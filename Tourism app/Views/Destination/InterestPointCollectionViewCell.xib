@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Bold.ttf">
+            <string>Roboto-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell_identifier" id="gTV-IL-0wX" customClass="InterestPointCollectionViewCell" customModule="Tourism_app" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OWj-RF-FIR">
+                        <rect key="frame" x="2" y="2" width="76" height="76"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cell-background" translatesAutoresizingMaskIntoConstraints="NO" id="fFr-K2-1yF">
+                                <rect key="frame" x="-7" y="-3" width="90" height="86"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="KX3-DV-eGD">
+                                <rect key="frame" x="25.5" y="15" width="25" height="46.5"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Food" translatesAutoresizingMaskIntoConstraints="NO" id="ck1-qJ-id4">
+                                        <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="25" id="BFx-ZI-eqs"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green-line" translatesAutoresizingMaskIntoConstraints="NO" id="zxe-bX-ZNy">
+                                        <rect key="frame" x="0.0" y="30" width="25" height="2"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Food" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kUK-Ym-3Is">
+                                        <rect key="frame" x="0.0" y="37" width="25" height="9.5"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="8"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="25" id="90i-M1-hmc"/>
+                                    <constraint firstAttribute="height" constant="46.5" id="SX8-Fe-GYR"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fFr-K2-1yF" firstAttribute="top" secondItem="OWj-RF-FIR" secondAttribute="top" constant="-3" id="0hl-cw-gYi"/>
+                            <constraint firstAttribute="trailing" secondItem="fFr-K2-1yF" secondAttribute="trailing" constant="-7" id="GRN-BY-MRY"/>
+                            <constraint firstAttribute="bottom" secondItem="fFr-K2-1yF" secondAttribute="bottom" constant="-7" id="NOo-Tx-tgT"/>
+                            <constraint firstItem="KX3-DV-eGD" firstAttribute="centerX" secondItem="OWj-RF-FIR" secondAttribute="centerX" id="hPV-tP-ShA"/>
+                            <constraint firstItem="fFr-K2-1yF" firstAttribute="leading" secondItem="OWj-RF-FIR" secondAttribute="leading" constant="-7" id="np3-da-nu7"/>
+                            <constraint firstItem="KX3-DV-eGD" firstAttribute="centerY" secondItem="OWj-RF-FIR" secondAttribute="centerY" id="xjQ-jw-5gL"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="OWj-RF-FIR" secondAttribute="bottom" constant="2" id="AgY-1J-o6V"/>
+                <constraint firstItem="OWj-RF-FIR" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="UJX-f7-ghS"/>
+                <constraint firstItem="OWj-RF-FIR" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="mEi-Hv-hnH"/>
+                <constraint firstAttribute="trailing" secondItem="OWj-RF-FIR" secondAttribute="trailing" constant="2" id="nXD-0h-k1C"/>
+            </constraints>
+            <size key="customSize" width="84" height="79"/>
+            <point key="canvasLocation" x="162.31884057971016" y="129.91071428571428"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Food" width="63" height="59"/>
+        <image name="cell-background" width="90" height="90"/>
+        <image name="green-line" width="34" height="2"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
