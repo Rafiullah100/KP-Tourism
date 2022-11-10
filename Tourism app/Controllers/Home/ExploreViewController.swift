@@ -52,6 +52,7 @@ extension ExploreViewController: UITableViewDataSource{
     
     @objc func move(){
         Switcher.goToDestination(delegate: self)
+        print("wkneio")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
