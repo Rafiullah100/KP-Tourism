@@ -21,7 +21,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var mapContainerView: UIView!
-    
+
     lazy var exploreVC: UIViewController = {
         let vc: ExploreViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
         return vc
