@@ -53,13 +53,13 @@
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWh-HL-ePw">
-                                <rect key="frame" x="272" y="8" width="40" height="40"/>
+                                <rect key="frame" x="285" y="10" width="25" height="25"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="8XC-XZ-vfH"/>
-                                    <constraint firstAttribute="width" constant="40" id="LYY-ay-fpy"/>
+                                    <constraint firstAttribute="height" constant="25" id="8XC-XZ-vfH"/>
+                                    <constraint firstAttribute="width" constant="25" id="LYY-ay-fpy"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="unfavorite"/>
+                                <state key="normal" backgroundImage="unfavorite"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -68,11 +68,11 @@
                             <constraint firstAttribute="trailing" secondItem="J3J-OD-Oi7" secondAttribute="trailing" constant="15" id="3h1-Po-Zz1"/>
                             <constraint firstAttribute="bottom" secondItem="J3J-OD-Oi7" secondAttribute="bottom" constant="4" id="4n0-jv-oDK"/>
                             <constraint firstAttribute="bottom" secondItem="Kuz-pt-yOt" secondAttribute="bottom" id="Bwe-mY-2Tg"/>
-                            <constraint firstItem="hWh-HL-ePw" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" constant="8" id="CPm-sW-GL8"/>
+                            <constraint firstItem="hWh-HL-ePw" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" constant="10" id="CPm-sW-GL8"/>
                             <constraint firstItem="Kuz-pt-yOt" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" id="ZC3-0B-QM2"/>
                             <constraint firstAttribute="trailing" secondItem="Kuz-pt-yOt" secondAttribute="trailing" id="a47-2h-htD"/>
                             <constraint firstItem="Kuz-pt-yOt" firstAttribute="leading" secondItem="8LA-Rk-E0b" secondAttribute="leading" id="fhJ-Qi-7NV"/>
-                            <constraint firstAttribute="trailing" secondItem="hWh-HL-ePw" secondAttribute="trailing" constant="8" id="ngb-CI-i91"/>
+                            <constraint firstAttribute="trailing" secondItem="hWh-HL-ePw" secondAttribute="trailing" constant="10" id="ngb-CI-i91"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -85,12 +85,15 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="pageController" destination="Y2e-Mb-bCO" id="MKQ-Y0-4Cq"/>
+            </connections>
             <point key="canvasLocation" x="139" y="120"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Mask Group 5" width="1101" height="943"/>
-        <image name="unfavorite" width="44" height="44"/>
+        <image name="unfavorite" width="22" height="21"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

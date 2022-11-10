@@ -10,6 +10,7 @@ import UIKit
 class SouthTableViewCell: UITableViewCell {
     static var cellIdentifier = "cell_identifier"
 
+    @IBOutlet weak var pageController: UIPageControl!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

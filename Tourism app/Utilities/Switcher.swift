@@ -41,4 +41,17 @@ class Switcher {
         vc.modalTransitionStyle = .crossDissolve
         delegate.present(vc, animated: true, completion: nil)
     }
+    
+    static func gotoServicesVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
+        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalTransitionStyle = .crossDissolve
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
+    static func gotoEventDetail(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }

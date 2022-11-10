@@ -9,6 +9,8 @@ import UIKit
 
 class AttractionTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var favoriteBtn: UIButton!
+    @IBOutlet weak var pageController: UIPageControl!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -21,4 +23,6 @@ class AttractionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func favoriteBtnAction(_ sender: Any) {
+    }
 }

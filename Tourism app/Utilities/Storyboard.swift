@@ -14,6 +14,8 @@ enum Storyboard: String {
     case gallery = "Gallery"
     case mapView = "MapView"
     case popup = "PopUp"
+    case POI = "POI"
+
     func instantiate<T>(identifier: T.Type) -> T {
         let storyboard = UIStoryboard(name: rawValue, bundle: nil)
         guard let viewcontroller = storyboard.instantiateViewController(withIdentifier: String(describing: identifier)) as? T else {

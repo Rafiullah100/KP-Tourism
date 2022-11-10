@@ -33,11 +33,12 @@ extension SouthViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SouthTableViewCell = tableView.dequeueReusableCell(withIdentifier: SouthTableViewCell.cellIdentifier) as! SouthTableViewCell
+        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       tableView.didScrolled()
+//       tableView.didScrolled()
     }
 }
 

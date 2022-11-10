@@ -56,6 +56,9 @@ class HomeViewController: BaseViewController {
     lazy var mapVC: UIViewController = {
         UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController")
     }()
+    lazy var archVC: UIViewController = {
+        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ArcheologyViewController")
+    }()
     
     
     enum CardState {
@@ -100,6 +103,7 @@ class HomeViewController: BaseViewController {
           UITabBarItem(title: "South KP", image: UIImage(named: "south"), selectedImage: UIImage(named: "south-s")),
           UITabBarItem(title: "Tour Packages", image: UIImage(named: "tour"), selectedImage: UIImage(named: "tour-s")),
           UITabBarItem(title: "Gallery", image: UIImage(named: "gallery"), selectedImage: UIImage(named: "gallery-s")),
+          UITabBarItem(title: "Archeology", image: UIImage(named: "arch"), selectedImage: UIImage(named: "arch-s")),
           UITabBarItem(title: "Events", image: UIImage(named: "event"), selectedImage: UIImage(named: "event-s")),
           UITabBarItem(title: "Blogs", image: UIImage(named: "blog"), selectedImage: UIImage(named: "blog-s")),
           UITabBarItem(title: "Local Products", image: UIImage(named: "product"), selectedImage: UIImage(named: "product-s")),
@@ -109,14 +113,13 @@ class HomeViewController: BaseViewController {
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
-        tabbarView.isScrollEnabled = false
+        tabbarView.isScrollEnabled = true
         tabbarView.setTitleFont(UIFont(name: "Roboto-Light", size: 12.0), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Roboto-Medium", size: 12.0), for: .selected)
         tabbarView.setTitleColor(.darkGray, for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10
-        mapContainerView.backgroundColor = .red
         self.add(mapVC, in: mapContainerView)
         self.add(exploreVC, in: contentView)
     }
@@ -246,6 +249,9 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
         else if title == "Gallery"{
             self.add(galleryVC, in: contentView)
+        }
+        else if title == "Archeology"{
+            self.add(archVC, in: contentView)
         }
         else if title == "Events"{
             self.add(event, in: contentView)

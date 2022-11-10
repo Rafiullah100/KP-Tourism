@@ -9,7 +9,7 @@ import UIKit
 import GoogleMaps
 import SwiftGifOrigin
 
-class GettingHereViewController: UIViewController {
+class GettingHereViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var textualView: UIStackView!
     @IBOutlet weak var mapContainerView: UIView!
     
@@ -21,15 +21,32 @@ class GettingHereViewController: UIViewController {
         case navigation
     }
     
+    var locationManager: CLLocationManager!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupMap()
         mapTextual(travel: .textual)
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.startUpdatingLocation()
+        }
     }
-
-    private func setupMap(){
-        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 10.0)
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let userLocation:CLLocation = locations[0] as CLLocation
+        setupMap(lat: userLocation.coordinate.latitude, lon: userLocation.coordinate.longitude)
+        manager.stopUpdatingLocation()
+    }
+    
+    private func setupMap(lat: Double, lon: Double){
+        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
+        mapView.isMyLocationEnabled = true
+        mapView.settings.myLocationButton = true
+        mapView.settings.compassButton = true
         mapContainerView.addSubview(mapView)
     }
     

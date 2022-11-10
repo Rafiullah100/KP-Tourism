@@ -30,7 +30,7 @@
             </objects>
             <point key="canvasLocation" x="3565.217391304348" y="353.57142857142856"/>
         </scene>
-        <!--Trip-->
+        <!--1422-->
         <scene sceneID="Pq1-nG-3VZ">
             <objects>
                 <viewController id="DQx-w7-1Un" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                         <viewLayoutGuide key="safeArea" id="n6X-pH-o7J"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Trip" image="trip" id="KGF-hb-B3S"/>
+                    <tabBarItem key="tabBarItem" title="1422" image="help" selectedImage="help-s" id="KGF-hb-B3S"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QrO-fK-vK0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -58,10 +58,10 @@
                                 <rect key="frame" x="0.0" y="39" width="414" height="120"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mei-F8-eiC" customClass="MDCTabBarView">
-                                        <rect key="frame" x="0.0" y="65" width="414" height="55"/>
+                                        <rect key="frame" x="0.0" y="63" width="414" height="57"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="55" id="tL6-VA-hBN"/>
+                                            <constraint firstAttribute="height" constant="57" id="tL6-VA-hBN"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HcP-6g-fUP">
@@ -151,7 +151,7 @@
                                     <constraint firstAttribute="bottom" secondItem="mei-F8-eiC" secondAttribute="bottom" id="c7Q-gT-QxH"/>
                                     <constraint firstAttribute="height" constant="120" id="d9i-kA-LCQ"/>
                                     <constraint firstItem="mei-F8-eiC" firstAttribute="leading" secondItem="laQ-RI-Ejm" secondAttribute="leading" id="kaA-7W-aqJ"/>
-                                    <constraint firstItem="mei-F8-eiC" firstAttribute="top" secondItem="HcP-6g-fUP" secondAttribute="bottom" constant="10" id="n1F-t2-dB2"/>
+                                    <constraint firstItem="mei-F8-eiC" firstAttribute="top" secondItem="HcP-6g-fUP" secondAttribute="bottom" constant="8" id="n1F-t2-dB2"/>
                                     <constraint firstAttribute="trailing" secondItem="HcP-6g-fUP" secondAttribute="trailing" constant="8" id="r34-4p-4As"/>
                                     <constraint firstAttribute="trailing" secondItem="mei-F8-eiC" secondAttribute="trailing" id="z7t-cb-1Z5"/>
                                 </constraints>
@@ -199,7 +199,6 @@
                     <navigationItem key="navigationItem" id="ECl-SU-w3U"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="containerView" destination="akR-JM-oxN" id="OFV-vO-CQg"/>
                         <outlet property="contentView" destination="RNc-vV-8C6" id="psX-Es-iKD"/>
                         <outlet property="mapContainerView" destination="ZAD-LJ-EDa" id="Utl-2R-dAJ"/>
                         <outlet property="notificationView" destination="kTV-8H-vjF" id="m94-df-ADi"/>
@@ -253,11 +252,10 @@
                         <tabBarAppearance key="standardAppearance"/>
                     </tabBar>
                     <connections>
-                        <segue destination="DQx-w7-1Un" kind="relationship" relationship="viewControllers" id="FQ6-ft-for"/>
-                        <segue destination="SHj-EA-C32" kind="relationship" relationship="viewControllers" id="HBc-dc-aKA"/>
-                        <segue destination="6l6-8v-Re6" kind="relationship" relationship="viewControllers" id="emd-we-wlw"/>
-                        <segue destination="guj-F8-Iaf" kind="relationship" relationship="viewControllers" id="DfI-Mz-rCI"/>
-                        <segue destination="acC-FD-eBA" kind="relationship" relationship="viewControllers" id="iOj-ip-M8l"/>
+                        <segue destination="6l6-8v-Re6" kind="relationship" relationship="viewControllers" id="qwb-5G-uOw"/>
+                        <segue destination="guj-F8-Iaf" kind="relationship" relationship="viewControllers" id="lBI-hu-gxn"/>
+                        <segue destination="DQx-w7-1Un" kind="relationship" relationship="viewControllers" id="S8d-y5-SjJ"/>
+                        <segue destination="acC-FD-eBA" kind="relationship" relationship="viewControllers" id="PgC-oq-gUy"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SID-jv-Xd8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -274,7 +272,7 @@
                         <viewLayoutGuide key="safeArea" id="JZd-xH-v1I"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Alerts" image="notification" id="0cQ-5K-IXF"/>
+                    <tabBarItem key="tabBarItem" title="Alerts" image="alert" selectedImage="alert-s" id="0cQ-5K-IXF"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gD4-GT-okn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -345,11 +343,11 @@
             </objects>
             <point key="canvasLocation" x="6927.5362318840589" y="-4.0178571428571423"/>
         </scene>
-        <!--Home-->
+        <!--Explore-->
         <scene sceneID="DlZ-jx-F4i">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6l6-8v-Re6" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Home" image="home" id="wwo-xA-ZIb"/>
+                    <tabBarItem key="tabBarItem" title="Explore" image="explore-tab" selectedImage="explore-tab-s" id="wwo-xA-ZIb"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Co8-7c-5Oa">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -368,7 +366,7 @@
         <scene sceneID="L3o-WD-EUF">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="acC-FD-eBA" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Login" image="profile" id="3UU-RX-ePX"/>
+                    <tabBarItem key="tabBarItem" title="Login" image="profile" selectedImage="profile-s" id="3UU-RX-ePX"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xXj-5M-Zty">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
@@ -496,18 +494,22 @@
         <image name="L2" width="112" height="28"/>
         <image name="L3" width="111" height="28"/>
         <image name="Mask Group 15" width="1077" height="843"/>
+        <image name="alert" width="21" height="19.5"/>
+        <image name="alert-s" width="21" height="19.5"/>
         <image name="bottom-bg" width="469" height="258.5"/>
+        <image name="explore-tab" width="21" height="21"/>
+        <image name="explore-tab-s" width="20" height="20"/>
         <image name="favorite-tabbar" width="21" height="20"/>
+        <image name="help" width="23.5" height="22"/>
+        <image name="help-s" width="22.5" height="21"/>
         <image name="helpline" width="231" height="21"/>
-        <image name="home" width="24" height="19.5"/>
         <image name="kpcta_logo_Text" width="258" height="144"/>
         <image name="logo.gif" width="1280" height="720"/>
-        <image name="notification" width="17" height="20.5"/>
         <image name="notification-icon" width="18" height="22"/>
         <image name="profile" width="21" height="21"/>
+        <image name="profile-s" width="20" height="20"/>
         <image name="search" width="17.5" height="17.5"/>
         <image name="search-bg" width="392" height="103"/>
-        <image name="trip" width="22" height="18.5"/>
         <namedColor name="tabbar-tint">
             <color red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

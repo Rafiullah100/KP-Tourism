@@ -36,11 +36,12 @@ extension AttractionsViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: AttractionTableViewCell.cellIdentifier) as! AttractionTableViewCell
+        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       tableView.didScrolled()
+//       tableView.didScrolled()
     }
 }
 

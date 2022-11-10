@@ -21,9 +21,13 @@ class InterestPointViewController: UIViewController {
         super.viewDidLoad()
 
     }
+    
+    override func show(_ vc: UIViewController, sender: Any?) {
+        add(vc)
+    }
 }
 
-extension InterestPointViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension InterestPointViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 20
     }
@@ -34,8 +38,18 @@ extension InterestPointViewController: UICollectionViewDelegate, UICollectionVie
     }
 }
 
-//extension InterestPointViewController: UICollectionViewDelegateFlowLayout{
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width * 0.65)
-//    }
-//}
+extension InterestPointViewController: UICollectionViewDelegate{
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
+        show(vc, sender: self)
+    }
+}
+
+extension InterestPointViewController: UICollectionViewDelegateFlowLayout{
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellsAcross: CGFloat = 4
+        let spaceBetweenCells: CGFloat = 2
+        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
+        return CGSize(width: width, height: width)
+    }
+}

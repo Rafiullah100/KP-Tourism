@@ -34,11 +34,12 @@ extension AdventureViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AdventureTableViewCell = tableView.dequeueReusableCell(withIdentifier: AdventureTableViewCell.cellIdentifier) as! AdventureTableViewCell
+        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       tableView.didScrolled()
+//       tableView.didScrolled()
     }
 }
 

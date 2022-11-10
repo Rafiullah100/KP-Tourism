@@ -13,6 +13,7 @@ enum ViewControllerType {
     case title
     case back1
     case back2
+    case backWithTitle
 }
 
 class BaseViewController: UIViewController {
@@ -61,6 +62,8 @@ class BaseViewController: UIViewController {
             setupBackBarButtonItemsWithFilterButton()
         case .back2:
             setupBackBarButtonItemsWithLikeButton()
+        case .backWithTitle:
+            setupBackButtonWithTitle()
         }
     }
     
@@ -108,6 +111,12 @@ class BaseViewController: UIViewController {
         shareFilterBtns()
     }
     
+    func setupBackButtonWithTitle() {
+        navigationItem.rightBarButtonItems = []
+        navigationItem.leftBarButtonItems = []
+        addBackButtonWithTitle()
+    }
+    
     func addTitleLabel() {
         titleLabel = UILabel()
         if let titleLabel = titleLabel {
@@ -116,6 +125,30 @@ class BaseViewController: UIViewController {
             titleLabel.textColor = UIColor.black
             self.navigationItem.titleView = titleLabel
         }
+    }
+    
+    func addBackButtonWithTitle() {
+        let button = UIButton.init(type: .custom)
+        button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        imageView.image = UIImage(named: "Back")
+        let label = UILabel(frame: CGRect(x: 35, y: 0, width: 100, height: 30))
+
+        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto", size: 13) ?? UIFont()]
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto", size: 10) ?? UIFont()]
+        let firstString = NSMutableAttributedString(string: "Events, ", attributes: firstAttributes)
+        let secondString = NSAttributedString(string: "Swat", attributes: secondAttributes)
+
+        firstString.append(secondString)
+        label.textColor = .white
+        label.attributedText = firstString
+        let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
+        button.frame = buttonView.frame
+        buttonView.addSubview(button)
+        buttonView.addSubview(imageView)
+        buttonView.addSubview(label)
+        let barButton = UIBarButtonItem.init(customView: buttonView)
+        self.navigationItem.leftBarButtonItem = barButton
     }
 
     func addBackButton() {
@@ -158,7 +191,7 @@ class BaseViewController: UIViewController {
         shareItem.customView = filterButton
         
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "favorite"), for: .normal)
+        likeButton.setImage(UIImage(named: "fav"), for: .normal)
         likeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let likeItem = UIBarButtonItem()
         likeItem.customView = likeButton

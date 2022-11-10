@@ -43,6 +43,10 @@ extension ExploreViewController: UITableViewDataSource{
         singleTap.cancelsTouchesInView = false
         singleTap.numberOfTapsRequired = 1
         cell.scrollView.addGestureRecognizer(singleTap)
+        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        cell.actionBlock = {
+            cell.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+        }
         return cell
     }
     
@@ -55,7 +59,7 @@ extension ExploreViewController: UITableViewDataSource{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       tableView.didScrolled()
+//       tableView.didScrolled()
     }
 }
 

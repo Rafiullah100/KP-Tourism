@@ -34,6 +34,10 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.bgView.layer.cornerRadius = 15.0
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Switcher.gotoEventDetail(delegate: self)
+    }
 }
 
 extension EventsViewController: UICollectionViewDelegateFlowLayout{

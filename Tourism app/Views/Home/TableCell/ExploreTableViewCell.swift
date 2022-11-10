@@ -14,6 +14,8 @@ class ExploreTableViewCell: UITableViewCell {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageController: UIPageControl!
     
+    @IBOutlet weak var favoriteButton: UIButton!
+    var actionBlock: (() -> Void)? = nil
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,7 +28,7 @@ class ExploreTableViewCell: UITableViewCell {
     }
         
     @IBAction func favoriteBtn(_ sender: Any) {
-        print("clicked")
-        
+        actionBlock?()
     }
 }
+

@@ -37,7 +37,7 @@ extension TourViewController: UITableViewDataSource{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-       tableView.didScrolled()
+//       tableView.didScrolled()
     }
 }
 

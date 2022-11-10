@@ -37,13 +37,13 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="233"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXq-hA-yZU">
-                                                <rect key="frame" x="272" y="14" width="40" height="40"/>
+                                                <rect key="frame" x="282" y="14" width="25" height="25"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="40" id="qHc-Pi-M6C"/>
-                                                    <constraint firstAttribute="width" constant="40" id="vNM-FF-9K3"/>
+                                                    <constraint firstAttribute="height" constant="25" id="qHc-Pi-M6C"/>
+                                                    <constraint firstAttribute="width" constant="25" id="vNM-FF-9K3"/>
                                                 </constraints>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal" image="unfavorite"/>
+                                                <state key="normal" backgroundImage="unfavorite"/>
                                             </button>
                                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="8BD-w3-aoc">
                                                 <rect key="frame" x="77" y="213" width="166" height="20"/>
@@ -59,7 +59,7 @@
                                             <constraint firstItem="8BD-w3-aoc" firstAttribute="leading" secondItem="3Y8-BW-VqA" secondAttribute="leading" constant="77" id="R75-xe-2fP"/>
                                             <constraint firstItem="XXq-hA-yZU" firstAttribute="top" secondItem="3Y8-BW-VqA" secondAttribute="top" constant="14" id="VzE-7o-cev"/>
                                             <constraint firstItem="CYc-6X-GIu" firstAttribute="top" secondItem="3Y8-BW-VqA" secondAttribute="top" id="dEB-rn-LQ8"/>
-                                            <constraint firstAttribute="trailing" secondItem="XXq-hA-yZU" secondAttribute="trailing" constant="8" id="gB0-lD-A6G"/>
+                                            <constraint firstAttribute="trailing" secondItem="XXq-hA-yZU" secondAttribute="trailing" constant="13" id="gB0-lD-A6G"/>
                                             <constraint firstAttribute="bottom" secondItem="8BD-w3-aoc" secondAttribute="bottom" id="n3Z-8L-5Eq"/>
                                             <constraint firstAttribute="bottom" secondItem="CYc-6X-GIu" secondAttribute="bottom" id="rMh-ry-RFR"/>
                                             <constraint firstItem="CYc-6X-GIu" firstAttribute="leading" secondItem="3Y8-BW-VqA" secondAttribute="leading" id="wZ0-7o-wkB"/>
@@ -133,11 +133,14 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="pni-Ni-jHt"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="pageController" destination="8BD-w3-aoc" id="rCp-Ec-e8X"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Mask Group 4" width="1101" height="733"/>
-        <image name="unfavorite" width="44" height="44"/>
+        <image name="unfavorite" width="22" height="21"/>
     </resources>
 </document>
