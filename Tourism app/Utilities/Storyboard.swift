@@ -15,6 +15,7 @@ enum Storyboard: String {
     case mapView = "MapView"
     case popup = "PopUp"
     case POI = "POI"
+    case profile = "Profile"
 
     func instantiate<T>(identifier: T.Type) -> T {
         let storyboard = UIStoryboard(name: rawValue, bundle: nil)

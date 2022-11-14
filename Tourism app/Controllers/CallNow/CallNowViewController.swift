@@ -1,18 +1,19 @@
 //
-//  LoginViewController.swift
+//  CallNowViewController.swift
 //  Tourism app
 //
-//  Created by Rafi on 27/10/2022.
+//  Created by Rafi on 11/11/2022.
 //
 
 import UIKit
 
-class LoginViewController: BaseViewController {
+class CallNowViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .title
-        viewControllerTitle = "Log in or Sign up"
+        viewControllerTitle = "Tourism Emergency Helpline"
     }
+
 }

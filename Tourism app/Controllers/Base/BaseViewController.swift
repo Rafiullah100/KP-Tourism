@@ -23,7 +23,8 @@ class BaseViewController: UIViewController {
         
     var viewControllerTitle: String? {
         didSet {
-            //titleLabel?.text = viewControllerTitle ?? ""
+            print(viewControllerTitle ?? "")
+            titleLabel?.text = viewControllerTitle ?? ""
             switch type {
             case .home:
                 addCenterLabel()
@@ -39,9 +40,7 @@ class BaseViewController: UIViewController {
             titleLabel.text = viewControllerTitle ?? ""
             titleLabel.font = UIFont(name: "Poppins-Medium", size: 21)
             titleLabel.textColor = UIColor.white
-            
             self.navigationItem.titleView = titleLabel
-            
         }
     }
     
@@ -120,7 +119,7 @@ class BaseViewController: UIViewController {
     func addTitleLabel() {
         titleLabel = UILabel()
         if let titleLabel = titleLabel {
-            titleLabel.text = "Log in or Sign up"
+            titleLabel.text = viewControllerTitle
             titleLabel.font = UIFont(name: "Roboto-Bold", size: 18)
             titleLabel.textColor = UIColor.black
             self.navigationItem.titleView = titleLabel
