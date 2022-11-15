@@ -29,9 +29,6 @@ extension AccomodationViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AccomodationTableViewCell = tableView.dequeueReusableCell(withIdentifier: AccomodationTableViewCell.celldentifier) as! AccomodationTableViewCell
-        cell.bgView.layer.borderWidth = 0.5
-        cell.bgView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.bgView.layer.cornerRadius = 15.0
         return cell
     }
 }

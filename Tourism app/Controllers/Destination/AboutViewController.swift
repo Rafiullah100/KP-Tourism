@@ -39,8 +39,7 @@ extension AboutViewController: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: AboutCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: AboutCollectionViewCell.cellIdentifier, for: indexPath) as! AboutCollectionViewCell
-        cell.imgView.image = UIImage(named: contacts?[indexPath.row].photo ?? "")
-        cell.foodLabel.text = contacts?[indexPath.row].department ?? ""
+        cell.contact = contacts![indexPath.row]
         return cell
     }
 }

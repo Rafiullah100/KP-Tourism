@@ -14,6 +14,7 @@ class AdventureTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

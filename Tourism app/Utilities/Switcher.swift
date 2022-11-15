@@ -54,4 +54,17 @@ class Switcher {
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    static func gotoDestDetail(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "DestinationDetailViewController") as! DestinationDetailViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func gotoNotificationVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "NotificationViewController") as! NotificationViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.navigationBar.isHidden = false
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }

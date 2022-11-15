@@ -28,9 +28,6 @@ extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ItenrariesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ItenrariesCollectionViewCell.cellIdentifier, for: indexPath) as! ItenrariesCollectionViewCell
-        cell.bgView.layer.borderWidth = 0.5
-        cell.bgView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.bgView.layer.cornerRadius = 5.0
         return cell
     }
 }

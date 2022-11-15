@@ -29,9 +29,6 @@ extension EventsViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: EventCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: EventCollectionViewCell.cellIdentifier, for: indexPath) as! EventCollectionViewCell
-        cell.bgView.layer.borderWidth = 0.5
-        cell.bgView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.bgView.layer.cornerRadius = 15.0
         return cell
     }
     

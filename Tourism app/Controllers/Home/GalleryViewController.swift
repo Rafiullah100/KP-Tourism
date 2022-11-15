@@ -80,15 +80,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        switch collectionView {
-        case imageCollectionView:
-            return CGSize(width: 130, height: 100)
-        case videoCollectionView:
-            return CGSize(width: 130, height: 100)
-        case virtualCollectionView:
-            return CGSize(width: 130, height: 100)
-        default:
-            return CGSize.zero
-        }
+        return CGSize(width: 130, height: 100)
     }
 }

@@ -9,6 +9,12 @@ import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
 
+struct Sections {
+    let title: String?
+    let image: String?
+    let selectedImage: String?
+}
+
 class HomeViewController: BaseViewController {
 
     var tabs: [Tab]?
@@ -21,7 +27,8 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var mapContainerView: UIView!
-
+    @IBOutlet weak var mapButton: UIButton!
+    
     lazy var exploreVC: UIViewController = {
         let vc: ExploreViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
         return vc
@@ -76,11 +83,14 @@ class HomeViewController: BaseViewController {
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted:CGFloat = 0
     
+    var section: [Sections]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         shadow()
         type = .back1
+        
         setupCard()
         configureTabbar()
     }
@@ -96,6 +106,24 @@ class HomeViewController: BaseViewController {
     }
     
     private func configureTabbar(){
+//        section = [Sections(title: "Explore", image: "explore", selectedImage: "explore-s"),
+//        Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
+//        Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
+//        Sections(title: "South KP", image: "south", selectedImage: "south-s"),
+//        Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
+//        Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
+//        Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
+//        Sections(title: "Events", image: "event", selectedImage: "event-s"),
+//        Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
+//        Sections(title: "Local Products", image: "product", selectedImage: "product-s")
+//        ]
+        
+//        tabbarView.items = [
+//            section?.forEach({ sec in
+//                UITabBarItem(title: sec.title, image: UIImage(named: sec.image ?? ""), selectedImage: UIImage(named: sec.selectedImage ?? ""))
+//            })
+//        ]
+        
         tabbarView.items = [
           UITabBarItem(title: "Explore", image: UIImage(named: "explore"), selectedImage: UIImage(named: "explore-s")),
           UITabBarItem(title: "Attractions", image: UIImage(named: "attraction"), selectedImage: UIImage(named: "attraction-s")),
@@ -154,13 +182,14 @@ class HomeViewController: BaseViewController {
                 if translation.y > 10 {
                     continueInteractiveTransition()
                 }
+                mapButton.isHidden = true
             }
             else{
                 let name = Notification.Name(Constants.enableScrolling)
                 NotificationCenter.default.post(name: name, object: nil)
                 continueInteractiveTransition()
+                mapButton.isHidden = false
             }
-            
         default:
             break
         }
@@ -222,6 +251,21 @@ class HomeViewController: BaseViewController {
         }
     }
     @IBAction func notificattionButtonAction(_ sender: Any) {
+        
+    }
+    @IBAction func mapBtnAction(_ sender: Any) {
+        print(nextState)
+        switch nextState {
+        case .expanded:
+            mapButton.isHidden = false
+//            animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
+        case .collapsed:
+            mapButton.isHidden = true
+            animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
+        }
+    }
+    @IBAction func notificationBtnAction(_ sender: Any) {
+        Switcher.gotoNotificationVC(delegate: self)
     }
 }
 
@@ -231,7 +275,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
     }
     
     private func addChild(title: String){
-//        self.remove(from: container)
         if title == "Explore" {
             self.add(exploreVC, in: contentView)
         }
@@ -266,7 +309,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
 }
 
 extension HomeViewController: Dragged{
-
     func isDragged() {
         animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
     }

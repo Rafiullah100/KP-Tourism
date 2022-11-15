@@ -39,6 +39,10 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
         let cell: DestAttractCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestAttractCollectionViewCell.cellIdentifier, for: indexPath) as! DestAttractCollectionViewCell
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Switcher.gotoDestDetail(delegate: self)
+    }
 }
 
 extension AttractionViewController: UICollectionViewDelegateFlowLayout{

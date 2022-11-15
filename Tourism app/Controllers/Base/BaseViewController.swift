@@ -14,6 +14,12 @@ enum ViewControllerType {
     case back1
     case back2
     case backWithTitle
+    case notification
+}
+
+enum RightButttonsType {
+    case Setting
+    case upload
 }
 
 class BaseViewController: UIViewController {
@@ -63,6 +69,8 @@ class BaseViewController: UIViewController {
             setupBackBarButtonItemsWithLikeButton()
         case .backWithTitle:
             setupBackButtonWithTitle()
+        case .notification:
+            setupBackButton()
         }
     }
     
@@ -100,7 +108,7 @@ class BaseViewController: UIViewController {
         navigationItem.rightBarButtonItems = []
         navigationItem.leftBarButtonItems = []
         addBackButton()
-        shareFavoriteBtns()
+        shareFavoriteBtns(type: .Setting)
     }
     
     func setupBackBarButtonItemsWithFilterButton() {
@@ -114,6 +122,20 @@ class BaseViewController: UIViewController {
         navigationItem.rightBarButtonItems = []
         navigationItem.leftBarButtonItems = []
         addBackButtonWithTitle()
+    }
+    
+    func setupBackButton() {
+        navigationItem.rightBarButtonItems = []
+        navigationItem.leftBarButtonItems = []
+        addArrowBackButton()
+    }
+    
+    func addArrowBackButton() {
+        let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
+        backButton.image = nil
+        backButton.image = UIImage(named: "arrow-back")
+        self.navigationController?.navigationItem.hidesBackButton = true
+        self.navigationItem.leftBarButtonItem = backButton
     }
     
     func addTitleLabel() {
@@ -166,15 +188,20 @@ class BaseViewController: UIViewController {
         self.navigationItem.leftBarButtonItem = crossButton
     }
     
-    func shareFavoriteBtns() {
+    public func shareFavoriteBtns(type: RightButttonsType) {
         let shareButton = UIButton()
-        shareButton.setImage(UIImage(named: "share"), for: .normal)
+        switch type {
+        case .Setting:
+            shareButton.setImage(UIImage(named: "filter"), for: .normal)
+        case .upload:
+            shareButton.setImage(UIImage(named: "share"), for: .normal)
+        }
         shareButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let shareItem = UIBarButtonItem()
         shareItem.customView = shareButton
         
         let likeButton = UIButton()
-        likeButton.setImage(UIImage(named: "favorite"), for: .normal)
+        likeButton.setImage(UIImage(named: "fav"), for: .normal)
         likeButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let likeItem = UIBarButtonItem()
         likeItem.customView = likeButton

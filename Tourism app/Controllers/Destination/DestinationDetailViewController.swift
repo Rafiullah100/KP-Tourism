@@ -1,22 +1,19 @@
 //
-//  AttractionViewController.swift
+//  DestinationDetailViewController.swift
 //  Tourism app
 //
-//  Created by Rafi on 12/10/2022.
+//  Created by Rafi on 15/11/2022.
 //
-
 import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
 import SwiftGifOrigin
-protocol PopupDelegate {
-    func showPopup()
-}
+//protocol PopupDelegate {
+//    func showPopup()
+//}
 
-class DestinatonViewController: BaseViewController {
-    
-    @IBOutlet weak var shareButton: UIButton!
-    
+class DestinationDetailViewController: BaseViewController {
+        
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tabbarView: MDCTabBarView!
     @IBOutlet weak var headerImageView: UIImageView!
@@ -26,7 +23,7 @@ class DestinatonViewController: BaseViewController {
     lazy var attractionVC: UIViewController = {
         let vc: AttractionViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AttractionViewController") as!
         AttractionViewController
-        delegate = vc as PopupDelegate
+//        delegate = vc as PopupDelegate
         return vc
     }()
     
@@ -52,7 +49,7 @@ class DestinatonViewController: BaseViewController {
         UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AboutViewController")
     }()
 
-    var delegate: PopupDelegate?
+//    var delegate: PopupDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,43 +98,43 @@ class DestinatonViewController: BaseViewController {
     }
 }
 
-extension DestinatonViewController: MDCTabBarViewDelegate{
+extension DestinationDetailViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
         addChild(tag: item.tag)
     }
     
     private func addChild(tag: Int){
         if tag == 0 {
-            self.shareFavoriteBtns(type: .Setting)
-            self.delegate = attractionVC as? PopupDelegate
+            type = .back1
+//            self.delegate = attractionVC as? PopupDelegate
             self.add(attractionVC, in: contentView)
         }
         else if tag == 1{
-            self.shareFavoriteBtns(type: .Setting)
+            type = .back1
             self.add(gettingHereVC, in: contentView)
         }
         else if tag == 2{
-            self.shareFavoriteBtns(type: .Setting)
+            type = .back1
             self.add(interestingVC, in: contentView)
         }
         else if tag == 3{
-            self.shareFavoriteBtns(type: .upload)
+            type = .back2
             self.add(eventVC, in: contentView)
         }
         else if tag == 4{
-            self.shareFavoriteBtns(type: .upload)
+            type = .back2
             self.add(productVC, in: contentView)
         }
         else if tag == 5{
-            self.shareFavoriteBtns(type: .upload)
+            type = .back2
             self.add(itenrariesVC, in: contentView)
         }
         else if tag == 6{
-            self.shareFavoriteBtns(type: .upload)
+            type = .back2
             self.add(accomodationVC, in: contentView)
         }
         else if tag == 7{
-            self.shareFavoriteBtns(type: .upload)
+            type = .back2
             self.add(aboutVC, in: contentView)
         }
     }

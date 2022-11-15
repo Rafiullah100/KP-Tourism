@@ -29,9 +29,6 @@ extension LocalProductsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestProductCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestProductCollectionViewCell.cellIdentifier, for: indexPath) as! DestProductCollectionViewCell
-        cell.bgView.layer.borderWidth = 0.5
-        cell.bgView.layer.borderColor = UIColor.lightGray.cgColor
-        cell.bgView.layer.cornerRadius = 5.0
         return cell
     }
 }

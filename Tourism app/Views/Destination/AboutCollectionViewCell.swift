@@ -12,6 +12,14 @@ class AboutCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var foodLabel: UILabel!
+    
+    var contact: Contacts? {
+        didSet {
+            imgView.image = UIImage(named: contact?.photo ?? "")
+            foodLabel.text = contact?.department ?? ""
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
