@@ -14,4 +14,6 @@ pod 'GoogleMaps'
 pod 'GooglePlaces', '6.1.1'
 pod 'SwiftGifOrigin'
 pod 'IQKeyboardManager' #iOS8 and later
+pod 'ImageSlideshow', '~> 1.9.0'
+
 end

@@ -14,3 +14,4 @@ class NotificationViewController: BaseViewController {
         type = .notification
     }
 }
+

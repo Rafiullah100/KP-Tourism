@@ -141,7 +141,7 @@ class HomeViewController: BaseViewController {
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
-        tabbarView.isScrollEnabled = true
+        tabbarView.isScrollEnabled = false
         tabbarView.setTitleFont(UIFont(name: "Roboto-Light", size: 12.0), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Roboto-Medium", size: 12.0), for: .selected)
         tabbarView.setTitleColor(.darkGray, for: .normal)

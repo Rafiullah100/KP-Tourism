@@ -16,6 +16,7 @@ class ExploreViewController: BaseViewController {
             tableView.register(UINib(nibName: "ExploreTableViewCell", bundle: nil), forCellReuseIdentifier: ExploreTableViewCell.cellIdentifier)
         }
     }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,7 @@ extension ExploreViewController: UITableViewDataSource{
         singleTap.cancelsTouchesInView = false
         singleTap.numberOfTapsRequired = 1
         cell.scrollView.addGestureRecognizer(singleTap)
-        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+       
         cell.actionBlock = {
             cell.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
         }
@@ -52,16 +53,17 @@ extension ExploreViewController: UITableViewDataSource{
     
     @objc func move(){
         Switcher.goToDestination(delegate: self)
-        print("wkneio")
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         move()
     }
+
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //       tableView.didScrolled()
     }
+    
 }
 
 extension ExploreViewController: UITableViewDelegate{

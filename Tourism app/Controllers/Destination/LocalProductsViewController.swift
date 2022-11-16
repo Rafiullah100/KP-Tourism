@@ -20,6 +20,10 @@ class LocalProductsViewController: UIViewController {
         super.viewDidLoad()
 
     }
+    
+    override func show(_ vc: UIViewController, sender: Any?) {
+        add(vc)
+    }
 }
 
 extension LocalProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -30,6 +34,11 @@ extension LocalProductsViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestProductCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestProductCollectionViewCell.cellIdentifier, for: indexPath) as! DestProductCollectionViewCell
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
+        show(vc, sender: self)
     }
 }
 

@@ -6,14 +6,22 @@
 //
 
 import UIKit
-
+import ImageSlideshow
 class AttractionTableViewCell: UITableViewCell {
 
+    
+    @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var favoriteBtn: UIButton!
-    @IBOutlet weak var pageController: UIPageControl!
+    
+    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
+    var delegate: Dragged?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        slideShow.slideshowInterval = 2.0
+        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+        slideShow.setImageInputs(localSource)
     }
     static var cellIdentifier = "cell_identifier"
 

@@ -6,6 +6,16 @@
 //
 
 import UIKit
+import ImageSlideshow
+
+struct Model {
+    let image: UIImage
+    let title: String
+
+    var inputSource: InputSource {
+        return ImageSource(image: image)
+    }
+}
 
 class AttractionsViewController: UIViewController {
 
@@ -36,7 +46,6 @@ extension AttractionsViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: AttractionTableViewCell.cellIdentifier) as! AttractionTableViewCell
-        cell.pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
         return cell
     }
     
@@ -48,5 +57,11 @@ extension AttractionsViewController: UITableViewDataSource{
 extension AttractionsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 300.0
+    }
+}
+
+extension CGRect {
+    var center: CGPoint {
+        return CGPoint(x: self.midX, y: self.midY)
     }
 }

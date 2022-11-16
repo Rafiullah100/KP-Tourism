@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +26,16 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9C0-vS-yNg">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swatt1" translatesAutoresizingMaskIntoConstraints="NO" id="BxH-5o-4m5">
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3g-td-uVi" customClass="ImageSlideshow" customModule="ImageSlideshow">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swatt1" translatesAutoresizingMaskIntoConstraints="NO" id="BxH-5o-4m5">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMh-Mt-giM">
@@ -64,23 +74,19 @@
                                                 </attributedString>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="6Ja-7q-5rG">
-                                                <rect key="frame" x="102.5" y="263" width="115.5" height="19"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="19" id="3ud-8m-F0v"/>
-                                                </constraints>
-                                            </pageControl>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstItem="f3g-td-uVi" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" id="GPj-vT-XYt"/>
                                             <constraint firstItem="0eb-tw-0SL" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" constant="8" id="HFV-ak-qwO"/>
-                                            <constraint firstAttribute="bottom" secondItem="6Ja-7q-5rG" secondAttribute="bottom" constant="8" id="MGy-eI-cyo"/>
+                                            <constraint firstAttribute="bottom" secondItem="f3g-td-uVi" secondAttribute="bottom" id="S52-IL-72K"/>
                                             <constraint firstItem="BxH-5o-4m5" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" id="S7b-H3-r0I"/>
+                                            <constraint firstItem="f3g-td-uVi" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" id="WZ8-ew-Mmz"/>
                                             <constraint firstItem="YMh-Mt-giM" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" constant="14" id="YEY-q9-w1N"/>
                                             <constraint firstAttribute="bottom" secondItem="BxH-5o-4m5" secondAttribute="bottom" id="eN0-dK-CC2"/>
+                                            <constraint firstAttribute="trailing" secondItem="f3g-td-uVi" secondAttribute="trailing" id="kZt-j9-4xN"/>
                                             <constraint firstAttribute="trailing" secondItem="YMh-Mt-giM" secondAttribute="trailing" constant="13" id="keJ-VK-2mK"/>
                                             <constraint firstItem="BxH-5o-4m5" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" id="kwG-jq-U2b"/>
-                                            <constraint firstItem="6Ja-7q-5rG" firstAttribute="centerX" secondItem="9C0-vS-yNg" secondAttribute="centerX" id="m6c-C4-C4J"/>
                                             <constraint firstAttribute="bottom" secondItem="0eb-tw-0SL" secondAttribute="bottom" constant="10" id="q3G-EV-814"/>
                                             <constraint firstAttribute="trailing" secondItem="BxH-5o-4m5" secondAttribute="trailing" id="zWf-Po-9Bv"/>
                                         </constraints>
@@ -110,7 +116,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="favoriteBtn" destination="YMh-Mt-giM" id="twe-iV-de1"/>
-                <outlet property="pageController" destination="6Ja-7q-5rG" id="Q26-9W-beF"/>
+                <outlet property="slideShow" destination="f3g-td-uVi" id="Fxa-f8-40m"/>
             </connections>
             <point key="canvasLocation" x="749.27536231884062" y="141.29464285714286"/>
         </tableViewCell>
@@ -118,5 +124,8 @@
     <resources>
         <image name="swatt1" width="1104" height="815"/>
         <image name="unfavorite" width="22" height="21"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>

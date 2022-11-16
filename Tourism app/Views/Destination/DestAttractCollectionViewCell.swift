@@ -14,5 +14,4 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
 }
