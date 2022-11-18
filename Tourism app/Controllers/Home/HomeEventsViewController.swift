@@ -9,13 +9,14 @@ import UIKit
 
 class HomeEventsViewController: UIViewController {
     
-    @IBOutlet weak var collectionView: UICollectionView!{
+    @IBOutlet weak var tableView: UITableView!{
         didSet{
-            collectionView.delegate = self
-            collectionView.dataSource = self
-            collectionView.register(UINib(nibName: "EventCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: EventCollectionViewCell.cellIdentifier)
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: EventTableViewCell.cellIdentifier)
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,19 +24,20 @@ class HomeEventsViewController: UIViewController {
 
 }
 
-extension HomeEventsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension HomeEventsViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: EventCollectionViewCell.cellIdentifier, for: indexPath) as! EventCollectionViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: EventTableViewCell.cellIdentifier) as! EventTableViewCell
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width*0.95)
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400
     }
+    
 }
 
  
