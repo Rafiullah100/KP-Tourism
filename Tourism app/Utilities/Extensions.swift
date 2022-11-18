@@ -251,6 +251,19 @@ public extension UITableView {
     func restore() {
         self.backgroundView = nil
     }
+    
+    func registerNibForCellClass(_ cellClass: UITableViewCell.Type) {
+        let cellReuseIdentifier = cellClass.cellReuseIdentifier()
+        let nibCell = UINib(nibName: cellReuseIdentifier, bundle: nil)
+        register(nibCell, forCellReuseIdentifier: cellReuseIdentifier)
+    }
+    
+}
+
+extension UITableViewCell{
+    class func cellReuseIdentifier() -> String {
+        return "\(self)"
+    }
 }
 
 
@@ -282,7 +295,6 @@ extension UIViewController {
     func remove() {
         remove(from: view)
     }
-    
     
    
 }

@@ -54,9 +54,13 @@ class DestinatonViewController: BaseViewController {
 
     var delegate: PopupDelegate?
     
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
+        
         type = .back1
         configureTabbar()
     }

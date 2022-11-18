@@ -8,35 +8,37 @@
 import UIKit
 
 class BlogsViewController: UIViewController {
-
-    @IBOutlet weak var collectionView: UICollectionView!{
+    @IBOutlet weak var tableView: UITableView!{
         didSet{
-            collectionView.delegate = self
-            collectionView.dataSource = self
-            collectionView.register(UINib(nibName: "BlogCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: BlogCollectionViewCell.cellIdentifier)
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.register(UINib(nibName: "BlogTableViewCell", bundle: nil), forCellReuseIdentifier: BlogTableViewCell.cellIdentifier)
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
-
+    
+    @objc func tableViewScrolling(){
+        tableView.isScrollEnabled = true
+    }
 }
 
-extension BlogsViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension BlogsViewController: UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 5
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: BlogCollectionViewCell.cellIdentifier, for: indexPath) as! BlogCollectionViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: BlogTableViewCell.cellIdentifier) as! BlogTableViewCell
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-            return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.width*1.1)
-    }
 }
 
- 
-
+extension BlogsViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 400.0
+    }
+}

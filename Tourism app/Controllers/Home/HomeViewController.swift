@@ -28,6 +28,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var mapContainerView: UIView!
     @IBOutlet weak var mapButton: UIButton!
+    @IBOutlet weak var tableView: UITableView!
     
     lazy var exploreVC: UIViewController = {
         let vc: ExploreViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
@@ -35,7 +36,7 @@ class HomeViewController: BaseViewController {
     }()
     lazy var attractionVC: UIViewController = {
         let vc: AttractionsViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "AttractionsViewController") as! AttractionsViewController
-        vc.delegate = self
+//        vc.delegate = self
         return vc
     }()
     
@@ -67,6 +68,8 @@ class HomeViewController: BaseViewController {
         UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ArcheologyViewController")
     }()
     
+    var cellType = [CellType]()
+
     
     enum CardState {
         case expanded
@@ -90,7 +93,6 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         shadow()
         type = .back1
-        
         setupCard()
         configureTabbar()
     }
@@ -106,23 +108,6 @@ class HomeViewController: BaseViewController {
     }
     
     private func configureTabbar(){
-//        section = [Sections(title: "Explore", image: "explore", selectedImage: "explore-s"),
-//        Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
-//        Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-//        Sections(title: "South KP", image: "south", selectedImage: "south-s"),
-//        Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
-//        Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
-//        Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
-//        Sections(title: "Events", image: "event", selectedImage: "event-s"),
-//        Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
-//        Sections(title: "Local Products", image: "product", selectedImage: "product-s")
-//        ]
-        
-//        tabbarView.items = [
-//            section?.forEach({ sec in
-//                UITabBarItem(title: sec.title, image: UIImage(named: sec.image ?? ""), selectedImage: UIImage(named: sec.selectedImage ?? ""))
-//            })
-//        ]
         
         tabbarView.items = [
           UITabBarItem(title: "Explore", image: UIImage(named: "explore"), selectedImage: UIImage(named: "explore-s")),
@@ -308,8 +293,4 @@ extension HomeViewController: MDCTabBarViewDelegate{
     }
 }
 
-extension HomeViewController: Dragged{
-    func isDragged() {
-        animateTransitionIfNeeded(state: .collapsed, duration: 0.9)
-    }
-}
+

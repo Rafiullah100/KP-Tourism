@@ -33,18 +33,6 @@ class DestinationDetailViewController: BaseViewController {
     lazy var interestingVC: UIViewController = {
         UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "InterestPointViewController")
     }()
-    lazy var eventVC: UIViewController = {
-        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "EventsViewController")
-    }()
-    lazy var productVC: UIViewController = {
-        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "LocalProductsViewController")
-    }()
-    lazy var itenrariesVC: UIViewController = {
-        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "ItenrariesViewController")
-    }()
-    lazy var accomodationVC: UIViewController = {
-        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AccomodationViewController")
-    }()
     lazy var aboutVC: UIViewController = {
         UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AboutViewController")
     }()
@@ -60,13 +48,9 @@ class DestinationDetailViewController: BaseViewController {
     
     private func configureTabbar(){
         tabbarView.items = [
-            UITabBarItem(title: "Attractions", image: UIImage(), tag: 0),
+            UITabBarItem(title: "What to See", image: UIImage(), tag: 0),
             UITabBarItem(title: "Getting Here", image: UIImage(), tag: 1),
             UITabBarItem(title: "Point of Interest", image: UIImage(), tag: 2),
-            UITabBarItem(title: "Events", image: UIImage(), tag: 3),
-            UITabBarItem(title: "Local Products", image: UIImage(), tag: 4),
-            UITabBarItem(title: "Itenraries", image: UIImage(), tag: 5),
-            UITabBarItem(title: "Accomodation", image: UIImage(), tag: 6),
             UITabBarItem(title: "About", image: UIImage(), tag: 7)
         ]
         tabbarView.selectedItem = tabbarView.items[0]
@@ -118,22 +102,6 @@ extension DestinationDetailViewController: MDCTabBarViewDelegate{
             self.add(interestingVC, in: contentView)
         }
         else if tag == 3{
-            type = .back2
-            self.add(eventVC, in: contentView)
-        }
-        else if tag == 4{
-            type = .back2
-            self.add(productVC, in: contentView)
-        }
-        else if tag == 5{
-            type = .back2
-            self.add(itenrariesVC, in: contentView)
-        }
-        else if tag == 6{
-            type = .back2
-            self.add(accomodationVC, in: contentView)
-        }
-        else if tag == 7{
             type = .back2
             self.add(aboutVC, in: contentView)
         }

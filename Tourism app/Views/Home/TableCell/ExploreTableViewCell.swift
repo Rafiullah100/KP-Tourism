@@ -9,7 +9,7 @@ import UIKit
 
 class ExploreTableViewCell: UITableViewCell {
 
-    static var cellIdentifier = "cell_identifier"
+    static var cellIdentifier = "cell_identifier1"
     @IBOutlet weak var container: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var pageController: UIPageControl!

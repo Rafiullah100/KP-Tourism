@@ -209,33 +209,17 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WB3-8B-adw">
                                         <rect key="frame" x="0.0" y="60" width="414" height="758"/>
                                         <subviews>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hyk-wO-ddA">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="FD7-T9-jAI">
                                                 <rect key="frame" x="8" y="0.0" width="398" height="758"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="bgb-ja-YGs">
-                                                    <size key="itemSize" width="128" height="128"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="0EP-99-tVF">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="oE0-oi-Zcn">
-                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
-                                            </collectionView>
+                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="hyk-wO-ddA" firstAttribute="leading" secondItem="WB3-8B-adw" secondAttribute="leading" constant="8" id="Bvz-aH-TZF"/>
-                                            <constraint firstItem="hyk-wO-ddA" firstAttribute="top" secondItem="WB3-8B-adw" secondAttribute="top" id="SEH-kS-Dux"/>
-                                            <constraint firstAttribute="trailing" secondItem="hyk-wO-ddA" secondAttribute="trailing" constant="8" id="l5F-c4-vgX"/>
-                                            <constraint firstAttribute="bottom" secondItem="hyk-wO-ddA" secondAttribute="bottom" id="vwl-IQ-vGK"/>
+                                            <constraint firstItem="FD7-T9-jAI" firstAttribute="top" secondItem="WB3-8B-adw" secondAttribute="top" id="248-Lk-zYs"/>
+                                            <constraint firstItem="FD7-T9-jAI" firstAttribute="leading" secondItem="WB3-8B-adw" secondAttribute="leading" constant="8" id="L2C-Xm-iDK"/>
+                                            <constraint firstAttribute="bottom" secondItem="FD7-T9-jAI" secondAttribute="bottom" id="bsf-BX-pWp"/>
+                                            <constraint firstAttribute="trailing" secondItem="FD7-T9-jAI" secondAttribute="trailing" constant="8" id="jfP-R3-DMF"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -255,7 +239,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="hyk-wO-ddA" id="Y1G-2B-OhN"/>
+                        <outlet property="tableView" destination="FD7-T9-jAI" id="sFR-yg-OvV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Yy8-78-tgB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -302,33 +286,17 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9oA-0N-td6">
                                         <rect key="frame" x="0.0" y="60" width="414" height="758"/>
                                         <subviews>
-                                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="fUz-Pr-e8W">
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Iwq-Qy-lD5">
                                                 <rect key="frame" x="8" y="0.0" width="398" height="758"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="dzl-iM-tul">
-                                                    <size key="itemSize" width="128" height="128"/>
-                                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                                </collectionViewFlowLayout>
-                                                <cells>
-                                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="4Bn-J0-iPf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Enl-7L-YfO">
-                                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </collectionViewCellContentView>
-                                                    </collectionViewCell>
-                                                </cells>
-                                            </collectionView>
+                                            </tableView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="fUz-Pr-e8W" secondAttribute="trailing" constant="8" id="Igp-eE-T4E"/>
-                                            <constraint firstItem="fUz-Pr-e8W" firstAttribute="leading" secondItem="9oA-0N-td6" secondAttribute="leading" constant="8" id="VDz-q3-xkj"/>
-                                            <constraint firstAttribute="bottom" secondItem="fUz-Pr-e8W" secondAttribute="bottom" id="ri0-D5-OWb"/>
-                                            <constraint firstItem="fUz-Pr-e8W" firstAttribute="top" secondItem="9oA-0N-td6" secondAttribute="top" id="wmP-Oi-OD6"/>
+                                            <constraint firstItem="Iwq-Qy-lD5" firstAttribute="leading" secondItem="9oA-0N-td6" secondAttribute="leading" constant="8" id="Kji-CN-Kmk"/>
+                                            <constraint firstAttribute="trailing" secondItem="Iwq-Qy-lD5" secondAttribute="trailing" constant="8" id="PZ7-KE-Gjk"/>
+                                            <constraint firstAttribute="bottom" secondItem="Iwq-Qy-lD5" secondAttribute="bottom" id="aDi-7j-srT"/>
+                                            <constraint firstItem="Iwq-Qy-lD5" firstAttribute="top" secondItem="9oA-0N-td6" secondAttribute="top" id="dF7-I1-2dI"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -348,7 +316,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="fUz-Pr-e8W" id="21F-Pe-dBG"/>
+                        <outlet property="tableView" destination="Iwq-Qy-lD5" id="dpN-fJ-D0r"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ge-YJ-3eX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
