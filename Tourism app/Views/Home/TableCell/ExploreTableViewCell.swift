@@ -6,21 +6,29 @@
 //
 
 import UIKit
-
+import ImageSlideshow
 class ExploreTableViewCell: UITableViewCell {
 
-    static var cellIdentifier = "cell_identifier1"
     @IBOutlet weak var container: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var pageController: UIPageControl!
     
+    @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var favoriteButton: UIButton!
     var actionBlock: (() -> Void)? = nil
+    
+    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        pageController.transform = CGAffineTransform(scaleX: 0.7, y: 0.7)
+        slideShow.slideshowInterval = 2.0
+        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+        slideShow.isUserInteractionEnabled = false
+        slideShow.setImageInputs(localSource)
+//        slideShow.pauseTimer()
+    }
+
+    static func configureCell() {
+        //
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

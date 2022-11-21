@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 
-enum CellType{
+enum CellType: CaseIterable{
     
     case explore
     case attraction
@@ -29,7 +29,7 @@ enum CellType{
         
         }
     }
-    
+   
     func getClass() -> UITableViewCell.Type{
         switch self {
         case .explore: return ExploreTableViewCell.self

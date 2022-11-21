@@ -8,7 +8,6 @@
 import UIKit
 
 class ProductTableViewCell: UITableViewCell {
-    static var cellIdentifier = "cell_identifier"
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

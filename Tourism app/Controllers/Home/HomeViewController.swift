@@ -9,67 +9,40 @@ import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
 
-struct Sections {
-    let title: String?
-    let image: String?
-    let selectedImage: String?
-}
-
 class HomeViewController: BaseViewController {
-
-    var tabs: [Tab]?
     
     @IBOutlet weak var searchBgView: UIView!
     @IBOutlet weak var notificationView: UIView!
     
     @IBOutlet weak var tabbarView: MDCTabBarView!
     @IBOutlet weak var topView: UIView!
-    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var mapContainerView: UIView!
     @IBOutlet weak var mapButton: UIButton!
-    @IBOutlet weak var tableView: UITableView!
     
-    lazy var exploreVC: UIViewController = {
-        let vc: ExploreViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ExploreViewController") as! ExploreViewController
-        return vc
-    }()
-    lazy var attractionVC: UIViewController = {
-        let vc: AttractionsViewController = UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "AttractionsViewController") as! AttractionsViewController
-//        vc.delegate = self
-        return vc
-    }()
+    @IBOutlet weak var tableViewContainer: UIView!
+    @IBOutlet weak var galleryContainer: UIView!
     
-    lazy var adventureVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "AdventureViewController")
-    }()
-    lazy var southVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "SouthViewController")
-    }()
-    lazy var tourVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "TourViewController")
-    }()
-    lazy var event: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "HomeEventsViewController")
-    }()
-    lazy var blogVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "BlogsViewController")
-    }()
-    lazy var productVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ProductViewController")
-    }()
+    
+    @IBOutlet weak var tableView: UITableView!{
+        didSet{
+            tableView.delegate = self
+            tableView.dataSource = self
+            
+            for type in CellType.allCases{
+                tableView.registerNibForCellClass(type.getClass())
+            }
+        }
+    }
+
     lazy var galleryVC: UIViewController = {
         UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "GalleryViewController")
     }()
-    lazy var mapVC: UIViewController = {
+    var mapVC: UIViewController {
         UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController")
-    }()
-    lazy var archVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ArcheologyViewController")
-    }()
+    }
     
-    var cellType = [CellType]()
-
+    var cellType: CellType?
     
     enum CardState {
         case expanded
@@ -86,8 +59,8 @@ class HomeViewController: BaseViewController {
     var runningAnimations = [UIViewPropertyAnimator]()
     var animationProgressWhenInterrupted:CGFloat = 0
     
-    var section: [Sections]?
-    
+    var section = [Sections]()
+    var tabbarItems = [UITabBarItem]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,30 +70,28 @@ class HomeViewController: BaseViewController {
         configureTabbar()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
-    }
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
     }
     
     private func configureTabbar(){
-        
-        tabbarView.items = [
-          UITabBarItem(title: "Explore", image: UIImage(named: "explore"), selectedImage: UIImage(named: "explore-s")),
-          UITabBarItem(title: "Attractions", image: UIImage(named: "attraction"), selectedImage: UIImage(named: "attraction-s")),
-          UITabBarItem(title: "Adventure", image: UIImage(named: "adventure"), selectedImage: UIImage(named: "adventure-s")),
-          UITabBarItem(title: "South KP", image: UIImage(named: "south"), selectedImage: UIImage(named: "south-s")),
-          UITabBarItem(title: "Tour Packages", image: UIImage(named: "tour"), selectedImage: UIImage(named: "tour-s")),
-          UITabBarItem(title: "Gallery", image: UIImage(named: "gallery"), selectedImage: UIImage(named: "gallery-s")),
-          UITabBarItem(title: "Archeology", image: UIImage(named: "arch"), selectedImage: UIImage(named: "arch-s")),
-          UITabBarItem(title: "Events", image: UIImage(named: "event"), selectedImage: UIImage(named: "event-s")),
-          UITabBarItem(title: "Blogs", image: UIImage(named: "blog"), selectedImage: UIImage(named: "blog-s")),
-          UITabBarItem(title: "Local Products", image: UIImage(named: "product"), selectedImage: UIImage(named: "product-s")),
+        section = [Sections(title: "Explore", image: "explore", selectedImage: "explore-s"),
+                   Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
+                   Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
+                   Sections(title: "South KP", image: "south", selectedImage: "south-s"),
+                   Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
+                   Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
+                   Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
+                   Sections(title: "Events", image: "event", selectedImage: "event-s"),
+                   Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
+                   Sections(title: "Local Products", image: "product", selectedImage: "product-s"),
         ]
+        for item in section {
+            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            tabbarItems.append(tabbarItem)
+        }
+        tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
         tabbarView.bottomDividerColor = .groupTableViewBackground
         tabbarView.rippleColor = .clear
@@ -134,11 +105,11 @@ class HomeViewController: BaseViewController {
         tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10
         self.add(mapVC, in: mapContainerView)
-        self.add(exploreVC, in: contentView)
+        cellType = .explore
+        galleryContainer.isHidden = true
     }
     
     func shadow()  {
-        notificationView.layer.cornerRadius = notificationView.frame.size.height * 0.5
         notificationView.layer.shadowColor = UIColor.lightGray.cgColor
         notificationView.layer.shadowOffset = CGSize(width: 1, height: 1)
         notificationView.layer.shadowOpacity = 0.4
@@ -239,7 +210,6 @@ class HomeViewController: BaseViewController {
         
     }
     @IBAction func mapBtnAction(_ sender: Any) {
-        print(nextState)
         switch nextState {
         case .expanded:
             mapButton.isHidden = false
@@ -256,41 +226,67 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
+        if item.title == tabbarItems[5].title{
+            galleryContainer.isHidden = false
+            tableViewContainer.isHidden = true
+        }
+        else{
+            galleryContainer.isHidden = true
+            tableViewContainer.isHidden = false
+        }
         addChild(title: item.title ?? "")
+        tableView.reloadData()
     }
     
     private func addChild(title: String){
-        if title == "Explore" {
-            self.add(exploreVC, in: contentView)
+        if title == tabbarItems[0].title {
+            cellType = .explore
         }
-        else if title == "Attractions"{
-            self.add(attractionVC, in: contentView)
+        else if title == tabbarItems[1].title{
+            cellType = .attraction
         }
-        else if title == "Adventure"{
-            self.add(adventureVC, in: contentView)
+        else if title == tabbarItems[2].title{
+            cellType = .adventure
         }
-        else if title == "South KP"{
-            self.add(southVC, in: contentView)
+        else if title == tabbarItems[3].title{
+            cellType = .south
         }
-        else if title == "Tour Packages"{
-            self.add(tourVC, in: contentView)
+        else if title == tabbarItems[4].title{
+            cellType = .tour
         }
-        else if title == "Gallery"{
-            self.add(galleryVC, in: contentView)
+        else if title == tabbarItems[5].title{
+            self.add(galleryVC, in: galleryContainer)
         }
-        else if title == "Archeology"{
-            self.add(archVC, in: contentView)
+        else if title == tabbarItems[6].title{
+            cellType = .arch
         }
-        else if title == "Events"{
-            self.add(event, in: contentView)
+        else if title == tabbarItems[7].title{
+            cellType = .event
         }
-        else if title == "Blogs"{
-            self.add(blogVC, in: contentView)
+        else if title == tabbarItems[8].title{
+            cellType = .blog
         }
-        else if title == "Local Products"{
-            self.add(productVC, in: contentView)
+        else if title == tabbarItems[9].title{
+            cellType = .product
         }
     }
 }
 
-
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "")
+        return cell ?? UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return cellType?.getHeight() ?? 0.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Switcher.goToDestination(delegate: self)
+    }
+}

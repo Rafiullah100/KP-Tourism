@@ -8,10 +8,6 @@
 import UIKit
 import GoogleMaps
 
-struct Coordinates {
-    let lat: Double
-    let long: Double
-}
 class ExploreMapViewController: UIViewController {
 
     let arr = [Coordinates(lat: 35.2227, long: 72.4258), Coordinates(lat: 35.2072, long: 72.5456), Coordinates(lat: 35.1404, long: 72.5353), Coordinates(lat: 35.1706, long: 72.3711)]

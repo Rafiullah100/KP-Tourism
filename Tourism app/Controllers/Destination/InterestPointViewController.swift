@@ -47,7 +47,7 @@ extension InterestPointViewController: UICollectionViewDelegate{
 
 extension InterestPointViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellsAcross: CGFloat = 4
+        let cellsAcross: CGFloat = 3
         let spaceBetweenCells: CGFloat = 2
         let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
         return CGSize(width: width, height: width)

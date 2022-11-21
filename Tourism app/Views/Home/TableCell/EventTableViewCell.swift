@@ -8,7 +8,6 @@
 import UIKit
 
 class EventTableViewCell: UITableViewCell {
-    static var cellIdentifier = "cell_identifier"
 
     @IBOutlet weak var statusView: UIView!
     override func awakeFromNib() {

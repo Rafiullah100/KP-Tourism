@@ -13,18 +13,17 @@ class AttractionTableViewCell: UITableViewCell {
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var favoriteBtn: UIButton!
     
-    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
     var delegate: Dragged?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-        slideShow.slideshowInterval = 2.0
-        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        slideShow.setImageInputs(localSource)
     }
-    static var cellIdentifier = "cell_identifier"
 
+    static func configureCell() {
+        //
+    }
+    
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

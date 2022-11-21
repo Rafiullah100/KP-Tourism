@@ -7,14 +7,14 @@
 
 import UIKit
 
-enum MediaType: String {
-    case image
-    case video
-    case virtual
-}
-
 class GalleryViewController: BaseViewController {
 
+    enum MediaType: String {
+        case image
+        case video
+        case virtual
+    }
+    
     @IBOutlet weak var imageCollectionView: UICollectionView!{
         didSet{
             imageCollectionView.dataSource = self
@@ -48,8 +48,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         switch collectionView {
         case imageCollectionView:
            return 5
-        case videoCollectionView:
-            return 5
         case videoCollectionView:
             return 5
         case virtualCollectionView:
