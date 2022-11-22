@@ -14,9 +14,14 @@ class AttractionTableViewCell: UITableViewCell {
     @IBOutlet weak var favoriteBtn: UIButton!
     
     var delegate: Dragged?
-    
+    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
+
     override func awakeFromNib() {
         super.awakeFromNib()
+        slideShow.slideshowInterval = 2.0
+        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+        slideShow.isUserInteractionEnabled = false
+        slideShow.setImageInputs(localSource)
     }
 
     static func configureCell() {

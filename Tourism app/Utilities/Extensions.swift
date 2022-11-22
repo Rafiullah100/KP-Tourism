@@ -266,6 +266,13 @@ extension UITableViewCell{
     }
 }
 
+extension UICollectionViewCell{
+    class func cellReuseIdentifier() -> String {
+        return "\(self)"
+    }
+}
+
+
 
 extension CGRect {
     var center: CGPoint {

@@ -18,7 +18,7 @@ class AttractionViewController: UIViewController {
         }
     }
     
-    let vc: DestinatonViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "DestinatonViewController") as! DestinatonViewController
+    let vc: DestinatonHomeViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "DestinatonViewController") as! DestinatonHomeViewController
 
     
     override func viewWillAppear(_ animated: Bool) {

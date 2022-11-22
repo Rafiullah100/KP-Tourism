@@ -19,4 +19,9 @@ struct Coordinates {
     let long: Double
 }
 
+struct Destination {
+    let image: String
+    let title: String
+}
+
 //this is struct

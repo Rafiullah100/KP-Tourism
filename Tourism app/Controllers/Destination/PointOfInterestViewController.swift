@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InterestPointViewController: UIViewController {
+class PointOfInterestViewController: BaseViewController {
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -19,7 +19,7 @@ class InterestPointViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        type = .back1
     }
     
     override func show(_ vc: UIViewController, sender: Any?) {
@@ -27,7 +27,7 @@ class InterestPointViewController: UIViewController {
     }
 }
 
-extension InterestPointViewController: UICollectionViewDataSource{
+extension PointOfInterestViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 20
     }
@@ -38,14 +38,14 @@ extension InterestPointViewController: UICollectionViewDataSource{
     }
 }
 
-extension InterestPointViewController: UICollectionViewDelegate{
+extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         show(vc, sender: self)
     }
 }
 
-extension InterestPointViewController: UICollectionViewDelegateFlowLayout{
+extension PointOfInterestViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellsAcross: CGFloat = 3
         let spaceBetweenCells: CGFloat = 2

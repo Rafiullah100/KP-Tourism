@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Roboto-Light.ttf">
+            <string>Roboto-Light</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="gTV-IL-0wX" customClass="DestinationCollectionViewCell" customModule="Tourism_app" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="80" height="60"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="80" height="60"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RCh-ZB-oyH">
+                        <rect key="frame" x="2" y="2" width="76" height="56"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="Bwa-bk-fpQ">
+                                <rect key="frame" x="5" y="5" width="66" height="46"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a7o-ei-duJ">
+                                        <rect key="frame" x="0.0" y="0.0" width="66" height="33.333333333333336"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gallery" translatesAutoresizingMaskIntoConstraints="NO" id="Jei-Y1-NWm">
+                                                <rect key="frame" x="19.666666666666671" y="3.3333333333333357" width="27" height="27"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="27" id="MNY-7T-Nqg"/>
+                                                    <constraint firstAttribute="width" constant="27" id="UUP-UX-qwL"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="Jei-Y1-NWm" firstAttribute="centerY" secondItem="a7o-ei-duJ" secondAttribute="centerY" id="3LS-rK-tZL"/>
+                                            <constraint firstItem="Jei-Y1-NWm" firstAttribute="centerX" secondItem="a7o-ei-duJ" secondAttribute="centerX" id="7f0-VJ-p2k"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Point of Interest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HKn-Ha-CAn">
+                                        <rect key="frame" x="0.0" y="36.333333333333336" width="66" height="9.6666666666666643"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="8"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Bwa-bk-fpQ" firstAttribute="leading" secondItem="RCh-ZB-oyH" secondAttribute="leading" constant="5" id="0DV-d2-wUX"/>
+                            <constraint firstItem="Bwa-bk-fpQ" firstAttribute="top" secondItem="RCh-ZB-oyH" secondAttribute="top" constant="5" id="H31-6Q-kkv"/>
+                            <constraint firstAttribute="trailing" secondItem="Bwa-bk-fpQ" secondAttribute="trailing" constant="5" id="Mt1-5d-u8t"/>
+                            <constraint firstAttribute="bottom" secondItem="Bwa-bk-fpQ" secondAttribute="bottom" constant="5" id="rmz-xs-FWf"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstItem="RCh-ZB-oyH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="4LH-rD-urz"/>
+                <constraint firstAttribute="bottom" secondItem="RCh-ZB-oyH" secondAttribute="bottom" constant="2" id="JYe-8F-x65"/>
+                <constraint firstItem="RCh-ZB-oyH" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="P3a-Fi-y9S"/>
+                <constraint firstAttribute="trailing" secondItem="RCh-ZB-oyH" secondAttribute="trailing" constant="2" id="VN5-j9-aNY"/>
+            </constraints>
+            <connections>
+                <outlet property="imgView" destination="Jei-Y1-NWm" id="Fi8-IF-o8V"/>
+                <outlet property="label" destination="HKn-Ha-CAn" id="Ymn-dQ-dFW"/>
+            </connections>
+            <point key="canvasLocation" x="16.793893129770993" y="19.718309859154932"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="gallery" width="20.333333969116211" height="17.666666030883789"/>
+    </resources>
+</document>

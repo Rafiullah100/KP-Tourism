@@ -36,7 +36,7 @@ class HomeViewController: BaseViewController {
     }
 
     lazy var galleryVC: UIViewController = {
-        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "GalleryViewController")
+        UIStoryboard(name: "Gallery", bundle: nil).instantiateViewController(withIdentifier: "GalleryViewController")
     }()
     var mapVC: UIViewController {
         UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController")
@@ -287,6 +287,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToDestination(delegate: self)
+        Switcher.goToDestinationHome(delegate: self)
     }
 }

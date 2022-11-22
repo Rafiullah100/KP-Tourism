@@ -9,13 +9,13 @@ import UIKit
 import GoogleMaps
 import SwiftGifOrigin
 
-class GettingHereViewController: UIViewController, CLLocationManagerDelegate {
-    @IBOutlet weak var textualView: UIStackView!
-    @IBOutlet weak var mapContainerView: UIView!
-    
-    @IBOutlet weak var textualButton: UIButton!
-    @IBOutlet weak var navigationButton: UIButton!
-    @IBOutlet weak var carImage: UIImageView!
+class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
+//    @IBOutlet weak var textualView: UIStackView!
+//    @IBOutlet weak var mapContainerView: UIView!
+//
+//    @IBOutlet weak var textualButton: UIButton!
+//    @IBOutlet weak var navigationButton: UIButton!
+//    @IBOutlet weak var carImage: UIImageView!
     enum Travel {
         case textual
         case navigation
@@ -25,6 +25,7 @@ class GettingHereViewController: UIViewController, CLLocationManagerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        type = .back1
         mapTextual(travel: .textual)
         locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -47,7 +48,7 @@ class GettingHereViewController: UIViewController, CLLocationManagerDelegate {
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
-        mapContainerView.addSubview(mapView)
+//        mapContainerView.addSubview(mapView)
     }
     
     @IBAction func textualButtonAction(_ sender: Any) {
@@ -59,21 +60,21 @@ class GettingHereViewController: UIViewController, CLLocationManagerDelegate {
     }
     
     private func mapTextual(travel: Travel){
-        switch travel {
-        case .textual:
-            textualButton.setTitleColor(.black, for: .normal)
-            navigationButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
-            textualButton.backgroundColor = Constants.darkGrayColor
-            navigationButton.backgroundColor = Constants.lightGrayColor
-            textualView.isHidden = false
-            mapContainerView.isHidden = true
-        case .navigation:
-            textualButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
-            navigationButton.setTitleColor(.black, for: .normal)
-            textualButton.backgroundColor = Constants.lightGrayColor
-            navigationButton.backgroundColor = Constants.darkGrayColor
-            textualView.isHidden = true
-            mapContainerView.isHidden = false
-        }
+//        switch travel {
+//        case .textual:
+//            textualButton.setTitleColor(.black, for: .normal)
+//            navigationButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
+//            textualButton.backgroundColor = Constants.darkGrayColor
+//            navigationButton.backgroundColor = Constants.lightGrayColor
+//            textualView.isHidden = false
+//            mapContainerView.isHidden = true
+//        case .navigation:
+//            textualButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
+//            navigationButton.setTitleColor(.black, for: .normal)
+//            textualButton.backgroundColor = Constants.lightGrayColor
+//            navigationButton.backgroundColor = Constants.darkGrayColor
+//            textualView.isHidden = true
+//            mapContainerView.isHidden = false
+//        }
     }
 }
