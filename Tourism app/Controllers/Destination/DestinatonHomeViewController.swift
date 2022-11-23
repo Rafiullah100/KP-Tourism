@@ -12,9 +12,7 @@ protocol PopupDelegate {
 }
 
 class DestinatonHomeViewController: BaseViewController {
-    
-    @IBOutlet weak var shareButton: UIButton!
-    
+        
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var contentView: UIView!
@@ -34,12 +32,16 @@ class DestinatonHomeViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .back1
-        desintationArray = [Destination(image: "gallery", title: "What to See"), Destination(image: "gallery", title: "Getting Here"), Destination(image: "gallery", title: "Point of Interest"), Destination(image: "gallery", title: "Accomodation"), Destination(image: "gallery", title: "Events"), Destination(image: "gallery", title: "Gallery"), Destination(image: "gallery", title: "Itinrary"), Destination(image: "gallery", title:"Local Products")]
+        desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
 
     }
 
     override func showFilter() {
         filterView.isHidden = !filterView.isHidden
+    }
+    
+    @IBAction func gotoAbout(_ sender: Any) {
+        Switcher.gotoAbout(delegate: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,7 +61,26 @@ extension DestinatonHomeViewController: UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToPOI(delegate: self)
+        switch indexPath.row {
+        case 0:
+            Switcher.goToAttraction(delegate: self)
+        case 1:
+            Switcher.goToGettingHere(delegate: self)
+        case 2:
+            Switcher.goToPOI(delegate: self)
+        case 3:
+            Switcher.goToAccomodation(delegate: self)
+        case 4:
+            Switcher.goToEvents(delegate: self)
+        case 5:
+            Switcher.gotoGalleryDetail(delegate: self)
+        case 6:
+            Switcher.goToItinrary(delegate: self)
+        case 7:
+            Switcher.goToProducts(delegate: self)
+        default:
+            break
+        }
     }
 }
 

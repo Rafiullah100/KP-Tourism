@@ -10,12 +10,6 @@ import GoogleMaps
 import SwiftGifOrigin
 
 class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
-//    @IBOutlet weak var textualView: UIStackView!
-//    @IBOutlet weak var mapContainerView: UIView!
-//
-//    @IBOutlet weak var textualButton: UIButton!
-//    @IBOutlet weak var navigationButton: UIButton!
-//    @IBOutlet weak var carImage: UIImageView!
     enum Travel {
         case textual
         case navigation
@@ -31,8 +25,10 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.startUpdatingLocation()
+            }
         }
     }
     
@@ -56,7 +52,7 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func naviigationButtonAction(_ sender: Any) {
-        mapTextual(travel: .navigation)
+        Switcher.goToNavigation(delegate: self)
     }
     
     private func mapTextual(travel: Travel){

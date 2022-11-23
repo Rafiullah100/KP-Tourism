@@ -24,4 +24,11 @@ struct Destination {
     let title: String
 }
 
+
+struct Contacts {
+    let photo: String?
+    let department: String?
+    let phone: String?
+}
+
 //this is struct

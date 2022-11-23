@@ -7,15 +7,16 @@
 
 import UIKit
 import GoogleMaps
-class POIMapViewController: UIViewController, CLLocationManagerDelegate {
+class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
 
     var locationManager: CLLocationManager!
 
     
+    @IBOutlet weak var mapViewContainer: UIView!
     @IBOutlet weak var seacrhBgView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        type = .back1
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -37,7 +38,7 @@ class POIMapViewController: UIViewController, CLLocationManagerDelegate {
         let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
-        view.addSubview(mapView)
-        view.bringSubviewToFront(seacrhBgView)
+        mapViewContainer.addSubview(mapView)
+        mapViewContainer.bringSubviewToFront(seacrhBgView)
     }
 }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ItenrariesViewController: UIViewController {
+class ItenrariesViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -18,6 +18,7 @@ class ItenrariesViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        type = .back1
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class POIServicesViewController: UIViewController {
+class POIServicesViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -17,12 +17,12 @@ class POIServicesViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        type = .back1
     }
     
-    override func show(_ vc: UIViewController, sender: Any?) {
-        add(vc)
-    }
+//    override func show(_ vc: UIViewController, sender: Any?) {
+//        add(vc)
+//    }
 }
 
 
@@ -37,8 +37,9 @@ extension POIServicesViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
-        show(vc, sender: self)
+        Switcher.goToPOIMap(delegate: self)
+//        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
+//        show(vc, sender: self)
     }
 }
 

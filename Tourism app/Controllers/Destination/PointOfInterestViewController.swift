@@ -40,8 +40,9 @@ extension PointOfInterestViewController: UICollectionViewDataSource{
 
 extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
-        show(vc, sender: self)
+//        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
+//        show(vc, sender: self)
+        Switcher.goToPOIServices(delegate: self)
     }
 }
 

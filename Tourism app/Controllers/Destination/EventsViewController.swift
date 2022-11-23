@@ -7,18 +7,18 @@
 
 import UIKit
 
-class EventsViewController: UIViewController {
+class EventsViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.register(UINib(nibName: "AccomodationTableViewCell", bundle: nil), forCellReuseIdentifier: "EventTableViewCell")
+            tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: EventTableViewCell.cellReuseIdentifier())
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        type = .back1
     }
 }
 
@@ -36,5 +36,9 @@ extension EventsViewController: UITableViewDataSource{
 extension EventsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 400.0
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Switcher.gotoEventDetail(delegate: self)
     }
 }

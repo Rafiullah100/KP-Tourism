@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AttractionViewController: UIViewController {
+class AttractionViewController: BaseViewController {
     
 
     @IBOutlet weak var collectionView: UICollectionView!{
@@ -18,15 +18,13 @@ class AttractionViewController: UIViewController {
         }
     }
     
-    let vc: DestinatonHomeViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "DestinatonViewController") as! DestinatonHomeViewController
-
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        type = .back1
     }
 }
 
@@ -41,7 +39,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoDestDetail(delegate: self)
+//        Switcher.gotoDestDetail(delegate: self)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class AccomodationViewController: UIViewController {
+class AccomodationViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -18,7 +18,7 @@ class AccomodationViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        type = .back1
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class LocalProductsViewController: UIViewController {
+class LocalProductsViewController: BaseViewController {
     @IBOutlet weak var collecttionView: UICollectionView!{
         didSet{
             collecttionView.delegate = self
@@ -18,7 +18,7 @@ class LocalProductsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        type = .back1
     }
     
     override func show(_ vc: UIViewController, sender: Any?) {
@@ -28,7 +28,7 @@ class LocalProductsViewController: UIViewController {
 
 extension LocalProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

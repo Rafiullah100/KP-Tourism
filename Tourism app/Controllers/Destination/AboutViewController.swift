@@ -7,13 +7,7 @@
 
 import UIKit
 
-struct Contacts {
-    let photo: String?
-    let department: String?
-    let phone: String?
-}
-
-class AboutViewController: UIViewController {
+class AboutViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -27,6 +21,7 @@ class AboutViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        type = .back1
         contacts = [Contacts(photo: "Food", department: "Food", phone: "+91 123 4567"), Contacts(photo: "Hospital", department: "HOSPITAL", phone: "+91 123 4567"), Contacts(photo: "police", department: "POLICE", phone: "+91 123 4567"), Contacts(photo: "police-car", department: "POLICE", phone: "+91 123 4567")]
     }
 }
