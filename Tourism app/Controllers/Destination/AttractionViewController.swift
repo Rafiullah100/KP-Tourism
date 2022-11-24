@@ -39,7 +39,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        Switcher.gotoDestDetail(delegate: self)
+        Switcher.goToDestination(delegate: self, type: .tourismSpot)
     }
 }
 

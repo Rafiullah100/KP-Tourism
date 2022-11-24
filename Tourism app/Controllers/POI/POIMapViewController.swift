@@ -22,8 +22,10 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.startUpdatingLocation()
+        DispatchQueue.global().async {
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.startUpdatingLocation()
+            }
         }
     }
     

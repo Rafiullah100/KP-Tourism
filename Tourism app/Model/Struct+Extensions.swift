@@ -31,4 +31,9 @@ struct Contacts {
     let phone: String?
 }
 
+
+enum LocationCategory {
+    case district
+    case tourismSpot
+}
 //this is struct

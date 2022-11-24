@@ -11,12 +11,16 @@ protocol PopupDelegate {
     func showPopup()
 }
 
-class DestinatonHomeViewController: BaseViewController {
+class CommonViewController: BaseViewController {
         
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerImageView: UIImageView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var filterView: FilterView!
+    @IBOutlet weak var welcomeLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.register(UINib(nibName: "DestinationCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DestinationCollectionViewCell.cellReuseIdentifier())
@@ -25,7 +29,8 @@ class DestinatonHomeViewController: BaseViewController {
         }
     }
     var delegate: PopupDelegate?
-    var desintationArray: [Destination]? = nil
+    var locationCategory: LocationCategory?
+    var desintationArray: [Destination]?
     
     
     override func viewDidLoad() {
@@ -33,15 +38,30 @@ class DestinatonHomeViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         type = .back1
         desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
-
+        updateUI()
     }
 
-    override func showFilter() {
-        filterView.isHidden = !filterView.isHidden
-    }
+//    override func showFilter() {
+//        filterView.isHidden = !filterView.isHidden
+//    }
     
     @IBAction func gotoAbout(_ sender: Any) {
         Switcher.gotoAbout(delegate: self)
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            welcomeLabel.text = "Welcome to Swat"
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            welcomeLabel.text = "Welcome to Kalam"
+        default:
+            break
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -49,7 +69,7 @@ class DestinatonHomeViewController: BaseViewController {
     }
 }
 
-extension DestinatonHomeViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 8
     }
@@ -85,7 +105,7 @@ extension DestinatonHomeViewController: UICollectionViewDelegate, UICollectionVi
 }
 
 
-extension DestinatonHomeViewController: UICollectionViewDelegateFlowLayout{
+extension CommonViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellsAcross: CGFloat = 4
         let spaceBetweenCells: CGFloat = 2

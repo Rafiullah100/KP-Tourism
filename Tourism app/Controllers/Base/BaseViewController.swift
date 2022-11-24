@@ -22,6 +22,7 @@ enum RightButttonsType {
     case upload
 }
 
+
 class BaseViewController: UIViewController {
     var type: ViewControllerType = .back1
     var categoryId = ""
@@ -29,7 +30,6 @@ class BaseViewController: UIViewController {
         
     var viewControllerTitle: String? {
         didSet {
-            print(viewControllerTitle ?? "")
             titleLabel?.text = viewControllerTitle ?? ""
             switch type {
             case .home:

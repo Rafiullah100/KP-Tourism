@@ -819,10 +819,25 @@
             </objects>
             <point key="canvasLocation" x="122" y="1405"/>
         </scene>
-        <!--Destinaton Home View Controller-->
+        <!--Destination View Controller-->
+        <scene sceneID="oAn-D4-DrC">
+            <objects>
+                <viewController storyboardIdentifier="DestinationViewController" id="9hw-UO-6f4" customClass="DestinationViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IZc-Iv-UhU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Gyh-9g-Cn0"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e62-a4-QKZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1285" y="86"/>
+        </scene>
+        <!--Common View Controller-->
         <scene sceneID="0qW-hV-wDJ">
             <objects>
-                <viewController storyboardIdentifier="DestinatonHomeViewController" modalPresentationStyle="fullScreen" id="u1f-Uj-fuq" customClass="DestinatonHomeViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CommonViewController" modalPresentationStyle="fullScreen" id="u1f-Uj-fuq" customClass="CommonViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RJk-Ag-6Ih">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1082,8 +1097,12 @@
                         <outlet property="collectionView" destination="R9v-XJ-qNf" id="60N-6V-jbb"/>
                         <outlet property="containerView" destination="A0L-vn-qWS" id="VIJ-2L-Vpf"/>
                         <outlet property="contentView" destination="Efn-u1-qek" id="VCZ-tE-Ngg"/>
+                        <outlet property="descriptionLabel" destination="irx-b8-zLm" id="Vo8-cc-wux"/>
                         <outlet property="filterView" destination="zTU-Sy-22x" id="wDf-vb-7jg"/>
                         <outlet property="headerImageView" destination="Ein-GF-WpN" id="VzX-hV-4MN"/>
+                        <outlet property="thumbnailBottomLabel" destination="E84-Ot-Pwy" id="arK-UY-cj5"/>
+                        <outlet property="thumbnailTopLabel" destination="eB9-PF-FeM" id="rEP-Ff-0lY"/>
+                        <outlet property="welcomeLabel" destination="75t-bK-Ybo" id="mcA-Xx-Mr8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uXH-j4-LLv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1362,7 +1381,7 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="v8U-QI-m5E">
-                                                                        <rect key="frame" x="0.0" y="30" width="414" height="347"/>
+                                                                        <rect key="frame" x="0.0" y="30" width="414" height="237"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="car" translatesAutoresizingMaskIntoConstraints="NO" id="ydk-j2-ZqV">
                                                                                 <rect key="frame" x="129" y="0.0" width="156" height="99"/>
@@ -1410,7 +1429,7 @@
                                                                                 </constraints>
                                                                             </view>
                                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="justified" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VJ-Wc-aoS">
-                                                                                <rect key="frame" x="57" y="169" width="300" height="178"/>
+                                                                                <rect key="frame" x="57" y="169" width="300" height="68"/>
                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="300" id="e6O-yp-ww8"/>
@@ -1428,7 +1447,7 @@
                                                                         </constraints>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJ2-Fm-ZJy">
-                                                                        <rect key="frame" x="0.0" y="377" width="414" height="249"/>
+                                                                        <rect key="frame" x="0.0" y="267" width="414" height="359"/>
                                                                     </view>
                                                                 </subviews>
                                                                 <constraints>
@@ -2722,6 +2741,21 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Mz-Qx-dgm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1449" y="90"/>
+        </scene>
+        <!--Tourism Spot View Controller-->
+        <scene sceneID="e6H-g3-649">
+            <objects>
+                <viewController storyboardIdentifier="TourismSpotViewController" id="Tc3-AL-a0V" customClass="TourismSpotViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Znz-o7-ygZ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Q1a-lM-Qzo"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkH-yO-LMF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1968" y="86"/>
         </scene>
     </scenes>
     <resources>

@@ -287,6 +287,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToDestinationHome(delegate: self)
+        Switcher.goToDestination(delegate: self, type: .district)
     }
 }
