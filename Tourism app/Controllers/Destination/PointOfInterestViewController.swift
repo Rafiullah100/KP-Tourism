@@ -8,6 +8,9 @@
 import UIKit
 
 class PointOfInterestViewController: BaseViewController {
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -15,11 +18,29 @@ class PointOfInterestViewController: BaseViewController {
             collectionView.register(UINib(nibName: "InterestPointCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: InterestPointCollectionViewCell.cellIdentifier)
         }
     }
+    var locationCategory: LocationCategory?
+
 
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        updateUI()
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
+        }
     }
     
     override func show(_ vc: UIViewController, sender: Any?) {
@@ -42,7 +63,7 @@ extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
 //        show(vc, sender: self)
-        Switcher.goToPOIServices(delegate: self)
+        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!)
     }
 }
 

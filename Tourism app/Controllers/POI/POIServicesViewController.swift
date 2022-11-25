@@ -9,20 +9,42 @@ import UIKit
 
 class POIServicesViewController: BaseViewController {
 
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
             collectionView.dataSource = self
         }
     }
+    var locationCategory: LocationCategory?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        updateUI()
     }
     
 //    override func show(_ vc: UIViewController, sender: Any?) {
 //        add(vc)
 //    }
+    
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
+        }
+    }
 }
 
 
@@ -37,7 +59,7 @@ extension POIServicesViewController: UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToPOIMap(delegate: self)
+        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!)
 //        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
 //        show(vc, sender: self)
     }

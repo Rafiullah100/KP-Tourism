@@ -8,7 +8,9 @@
 import UIKit
 
 class EventsViewController: BaseViewController {
-
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -16,9 +18,27 @@ class EventsViewController: BaseViewController {
             tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: EventTableViewCell.cellReuseIdentifier())
         }
     }
+    var locationCategory: LocationCategory?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        updateUI()
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
+        }
     }
 }
 

@@ -11,9 +11,13 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
 
     var locationManager: CLLocationManager!
 
-    
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var mapViewContainer: UIView!
     @IBOutlet weak var seacrhBgView: UIView!
+    var locationCategory: LocationCategory?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -26,6 +30,23 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
             if CLLocationManager.locationServicesEnabled() {
                 self.locationManager.startUpdatingLocation()
             }
+        }
+        updateUI()
+    }
+    
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
         }
     }
     

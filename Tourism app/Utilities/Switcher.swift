@@ -30,62 +30,72 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIMap(delegate: UIViewController){
+    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToNavigation(delegate: UIViewController){
+    static func goToNavigation(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "NavigationViewController") as! NavigationViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAttraction(delegate: UIViewController){
+    static func goToAttraction(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AttractionViewController") as! AttractionViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToGettingHere(delegate: UIViewController){
+    static func goToGettingHere(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GettingHereViewController") as! GettingHereViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
 
-    static func goToPOI(delegate: UIViewController){
+    static func goToPOI(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PointOfInterestViewController") as! PointOfInterestViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAccomodation(delegate: UIViewController){
+    static func goToAccomodation(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AccomodationViewController") as! AccomodationViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToEvents(delegate: UIViewController){
+    static func goToEvents(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToItinrary(delegate: UIViewController){
+    static func goToItinrary(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ItenrariesViewController") as! ItenrariesViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToProducts(delegate: UIViewController){
+    static func goToProducts(delegate: UIViewController, locationCategory: LocationCategory){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "LocalProductsViewController") as! LocalProductsViewController
+        vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -102,11 +112,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoTourismSpot(delegate: UIViewController){
-        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "TourismSpotViewController") as! TourismSpotViewController
-        vc.modalPresentationStyle = .fullScreen
-        delegate.navigationController?.pushViewController(vc, animated: true)
-    }
+//    static func gotoTourismSpot(delegate: UIViewController){
+//        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "TourismSpotViewController") as! TourismSpotViewController
+//        vc.modalPresentationStyle = .fullScreen
+//        delegate.navigationController?.pushViewController(vc, animated: true)
+//    }
     
 //    static func gotoFilterVC(delegate: UIViewController){
 //        let vc = UIStoryboard(name: Storyboard.popup.rawValue, bundle: nil).instantiateViewController(withIdentifier: "FilterViewController") as! FilterViewController

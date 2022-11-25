@@ -8,6 +8,9 @@
 import UIKit
 
 class LocalProductsViewController: BaseViewController {
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var collecttionView: UICollectionView!{
         didSet{
             collecttionView.delegate = self
@@ -15,10 +18,28 @@ class LocalProductsViewController: BaseViewController {
             collecttionView.register(UINib(nibName: "DestProductCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DestProductCollectionViewCell.cellIdentifier)
         }
     }
+    var locationCategory: LocationCategory?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        updateUI()
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
+        }
     }
     
     override func show(_ vc: UIViewController, sender: Any?) {

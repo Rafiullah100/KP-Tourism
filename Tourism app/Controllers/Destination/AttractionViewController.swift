@@ -9,7 +9,10 @@ import UIKit
 
 class AttractionViewController: BaseViewController {
     
-
+    @IBOutlet weak var sectionLabel: UILabel!
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -18,6 +21,8 @@ class AttractionViewController: BaseViewController {
         }
     }
     
+    var locationCategory: LocationCategory = .district
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -25,6 +30,22 @@ class AttractionViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        updateUI()
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+            sectionLabel.text = "Attractions"
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+            sectionLabel.text = "What to See"
+        }
     }
 }
 
@@ -39,7 +60,12 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToDestination(delegate: self, type: .tourismSpot)
+        switch locationCategory {
+        case .district:
+            Switcher.goToDestination(delegate: self, type: .tourismSpot)
+        case .tourismSpot:
+            print("do nothing")
+        }
     }
 }
 

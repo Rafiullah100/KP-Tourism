@@ -10,8 +10,13 @@ import GoogleMaps
 
 class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
 
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
+    
     @IBOutlet weak var mapViewContainer: UIView!
     var locationManager: CLLocationManager!
+    var locationCategory: LocationCategory?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +30,23 @@ class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
                 self.locationManager.startUpdatingLocation()
             }
         }
+        updateUI()
     }
     
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
+        }
+    }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let userLocation:CLLocation = locations[0] as CLLocation

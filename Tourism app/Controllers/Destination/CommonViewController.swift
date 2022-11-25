@@ -13,6 +13,7 @@ protocol PopupDelegate {
 
 class CommonViewController: BaseViewController {
         
+    @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
     @IBOutlet weak var containerView: UIView!
@@ -29,7 +30,7 @@ class CommonViewController: BaseViewController {
         }
     }
     var delegate: PopupDelegate?
-    var locationCategory: LocationCategory?
+    var locationCategory: LocationCategory = .district
     var desintationArray: [Destination]?
     
     
@@ -55,12 +56,12 @@ class CommonViewController: BaseViewController {
             thumbnailTopLabel.text = "Swat"
             thumbnailBottomLabel.text = "KP"
             welcomeLabel.text = "Welcome to Swat"
+            thumbnail.image = UIImage(named: "Path 94")
         case .tourismSpot:
             thumbnailTopLabel.text = "Kalam"
             thumbnailBottomLabel.text = "Swat"
             welcomeLabel.text = "Welcome to Kalam"
-        default:
-            break
+            thumbnail.image = UIImage(named: "iten")
         }
     }
     
@@ -83,21 +84,21 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            Switcher.goToAttraction(delegate: self)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory)
         case 1:
-            Switcher.goToGettingHere(delegate: self)
+            Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
         case 2:
-            Switcher.goToPOI(delegate: self)
+            Switcher.goToPOI(delegate: self, locationCategory: locationCategory)
         case 3:
-            Switcher.goToAccomodation(delegate: self)
+            Switcher.goToAccomodation(delegate: self, locationCategory: locationCategory)
         case 4:
-            Switcher.goToEvents(delegate: self)
+            Switcher.goToEvents(delegate: self, locationCategory: locationCategory)
         case 5:
             Switcher.gotoGalleryDetail(delegate: self)
         case 6:
-            Switcher.goToItinrary(delegate: self)
+            Switcher.goToItinrary(delegate: self, locationCategory: locationCategory)
         case 7:
-            Switcher.goToProducts(delegate: self)
+            Switcher.goToProducts(delegate: self, locationCategory: locationCategory)
         default:
             break
         }

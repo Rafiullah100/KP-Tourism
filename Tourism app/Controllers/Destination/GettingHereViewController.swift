@@ -15,6 +15,11 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
         case navigation
     }
     
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
+    
+    var locationCategory: LocationCategory?
     var locationManager: CLLocationManager!
     
     override func viewDidLoad() {
@@ -29,6 +34,22 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
             if CLLocationManager.locationServicesEnabled() {
                 self.locationManager.startUpdatingLocation()
             }
+        }
+        updateUI()
+    }
+    
+    func updateUI() {
+        switch locationCategory {
+        case .district:
+            thumbnailTopLabel.text = "Swat"
+            thumbnailBottomLabel.text = "KP"
+            thumbnail.image = UIImage(named: "Path 94")
+        case .tourismSpot:
+            thumbnailTopLabel.text = "Kalam"
+            thumbnailBottomLabel.text = "Swat"
+            thumbnail.image = UIImage(named: "iten")
+        default:
+            break
         }
     }
     
@@ -52,7 +73,7 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func naviigationButtonAction(_ sender: Any) {
-        Switcher.goToNavigation(delegate: self)
+        Switcher.goToNavigation(delegate: self, locationCategory: locationCategory!)
     }
     
     private func mapTextual(travel: Travel){
