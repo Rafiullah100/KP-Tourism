@@ -26,17 +26,21 @@ enum CellType: CaseIterable{
         case .explore, .attraction, .adventure, .south : return 300
         case .tour, .product, .arch: return 350
         case .event, .blog: return 400
-        
         }
     }
    
     func getClass() -> UITableViewCell.Type{
         switch self {
-        case .explore: return ExploreTableViewCell.self
-        case .attraction: return AttractionTableViewCell.self
-        case .adventure: return AdventureTableViewCell.self
-        case .south: return SouthTableViewCell.self
-        case .tour: return TourTableViewCell.self
+        case .explore:
+            return ExploreTableViewCell.self
+        case .attraction:
+            return AttractionTableViewCell.self
+        case .adventure:
+            return AdventureTableViewCell.self
+        case .south:
+            return SouthTableViewCell.self
+        case .tour:
+            return TourTableViewCell.self
         case .product:
             return ProductTableViewCell.self
         case .arch:

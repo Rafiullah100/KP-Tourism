@@ -47,7 +47,7 @@ class CommonViewController: BaseViewController {
 //    }
     
     @IBAction func gotoAbout(_ sender: Any) {
-        Switcher.gotoAbout(delegate: self)
+        Switcher.gotoAbout(delegate: self, locationCategory: locationCategory)
     }
     
     func updateUI() {

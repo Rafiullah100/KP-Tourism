@@ -9,7 +9,6 @@ import UIKit
 
 class DestAttractCollectionViewCell: UICollectionViewCell {
 
-    static var cellIdentifier = "cell_identifier"
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -15,7 +15,7 @@ class PointOfInterestViewController: BaseViewController {
         didSet{
             collectionView.delegate = self
             collectionView.dataSource = self
-            collectionView.register(UINib(nibName: "InterestPointCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: InterestPointCollectionViewCell.cellIdentifier)
+            collectionView.register(UINib(nibName: "InterestPointCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: InterestPointCollectionViewCell.cellReuseIdentifier())
         }
     }
     var locationCategory: LocationCategory?
@@ -54,7 +54,7 @@ extension PointOfInterestViewController: UICollectionViewDataSource{
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: InterestPointCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InterestPointCollectionViewCell.cellIdentifier, for: indexPath) as! InterestPointCollectionViewCell
+        let cell: InterestPointCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InterestPointCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! InterestPointCollectionViewCell
         return cell
     }
 }
@@ -69,9 +69,10 @@ extension PointOfInterestViewController: UICollectionViewDelegate{
 
 extension PointOfInterestViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellsAcross: CGFloat = 3
-        let spaceBetweenCells: CGFloat = 2
-        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-        return CGSize(width: width, height: width)
+//        let cellsAcross: CGFloat = 3
+//        let spaceBetweenCells: CGFloat = 2
+//        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
+        Helper.shared.cellSize(collectionView: collectionView, space: 2, cellsAcross: 3)
+//        return CGSize(width: width, height: width)
     }
 }

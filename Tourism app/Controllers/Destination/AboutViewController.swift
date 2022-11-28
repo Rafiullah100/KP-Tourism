@@ -9,6 +9,10 @@ import UIKit
 
 class AboutViewController: BaseViewController {
 
+    @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
+    @IBOutlet weak var thumbnailTopLabel: UILabel!
+    @IBOutlet weak var welcomeLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -18,6 +22,8 @@ class AboutViewController: BaseViewController {
     }
     
     var contacts: [Contacts]?
+    var locationCategory: LocationCategory?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

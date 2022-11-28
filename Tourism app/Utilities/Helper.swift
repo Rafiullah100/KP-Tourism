@@ -22,5 +22,12 @@ class Helper{
         }
         scrollView.contentSize = CGSize(width: CGFloat(images.count) * container.bounds.width, height: 263)
     }
-
+    
+    
+    public func cellSize(collectionView: UICollectionView, space: CGFloat, cellsAcross: CGFloat)-> CGSize{
+        let cellsAcross: CGFloat = 3
+        let spaceBetweenCells: CGFloat = 2
+        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
+        return CGSize(width: width, height: width)
+    }
 }

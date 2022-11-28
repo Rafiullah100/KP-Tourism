@@ -240,33 +240,43 @@ extension HomeViewController: MDCTabBarViewDelegate{
     
     private func addChild(title: String){
         if title == tabbarItems[0].title {
+            mapButton.isHidden = false
             cellType = .explore
         }
         else if title == tabbarItems[1].title{
+            mapButton.isHidden = false
             cellType = .attraction
         }
         else if title == tabbarItems[2].title{
+            mapButton.isHidden = true
             cellType = .adventure
         }
         else if title == tabbarItems[3].title{
+            mapButton.isHidden = false
             cellType = .south
         }
         else if title == tabbarItems[4].title{
+            mapButton.isHidden = true
             cellType = .tour
         }
         else if title == tabbarItems[5].title{
+            mapButton.isHidden = true
             self.add(galleryVC, in: galleryContainer)
         }
         else if title == tabbarItems[6].title{
+            mapButton.isHidden = false
             cellType = .arch
         }
         else if title == tabbarItems[7].title{
+            mapButton.isHidden = false
             cellType = .event
         }
         else if title == tabbarItems[8].title{
+            mapButton.isHidden = true
             cellType = .blog
         }
         else if title == tabbarItems[9].title{
+            mapButton.isHidden = true
             cellType = .product
         }
     }

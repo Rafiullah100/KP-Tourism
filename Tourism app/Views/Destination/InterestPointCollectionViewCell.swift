@@ -8,7 +8,6 @@
 import UIKit
 
 class InterestPointCollectionViewCell: UICollectionViewCell {
-    static var cellIdentifier = "cell_identifier"
     
     override func awakeFromNib() {
         super.awakeFromNib()
