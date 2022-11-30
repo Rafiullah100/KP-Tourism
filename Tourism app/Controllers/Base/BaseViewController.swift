@@ -162,7 +162,7 @@ class BaseViewController: UIViewController {
 
         firstString.append(secondString)
         label.textColor = .white
-        label.attributedText = firstString
+        label.text = viewControllerTitle
         let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
         button.frame = buttonView.frame
         buttonView.addSubview(button)

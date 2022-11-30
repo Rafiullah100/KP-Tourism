@@ -171,6 +171,10 @@ extension String{
         let emailTest = NSPredicate(format:"SELF MATCHES[c] %@", emailRegEx)
         return emailTest.evaluate(with: self)
     }
+    
+    var asUrl: URL? {
+        return URL(string: self)
+    }
 }
 
 extension UIApplication {
@@ -307,5 +311,8 @@ extension UIViewController {
         remove(from: view)
     }
     
+    class func identifier() -> String {
+        return String(describing: self)
+    }
    
 }

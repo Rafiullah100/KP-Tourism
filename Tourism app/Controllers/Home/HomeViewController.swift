@@ -297,6 +297,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToDestination(delegate: self, type: .district)
+        switch cellType {
+        case .explore:
+            Switcher.goToDestination(delegate: self, type: .district)
+        case .adventure:
+            Switcher.gotoAdventureDetail(delegate: self)
+        case .tour:
+            Switcher.gotoPackageDetail(delegate: self)
+        default:
+            break
+        }
     }
 }

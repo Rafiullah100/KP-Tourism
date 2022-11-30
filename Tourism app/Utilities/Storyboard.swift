@@ -9,13 +9,11 @@ import UIKit
 
 enum Storyboard: String {
     case main = "Main"
-    case mainTab = "MainTab"
     case destination = "Destination"
     case gallery = "Gallery"
     case mapView = "MapView"
-    case popup = "PopUp"
     case POI = "POI"
-    case profile = "Profile"
+    case detail = "Detail"
 
     func instantiate<T>(identifier: T.Type) -> T {
         let storyboard = UIStoryboard(name: rawValue, bundle: nil)

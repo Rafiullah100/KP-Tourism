@@ -11,7 +11,6 @@ struct Sections {
     let title: String!
     let image: String!
     let selectedImage: String!
-    
 }
 
 struct Coordinates {
@@ -24,16 +23,20 @@ struct Destination {
     let title: String
 }
 
-
 struct Contacts {
     let photo: String?
     let department: String?
     let phone: String?
 }
 
-
 enum LocationCategory {
     case district
     case tourismSpot
+}
+
+enum DetailType {
+    case event
+    case adventure
+    
 }
 //this is struct
