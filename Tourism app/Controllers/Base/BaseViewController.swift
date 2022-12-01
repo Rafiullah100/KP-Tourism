@@ -153,7 +153,7 @@ class BaseViewController: UIViewController {
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         imageView.image = UIImage(named: "Back")
-        let label = UILabel(frame: CGRect(x: 35, y: 0, width: 100, height: 30))
+        let label = UILabel(frame: CGRect(x: 35, y: 0, width: 250, height: 30))
 
         let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto", size: 13) ?? UIFont()]
         let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto", size: 10) ?? UIFont()]

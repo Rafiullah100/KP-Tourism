@@ -304,6 +304,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             Switcher.gotoAdventureDetail(delegate: self)
         case .tour:
             Switcher.gotoPackageDetail(delegate: self)
+        case .blog:
+            Switcher.gotoBlogDetail(delegate: self)
+        case .product:
+            Switcher.gotoProductDetail(delegate: self)
         default:
             break
         }

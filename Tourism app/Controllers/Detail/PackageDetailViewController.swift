@@ -10,6 +10,7 @@ import UIKit
 class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -29,6 +30,7 @@ class PackageDetailViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         textViewHeight.constant = textView.contentSize.height
+        scrollViewHeight.constant = textView.contentSize.height + tableView.contentSize.height + 100
 //        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: textView.contentSize.height + tableView.contentSize.height + 100)
     }
 }
