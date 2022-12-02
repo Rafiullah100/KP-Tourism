@@ -13,6 +13,10 @@ class LoginViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .title
-        viewControllerTitle = "Log in or Sign up"
+        viewControllerTitle = "Login"
+    }
+
+    @IBAction func gotoSignUp(_ sender: Any) {
+        Switcher.goToSignupVC(delegate: self)
     }
 }

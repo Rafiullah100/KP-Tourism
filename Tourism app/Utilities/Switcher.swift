@@ -175,4 +175,17 @@ class Switcher {
         delegate.navigationController?.navigationBar.isHidden = false
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    static func goToSignupVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SignupViewController") as! SignupViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func goToLoginVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "LoginViewController") as! LoginViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }
+
