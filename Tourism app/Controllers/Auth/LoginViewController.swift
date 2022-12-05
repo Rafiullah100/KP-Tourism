@@ -19,4 +19,8 @@ class LoginViewController: BaseViewController {
     @IBAction func gotoSignUp(_ sender: Any) {
         Switcher.goToSignupVC(delegate: self)
     }
+    
+    @IBAction func LoginBtnAction(_ sender: Any) {
+        Switcher.goToFeedsVC(delegate: self)
+    }
 }

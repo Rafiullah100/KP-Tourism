@@ -77,6 +77,18 @@ extension UIView {
             self.alpha = 0
         }
     }
+    
+    func addBottomShadow() {
+        layer.masksToBounds = false
+        layer.shadowRadius = 2
+        layer.shadowOpacity = 0.5
+        layer.shadowColor = UIColor.lightGray.cgColor
+        layer.shadowOffset = CGSize(width: 0 , height: 2)
+        layer.shadowPath = UIBezierPath(rect: CGRect(x: 0,
+                                                     y: bounds.maxY - layer.shadowRadius,
+                                                     width: bounds.width,
+                                                     height: layer.shadowRadius)).cgPath
+    }
 }
 
 extension UIColor{
