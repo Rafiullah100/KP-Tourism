@@ -1,18 +1,15 @@
 //
-//  FeedTableViewCell.swift
+//  ChatListTableViewCell.swift
 //  Tourism app
 //
-//  Created by MacBook Pro on 12/5/22.
+//  Created by MacBook Pro on 12/6/22.
 //
 
 import UIKit
 
-class FeedTableViewCell: UITableViewCell {
+class ChatListTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var imgbgView: UIView!
-    @IBOutlet weak var imgView: UIImageView!
-    @IBOutlet weak var label: UILabel!
-    
+    @IBOutlet weak var statusIndicator: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

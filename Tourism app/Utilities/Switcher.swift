@@ -193,5 +193,11 @@ class Switcher {
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
+    
+    static func goToChatListVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatListViewController") as! ChatListViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

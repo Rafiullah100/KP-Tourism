@@ -29,8 +29,10 @@ class FeedsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
-        tableView.estimatedRowHeight = 350.0
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    @IBAction func chatBtnAction(_ sender: Any) {
+        Switcher.goToChatListVC(delegate: self)
     }
 }
 
@@ -58,12 +60,9 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
-        if indexPath.row == 1{
-            cell.imgView.isHidden = true
-            cell.label.text = "This property is nil by default."
-            cell.label.backgroundColor = .green
+        if indexPath.row == 1 {
+            cell.imgbgView.isHidden = true
         }
         return cell
-        
     }
 }
