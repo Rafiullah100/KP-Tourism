@@ -30,7 +30,7 @@ class ChatListViewController: UIViewController {
     
     private func configureTabbar(){
         let section = ["Recent", "Unread", "Groups"]
-        for i in 0...section.count-1{
+        for i in 0..<section.count{
             let tabbarItem = UITabBarItem(title: section[i], image: nil, tag: i)
             tabbarItems.append(tabbarItem)
         }

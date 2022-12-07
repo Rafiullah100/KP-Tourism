@@ -13,7 +13,7 @@ class FeedsViewController: UIViewController {
         didSet{
             collectionView.dataSource = self
             collectionView.delegate = self
-            collectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier())
+            collectionView.register(UINib(nibName: "StatusCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier())
         }
     }
     @IBOutlet weak var tableView: UITableView!{
@@ -34,6 +34,9 @@ class FeedsViewController: UIViewController {
     @IBAction func chatBtnAction(_ sender: Any) {
         Switcher.goToChatListVC(delegate: self)
     }
+    @IBAction func profileBtnAction(_ sender: Any) {
+        Switcher.goToProfileVC(delegate: self)
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -41,7 +44,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
         return 10
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell: ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! ProfileCollectionViewCell
+        let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
         return cell
     }

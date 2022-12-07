@@ -2,37 +2,14 @@
 //  ProfileCollectionViewCell.swift
 //  Tourism app
 //
-//  Created by MacBook Pro on 12/5/22.
+//  Created by MacBook Pro on 12/7/22.
 //
 
 import UIKit
 
 class ProfileCollectionViewCell: UICollectionViewCell {
 
-    enum FeedCellType {
-        case userSelf
-        case other
-    }
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var statusImageView: UIImageView!
-    
-    var cellType: FeedCellType? {
-        didSet{
-            switch cellType {
-            case .userSelf:
-                label.isHidden = true
-                statusImageView.isHidden = false
-            case .other:
-                label.isHidden = false
-                statusImageView.isHidden = true
-            case .none:
-                break
-            }
-        }
-    }
-    
-    
-    
+    @IBOutlet weak var imgView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
