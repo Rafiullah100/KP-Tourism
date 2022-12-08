@@ -58,8 +58,7 @@ extension LocalProductsViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
-//        show(vc, sender: self)
+        Switcher.gotoProductDetail(delegate: self)
     }
 }
 

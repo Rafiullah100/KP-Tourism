@@ -73,6 +73,9 @@ class ProfileViewController: UIViewController {
     @IBAction func followerBtnAction(_ sender: Any) {
         Switcher.showFollower(delegate: self)
     }
+    @IBAction func favoriteBtnAction(_ sender: Any) {
+        Switcher.goToWishlistVC(delegate: self)
+    }
 }
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource{

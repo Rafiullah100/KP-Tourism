@@ -51,6 +51,10 @@ extension AccomodationViewController: UITableViewDataSource{
         let cell: AccomodationTableViewCell = tableView.dequeueReusableCell(withIdentifier: AccomodationTableViewCell.celldentifier) as! AccomodationTableViewCell
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Switcher.gotoAccomodationDetail(delegate: self)
+    }
 }
 
 extension AccomodationViewController: UITableViewDelegate{

@@ -300,14 +300,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         switch cellType {
         case .explore:
             Switcher.goToDestination(delegate: self, type: .district)
-        case .adventure:
-            Switcher.gotoAdventureDetail(delegate: self)
+        case .event:
+            Switcher.gotoEventDetail(delegate: self)
         case .tour:
             Switcher.gotoPackageDetail(delegate: self)
         case .blog:
             Switcher.gotoBlogDetail(delegate: self)
         case .product:
             Switcher.gotoProductDetail(delegate: self)
+        case .adventure:
+            Switcher.gotoAdventureDetail(delegate: self)
         default:
             break
         }

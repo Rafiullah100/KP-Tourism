@@ -12,5 +12,6 @@ class EventDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .backWithTitle
+        viewControllerTitle = "Events, Swat"
     }
 }

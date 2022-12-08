@@ -7,10 +7,12 @@
 
 import UIKit
 
-class AdventureDetailViewController: UIViewController {
+class AdventureDetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        navigationController?.navigationBar.isHidden = false
+        type = .backWithTitle
+        viewControllerTitle = "Polo Games"
     }
 }

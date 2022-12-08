@@ -37,6 +37,7 @@ enum LocationCategory {
 enum DetailType {
     case event
     case adventure
-    
 }
+
+
 //this is struct
