@@ -68,7 +68,7 @@ class ProfileViewController: UIViewController {
         scrollHeight += tabbarView.frame.height
         scrollHeight += statusView.frame.height
         scrollHeight += tableViewHeight.constant
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollHeight + 20)
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollHeight + 10.0)
     }
     @IBAction func followerBtnAction(_ sender: Any) {
         Switcher.showFollower(delegate: self)
@@ -80,7 +80,7 @@ class ProfileViewController: UIViewController {
 
 extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 20
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {

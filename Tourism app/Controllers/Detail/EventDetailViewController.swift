@@ -11,6 +11,7 @@ class EventDetailViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "Events, Swat"
     }

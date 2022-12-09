@@ -19,10 +19,11 @@ class PackageDetailCell: UITableViewCell{
 class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var selectedRow: Int?
+    var selectedRow = 0
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -43,9 +44,7 @@ class PackageDetailViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         textViewHeight.constant = textView.contentSize.height
-        var scrollHeight: CGFloat = textViewHeight.constant
-        scrollHeight += tableView.contentSize.height
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollHeight)
+        tableViewHeight.constant = tableView.contentSize.height + 100
     }
 }
 

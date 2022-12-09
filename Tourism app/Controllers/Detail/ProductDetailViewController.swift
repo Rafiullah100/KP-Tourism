@@ -11,6 +11,7 @@ class ProductDetailViewController: BaseViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +23,6 @@ class ProductDetailViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         textViewHeight.constant = textView.contentSize.height
-        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: textView.contentSize.height + 200)
+//        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: textViewHeight.constant + bottomView.frame.height + 50)
     }
 }
