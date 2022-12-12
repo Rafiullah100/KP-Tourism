@@ -8,7 +8,7 @@
 import Foundation
 
 enum Route {
-    static let baseUrl = "https://yummie.glitch.me"
+    static let baseUrl = "https://staging-admin.kptourism.com"
     
     case fetchAllCategories
     case placeOrder(String)

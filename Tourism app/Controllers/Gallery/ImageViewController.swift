@@ -22,7 +22,6 @@ class ImageViewController: UIViewController {
         collectionView.asDataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: collectionElementKindHeader, bundle: nil), forSupplementaryViewOfKind: collectionElementKindHeader, withReuseIdentifier: "header")
-        
     }
 }
 

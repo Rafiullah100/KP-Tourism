@@ -23,7 +23,7 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     
-    var selectedRow = 0
+    var selectedRow: Int?
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -44,7 +44,7 @@ class PackageDetailViewController: BaseViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         textViewHeight.constant = textView.contentSize.height
-        tableViewHeight.constant = tableView.contentSize.height + 100
+        tableViewHeight.constant = tableView.contentSize.height
     }
 }
 
@@ -70,7 +70,8 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         selectedRow = indexPath.row
         tableView.reloadData()
-//        let cell: PackageDetailCell = tableView.cellForRow(at: indexPath) as! PackageDetailCell
+        let cell: PackageDetailCell = tableView.cellForRow(at: indexPath) as! PackageDetailCell
+        tableViewHeight.constant = tableView.contentSize.height + cell.subTitleLabel.frame.height
 //        cell.subTitleLabel.isHidden = false
     }
 }
