@@ -8,7 +8,7 @@
 import UIKit
 
 class AdventureDetailViewController: BaseViewController {
-
+    @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false

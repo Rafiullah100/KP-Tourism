@@ -31,7 +31,7 @@ struct NetworkService {
 //        request(route: .fetchOrders, method: .get, completion: completion)
 //    }
     
-    private func request<T: Decodable>(route: Route,
+    func request<T: Decodable>(route: Route,
                                      method: Method,
                                      parameters: [String: Any]? = nil,
                                      completion: @escaping(Result<T, Error>) -> Void) {
@@ -57,7 +57,7 @@ struct NetworkService {
         }.resume()
     }
     
-    private func handleResponse<T: Decodable>(result: Result<Data, Error>?,
+    func handleResponse<T: Decodable>(result: Result<Data, Error>?,
                                               completion: (Result<T, Error>) -> Void) {
         guard let result = result else {
             completion(.failure(AppError.unknownError))
@@ -93,7 +93,7 @@ struct NetworkService {
     ///   - method: type of request to be made
     ///   - parameters: whatever extra information you need to pass to the backend
     /// - Returns: URLRequest
-    private func createRequest(route: Route,
+    func createRequest(route: Route,
                                method: Method,
                                parameters: [String: Any]? = nil) -> URLRequest? {
         let urlString = Route.baseUrl + route.description

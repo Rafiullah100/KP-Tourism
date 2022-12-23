@@ -62,7 +62,8 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch locationCategory {
         case .district:
-            Switcher.goToDestination(delegate: self, type: .tourismSpot)
+            print("erg er")
+//            Switcher.goToDestination(delegate: self, type: .tourismSpot)
         case .tourismSpot:
             print("do nothing")
         }

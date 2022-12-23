@@ -19,13 +19,14 @@ class PointOfInterestViewController: BaseViewController {
         }
     }
     var locationCategory: LocationCategory?
-
-
+    var category: PoiCategoriesModel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        fetch()
     }
     
     func updateUI() {
@@ -43,6 +44,21 @@ class PointOfInterestViewController: BaseViewController {
         }
     }
     
+    private func fetch() {
+        URLSession.shared.request(route: .fetchPoiCategories, method: .post, model: PoiCategoriesModel.self) { result in
+            switch result {
+            case .success(let poiCategory):
+                DispatchQueue.main.async {
+                    self.category = poiCategory
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+      
+    
     override func show(_ vc: UIViewController, sender: Any?) {
         add(vc)
     }
@@ -50,29 +66,24 @@ class PointOfInterestViewController: BaseViewController {
 
 extension PointOfInterestViewController: UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 20
+        return category?.poicategories.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: InterestPointCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: InterestPointCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! InterestPointCollectionViewCell
+        cell.poiCategory = category?.poicategories[indexPath.row]
         return cell
     }
 }
 
 extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
-//        show(vc, sender: self)
         Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!)
     }
 }
 
 extension PointOfInterestViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        let cellsAcross: CGFloat = 3
-//        let spaceBetweenCells: CGFloat = 2
-//        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
         Helper.shared.cellSize(collectionView: collectionView, space: 2, cellsAcross: 3)
-//        return CGSize(width: width, height: width)
     }
 }

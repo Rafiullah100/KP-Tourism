@@ -24,9 +24,10 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToDestination(delegate: UIViewController, type: LocationCategory){
+    static func goToDestination(delegate: UIViewController, type: LocationCategory, exploreDistrict: ExploreDistrict){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "CommonViewController") as! CommonViewController
         vc.locationCategory = type
+        vc.district = exploreDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

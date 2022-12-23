@@ -7,6 +7,7 @@
 
 import UIKit
 import ImageSlideshow
+import SDWebImage
 class ExploreTableViewCell: UITableViewCell {
 
     @IBOutlet weak var container: UIView!
@@ -14,17 +15,30 @@ class ExploreTableViewCell: UITableViewCell {
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var favoriteButton: UIButton!
     var actionBlock: (() -> Void)? = nil
+    @IBOutlet weak var districtLabel: UILabel!
     
-    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
+    @IBOutlet weak var kpLabel: UILabel!
+    var imageSDWebImageSrc = [SDWebImageSource]()
+    
+    var district: ExploreDistrict? {
+        didSet{
+            districtLabel.text = district?.title
+            imageSDWebImageSrc = []
+            district?.attractions.forEach({ attration in
+                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + attration.previewImage)
+                if let sdURL = imageUrl{
+                    imageSDWebImageSrc.append(sdURL)
+                    slideShow.slideshowInterval = 2.0
+                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+                    slideShow.isUserInteractionEnabled = false
+                    slideShow.setImageInputs(imageSDWebImageSrc)
+                }
+            })
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
-        slideShow.slideshowInterval = 2.0
-        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        slideShow.isUserInteractionEnabled = false
-        slideShow.setImageInputs(localSource)
-//        slideShow.pauseTimer()
     }
 
     static func configureCell() {

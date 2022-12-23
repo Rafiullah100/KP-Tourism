@@ -17,11 +17,8 @@ class PackageDetailCell: UITableViewCell{
 
 
 class PackageDetailViewController: BaseViewController {
-    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var scrollView: UIScrollView!
+
     
     var selectedRow: Int?
     
@@ -39,12 +36,6 @@ class PackageDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "Naran Package"
         tableView.rowHeight = UITableView.automaticDimension
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        textViewHeight.constant = textView.contentSize.height
-        tableViewHeight.constant = tableView.contentSize.height
     }
 }
 

@@ -32,6 +32,9 @@ class POIServicesViewController: BaseViewController {
 //    }
     
     
+    @IBAction func mapBtnAction(_ sender: Any) {
+        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!)
+    }
     func updateUI() {
         switch locationCategory {
         case .district:

@@ -45,7 +45,7 @@ class ItenrariesViewController: BaseViewController {
 
 extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -59,8 +59,7 @@ extension ItenrariesViewController: UICollectionViewDelegateFlowLayout{
         let cellsAcross: CGFloat = 2
         let spaceBetweenCells: CGFloat = 5
         let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-        return CGSize(width: width, height: width*1.2)
-        
+        return CGSize(width: width, height: width)
     }
 }
 

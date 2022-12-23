@@ -32,7 +32,7 @@ class CommonViewController: BaseViewController {
     var delegate: PopupDelegate?
     var locationCategory: LocationCategory = .district
     var desintationArray: [Destination]?
-    
+    var district: ExploreDistrict?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +63,11 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to Kalam"
             thumbnail.image = UIImage(named: "iten")
         }
+        
+        thumbnailTopLabel.text = district?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")))
+        welcomeLabel.text = "Welcome to \(district?.title ?? "")"
+        descriptionLabel.text = district?.description
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,7 +77,7 @@ class CommonViewController: BaseViewController {
 
 extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return desintationArray?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

@@ -63,6 +63,6 @@ class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
         mapViewContainer.addSubview(mapView)
     }
     @IBAction func navigationBtnAction(_ sender: Any) {
+        Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory!)
     }
-    
 }

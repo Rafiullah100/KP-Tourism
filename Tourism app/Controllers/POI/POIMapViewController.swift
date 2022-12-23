@@ -64,4 +64,7 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
         mapViewContainer.addSubview(mapView)
         mapViewContainer.bringSubviewToFront(seacrhBgView)
     }
+    @IBAction func listBtnAction(_ sender: Any) {
+        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!)
+    }
 }

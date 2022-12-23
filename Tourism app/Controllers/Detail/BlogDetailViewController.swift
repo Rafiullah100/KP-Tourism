@@ -9,9 +9,6 @@ import UIKit
 
 class BlogDetailViewController: BaseViewController {
 
-    @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textView: UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,8 +17,5 @@ class BlogDetailViewController: BaseViewController {
         viewControllerTitle = "7 Things to do in Peshawar"
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        textViewHeight.constant = textView.contentSize.height
-    }
+ 
 }

@@ -40,6 +40,9 @@ class ChatViewController: UIViewController {
         textView.textColor = UIColor.lightGray
     }
     
+    @IBAction func backBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 //        toolBarHeight.constant = textView.contentSize.height

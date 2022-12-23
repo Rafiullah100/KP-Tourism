@@ -12,13 +12,20 @@ class WeatherAlertViewController: UIViewController {
     @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var alertLabel: UILabel!
     @IBOutlet weak var weatherView: UIView!
+    @IBOutlet weak var dropdownButton: UIButton!
     @IBOutlet weak var weatherLabel: UILabel!
     @IBOutlet weak var weatherMiddleView: UIView!
     
+    @IBOutlet weak var dropDownLabel: UILabel!
+    @IBOutlet weak var textField: UITextField!
     enum CellType {
         case WeatherTableViewCell
         case AlertTableViewCell
     }
+    
+    let pickerView = UIPickerView()
+    let userType = ["Swat", "Lower Dir", "Upper Dir", "Shangla", "Buner", "Malakand"]
+
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -36,10 +43,17 @@ class WeatherAlertViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         cellType = .WeatherTableViewCell
+        pickerView.delegate = self
+        pickerView.dataSource = self
+        textField.isHidden = true
+        textField.inputView = pickerView
     }
     
     @IBAction func updateBtnAction(_ sender: Any) {
         changeCell(type: .WeatherTableViewCell)
+    }
+    @IBAction func dropDownBtnAction(_ sender: Any) {
+        textField.becomeFirstResponder()
     }
     
     @IBAction func alertBtnAction(_ sender: Any) {
@@ -94,8 +108,22 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
             return 0
         }
     }
-
 }
 
-
-
+extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        userType.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return userType[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        dropDownLabel.text = userType[row]
+    }
+}

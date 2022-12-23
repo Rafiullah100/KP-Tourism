@@ -8,21 +8,21 @@
 import Foundation
 
 enum Route {
-    static let baseUrl = "https://staging-admin.kptourism.com"
+    static let baseUrl = "https://staging-admin.kptourism.com/"
     
-    case fetchAllCategories
-    case placeOrder(String)
-    case fetchCategoryDishes(String)
+    case fetchAllDistricts
+    case fetchExpolreDistrict
+    case fetchPoiCategories
     case fetchOrders
     
     var description: String {
         switch self {
-        case .fetchAllCategories:
-            return "/dish-categories"
-        case .placeOrder(let dishId):
-            return "/orders/\(dishId)"
-        case .fetchCategoryDishes(let categoryId):
-            return "/dishes/\(categoryId)"
+        case .fetchAllDistricts:
+            return "api/mobile/districts/list"
+        case .fetchExpolreDistrict:
+            return "api/mobile/attractions/getdistrictwise"
+        case .fetchPoiCategories:
+            return "api/mobile/poi/getcategories"
         case .fetchOrders:
             return "/orders"
         }
