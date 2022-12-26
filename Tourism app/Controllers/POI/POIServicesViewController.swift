@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class POIServicesViewController: BaseViewController {
 
     @IBOutlet weak var thumbnail: UIImageView!
@@ -20,17 +20,33 @@ class POIServicesViewController: BaseViewController {
     }
 
     var locationCategory: LocationCategory?
-
+    var district: ExploreDistrict?
+    var poiCategoriId: Int?
+    var POISubCatories: POISubCatoriesModel?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        fetch()
     }
     
-//    override func show(_ vc: UIViewController, sender: Any?) {
-//        add(vc)
-//    }
-    
+    private func fetch() {
+        guard let districtId = district?.districtCategoryID, let categoryId = poiCategoriId else { return }
+        let parameters = ["district_id": districtId, "poi_category_id": categoryId]
+        URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
+            switch result {
+            case .success(let poiSubCategory):
+                DispatchQueue.main.async {
+                    self.POISubCatories = poiSubCategory
+                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView(title: "No Data", message: "", image: nil) : self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
     
     @IBAction func mapBtnAction(_ sender: Any) {
         Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!)
@@ -48,24 +64,25 @@ class POIServicesViewController: BaseViewController {
         default:
             break
         }
+        thumbnailTopLabel.text = district?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")))
     }
 }
 
 
 extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
    
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return POISubCatories?.pois.rows.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: POIServiceTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell_identifier", for: indexPath) as! POIServiceTableViewCell
+        cell.poiSubCategory = POISubCatories?.pois.rows[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 110.0
     }
-    
 }

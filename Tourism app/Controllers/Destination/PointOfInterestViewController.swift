@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class PointOfInterestViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -20,6 +20,7 @@ class PointOfInterestViewController: BaseViewController {
     }
     var locationCategory: LocationCategory?
     var category: PoiCategoriesModel?
+    var district: ExploreDistrict?
     
     
     override func viewDidLoad() {
@@ -42,6 +43,9 @@ class PointOfInterestViewController: BaseViewController {
         default:
             break
         }
+        
+        thumbnailTopLabel.text = district?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")))
     }
     
     private func fetch() {
@@ -78,12 +82,13 @@ extension PointOfInterestViewController: UICollectionViewDataSource{
 
 extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!)
+        guard let district = district, let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
+        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, district: district, poiCategoryId: poiCategoryId)
     }
 }
 
 extension PointOfInterestViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        Helper.shared.cellSize(collectionView: collectionView, space: 2, cellsAcross: 3)
+        Helper.shared.cellSize(collectionView: collectionView, space: 2, cellsAcross: 4)
     }
 }

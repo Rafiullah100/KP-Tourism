@@ -32,9 +32,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, district: ExploreDistrict, poiCategoryId: Int){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory
+        vc.district = district
+        vc.poiCategoriId = poiCategoryId
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -67,9 +69,10 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
 
-    static func goToPOI(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToPOI(delegate: UIViewController, locationCategory: LocationCategory, district: ExploreDistrict){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PointOfInterestViewController") as! PointOfInterestViewController
         vc.locationCategory = locationCategory
+        vc.district = district
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

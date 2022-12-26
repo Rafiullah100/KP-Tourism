@@ -93,7 +93,8 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 1:
             Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
         case 2:
-            Switcher.goToPOI(delegate: self, locationCategory: locationCategory)
+            guard let district = district else { return }
+            Switcher.goToPOI(delegate: self, locationCategory: locationCategory, district: district)
         case 3:
             Switcher.goToAccomodation(delegate: self, locationCategory: locationCategory)
         case 4:

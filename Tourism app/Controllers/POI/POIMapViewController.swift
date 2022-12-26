@@ -17,7 +17,8 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
     @IBOutlet weak var mapViewContainer: UIView!
     @IBOutlet weak var seacrhBgView: UIView!
     var locationCategory: LocationCategory?
-
+    var district: ExploreDistrict?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -65,6 +66,7 @@ class POIMapViewController: BaseViewController, CLLocationManagerDelegate {
         mapViewContainer.bringSubviewToFront(seacrhBgView)
     }
     @IBAction func listBtnAction(_ sender: Any) {
-        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!)
+        guard let district = district else { return }
+//        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, district: district)
     }
 }
