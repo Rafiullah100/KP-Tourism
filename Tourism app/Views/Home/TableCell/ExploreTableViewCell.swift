@@ -25,7 +25,7 @@ class ExploreTableViewCell: UITableViewCell {
             districtLabel.text = district?.title
             imageSDWebImageSrc = []
             district?.attractions.forEach({ attration in
-                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + attration.previewImage)
+                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ?? ""))
                 if let sdURL = imageUrl{
                     imageSDWebImageSrc.append(sdURL)
                     slideShow.slideshowInterval = 2.0

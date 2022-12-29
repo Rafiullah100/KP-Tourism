@@ -15,9 +15,9 @@ class TabLabelCollectionViewCell: UICollectionViewCell {
         l.translatesAutoresizingMaskIntoConstraints = false
         l.backgroundColor = UIColor.clear
         l.textAlignment = .center
-        l.textColor = UIColor(red: 154/255, green: 154/255, blue: 154/255, alpha: 1.0)
-        l.adjustsFontSizeToFitWidth = false
-        l.font = UIFont(name: "Roboto-regular", size: 12.0)
+        l.textColor = .black
+        l.adjustsFontSizeToFitWidth = true
+        l.font = UIFont.systemFont(ofSize: 12)
         
         return l
     }()

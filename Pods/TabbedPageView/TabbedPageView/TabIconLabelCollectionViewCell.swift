@@ -8,21 +8,22 @@
 
 import UIKit
 
-open class TabIconLabelCollectionViewCell: UICollectionViewCell {
+class TabIconLabelCollectionViewCell: UICollectionViewCell {
     
-    open lazy var label: UILabel = {
+    lazy var label: UILabel = {
         var l = UILabel(frame: CGRect.zero)
         l.translatesAutoresizingMaskIntoConstraints = false
         l.backgroundColor = .clear
         l.textAlignment = .center
         l.baselineAdjustment = .alignCenters
-        l.textColor = UIColor(red: 154/255, green: 154/255, blue: 154/255, alpha: 1.0)
-        l.adjustsFontSizeToFitWidth = false
-        l.font = UIFont(name: "Roboto-Regular", size: 14)
+        l.textColor = .black
+        l.adjustsFontSizeToFitWidth = true
+        l.font = UIFont.systemFont(ofSize: 12.0)
+        
         return l
     }()
     
-    open lazy var imageView: UIImageView = {
+    lazy var imageView: UIImageView = {
         var iv = UIImageView(frame: CGRect.zero)
         iv.translatesAutoresizingMaskIntoConstraints = false
         iv.contentMode = .scaleAspectFit
@@ -43,7 +44,7 @@ open class TabIconLabelCollectionViewCell: UICollectionViewCell {
         setupView()
     }
     
-    required public init?(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     

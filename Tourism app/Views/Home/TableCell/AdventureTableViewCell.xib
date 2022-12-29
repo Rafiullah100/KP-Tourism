@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,6 +36,14 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 4" translatesAutoresizingMaskIntoConstraints="NO" id="CYc-6X-GIu">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="233"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="233" id="h8K-eg-Sal"/>
+                                                </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXq-hA-yZU">
                                                 <rect key="frame" x="282" y="14" width="25" height="25"/>
@@ -45,22 +54,13 @@
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                 <state key="normal" backgroundImage="unfavorite"/>
                                             </button>
-                                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="8BD-w3-aoc">
-                                                <rect key="frame" x="77" y="213" width="166" height="20"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="20" id="eKY-3M-mNN"/>
-                                                </constraints>
-                                            </pageControl>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="8BD-w3-aoc" secondAttribute="trailing" constant="77" id="3S7-No-u8l"/>
                                             <constraint firstAttribute="trailing" secondItem="CYc-6X-GIu" secondAttribute="trailing" id="KPe-V7-cwH"/>
-                                            <constraint firstItem="8BD-w3-aoc" firstAttribute="leading" secondItem="3Y8-BW-VqA" secondAttribute="leading" constant="77" id="R75-xe-2fP"/>
                                             <constraint firstItem="XXq-hA-yZU" firstAttribute="top" secondItem="3Y8-BW-VqA" secondAttribute="top" constant="14" id="VzE-7o-cev"/>
                                             <constraint firstItem="CYc-6X-GIu" firstAttribute="top" secondItem="3Y8-BW-VqA" secondAttribute="top" id="dEB-rn-LQ8"/>
                                             <constraint firstAttribute="trailing" secondItem="XXq-hA-yZU" secondAttribute="trailing" constant="13" id="gB0-lD-A6G"/>
-                                            <constraint firstAttribute="bottom" secondItem="8BD-w3-aoc" secondAttribute="bottom" id="n3Z-8L-5Eq"/>
                                             <constraint firstAttribute="bottom" secondItem="CYc-6X-GIu" secondAttribute="bottom" id="rMh-ry-RFR"/>
                                             <constraint firstItem="CYc-6X-GIu" firstAttribute="leading" secondItem="3Y8-BW-VqA" secondAttribute="leading" id="wZ0-7o-wkB"/>
                                         </constraints>
@@ -79,6 +79,9 @@
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lorem ipsum dolor sit amet, consectetur dolor ernjn eerk dolor dolor dolor dolor dolor wef ejkr" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hil-aq-btQ">
                                                         <rect key="frame" x="0.0" y="21.5" width="304" height="32.5"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="32.5" id="ZwZ-nS-NjK"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="12"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -134,7 +137,9 @@
             <viewLayoutGuide key="safeArea" id="pni-Ni-jHt"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="pageController" destination="8BD-w3-aoc" id="rCp-Ec-e8X"/>
+                <outlet property="descriptionLabel" destination="Hil-aq-btQ" id="aIQ-FG-UtV"/>
+                <outlet property="imgView" destination="CYc-6X-GIu" id="1wT-My-9l3"/>
+                <outlet property="titleLable" destination="sct-xx-UNH" id="LmU-0e-Vis"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
         </tableViewCell>

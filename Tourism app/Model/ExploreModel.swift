@@ -17,14 +17,14 @@ struct ExploreAttractions: Codable {
 }
 
 struct ExploreDistrict: Codable {
-    let id, userID: Int
-    let title, slug, geographicalArea, thumbnailImage: String
-    let previewImage, locationTitle, latitude, longitude: String
-    let description: String
-    let featured, isTopDestination: Bool
-    let viewsCounter, status, isDeleted: Int
-    let createdAt, updatedAt: String
-    let districtCategoryID: Int
+    let id, userID: Int?
+    let title, slug, geographicalArea, thumbnailImage: String?
+    let previewImage, locationTitle, latitude, longitude: String?
+    let description: String?
+    let featured, isTopDestination: Bool?
+    let viewsCounter, status, isDeleted: Int?
+    let createdAt, updatedAt: String?
+    let districtCategoryID: Int?
     let attractions: [ExploreSubAttration]
 
     enum CodingKeys: String, CodingKey {
@@ -47,17 +47,17 @@ struct ExploreDistrict: Codable {
 }
 
 struct ExploreSubAttration: Codable {
-    let id: Int
-    let title, slug: String
-    let districtID: Int
-    let isTopAttraction, family, adults: Bool
-    let locationTitle, lat, long, attractionDescription: String
-    let displayImage, previewImage: String
-    let authorID: Int
-//    let parentID: Int
-    let type: String
-    let status, viewsCounter, isDeleted: Int
-    let createdAt, updatedAt: String
+    let id: Int?
+    let title, slug: String?
+    let districtID: Int?
+    let isTopAttraction, family, adults: Bool?
+    let locationTitle, lat, long, attractionDescription: String?
+    let displayImage, previewImage: String?
+    let authorID: Int?
+    let parentID: Int?
+    let type: String?
+    let status, viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, slug
@@ -70,7 +70,7 @@ struct ExploreSubAttration: Codable {
         case displayImage = "display_image"
         case previewImage = "preview_image"
         case authorID = "author_id"
-//        case parentID = "parent_id"
+        case parentID = "parent_id"
         case type, status
         case viewsCounter = "views_counter"
         case isDeleted, createdAt, updatedAt

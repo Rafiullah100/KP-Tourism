@@ -16,22 +16,22 @@ struct POISubCatoriesModel: Codable {
 
 // MARK: - Pois
 struct Pois: Codable {
-    let count: Int
+    let count: Int?
     let rows: [POISubCatoryModel]
 }
 
 // MARK: - Row
 struct POISubCatoryModel: Codable {
-    let id: Int
-    let title, slug: String
-    let districtID, poiCategoryID: Int
-    let family, adults: Bool
-    let locationTitle, lat, long, rowDescription: String
-    let displayImage: String
-    let authorID: Int
-    let status: Bool
-    let viewsCounter, isDeleted: Int
-    let createdAt, updatedAt: String
+    let id: Int?
+    let title, slug: String?
+    let districtID, poiCategoryID: Int?
+    let family, adults: Bool?
+    let locationTitle, lat, long, rowDescription: String?
+    let displayImage: String?
+    let authorID: Int?
+    let status: Bool?
+    let viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
     let poiCategories: PoiCategories
 
     enum CodingKeys: String, CodingKey {
@@ -53,9 +53,9 @@ struct POISubCatoryModel: Codable {
 
 // MARK: - PoiCategories
 struct PoiCategories: Codable {
-    let id: Int
-    let title, slug, icon: String
-    let status, isDeleted: Int
-    let createdAt, updatedAt: String
+    let id: Int?
+    let title, slug, icon: String?
+    let status, isDeleted: Int?
+    let createdAt, updatedAt: String?
 }
 

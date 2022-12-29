@@ -6,19 +6,26 @@
 //
 
 import Foundation
-
+import UIKit
+import SVProgressHUD
+import Toast_Swift
 extension URLSession{
-    func request<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
+    func request<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) {
         
+        if !Reachability.isConnectedToNetwork() {
+            completion(.failure(.noInternet))
+        }
         guard let request = createRequest(route: route, method: method, parameters: parameters) else {
             completion(.failure(AppError.unknownError))
             return
         }
-        
+        SVProgressHUD.show(withStatus: "Please Wait...")
         let task = dataTask(with: request) { data, response, error in
+            SVProgressHUD.dismiss()
             guard let data = data else {
                 if let error = error{
-                    completion(.failure(error))
+                    print(error)
+                    completion(.failure(.unknownError))
                 }
                 else{
                     completion(.failure(AppError.unknownError))

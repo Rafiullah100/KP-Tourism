@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-
+import Toast_Swift
 
 extension NSMutableAttributedString {
     public func setAsLink(textToFind:String, linkURL:String) -> Bool {
@@ -265,8 +265,8 @@ public extension UITableView {
         self.setContentOffset(contentOffset, animated: false)
     }
     
-    func setEmptyView(title: String, message: String, image: UIImage?) {
-        
+    func setEmptyView() {
+        let image = UIImage(named: "")
         let emptyImageView = UIImageView(image: image)
         emptyImageView.contentMode = .scaleAspectFit
         if let _ = image {
@@ -278,11 +278,11 @@ public extension UITableView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Poppins", size: 18)
+        titleLabel.font = UIFont(name: "Roboto-Medium", size: 18)
         messageLabel.textColor = UIColor.black
-        messageLabel.font = UIFont(name: "Poppins", size: 16)
-        titleLabel.text = title
-        messageLabel.text = message
+        messageLabel.font = UIFont(name: "Roboto-Light", size: 16)
+        titleLabel.text = "No Data!"
+        messageLabel.text = ""
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
         
@@ -301,6 +301,42 @@ public extension UITableView {
         self.backgroundView = containerView
     }
     
+    func noInternet() {
+        let image = UIImage(named: "no-internet")
+        let emptyImageView = UIImageView(image: image)
+        emptyImageView.contentMode = .scaleAspectFit
+        if let _ = image {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        } else {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+        }
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "Roboto-Medium", size: 16)
+        messageLabel.textColor = UIColor.black
+        messageLabel.font = UIFont(name: "Roboto-Light", size: 14)
+        titleLabel.text = "No Internet"
+        messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        
+        let containerStack = UIStackView(arrangedSubviews: [emptyImageView, titleLabel, messageLabel])
+        containerStack.alignment = .center
+        containerStack.axis = .vertical
+        containerStack.distribution = .fill
+        containerStack.spacing = 10
+        
+        let containerView = UIView()
+        containerView.addSubview(containerStack)
+        containerStack.translatesAutoresizingMaskIntoConstraints = false
+        containerStack.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.7, constant: 0).isActive = true
+        containerStack.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0).isActive = true
+        containerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0).isActive = true
+        self.backgroundView = containerView
+    }
+    
     func restore() {
         self.backgroundView = nil
     }
@@ -310,7 +346,6 @@ public extension UITableView {
         let nibCell = UINib(nibName: cellReuseIdentifier, bundle: nil)
         register(nibCell, forCellReuseIdentifier: cellReuseIdentifier)
     }
-    
 }
 
 extension UITableViewCell{
@@ -364,4 +399,78 @@ extension UIViewController {
         return String(describing: self)
     }
    
+}
+
+extension UICollectionView{
+    func setEmptyView() {
+        let image = UIImage(named: "no-internet")
+        let emptyImageView = UIImageView(image: image)
+        emptyImageView.contentMode = .scaleAspectFit
+        if let _ = image {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        } else {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+        }
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "Roboto-Medium", size: 18)
+        messageLabel.textColor = UIColor.black
+        messageLabel.font = UIFont(name: "Roboto-Light", size: 16)
+        titleLabel.text = "No Data!"
+        messageLabel.text = ""
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        
+        let containerStack = UIStackView(arrangedSubviews: [emptyImageView, titleLabel, messageLabel])
+        containerStack.alignment = .center
+        containerStack.axis = .vertical
+        containerStack.distribution = .fill
+        containerStack.spacing = 10
+        
+        let containerView = UIView()
+        containerView.addSubview(containerStack)
+        containerStack.translatesAutoresizingMaskIntoConstraints = false
+        containerStack.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.7, constant: 0).isActive = true
+        containerStack.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: -20).isActive = true
+        containerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0).isActive = true
+        self.backgroundView = containerView
+    }
+    
+    func noInternet() {
+        let image = UIImage(named: "no-internet")
+        let emptyImageView = UIImageView(image: image)
+        emptyImageView.contentMode = .scaleAspectFit
+        if let _ = image {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 40.0).isActive = true
+        } else {
+            emptyImageView.heightAnchor.constraint(equalToConstant: 0).isActive = true
+        }
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "Roboto-Medium", size: 16)
+        messageLabel.textColor = UIColor.black
+        messageLabel.font = UIFont(name: "Roboto-Light", size: 14)
+        titleLabel.text = "No Internet"
+        messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        
+        let containerStack = UIStackView(arrangedSubviews: [emptyImageView, titleLabel, messageLabel])
+        containerStack.alignment = .center
+        containerStack.axis = .vertical
+        containerStack.distribution = .fill
+        containerStack.spacing = 10
+        
+        let containerView = UIView()
+        containerView.addSubview(containerStack)
+        containerStack.translatesAutoresizingMaskIntoConstraints = false
+        containerStack.widthAnchor.constraint(equalTo: containerView.widthAnchor, multiplier: 0.7, constant: 0).isActive = true
+        containerStack.centerYAnchor.constraint(equalTo: containerView.centerYAnchor, constant: 0).isActive = true
+        containerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0).isActive = true
+        self.backgroundView = containerView
+    }
 }

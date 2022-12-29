@@ -137,8 +137,9 @@ class Switcher {
         delegate.present(vc, animated: true, completion: nil)
     }
     
-    static func gotoEventDetail(delegate: UIViewController){
+    static func gotoEventDetail(delegate: UIViewController, event: EventListModel){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
+        vc.eventDetail = event
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -161,8 +162,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoAdventureDetail(delegate: UIViewController){
+    static func gotoAdventureDetail(delegate: UIViewController, adventure: Adventure){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AdventureDetailViewController") as! AdventureDetailViewController
+        vc.adventureDetail = adventure
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

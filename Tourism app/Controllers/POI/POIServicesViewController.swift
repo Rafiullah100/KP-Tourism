@@ -40,10 +40,12 @@ class POIServicesViewController: BaseViewController {
             case .success(let poiSubCategory):
                 DispatchQueue.main.async {
                     self.POISubCatories = poiSubCategory
-                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView(title: "No Data", message: "", image: nil) : self.tableView.reloadData()
+                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
             }
         }
     }

@@ -54,10 +54,12 @@ class PointOfInterestViewController: BaseViewController {
             case .success(let poiCategory):
                 DispatchQueue.main.async {
                     self.category = poiCategory
-                    self.collectionView.reloadData()
+                    self.category?.poicategories.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                if error == .noInternet {
+                    self.collectionView.noInternet()
+                }
             }
         }
     }

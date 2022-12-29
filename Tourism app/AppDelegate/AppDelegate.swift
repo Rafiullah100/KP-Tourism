@@ -11,10 +11,12 @@ import GooglePlaces
 import IQKeyboardManager
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        window = UIWindow(frame: UIScreen.main.bounds)
         IQKeyboardManager.shared().isEnabled = true
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Roboto-Light", size: 10) ?? UIFont()], for: .normal)

@@ -11,7 +11,7 @@ import UIKit
 open class TabbedPageView: UIView {
     open weak var delegate: TabbedPageViewDelegate?
     open weak var dataSource: TabbedPageViewDataSource?
-
+    
     // The container view that contains the tab content (views)
     private lazy var containerView: UIView = {
         let view = UIView(frame: .zero)
@@ -37,7 +37,7 @@ open class TabbedPageView: UIView {
     }()
     
     // Determines if the user can manually swipe through the tab views or if they're required to press the tab headers in order to change tabs
-    public var isManualScrollingEnabled: Bool = false
+    public var isManualScrollingEnabled: Bool = true
     
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -138,6 +138,7 @@ open class TabbedPageView: UIView {
             case .viewController(let viewController):
                 parentViewController?.addChild(viewController)
                 viewController.didMove(toParent: parentViewController)
+                
                 views.append(viewController.view)
             }
         }
@@ -178,12 +179,8 @@ open class TabbedPageView: UIView {
 extension TabbedPageView: UICollectionViewDelegate {
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         tabContentView.tabContentCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IconLabelCell", for: indexPath) as! TabIconLabelCollectionViewCell
-
-        delegate?.tabbedPageView(self, didSelectTabAt: indexPath.row, cell: cell)
         
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "IconLabelCell", for: indexPath) as! TabIconLabelCollectionViewCell
-//        cell.label.textColor = .red
+        delegate?.tabbedPageView(self, didSelectTabAt: indexPath.row)
     }
 }
 
@@ -225,8 +222,6 @@ extension TabbedPageView: UICollectionViewDataSource {
             return cell
         }
     }
-
-    
 }
 
 

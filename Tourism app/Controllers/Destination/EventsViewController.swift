@@ -59,6 +59,6 @@ extension EventsViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoEventDetail(delegate: self)
+//        Switcher.gotoEventDetail(delegate: self, event: <#EventListModel#>)
     }
 }

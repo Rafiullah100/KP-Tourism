@@ -48,7 +48,7 @@ public class TabBar: UIView {
     public var transitionStyle: TabBarTransitionStyle = .normal
     public var tabWidth: CGFloat?
     public var height: CGFloat?
-    public var sliderColor:UIColor = UIColor(red: 50/255, green: 116/255, blue: 37/255, alpha: 1.0)
+    public var sliderColor:UIColor = UIColor.blue
     
     
     public required init?(coder aDecoder: NSCoder) {
@@ -120,12 +120,12 @@ public class TabBar: UIView {
             // Collection view constraints
             tabCollectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             tabCollectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            tabCollectionView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.70),
+            tabCollectionView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.92),
             
             // Selection indicator constraints
             selectionSliderLeadingConstraint!,
             selectionSliderWidthConstraint!,
-            selectionSlider.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.03)
+            selectionSlider.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.08)
         ])
     }
 }

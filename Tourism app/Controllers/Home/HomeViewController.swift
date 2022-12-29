@@ -8,7 +8,6 @@
 import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
-
 class HomeViewController: BaseViewController {
     
     @IBOutlet weak var searchBgView: UIView!
@@ -85,7 +84,9 @@ class HomeViewController: BaseViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
             }
         }
     }
@@ -95,6 +96,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if cellType == .explore {
             return (model as? ExploreModel)?.attractions.rows.count ?? 0
+        }
+        else if cellType == .event{
+            return (model as? EventsModel)?.events.count ?? 0
+        }
+        else if cellType == .adventure{
+            return (model as? AdventureModel)?.adventures.count ?? 0
+        }
+        else if cellType == .blog{
+            return (model as? BlogsModel)?.blog.count ?? 0
         }
         else{
             return 5
@@ -109,6 +119,21 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         }
         else if cellType == .attraction{
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
+            return cell
+        }
+        else if cellType == .event{
+            let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
+            cell.event = (model as? EventsModel)?.events[indexPath.row]
+            return cell
+        }
+        else if cellType == .adventure{
+            let cell: AdventureTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AdventureTableViewCell
+            cell.adventure = (model as? AdventureModel)?.adventures[indexPath.row]
+            return cell
+        }
+        else if cellType == .blog{
+            let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
+            cell.blog = (model as? BlogsModel)?.blog[indexPath.row]
             return cell
         }
         else{
@@ -126,7 +151,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .explore:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as! ExploreModel).attractions.rows[indexPath.row])
         case .event:
-            Switcher.gotoEventDetail(delegate: self)
+            Switcher.gotoEventDetail(delegate: self, event: (model as! EventsModel).events[indexPath.row])
         case .tour:
             Switcher.gotoPackageDetail(delegate: self)
         case .blog:
@@ -134,7 +159,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .product:
             Switcher.gotoProductDetail(delegate: self)
         case .adventure:
-            Switcher.gotoAdventureDetail(delegate: self)
+            Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
             Switcher.gotoGalleryDetail(delegate: self)
         default:
@@ -155,6 +180,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
             tableViewContainer.isHidden = false
         }
         addChild(title: item.title ?? "")
+//        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         tableView.reloadData()
     }
     
@@ -167,10 +193,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[1].title{
             mapButton.isHidden = false
             cellType = .attraction
+            fetch(route: .attractionbyDistrict, method: .post, model: AttractionByDistrictModel.self)
         }
         else if title == tabbarItems[2].title{
             mapButton.isHidden = true
             cellType = .adventure
+            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
         }
         else if title == tabbarItems[3].title{
             mapButton.isHidden = false
@@ -191,10 +219,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[7].title{
             mapButton.isHidden = false
             cellType = .event
+            fetch(route: .fetchAllEvents, method: .get, model: EventsModel.self)
         }
         else if title == tabbarItems[8].title{
             mapButton.isHidden = true
             cellType = .blog
+            fetch(route: .fetchBlogs, method: .post, model: BlogsModel.self)
         }
         else if title == tabbarItems[9].title{
             mapButton.isHidden = true
