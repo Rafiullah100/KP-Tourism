@@ -29,4 +29,5 @@ class Helper{
         let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
         return CGSize(width: width, height: width)
     }
+
 }

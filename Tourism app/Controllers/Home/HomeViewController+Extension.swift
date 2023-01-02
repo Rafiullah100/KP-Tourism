@@ -69,7 +69,7 @@ extension HomeViewController{
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
             if nextState == .collapsed {
-                if translation.y > 10 {
+                if translation.y > 20 {
                     continueInteractiveTransition()
                 }
                 mapButton.isHidden = true

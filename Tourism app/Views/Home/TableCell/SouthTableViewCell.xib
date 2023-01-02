@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -28,29 +29,32 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8LA-Rk-E0b">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 5" translatesAutoresizingMaskIntoConstraints="NO" id="Kuz-pt-yOt">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qzE-Jz-pzk" customClass="ImageSlideshow" customModule="ImageSlideshow">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J3J-OD-Oi7">
-                                <rect key="frame" x="15" y="260" width="290" height="26"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="J3J-OD-Oi7">
+                                <rect key="frame" x="15" y="270.5" width="290" height="15.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lakki Marwat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7AC-3J-WI6">
-                                        <rect key="frame" x="0.0" y="0.0" width="79" height="26"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="145" height="15.5"/>
                                         <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Y2e-Mb-bCO">
-                                        <rect key="frame" x="79" y="0.0" width="132" height="26"/>
-                                    </pageControl>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Khyber Pkhtunkhwa" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YV-3X-MeN">
-                                        <rect key="frame" x="211" y="0.0" width="79" height="26"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="9"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Khyber Pkhtunkhwa" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5YV-3X-MeN">
+                                        <rect key="frame" x="145" y="0.0" width="145" height="15.5"/>
+                                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="11"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hWh-HL-ePw">
                                 <rect key="frame" x="285" y="10" width="25" height="25"/>
@@ -62,17 +66,17 @@
                                 <state key="normal" backgroundImage="unfavorite"/>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="J3J-OD-Oi7" firstAttribute="leading" secondItem="8LA-Rk-E0b" secondAttribute="leading" constant="15" id="3b3-Mu-iII"/>
                             <constraint firstAttribute="trailing" secondItem="J3J-OD-Oi7" secondAttribute="trailing" constant="15" id="3h1-Po-Zz1"/>
                             <constraint firstAttribute="bottom" secondItem="J3J-OD-Oi7" secondAttribute="bottom" constant="4" id="4n0-jv-oDK"/>
-                            <constraint firstAttribute="bottom" secondItem="Kuz-pt-yOt" secondAttribute="bottom" id="Bwe-mY-2Tg"/>
                             <constraint firstItem="hWh-HL-ePw" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" constant="10" id="CPm-sW-GL8"/>
-                            <constraint firstItem="Kuz-pt-yOt" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" id="ZC3-0B-QM2"/>
-                            <constraint firstAttribute="trailing" secondItem="Kuz-pt-yOt" secondAttribute="trailing" id="a47-2h-htD"/>
-                            <constraint firstItem="Kuz-pt-yOt" firstAttribute="leading" secondItem="8LA-Rk-E0b" secondAttribute="leading" id="fhJ-Qi-7NV"/>
+                            <constraint firstItem="qzE-Jz-pzk" firstAttribute="leading" secondItem="8LA-Rk-E0b" secondAttribute="leading" id="GAB-C6-luo"/>
+                            <constraint firstItem="qzE-Jz-pzk" firstAttribute="top" secondItem="8LA-Rk-E0b" secondAttribute="top" id="OEc-Fx-Wdu"/>
+                            <constraint firstAttribute="trailing" secondItem="qzE-Jz-pzk" secondAttribute="trailing" id="SLF-u4-3yP"/>
                             <constraint firstAttribute="trailing" secondItem="hWh-HL-ePw" secondAttribute="trailing" constant="10" id="ngb-CI-i91"/>
+                            <constraint firstAttribute="bottom" secondItem="qzE-Jz-pzk" secondAttribute="bottom" id="zEJ-4r-jKO"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -86,13 +90,14 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
-                <outlet property="pageController" destination="Y2e-Mb-bCO" id="MKQ-Y0-4Cq"/>
+                <outlet property="districtLabel" destination="7AC-3J-WI6" id="nZB-zD-oSX"/>
+                <outlet property="kpLabel" destination="5YV-3X-MeN" id="9z8-Xc-Ymn"/>
+                <outlet property="slideShow" destination="qzE-Jz-pzk" id="dJH-JL-c2g"/>
             </connections>
-            <point key="canvasLocation" x="139" y="120"/>
+            <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Mask Group 5" width="1101" height="943"/>
         <image name="unfavorite" width="22" height="21"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

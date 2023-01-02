@@ -144,8 +144,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoBlogDetail(delegate: UIViewController){
+    static func gotoBlogDetail(delegate: UIViewController, blogDetail: Blog){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "BlogDetailViewController") as! BlogDetailViewController
+        vc.blogDetail = blogDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

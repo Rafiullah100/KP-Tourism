@@ -8,8 +8,10 @@
 import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
+import GoogleMaps
+
 class HomeViewController: BaseViewController {
-    
+
     @IBOutlet weak var searchBgView: UIView!
     @IBOutlet weak var notificationView: UIView!
     
@@ -60,6 +62,9 @@ class HomeViewController: BaseViewController {
     var section = [Sections]()
     var tabbarItems = [UITabBarItem]()
     var model: Codable?
+    var totalPages: Int?
+    var currentPage: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +72,7 @@ class HomeViewController: BaseViewController {
         type = .back1
         setupCard()
         configureTabbar()
-        fetch(route: .fetchExpolreDistrict, method: .post, model: ExploreModel.self)
+        fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,13 +80,14 @@ class HomeViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = true
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, model: model) { result in
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let explore):
                 DispatchQueue.main.async {
                     self.model = explore
                     self.tableView.reloadData()
+                    self.showMap()
                 }
             case .failure(let error):
                 if error == .noInternet {
@@ -89,6 +95,22 @@ class HomeViewController: BaseViewController {
                 }
             }
         }
+    }
+    
+    private func showMap(){
+        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 10.0)
+        let mapView = GMSMapView.map(withFrame: mapContainerView.frame, camera: camera)
+        mapView.delegate = self
+        mapContainerView.addSubview(mapView)
+    
+        (model as? ExploreModel)?.attractions.rows.forEach({ district in
+            let marker = GMSMarker()
+            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.iconView = UIImageView(image: UIImage(named: "poi-map-icon"))
+            marker.userData = district.id
+            marker.map = mapView
+        })
     }
 }
 
@@ -105,6 +127,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         }
         else if cellType == .blog{
             return (model as? BlogsModel)?.blog.count ?? 0
+        }
+        else if cellType == .south{
+            return (model as? ExploreModel)?.attractions.count ?? 0
         }
         else{
             return 5
@@ -136,6 +161,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.blog = (model as? BlogsModel)?.blog[indexPath.row]
             return cell
         }
+        else if cellType == .south{
+            let cell: SouthTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! SouthTableViewCell
+            cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
+            return cell
+        }
         else{
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "")!
             return cell
@@ -155,7 +185,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .tour:
             Switcher.gotoPackageDetail(delegate: self)
         case .blog:
-            Switcher.gotoBlogDetail(delegate: self)
+            Switcher.gotoBlogDetail(delegate: self, blogDetail: (model as! BlogsModel).blog[indexPath.row])
         case .product:
             Switcher.gotoProductDetail(delegate: self)
         case .adventure:
@@ -203,6 +233,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[3].title{
             mapButton.isHidden = false
             cellType = .south
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
         }
         else if title == tabbarItems[4].title{
             mapButton.isHidden = true
@@ -230,5 +261,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
             mapButton.isHidden = true
             cellType = .product
         }
+    }
+}
+
+extension HomeViewController: GMSMapViewDelegate{
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        print(marker.userData ?? 0)
+        return true
     }
 }

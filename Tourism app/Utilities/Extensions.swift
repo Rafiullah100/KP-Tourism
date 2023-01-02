@@ -399,6 +399,11 @@ extension UIViewController {
         return String(describing: self)
     }
    
+    public func showAlert(title: String = "", message: String){
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .default))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension UICollectionView{
@@ -474,3 +479,4 @@ extension UICollectionView{
         self.backgroundView = containerView
     }
 }
+

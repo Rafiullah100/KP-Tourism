@@ -34,6 +34,7 @@ extension URLSession{
             }
             do {
                 let result = try JSONDecoder().decode(model, from: data)
+                print(result)
                 completion(.success(result))
             } catch let error {
                 print(error)

@@ -9,6 +9,8 @@ import UIKit
 
 class BlogTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var likesLabel: UILabel!
+    @IBOutlet weak var commentsLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
@@ -17,6 +19,9 @@ class BlogTableViewCell: UITableViewCell {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.thumbnailImage ?? "")))
             titleLabel.text = blog?.title
+            commentsLabel.text = "\(blog?.comments.commentsCount ?? 0)"
+            likesLabel.text = "\(blog?.likes.likesCount ?? 0)"
+            locationLabel.text = "\(blog?.districts.title ?? ""), \(blog?.attractions.title ?? "")"
         }
     }
     
