@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -11,9 +11,6 @@
     <customFonts key="customFonts">
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
-        </array>
-        <array key="Roboto-Light.ttf">
-            <string>Roboto-Light</string>
         </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
@@ -40,6 +37,9 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 14" translatesAutoresizingMaskIntoConstraints="NO" id="MoX-23-Tqe">
                                                 <rect key="frame" x="0.0" y="0.0" width="340" height="322.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="322.5" id="RN5-eJ-Tjy"/>
+                                                </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="UFR-ce-QiF">
                                                 <rect key="frame" x="10" y="15" width="76" height="35"/>
@@ -86,58 +86,65 @@
                                         <rect key="frame" x="0.0" y="330.5" width="340" height="57.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="sLz-KD-D1A">
-                                                <rect key="frame" x="10" y="7.5" width="137.5" height="45"/>
+                                                <rect key="frame" x="10" y="7.5" width="200" height="45"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Naran" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQQ-oq-TOR">
-                                                        <rect key="frame" x="0.0" y="0.0" width="46" height="16"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="46" height="23"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="prJ-ds-9qm">
-                                                        <rect key="frame" x="0.0" y="21" width="137.5" height="24"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Pz0-Zq-oHU">
+                                                        <rect key="frame" x="0.0" y="28" width="141" height="17"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="4.9" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fZQ-IJ-Ne8">
-                                                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="24"/>
-                                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
-                                                                <color key="textColor" name="tabbar-tint"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="IaU-VK-hmh">
-                                                                <rect key="frame" x="37.5" y="0.0" width="46.5" height="24"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="URb-Fc-vVG">
+                                                                <rect key="frame" x="0.0" y="0.0" width="34" height="17"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="IJd-Vh-DQR">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="8.5" height="24"/>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="wCo-e4-WbH">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
                                                                     </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="qNo-9f-rgV">
-                                                                        <rect key="frame" x="9.5" y="0.0" width="8.5" height="24"/>
-                                                                    </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="sfj-Qm-MXz">
-                                                                        <rect key="frame" x="19" y="0.0" width="8.5" height="24"/>
-                                                                    </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="4Di-b8-y6F">
-                                                                        <rect key="frame" x="28.5" y="0.0" width="8.5" height="24"/>
-                                                                    </imageView>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" translatesAutoresizingMaskIntoConstraints="NO" id="kTI-EN-4Pd">
-                                                                        <rect key="frame" x="38" y="0.0" width="8.5" height="24"/>
-                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMI-b6-hYt">
+                                                                        <rect key="frame" x="27" y="0.0" width="7" height="17"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
                                                                 </subviews>
                                                             </stackView>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="632 reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pFe-aU-3M5">
-                                                                <rect key="frame" x="90" y="0.0" width="47.5" height="24"/>
-                                                                <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="9"/>
-                                                                <nil key="textColor"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gye-yg-87x">
+                                                                <rect key="frame" x="54" y="0.0" width="33.5" height="17"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liked" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-U9-f1Y">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16.5" height="17"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-1R-X6z">
+                                                                        <rect key="frame" x="26.5" y="0.0" width="7" height="17"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fhz-sC-5Ia">
+                                                                <rect key="frame" x="107.5" y="0.0" width="33.5" height="17"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liked" translatesAutoresizingMaskIntoConstraints="NO" id="FLc-zg-DQM">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="16.5" height="17"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-bD-hbj">
+                                                                        <rect key="frame" x="26.5" y="0.0" width="7" height="17"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
                                                         </subviews>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="137.5" id="3XL-UG-WwG"/>
-                                                            <constraint firstAttribute="height" constant="24" id="nrS-IA-hUq"/>
-                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="45" id="IHm-de-wMN"/>
+                                                    <constraint firstAttribute="width" constant="200" id="oPb-tn-NAA"/>
                                                 </constraints>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JiZ-hl-e8g">
@@ -195,19 +202,25 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="commentsLabel" destination="gnI-bD-hbj" id="slT-gN-PYQ"/>
+                <outlet property="destinationLabel" destination="se1-8K-LhD" id="GAl-K9-1k0"/>
+                <outlet property="imgView" destination="MoX-23-Tqe" id="xby-dU-elt"/>
+                <outlet property="label" destination="hQQ-oq-TOR" id="s62-IO-RMT"/>
+                <outlet property="likesLabel" destination="BaZ-1R-X6z" id="Am6-Hm-Qz5"/>
+                <outlet property="viewsLabel" destination="sMI-b6-hYt" id="Nhz-8v-1Be"/>
+            </connections>
             <point key="canvasLocation" x="-366.66666666666669" y="-239.73214285714283"/>
         </tableViewCell>
     </objects>
     <resources>
         <image name="Mask Group 14" width="1086" height="870"/>
         <image name="bus" width="34" height="35"/>
+        <image name="comment" width="17" height="17"/>
+        <image name="liked" width="16.5" height="17"/>
         <image name="map" width="14" height="15"/>
         <image name="plan" width="34" height="35"/>
-        <image name="star" width="8.5" height="8.5"/>
         <image name="unfavorite" width="22" height="21"/>
-        <namedColor name="tabbar-tint">
-            <color red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

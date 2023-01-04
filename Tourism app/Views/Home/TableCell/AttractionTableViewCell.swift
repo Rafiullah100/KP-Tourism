@@ -13,18 +13,31 @@ class AttractionTableViewCell: UITableViewCell {
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var favoriteBtn: UIButton!
     
-    let localSource = [BundleImageSource(imageString: "Mask Group 4"), BundleImageSource(imageString: "Mask Group 5"), BundleImageSource(imageString: "Mask Group 14")]
+    @IBOutlet weak var label: UILabel!
+
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        slideShow.slideshowInterval = 2.0
-        slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-        slideShow.isUserInteractionEnabled = false
-        slideShow.setImageInputs(localSource)
+
     }
 
-    static func configureCell() {
-        //
+    var imageSDWebImageSrc = [SDWebImageSource]()
+    
+    var attraction: HomeAttractions? {
+        didSet{
+            label.text = attraction?.title
+            imageSDWebImageSrc = []
+            attraction?.attractionGalleries.forEach({ attration in
+                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""))
+                if let sdURL = imageUrl{
+                    imageSDWebImageSrc.append(sdURL)
+                    slideShow.slideshowInterval = 2.0
+                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+                    slideShow.isUserInteractionEnabled = false
+                    slideShow.setImageInputs(imageSDWebImageSrc)
+                }
+            })
+        }
     }
     
     

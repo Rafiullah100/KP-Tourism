@@ -19,5 +19,5 @@ pod 'IQKeyboardManager' #iOS8 and later
 pod 'ImageSlideshow/SDWebImage'
 pod 'SVProgressHUD'
 pod 'Toast-Swift', '~> 5.0.0'
-
+pod 'AARatingBar'
 end

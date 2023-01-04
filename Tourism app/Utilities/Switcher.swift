@@ -105,11 +105,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoGallery(delegate: UIViewController){
-        let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
-        vc.modalPresentationStyle = .fullScreen
-        delegate.navigationController?.pushViewController(vc, animated: true)
-    }
+//    static func gotoGallery(delegate: UIViewController){
+//        let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ImageViewController") as! ImageViewController
+//        vc.modalPresentationStyle = .fullScreen
+//        delegate.navigationController?.pushViewController(vc, animated: true)
+//    }
     
     static func gotoGalleryDetail(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GalleryDetailViewController") as! GalleryDetailViewController
@@ -170,8 +170,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoPackageDetail(delegate: UIViewController){
+    static func gotoPackageDetail(delegate: UIViewController, tourDetail: TourPackage){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PackageDetailViewController") as! PackageDetailViewController
+        vc.tourDetail = tourDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

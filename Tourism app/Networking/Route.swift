@@ -18,7 +18,10 @@ enum Route {
     case fetchAllEvents
     case fetchAdventure
     case fetchBlogs
-    
+    case fetchTourPackage
+    case fetchGallery
+    case fetchProduct
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -30,13 +33,19 @@ enum Route {
         case .fetchPoiSubCategories:
             return "api/mobile/poi/getbydistrict"
         case .attractionbyDistrict:
-            return "api/mobile/attractions/getbydistrict"
+            return "api/mobile/attractions/list"
         case .fetchAllEvents:
             return "api/mobile/events/getevents"
         case .fetchAdventure:
             return "api/mobile/events/getadventures"
         case .fetchBlogs:
             return "api/mobile/blogs/list"
+        case .fetchTourPackage:
+            return "api/mobile/tour_packages/list"
+        case .fetchGallery:
+            return "api/mobile/attractions/gallery"
+        case .fetchProduct:
+            return "api/mobile/local_products/list"
         }
     }
 }

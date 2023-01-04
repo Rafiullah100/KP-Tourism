@@ -464,7 +464,7 @@ typedef NS_ENUM(NSUInteger, GMSMapViewPaddingAdjustmentBehavior) {
 - (instancetype)initWithFrame:(CGRect)frame camera:(GMSCameraPosition *)camera;
 
 /**
- * Builds and returns a map view with a frame, map ID and camera target.
+ * Builds and returns a map view with a frame, map ID, and camera target.
  */
 - (instancetype)initWithFrame:(CGRect)frame
                         mapID:(GMSMapID *)mapID

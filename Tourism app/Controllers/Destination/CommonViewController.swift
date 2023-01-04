@@ -65,7 +65,7 @@ class CommonViewController: BaseViewController {
         }
         
         thumbnailTopLabel.text = district?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")))
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
         welcomeLabel.text = "Welcome to \(district?.title ?? "")"
         descriptionLabel.text = district?.description
     }

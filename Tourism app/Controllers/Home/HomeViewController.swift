@@ -131,6 +131,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         else if cellType == .south{
             return (model as? ExploreModel)?.attractions.count ?? 0
         }
+        else if cellType == .tour{
+            return (model as? TourModel)?.tour.count ?? 0
+        }
+        else if cellType == .attraction{
+            return (model as? AttractionModel)?.attractions.count ?? 0
+        }
+        else if cellType == .product{
+            return (model as? ProductModel)?.localProducts.count ?? 0
+        }
         else{
             return 5
         }
@@ -144,6 +153,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         }
         else if cellType == .attraction{
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
+            cell.attraction = (model as? AttractionModel)?.attractions[indexPath.row]
             return cell
         }
         else if cellType == .event{
@@ -166,6 +176,15 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
             return cell
         }
+        else if cellType == .tour{
+            let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
+            cell.tour = (model as? TourModel)?.tour[indexPath.row]
+            return cell
+        }
+        else if cellType == .product{
+            let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
+            return cell
+        }
         else{
             let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "")!
             return cell
@@ -183,7 +202,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .event:
             Switcher.gotoEventDetail(delegate: self, event: (model as! EventsModel).events[indexPath.row])
         case .tour:
-            Switcher.gotoPackageDetail(delegate: self)
+            Switcher.gotoPackageDetail(delegate: self, tourDetail: (model as! TourModel).tour[indexPath.row])
         case .blog:
             Switcher.gotoBlogDetail(delegate: self, blogDetail: (model as! BlogsModel).blog[indexPath.row])
         case .product:
@@ -218,12 +237,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
         if title == tabbarItems[0].title {
             mapButton.isHidden = false
             cellType = .explore
-            fetch(route: .fetchExpolreDistrict, method: .post, model: ExploreModel.self)
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
         }
         else if title == tabbarItems[1].title{
             mapButton.isHidden = false
             cellType = .attraction
-            fetch(route: .attractionbyDistrict, method: .post, model: AttractionByDistrictModel.self)
+            fetch(route: .attractionbyDistrict, method: .post, model: AttractionModel.self)
         }
         else if title == tabbarItems[2].title{
             mapButton.isHidden = true
@@ -238,10 +257,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[4].title{
             mapButton.isHidden = true
             cellType = .tour
+            fetch(route: .fetchTourPackage, method: .get, model: TourModel.self)
         }
         else if title == tabbarItems[5].title{
             mapButton.isHidden = true
             self.add(galleryVC, in: galleryContainer)
+            fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
         }
         else if title == tabbarItems[6].title{
             mapButton.isHidden = false
@@ -260,6 +281,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[9].title{
             mapButton.isHidden = true
             cellType = .product
+            fetch(route: .fetchProduct, method: .post, model: ProductModel.self)
         }
     }
 }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class ImageCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier = "cell_identifier"
     override func awakeFromNib() {
@@ -14,4 +14,11 @@ class ImageCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    @IBOutlet weak var imgView: UIImageView!
+    var images: GalleryRows?{
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (images?.image_url ?? "")))
+        }
+    }
+    
 }

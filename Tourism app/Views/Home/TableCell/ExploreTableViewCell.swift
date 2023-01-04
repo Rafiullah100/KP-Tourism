@@ -7,7 +7,6 @@
 
 import UIKit
 import ImageSlideshow
-import SDWebImage
 class ExploreTableViewCell: UITableViewCell {
 
     @IBOutlet weak var container: UIView!

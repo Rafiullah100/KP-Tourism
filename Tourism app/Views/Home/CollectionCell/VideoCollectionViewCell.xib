@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,8 +21,13 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H3p-XB-OfF">
                         <rect key="frame" x="0.0" y="0.0" width="120" height="100"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video" translatesAutoresizingMaskIntoConstraints="NO" id="82U-B8-qpt">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video" translatesAutoresizingMaskIntoConstraints="NO" id="82U-B8-qpt">
                                 <rect key="frame" x="0.0" y="0.0" width="118" height="100"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Rki-ID-ayA">
                                 <rect key="frame" x="10" y="10" width="12" height="12"/>
@@ -40,6 +46,11 @@
                             <constraint firstItem="82U-B8-qpt" firstAttribute="leading" secondItem="H3p-XB-OfF" secondAttribute="leading" id="fvs-vd-34n"/>
                             <constraint firstAttribute="bottom" secondItem="82U-B8-qpt" secondAttribute="bottom" id="nFm-Uh-A0F"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>
@@ -50,6 +61,9 @@
                 <constraint firstAttribute="trailing" secondItem="H3p-XB-OfF" secondAttribute="trailing" id="XSH-5M-YpK"/>
                 <constraint firstItem="H3p-XB-OfF" firstAttribute="leading" secondItem="day-Ts-teM" secondAttribute="leading" id="soL-hH-Hen"/>
             </constraints>
+            <connections>
+                <outlet property="imgView" destination="82U-B8-qpt" id="dwh-4H-S4h"/>
+            </connections>
             <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
         </collectionViewCell>
     </objects>

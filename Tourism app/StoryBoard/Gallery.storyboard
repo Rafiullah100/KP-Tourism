@@ -25,6 +25,75 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hyf-Ne-M3R">
                                 <rect key="frame" x="0.0" y="88" width="434" height="808"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lua-sZ-rdY" customClass="ASCollectionView" customModule="Tourism_app" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewLayout key="collectionViewLayout" id="teC-02-LBb" customClass="ASCollectionViewLayout" customModule="Tourism_app" customModuleProvider="target"/>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="TBy-ZZ-dK8" customClass="GridCell" customModule="Tourism_app" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="11" width="156" height="67"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Urd-fQ-YZz">
+                                                            <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gallery-image" translatesAutoresizingMaskIntoConstraints="NO" id="ykV-Jg-osc">
+                                                            <rect key="frame" x="10" y="10" width="15" height="15"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="IWC-4Z-cJJ"/>
+                                                                <constraint firstAttribute="height" constant="15" id="QX1-1q-TUu"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstItem="ykV-Jg-osc" firstAttribute="leading" secondItem="TBy-ZZ-dK8" secondAttribute="leading" constant="10" id="A6k-up-jdt"/>
+                                                    <constraint firstAttribute="bottom" secondItem="Urd-fQ-YZz" secondAttribute="bottom" id="hUH-yr-u18"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Urd-fQ-YZz" secondAttribute="trailing" id="htP-ZX-O3P"/>
+                                                    <constraint firstItem="Urd-fQ-YZz" firstAttribute="leading" secondItem="TBy-ZZ-dK8" secondAttribute="leading" id="kud-3C-yL3"/>
+                                                    <constraint firstItem="Urd-fQ-YZz" firstAttribute="top" secondItem="TBy-ZZ-dK8" secondAttribute="top" id="s5p-2D-yMG"/>
+                                                    <constraint firstItem="ykV-Jg-osc" firstAttribute="top" secondItem="TBy-ZZ-dK8" secondAttribute="top" constant="10" id="vWq-LT-S8Y"/>
+                                                </constraints>
+                                                <size key="customSize" width="156" height="67"/>
+                                                <connections>
+                                                    <outlet property="imgView" destination="Urd-fQ-YZz" id="F74-Wa-Aib"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="parallaxCell" id="RrP-yq-hEs" customClass="ParallaxCell" customModule="Tourism_app" customModuleProvider="target">
+                                                <rect key="frame" x="166" y="0.0" width="224" height="89"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="224" height="89"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gallery-image" translatesAutoresizingMaskIntoConstraints="NO" id="oHV-J8-Hzq">
+                                                            <rect key="frame" x="10" y="10" width="15" height="15"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="15" id="6C6-Kn-uI7"/>
+                                                                <constraint firstAttribute="height" constant="15" id="UhK-PM-AxK"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstItem="oHV-J8-Hzq" firstAttribute="leading" secondItem="RrP-yq-hEs" secondAttribute="leading" constant="10" id="H7P-e2-U17"/>
+                                                    <constraint firstItem="oHV-J8-Hzq" firstAttribute="top" secondItem="RrP-yq-hEs" secondAttribute="top" constant="10" id="K0v-af-JKJ"/>
+                                                </constraints>
+                                                <size key="customSize" width="224" height="89"/>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Lua-sZ-rdY" firstAttribute="leading" secondItem="Hyf-Ne-M3R" secondAttribute="leading" id="5gh-mM-eQu"/>
+                                    <constraint firstItem="Lua-sZ-rdY" firstAttribute="top" secondItem="Hyf-Ne-M3R" secondAttribute="top" id="5pS-iZ-h8L"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lua-sZ-rdY" secondAttribute="trailing" constant="20" id="Agp-hG-toP"/>
+                                    <constraint firstAttribute="bottom" secondItem="Lua-sZ-rdY" secondAttribute="bottom" id="p7Q-eb-b2s"/>
+                                </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ffW-s5-m38" customClass="MDCTabBarView">
                                 <rect key="frame" x="40" y="48" width="334" height="40"/>
@@ -46,6 +115,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="collectionView" destination="Lua-sZ-rdY" id="f57-mN-irf"/>
                         <outlet property="containerView" destination="Hyf-Ne-M3R" id="1RQ-qX-LGj"/>
                         <outlet property="tabbarView" destination="ffW-s5-m38" id="9pb-9g-phL"/>
                     </connections>
@@ -351,8 +421,13 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iiz-ww-iGa">
                                                         <rect key="frame" x="0.0" y="0.0" width="386" height="300"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swat" translatesAutoresizingMaskIntoConstraints="NO" id="Eux-XW-1q7">
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="Eux-XW-1q7">
                                                                 <rect key="frame" x="0.0" y="0.0" width="386" height="300"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lhR-tz-t3K">
                                                                 <rect key="frame" x="334" y="12" width="40" height="40"/>
@@ -380,6 +455,11 @@
                                                             <constraint firstItem="Eux-XW-1q7" firstAttribute="leading" secondItem="Iiz-ww-iGa" secondAttribute="leading" id="meL-zC-ARf"/>
                                                             <constraint firstItem="Eux-XW-1q7" firstAttribute="top" secondItem="Iiz-ww-iGa" secondAttribute="top" id="rMV-3D-a6c"/>
                                                         </constraints>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                <real key="value" value="10"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OT7-dx-zvK">
                                                         <rect key="frame" x="0.0" y="320" width="386" height="140"/>
@@ -648,6 +728,7 @@
                     <size key="freeformSize" width="414" height="950"/>
                     <connections>
                         <outlet property="imageCollectionView" destination="x18-zE-XjE" id="Fzp-mm-Avg"/>
+                        <outlet property="imageView" destination="Eux-XW-1q7" id="MZe-YU-jbh"/>
                         <outlet property="videoCollectionView" destination="KHg-Xz-Abl" id="ra0-8S-O33"/>
                         <outlet property="virtualCollectionView" destination="PS8-e9-TA7" id="S8u-xy-Ot9"/>
                     </connections>
@@ -660,7 +741,7 @@
     <resources>
         <image name="arrow-forward" width="17" height="10"/>
         <image name="gallery-image" width="15" height="15"/>
-        <image name="swat" width="1104" height="936"/>
+        <image name="placeholder" width="1000" height="624"/>
         <image name="unfavorite" width="22" height="21"/>
         <image name="video-icon" width="14" height="14"/>
         <systemColor name="opaqueSeparatorColor">
