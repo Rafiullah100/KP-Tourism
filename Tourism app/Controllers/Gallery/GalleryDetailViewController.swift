@@ -96,7 +96,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
 
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
-        gridCell.imgView.image = UIImage(named: "swat")
+        gridCell.imageView.image = UIImage(named: "swat")
         return gridCell
     }
 
@@ -113,7 +113,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
     
     class GridCell: UICollectionViewCell {
 
-        @IBOutlet weak var imgView: UIImageView!
+        @IBOutlet weak var imageView: UIImageView!
     }
 
     class ParallaxCell: ASCollectionViewParallaxCell {

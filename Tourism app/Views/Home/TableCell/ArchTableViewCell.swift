@@ -6,9 +6,12 @@
 //
 
 import UIKit
-
+import ImageSlideshow
 class ArchTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var slideShow: ImageSlideshow!
+    @IBOutlet weak var districtLabel: UILabel!
+    @IBOutlet weak var archeologyLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,4 +23,23 @@ class ArchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    var imageSDWebImageSrc = [SDWebImageSource]()
+    
+    var archeology: Archeology? {
+        didSet{
+            districtLabel.text = archeology?.title
+//            archeologyLabel.text = archeology.
+            imageSDWebImageSrc = []
+//            archeology?.attractions.forEach({ attration in
+            let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (archeology?.attractions.displayImage ?? ""))
+                if let sdURL = imageUrl{
+                    imageSDWebImageSrc.append(sdURL)
+                    slideShow.slideshowInterval = 2.0
+                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+                    slideShow.isUserInteractionEnabled = false
+                    slideShow.setImageInputs(imageSDWebImageSrc)
+                }
+//            })
+        }
+    }
 }

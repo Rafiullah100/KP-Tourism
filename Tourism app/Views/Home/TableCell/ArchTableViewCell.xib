@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -25,33 +26,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQ1-LQ-JBT">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FQ1-LQ-JBT" customClass="ImageSlideshow" customModule="ImageSlideshow">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 43232" translatesAutoresizingMaskIntoConstraints="NO" id="z42-o5-spP">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJh-7R-I7I">
-                                <rect key="frame" x="15" y="260" width="290" height="26"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Buddhist Monastry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6In-tB-x84">
-                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="26"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Qwl-u9-avz">
-                                        <rect key="frame" x="111.5" y="0.0" width="129" height="26"/>
-                                    </pageControl>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Mardan KPK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pga-pV-UEC">
-                                        <rect key="frame" x="240.5" y="0.0" width="49.5" height="26"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="9"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKN-hm-uz9">
                                 <rect key="frame" x="272" y="8" width="40" height="40"/>
                                 <constraints>
@@ -64,32 +41,54 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="RJh-7R-I7I" secondAttribute="bottom" constant="4" id="442-N2-GQw"/>
-                            <constraint firstItem="RJh-7R-I7I" firstAttribute="leading" secondItem="FQ1-LQ-JBT" secondAttribute="leading" constant="15" id="4i2-EF-Pds"/>
-                            <constraint firstItem="z42-o5-spP" firstAttribute="leading" secondItem="FQ1-LQ-JBT" secondAttribute="leading" id="Kmu-Gr-VHM"/>
-                            <constraint firstAttribute="bottom" secondItem="z42-o5-spP" secondAttribute="bottom" id="TxU-HF-CGV"/>
                             <constraint firstItem="AKN-hm-uz9" firstAttribute="top" secondItem="FQ1-LQ-JBT" secondAttribute="top" constant="8" id="UtJ-7p-FgS"/>
-                            <constraint firstAttribute="trailing" secondItem="RJh-7R-I7I" secondAttribute="trailing" constant="15" id="d14-ti-sJ1"/>
-                            <constraint firstItem="z42-o5-spP" firstAttribute="top" secondItem="FQ1-LQ-JBT" secondAttribute="top" id="qEB-yN-I3z"/>
-                            <constraint firstAttribute="trailing" secondItem="z42-o5-spP" secondAttribute="trailing" id="s7b-XZ-zPx"/>
                             <constraint firstAttribute="trailing" secondItem="AKN-hm-uz9" secondAttribute="trailing" constant="8" id="yD7-0b-Iq4"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
+                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RJh-7R-I7I">
+                        <rect key="frame" x="15" y="264.5" width="290" height="15.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Buddhist Monastry" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6In-tB-x84">
+                                <rect key="frame" x="0.0" y="0.0" width="240.5" height="15.5"/>
+                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Mardan KPK" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pga-pV-UEC">
+                                <rect key="frame" x="240.5" y="0.0" width="49.5" height="15.5"/>
+                                <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="9"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="RJh-7R-I7I" secondAttribute="trailing" constant="15" id="4Mc-Gr-Ifp"/>
+                    <constraint firstItem="RJh-7R-I7I" firstAttribute="leading" secondItem="ead-0f-DoR" secondAttribute="leading" constant="15" id="A54-Xz-TEm"/>
                     <constraint firstItem="FQ1-LQ-JBT" firstAttribute="leading" secondItem="ead-0f-DoR" secondAttribute="leading" id="Fvx-A9-Atq"/>
                     <constraint firstItem="FQ1-LQ-JBT" firstAttribute="top" secondItem="ead-0f-DoR" secondAttribute="top" id="N1i-p8-8GX"/>
+                    <constraint firstAttribute="bottom" secondItem="RJh-7R-I7I" secondAttribute="bottom" constant="20" id="ObT-gc-H0p"/>
                     <constraint firstAttribute="bottom" secondItem="FQ1-LQ-JBT" secondAttribute="bottom" constant="10" id="xSx-4F-3oI"/>
                     <constraint firstAttribute="trailing" secondItem="FQ1-LQ-JBT" secondAttribute="trailing" id="yaj-cc-AFi"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="3lG-1T-oHz"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-            <point key="canvasLocation" x="148" y="-19"/>
+            <connections>
+                <outlet property="archeologyLabel" destination="6In-tB-x84" id="txD-T5-xGT"/>
+                <outlet property="districtLabel" destination="pga-pV-UEC" id="V1N-p3-py3"/>
+                <outlet property="slideShow" destination="FQ1-LQ-JBT" id="t1j-op-E1A"/>
+            </connections>
+            <point key="canvasLocation" x="147.82608695652175" y="-19.419642857142858"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="Mask Group 43232" width="1101" height="943"/>
         <image name="unfavorite" width="22" height="21"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

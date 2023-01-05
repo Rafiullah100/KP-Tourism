@@ -28,7 +28,7 @@ struct LocalProduct: Codable {
     let isFeatured: Bool
     let approvedBy: String?
     let viewsCounter: Int
-    let districts: Districts
+    let districts: ProductDistricts
     let users: ProductUsers
     let comments: [ProductComment]
     let likes: [ProductLike]

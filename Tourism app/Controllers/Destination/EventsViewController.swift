@@ -18,37 +18,64 @@ class EventsViewController: BaseViewController {
             tableView.register(UINib(nibName: "EventTableViewCell", bundle: nil), forCellReuseIdentifier: EventTableViewCell.cellReuseIdentifier())
         }
     }
-    var locationCategory: LocationCategory?
-
+    var exploreDistrict: ExploreDistrict?
+    var eventDetail: EventsModel?
+    
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        guard let districtId = exploreDistrict?.id else {
+            return
+        }
+        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": districtId], model: EventsModel.self)
     }
     
-    func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let events):
+                DispatchQueue.main.async {
+                    self.eventDetail = events as? EventsModel
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
+            }
         }
+    }
+    
+    
+    func updateUI() {
+//        switch locationCategory {
+//        case .district:
+//            thumbnailTopLabel.text = "Swat"
+//            thumbnailBottomLabel.text = "KP"
+//            thumbnail.image = UIImage(named: "Path 94")
+//        case .tourismSpot:
+//            thumbnailTopLabel.text = "Kalam"
+//            thumbnailBottomLabel.text = "Swat"
+//            thumbnail.image = UIImage(named: "iten")
+//        default:
+//            break
+//        }
+        thumbnailTopLabel.text = exploreDistrict?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }
 }
 
 extension EventsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return eventDetail?.events.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell") as! EventTableViewCell
+        cell.event = eventDetail?.events[indexPath.row]
         return cell
     }
 }
@@ -59,6 +86,7 @@ extension EventsViewController: UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        Switcher.gotoEventDetail(delegate: self, event: <#EventListModel#>)
+        guard let event = eventDetail?.events[indexPath.row] else { return }
+        Switcher.gotoEventDetail(delegate: self, event: event)
     }
 }

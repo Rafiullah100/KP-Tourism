@@ -17,9 +17,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
-    static func gotoAbout(delegate: UIViewController, locationCategory: LocationCategory){
+    static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
-        vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -84,9 +84,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToEvents(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToEvents(delegate: UIViewController, exploreDistrict: ExploreDistrict){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController
-        vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -98,9 +98,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToProducts(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToProducts(delegate: UIViewController, exploreDistrict: ExploreDistrict){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "LocalProductsViewController") as! LocalProductsViewController
-        vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -151,8 +151,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoProductDetail(delegate: UIViewController){
+    static func gotoProductDetail(delegate: UIViewController, product: LocalProduct){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
+        vc.productDetail = product
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

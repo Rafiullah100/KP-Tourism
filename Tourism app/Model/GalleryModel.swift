@@ -7,32 +7,35 @@
 
 import Foundation
 
+
 struct GalleryModel : Codable {
     let attraction : [GalleryAttraction]?
     let images : GalleryImages?
     let videos : Videos?
-    let virtualTours : VirtualTours?
+    let virtual_tours : VirtualTours?
 
     enum CodingKeys: String, CodingKey {
 
         case attraction = "attraction"
         case images = "images"
         case videos = "videos"
-        case virtualTours = "virtual_tours"
+        case virtual_tours = "virtual_tours"
     }
+
 }
 
 struct GalleryAttraction : Codable {
     let id : Int?
     let title : String?
-    let displayImage : String?
+    let display_image : String?
 
     enum CodingKeys: String, CodingKey {
 
         case id = "id"
         case title = "title"
-        case displayImage = "display_image"
+        case display_image = "display_image"
     }
+
 }
 
 struct GalleryImages : Codable {
@@ -40,10 +43,11 @@ struct GalleryImages : Codable {
     let rows : [GalleryRows]?
 
     enum CodingKeys: String, CodingKey {
-        
+
         case count = "count"
         case rows = "rows"
     }
+
 
 }
 
@@ -57,13 +61,12 @@ struct Videos : Codable {
         case rows = "rows"
     }
 
- 
-
+   
 }
 
 struct VirtualTours : Codable {
     let count : Int?
-    let rows : [String]?
+    let rows : [GalleryRows]?
 
     enum CodingKeys: String, CodingKey {
 
@@ -71,8 +74,10 @@ struct VirtualTours : Codable {
         case rows = "rows"
     }
 
+  
 
 }
+
 
 struct GalleryRows : Codable {
     let id : Int?
@@ -95,6 +100,7 @@ struct GalleryRows : Codable {
         case video_url = "video_url"
         case virtual_url = "virtual_url"
     }
+
 
 
 }

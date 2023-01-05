@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -39,6 +40,11 @@
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 22" translatesAutoresizingMaskIntoConstraints="NO" id="XMx-j7-sHo">
                                                 <rect key="frame" x="0.0" y="0.0" width="316" height="269"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -48,6 +54,11 @@
                                             <constraint firstAttribute="trailing" secondItem="XMx-j7-sHo" secondAttribute="trailing" id="RcV-u2-Ibp"/>
                                             <constraint firstItem="XMx-j7-sHo" firstAttribute="leading" secondItem="S8y-Sv-XJJ" secondAttribute="leading" id="wPd-Fc-YZg"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOL-0l-eQ7">
                                         <rect key="frame" x="0.0" y="273" width="316" height="60"/>
@@ -160,6 +171,14 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="locationLabel" destination="ZTZ-gC-Jpa" id="a6n-Sl-kDP"/>
+                <outlet property="ownerImageView" destination="bCI-Jf-Adr" id="fjq-fO-bCA"/>
+                <outlet property="ownerNameLAbel" destination="nqW-ox-giL" id="2SX-gy-tYj"/>
+                <outlet property="productNameLabel" destination="iJq-KF-4Bf" id="9jA-Jv-Q8d"/>
+                <outlet property="thumbnailImageView" destination="XMx-j7-sHo" id="Uhk-Rg-xYf"/>
+                <outlet property="uploadedTimeLabel" destination="cJx-0j-dLP" id="tXf-Tk-wFQ"/>
+            </connections>
             <point key="canvasLocation" x="140.57971014492756" y="99.776785714285708"/>
         </tableViewCell>
     </objects>

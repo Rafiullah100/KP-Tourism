@@ -47,7 +47,8 @@ class CommonViewController: BaseViewController {
 //    }
     
     @IBAction func gotoAbout(_ sender: Any) {
-        Switcher.gotoAbout(delegate: self, locationCategory: locationCategory)
+        guard let district = district else { return  }
+        Switcher.gotoAbout(delegate: self, exploreDetail: district)
     }
     
     func updateUI() {
@@ -87,24 +88,24 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let district = district else { return }
         switch indexPath.row {
         case 0:
             Switcher.goToAttraction(delegate: self, locationCategory: locationCategory)
         case 1:
             Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
         case 2:
-            guard let district = district else { return }
             Switcher.goToPOI(delegate: self, locationCategory: locationCategory, district: district)
         case 3:
             Switcher.goToAccomodation(delegate: self, locationCategory: locationCategory)
         case 4:
-            Switcher.goToEvents(delegate: self, locationCategory: locationCategory)
+            Switcher.goToEvents(delegate: self, exploreDistrict: district)
         case 5:
             Switcher.gotoGalleryDetail(delegate: self)
         case 6:
             Switcher.goToItinrary(delegate: self, locationCategory: locationCategory)
         case 7:
-            Switcher.goToProducts(delegate: self, locationCategory: locationCategory)
+            Switcher.goToProducts(delegate: self, exploreDistrict: district)
         default:
             break
         }

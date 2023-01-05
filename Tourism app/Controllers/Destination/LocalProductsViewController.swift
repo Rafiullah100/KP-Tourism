@@ -18,27 +18,50 @@ class LocalProductsViewController: BaseViewController {
             collecttionView.register(UINib(nibName: "DestProductCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DestProductCollectionViewCell.cellIdentifier)
         }
     }
-    var locationCategory: LocationCategory?
-
+    var exploreDistrict: ExploreDistrict?
+    var productDetail: ProductModel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        guard let districtId = exploreDistrict?.id else {
+            return
+        }
+        fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": districtId], model: ProductModel.self)
     }
     
     func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
+//        switch locationCategory {
+//        case .district:
+//            thumbnailTopLabel.text = "Swat"
+//            thumbnailBottomLabel.text = "KP"
+//            thumbnail.image = UIImage(named: "Path 94")
+//        case .tourismSpot:
+//            thumbnailTopLabel.text = "Kalam"
+//            thumbnailBottomLabel.text = "Swat"
+//            thumbnail.image = UIImage(named: "iten")
+//        default:
+//            break
+//        }
+        thumbnailTopLabel.text = exploreDistrict?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let product):
+                DispatchQueue.main.async {
+                    self.productDetail = product as? ProductModel
+                    self.collecttionView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.collecttionView.noInternet()
+                }
+            }
         }
     }
     
@@ -49,16 +72,18 @@ class LocalProductsViewController: BaseViewController {
 
 extension LocalProductsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return productDetail?.localProducts.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestProductCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestProductCollectionViewCell.cellIdentifier, for: indexPath) as! DestProductCollectionViewCell
+        cell.product = productDetail?.localProducts[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoProductDetail(delegate: self)
+        guard let product = productDetail?.localProducts[indexPath.row] else { return }
+        Switcher.gotoProductDetail(delegate: self, product: product)
     }
 }
 

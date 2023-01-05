@@ -140,6 +140,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         else if cellType == .product{
             return (model as? ProductModel)?.localProducts.count ?? 0
         }
+        else if cellType == .arch{
+            return (model as? ArcheologyModel)?.archeology.count ?? 0
+        }
         else{
             return 5
         }
@@ -183,6 +186,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         }
         else if cellType == .product{
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
+            cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
+            return cell
+        }
+        else if cellType == .arch{
+            let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
+            cell.archeology = (model as? ArcheologyModel)?.archeology[indexPath.row]
             return cell
         }
         else{
@@ -206,7 +215,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .blog:
             Switcher.gotoBlogDetail(delegate: self, blogDetail: (model as! BlogsModel).blog[indexPath.row])
         case .product:
-            Switcher.gotoProductDetail(delegate: self)
+            Switcher.gotoProductDetail(delegate: self, product: (model as! ProductModel).localProducts[indexPath.row])
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
@@ -267,6 +276,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[6].title{
             mapButton.isHidden = false
             cellType = .arch
+            fetch(route: .fetchArcheology, method: .post, model: ArcheologyModel.self)
         }
         else if title == tabbarItems[7].title{
             mapButton.isHidden = false

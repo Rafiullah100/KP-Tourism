@@ -21,7 +21,11 @@ enum Route {
     case fetchTourPackage
     case fetchGallery
     case fetchProduct
+    case fetchArcheology
+    case fetchEventsByDistrict
+    case fetchProductByDistrict
 
+    
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -46,6 +50,12 @@ enum Route {
             return "api/mobile/attractions/gallery"
         case .fetchProduct:
             return "api/mobile/local_products/list"
+        case .fetchArcheology:
+            return "api/mobile/attractions/getarcheology"
+        case .fetchEventsByDistrict:
+            return "api/mobile/events/geteventsbydistrict"
+        case .fetchProductByDistrict:
+            return "api/mobile/local_products/getbydistrict"
         }
     }
 }

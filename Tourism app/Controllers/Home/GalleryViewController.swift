@@ -57,7 +57,7 @@ class GalleryViewController: BaseViewController {
             case .success(let gallery):
                 DispatchQueue.main.async {
                     self.gallery = gallery as? GalleryModel
-                    self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?[0].displayImage ?? "")))
+                    self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?[0].display_image ?? "")))
                     self.imageCollectionView.reloadData()
                     self.videoCollectionView.reloadData()
                 }
@@ -101,7 +101,7 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //Switcher.gotoGalleryDetail(delegate: self)
+        Switcher.gotoGalleryDetail(delegate: self)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
