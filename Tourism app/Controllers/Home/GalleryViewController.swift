@@ -101,7 +101,8 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoGalleryDetail(delegate: self)
+        guard let gallery = gallery else { return }
+        Switcher.gotoGalleryDetail(delegate: self, galleryDetail: gallery)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

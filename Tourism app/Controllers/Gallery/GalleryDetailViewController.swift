@@ -7,7 +7,7 @@
 
 import UIKit
 import MaterialComponents.MaterialTabs_TabBarView
-
+import SDWebImage
 class GalleryDetailViewController: BaseViewController {
 
     @IBOutlet weak var containerView: UIView!
@@ -18,6 +18,8 @@ class GalleryDetailViewController: BaseViewController {
     var numberOfItems: Int = 10
     let collectionElementKindHeader = "Header"
     let collectionElementKindMoreLoader = "MoreLoader"
+    
+    var galleryDetail: GalleryModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,34 +91,33 @@ extension GalleryDetailViewController: ASCollectionViewDelegate {
 }
 
 extension GalleryDetailViewController: ASCollectionViewDataSource {
-
+    
     func numberOfItemsInASCollectionView(_ asCollectionView: ASCollectionView) -> Int {
-        return numberOfItems
+        return galleryDetail?.images?.rows?.count ?? 0
     }
-
+    
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
-        gridCell.imageView.image = UIImage(named: "swat")
+        gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         return gridCell
     }
-
+    
     func collectionView(_ asCollectionView: ASCollectionView, parallaxCellForItemAtIndexPath indexPath: IndexPath) -> ASCollectionViewParallaxCell {
         let parallaxCell = collectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
-//        parallaxCell.updateParallaxImage(UIImage(named: "swat") ?? UIImage())
+        parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         return parallaxCell
     }
-
+    
     func collectionView(_ asCollectionView: ASCollectionView, headerAtIndexPath indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ASCollectionViewElement.Header, withReuseIdentifier: "header", for: indexPath)
         return header
     }
+}
     
     class GridCell: UICollectionViewCell {
 
-        @IBOutlet weak var imageView: UIImageView!
+        @IBOutlet var imageView: UIImageView!
     }
 
     class ParallaxCell: ASCollectionViewParallaxCell {
-
     }
-}

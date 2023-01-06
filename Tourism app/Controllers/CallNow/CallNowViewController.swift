@@ -16,4 +16,8 @@ class CallNowViewController: BaseViewController {
         viewControllerTitle = "Tourism Emergency Helpline"
     }
 
+    @IBAction func callnowBtn(_ sender: Any) {
+        let url: NSURL = URL(string: "TEL://1422")! as NSURL
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
+    }
 }

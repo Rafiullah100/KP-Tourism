@@ -111,8 +111,9 @@ class Switcher {
 //        delegate.navigationController?.pushViewController(vc, animated: true)
 //    }
     
-    static func gotoGalleryDetail(delegate: UIViewController){
+    static func gotoGalleryDetail(delegate: UIViewController, galleryDetail: GalleryModel){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GalleryDetailViewController") as! GalleryDetailViewController
+        vc.galleryDetail = galleryDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

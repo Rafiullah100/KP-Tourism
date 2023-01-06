@@ -219,7 +219,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
-            Switcher.gotoGalleryDetail(delegate: self)
+            print("lnk")
+//            Switcher.gotoGalleryDetail(delegate: self)
         default:
             break
         }

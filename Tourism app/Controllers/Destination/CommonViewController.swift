@@ -101,7 +101,8 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 4:
             Switcher.goToEvents(delegate: self, exploreDistrict: district)
         case 5:
-            Switcher.gotoGalleryDetail(delegate: self)
+            print("kmokn")
+//            Switcher.gotoGalleryDetail(delegate: self)
         case 6:
             Switcher.goToItinrary(delegate: self, locationCategory: locationCategory)
         case 7:
