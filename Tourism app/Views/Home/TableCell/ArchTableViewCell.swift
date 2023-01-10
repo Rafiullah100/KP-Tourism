@@ -28,10 +28,10 @@ class ArchTableViewCell: UITableViewCell {
     var archeology: Archeology? {
         didSet{
             districtLabel.text = archeology?.title
-//            archeologyLabel.text = archeology.
+            archeologyLabel.text = archeology?.districts?.title
             imageSDWebImageSrc = []
-//            archeology?.attractions.forEach({ attration in
-            let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (archeology?.attractions.displayImage ?? ""))
+            archeology?.archeologyAttractions?.forEach({ attration in
+                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.image_url ?? ""), placeholder: UIImage(named: "placeholder"))
                 if let sdURL = imageUrl{
                     imageSDWebImageSrc.append(sdURL)
                     slideShow.slideshowInterval = 2.0
@@ -39,7 +39,7 @@ class ArchTableViewCell: UITableViewCell {
                     slideShow.isUserInteractionEnabled = false
                     slideShow.setImageInputs(imageSDWebImageSrc)
                 }
-//            })
+            })
         }
     }
 }

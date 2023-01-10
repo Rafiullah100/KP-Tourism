@@ -7,19 +7,25 @@
 
 import Foundation
 
+
 struct AttractionModel: Codable {
-    let attractions: [HomeAttractions]
+    let attractions: HomeAttractions
 }
 
-// MARK: - Attraction
 struct HomeAttractions: Codable {
+    let count: Int
+    let rows: [AttractionsDistrict]
+}
+
+
+struct AttractionsDistrict: Codable {
     let id: Int
     let title, slug: String
     let districtID: Int
     let isTopAttraction, family, adults: Bool
     let locationTitle: String
     let latitude, longitude: String?
-    let attractionDescription, displayImage, previewImage: String
+    let description, displayImage, previewImage: String
     let authorID: Int
     let parentID: Int?
     let type: String
@@ -33,8 +39,7 @@ struct HomeAttractions: Codable {
         case isTopAttraction = "is_top_attraction"
         case family, adults
         case locationTitle = "location_title"
-        case latitude, longitude
-        case attractionDescription = "description"
+        case latitude, longitude, description
         case displayImage = "display_image"
         case previewImage = "preview_image"
         case authorID = "author_id"
@@ -46,7 +51,6 @@ struct HomeAttractions: Codable {
     }
 }
 
-// MARK: - AttractionGallery
 struct AttractionGallery: Codable {
     let id, attractionID, subAttractionID: Int
     let type, title: String
@@ -66,3 +70,5 @@ struct AttractionGallery: Codable {
         case status, isDeleted, createdAt, updatedAt
     }
 }
+
+

@@ -26,25 +26,11 @@ class LocalProductsViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         updateUI()
-        guard let districtId = exploreDistrict?.id else {
-            return
-        }
-        fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": districtId], model: ProductModel.self)
+        
+        fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ProductModel.self)
     }
     
     func updateUI() {
-//        switch locationCategory {
-//        case .district:
-//            thumbnailTopLabel.text = "Swat"
-//            thumbnailBottomLabel.text = "KP"
-//            thumbnail.image = UIImage(named: "Path 94")
-//        case .tourismSpot:
-//            thumbnailTopLabel.text = "Kalam"
-//            thumbnailBottomLabel.text = "Swat"
-//            thumbnail.image = UIImage(named: "iten")
-//        default:
-//            break
-//        }
         thumbnailTopLabel.text = exploreDistrict?.title
         thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }

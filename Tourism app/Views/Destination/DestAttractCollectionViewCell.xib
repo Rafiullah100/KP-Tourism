@@ -27,6 +27,11 @@
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swatt1" translatesAutoresizingMaskIntoConstraints="NO" id="Kzw-jt-sOD">
                         <rect key="frame" x="0.0" y="0.0" width="286" height="300"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="imA-kJ-22s">
                         <rect key="frame" x="12" y="276" width="262" height="19"/>
@@ -69,6 +74,11 @@
                 <constraint firstAttribute="trailing" secondItem="Rbo-Qs-egT" secondAttribute="trailing" constant="12" id="zvm-pv-owR"/>
             </constraints>
             <size key="customSize" width="286" height="184"/>
+            <connections>
+                <outlet property="attractionLabel" destination="VLZ-3X-hVb" id="xHg-wQ-Brn"/>
+                <outlet property="imgView" destination="Kzw-jt-sOD" id="fJT-GH-Iij"/>
+                <outlet property="provinceLabel" destination="oL3-7F-EAE" id="SFY-ts-g1J"/>
+            </connections>
             <point key="canvasLocation" x="308.69565217391306" y="164.73214285714286"/>
         </collectionViewCell>
     </objects>

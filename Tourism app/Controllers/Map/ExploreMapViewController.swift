@@ -23,6 +23,7 @@ class ExploreMapViewController: UIViewController {
             let marker = GMSMarker()
             marker.position = CLLocationCoordinate2D(latitude: item.lat, longitude: item.long)
             marker.iconView = CustomMakerView(frame: CGRect(x: 0, y: 0, width: 55, height: 30))
+            marker.icon = UIImage(named: "marker")
             marker.userData = item
             marker.map = mapView
         }

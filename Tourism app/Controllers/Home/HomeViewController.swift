@@ -24,6 +24,7 @@ class HomeViewController: BaseViewController {
     @IBOutlet weak var tableViewContainer: UIView!
     @IBOutlet weak var galleryContainer: UIView!
     
+    @IBOutlet weak var siteLabel: UILabel!
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -107,7 +108,7 @@ class HomeViewController: BaseViewController {
             let marker = GMSMarker()
             guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
             marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "poi-map-icon"))
+            marker.iconView = UIImageView(image: UIImage(named: "marker"))
             marker.userData = district.id
             marker.map = mapView
         })
@@ -116,87 +117,77 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if cellType == .explore {
+        
+        switch cellType {
+        case .explore:
+            siteLabel.text = "\((model as? ExploreModel)?.attractions.rows.count ?? 0) Explore Sites"
             return (model as? ExploreModel)?.attractions.rows.count ?? 0
-        }
-        else if cellType == .event{
-            return (model as? EventsModel)?.events.count ?? 0
-        }
-        else if cellType == .adventure{
+        case .attraction:
+            siteLabel.text = "\((model as? AttractionModel)?.attractions.rows.count ?? 0) Attraction Sites"
+            return (model as? AttractionModel)?.attractions.rows.count ?? 0
+        case .adventure:
             return (model as? AdventureModel)?.adventures.count ?? 0
-        }
-        else if cellType == .blog{
-            return (model as? BlogsModel)?.blog.count ?? 0
-        }
-        else if cellType == .south{
-            return (model as? ExploreModel)?.attractions.count ?? 0
-        }
-        else if cellType == .tour{
+        case .south:
+            siteLabel.text = "\((model as? ExploreModel)?.attractions.rows.count ?? 0) South KP Sites"
+            return (model as? ExploreModel)?.attractions.rows.count ?? 0
+        case .tour:
             return (model as? TourModel)?.tour.count ?? 0
-        }
-        else if cellType == .attraction{
-            return (model as? AttractionModel)?.attractions.count ?? 0
-        }
-        else if cellType == .product{
+        case .event:
+            siteLabel.text = "\((model as? EventsModel)?.events.count ?? 0)  Events"
+            return (model as? EventsModel)?.events.count ?? 0
+        case .arch:
+            siteLabel.text = "\((model as? ArcheologyModel)?.archeology?.count ?? 0) Archeology Sites"
+            return (model as? ArcheologyModel)?.archeology?.count ?? 0
+        case .blog:
+            return (model as? BlogsModel)?.blog.count ?? 0
+        case .product:
             return (model as? ProductModel)?.localProducts.count ?? 0
-        }
-        else if cellType == .arch{
-            return (model as? ArcheologyModel)?.archeology.count ?? 0
-        }
-        else{
-            return 5
+        default:
+            return 0
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if cellType == .explore {
+        
+        switch cellType {
+        case .explore:
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
             cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
             return cell
-        }
-        else if cellType == .attraction{
+        case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
-            cell.attraction = (model as? AttractionModel)?.attractions[indexPath.row]
+            cell.attraction = (model as? AttractionModel)?.attractions.rows[indexPath.row]
             return cell
-        }
-        else if cellType == .event{
-            let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
-            cell.event = (model as? EventsModel)?.events[indexPath.row]
-            return cell
-        }
-        else if cellType == .adventure{
+        case .adventure:
             let cell: AdventureTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AdventureTableViewCell
             cell.adventure = (model as? AdventureModel)?.adventures[indexPath.row]
             return cell
-        }
-        else if cellType == .blog{
-            let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
-            cell.blog = (model as? BlogsModel)?.blog[indexPath.row]
-            return cell
-        }
-        else if cellType == .south{
+        case .south:
             let cell: SouthTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! SouthTableViewCell
             cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
             return cell
-        }
-        else if cellType == .tour{
+        case .tour:
             let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
             cell.tour = (model as? TourModel)?.tour[indexPath.row]
             return cell
-        }
-        else if cellType == .product{
+        case .event:
+            let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
+            cell.event = (model as? EventsModel)?.events[indexPath.row]
+            return cell
+        case .arch:
+            let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
+            cell.archeology = (model as? ArcheologyModel)?.archeology?[indexPath.row]
+            return cell
+        case .blog:
+            let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
+            cell.blog = (model as? BlogsModel)?.blog[indexPath.row]
+            return cell
+        case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
             cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
             return cell
-        }
-        else if cellType == .arch{
-            let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
-            cell.archeology = (model as? ArcheologyModel)?.archeology[indexPath.row]
-            return cell
-        }
-        else{
-            let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "")!
-            return cell
+        default:
+            return UITableViewCell()
         }
     }
     
@@ -219,8 +210,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
-            print("lnk")
-//            Switcher.gotoGalleryDetail(delegate: self)
+            Switcher.goToDestination(delegate: self, type: .district, attractionDistrict: (model as! AttractionModel).attractions.rows[indexPath.row])
+        case .south:
+            Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions.rows[indexPath.row])
         default:
             break
         }
@@ -252,7 +244,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[1].title{
             mapButton.isHidden = false
             cellType = .attraction
-            fetch(route: .attractionbyDistrict, method: .post, model: AttractionModel.self)
+            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction"], model: AttractionModel.self)
         }
         else if title == tabbarItems[2].title{
             mapButton.isHidden = true

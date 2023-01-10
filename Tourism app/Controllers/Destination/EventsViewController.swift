@@ -27,10 +27,9 @@ class EventsViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         updateUI()
-        guard let districtId = exploreDistrict?.id else {
-            return
-        }
-        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": districtId], model: EventsModel.self)
+//        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": districtId], model: EventsModel.self)
+        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: EventsModel.self)
+
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -51,18 +50,6 @@ class EventsViewController: BaseViewController {
     
     
     func updateUI() {
-//        switch locationCategory {
-//        case .district:
-//            thumbnailTopLabel.text = "Swat"
-//            thumbnailBottomLabel.text = "KP"
-//            thumbnail.image = UIImage(named: "Path 94")
-//        case .tourismSpot:
-//            thumbnailTopLabel.text = "Kalam"
-//            thumbnailBottomLabel.text = "Swat"
-//            thumbnail.image = UIImage(named: "iten")
-//        default:
-//            break
-//        }
         thumbnailTopLabel.text = exploreDistrict?.title
         thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }

@@ -22,6 +22,9 @@ class AttractionViewController: BaseViewController {
     }
     
     var locationCategory: LocationCategory = .district
+    var exploreDistrict: ExploreDistrict?
+    var attractionDetail: AttractionModel?
+
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -31,31 +34,39 @@ class AttractionViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id], model: AttractionModel.self)
     }
     
     func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-            sectionLabel.text = "Attractions"
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-            sectionLabel.text = "What to See"
+        thumbnailTopLabel.text = exploreDistrict?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let attractions):
+                DispatchQueue.main.async {
+                    self.attractionDetail = attractions as? AttractionModel
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.collectionView.noInternet()
+                }
+            }
         }
     }
 }
 
 extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return attractionDetail?.attractions.rows.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestAttractCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DestAttractCollectionViewCell
+        cell.attraction = attractionDetail?.attractions.rows[indexPath.row]
         return cell
     }
     

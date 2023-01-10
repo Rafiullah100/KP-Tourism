@@ -23,12 +23,12 @@ class AttractionTableViewCell: UITableViewCell {
 
     var imageSDWebImageSrc = [SDWebImageSource]()
     
-    var attraction: HomeAttractions? {
+    var attraction: AttractionsDistrict? {
         didSet{
             label.text = attraction?.title
             imageSDWebImageSrc = []
             attraction?.attractionGalleries.forEach({ attration in
-                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""))
+                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? "" ))
                 if let sdURL = imageUrl{
                     imageSDWebImageSrc.append(sdURL)
                     slideShow.slideshowInterval = 2.0

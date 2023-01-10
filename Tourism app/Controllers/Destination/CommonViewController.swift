@@ -32,7 +32,11 @@ class CommonViewController: BaseViewController {
     var delegate: PopupDelegate?
     var locationCategory: LocationCategory = .district
     var desintationArray: [Destination]?
-    var district: ExploreDistrict?
+    var explore: ExploreDistrict?
+    var attraction: AttractionsDistrict?
+    var archeology: Archeology?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,8 +51,8 @@ class CommonViewController: BaseViewController {
 //    }
     
     @IBAction func gotoAbout(_ sender: Any) {
-        guard let district = district else { return  }
-        Switcher.gotoAbout(delegate: self, exploreDetail: district)
+        guard let explore = explore else { return  }
+        Switcher.gotoAbout(delegate: self, exploreDetail: explore)
     }
     
     func updateUI() {
@@ -64,11 +68,25 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to Kalam"
             thumbnail.image = UIImage(named: "iten")
         }
+        if explore != nil{
+            thumbnailTopLabel.text = explore?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
+            descriptionLabel.text = explore?.description
+        }
+        else if attraction != nil{
+            thumbnailTopLabel.text = attraction?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            welcomeLabel.text = "Welcome to \(attraction?.title ?? "")"
+            descriptionLabel.text = attraction?.description
+        }
+//        else if archeology != nil{
+//            thumbnailTopLabel.text = archeology?.title
+//            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+//            welcomeLabel.text = "Welcome to \(archeology?.title ?? "")"
+//            descriptionLabel.text = archeology?.
+//        }
         
-        thumbnailTopLabel.text = district?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
-        welcomeLabel.text = "Welcome to \(district?.title ?? "")"
-        descriptionLabel.text = district?.description
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,25 +106,24 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let district = district else { return }
+        guard let explore = explore else { return }
         switch indexPath.row {
         case 0:
-            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, explore: explore)
         case 1:
             Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
         case 2:
-            Switcher.goToPOI(delegate: self, locationCategory: locationCategory, district: district)
+            Switcher.goToPOI(delegate: self, locationCategory: locationCategory, district: explore)
         case 3:
             Switcher.goToAccomodation(delegate: self, locationCategory: locationCategory)
         case 4:
-            Switcher.goToEvents(delegate: self, exploreDistrict: district)
+            Switcher.goToEvents(delegate: self, exploreDistrict: explore)
         case 5:
-            print("kmokn")
-//            Switcher.gotoGalleryDetail(delegate: self)
+            Switcher.gotoGallery(delegate: self, districtId: explore.id ?? 0)
         case 6:
-            Switcher.goToItinrary(delegate: self, locationCategory: locationCategory)
+            Switcher.goToItinrary(delegate: self, locationCategory: locationCategory, exploreDistrict: explore)
         case 7:
-            Switcher.goToProducts(delegate: self, exploreDistrict: district)
+            Switcher.goToProducts(delegate: self, exploreDistrict: explore)
         default:
             break
         }

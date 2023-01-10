@@ -20,6 +20,8 @@ class GalleryDetailViewController: BaseViewController {
     let collectionElementKindMoreLoader = "MoreLoader"
     
     var galleryDetail: GalleryModel?
+    var districtId: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +33,26 @@ class GalleryDetailViewController: BaseViewController {
         collectionView.asDataSource = self
         collectionView.delegate = self
         collectionView.register(UINib(nibName: collectionElementKindHeader, bundle: nil), forSupplementaryViewOfKind: collectionElementKindHeader, withReuseIdentifier: "header")
+        if galleryDetail == nil{
+            fetch(route: .fetchGallery, method: .post, parameters: ["district_id": districtId ?? 0], model: GalleryModel.self)
+        }
+    }
+    
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let galleryDetail):
+                DispatchQueue.main.async {
+                    self.galleryDetail = galleryDetail as? GalleryModel
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.collectionView.noInternet()
+                }
+            }
+        }
     }
     
     private func configureTab(){

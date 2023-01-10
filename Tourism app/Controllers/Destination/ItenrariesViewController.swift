@@ -20,32 +20,41 @@ class ItenrariesViewController: BaseViewController {
         }
     }
     var locationCategory: LocationCategory?
+    var ItinraryDetail: ItinraryModel?
+    var exploreDistrict: ExploreDistrict?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
         updateUI()
+        fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let itinraries):
+                DispatchQueue.main.async {
+                    self.ItinraryDetail = itinraries as? ItinraryModel
+                    self.collectionView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.collectionView.noInternet()
+                }
+            }
+        }
     }
     
     func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
-        }
+        thumbnailTopLabel.text = exploreDistrict?.title
+        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }
 }
 
 extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return ItinraryDetail?.itineraries.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
