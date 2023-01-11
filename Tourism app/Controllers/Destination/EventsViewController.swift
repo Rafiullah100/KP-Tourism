@@ -19,6 +19,7 @@ class EventsViewController: BaseViewController {
         }
     }
     var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
     var eventDetail: EventsModel?
     
     
@@ -26,10 +27,16 @@ class EventsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        updateUI()
-//        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": districtId], model: EventsModel.self)
-        fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: EventsModel.self)
-
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: EventsModel.self)
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: EventsModel.self)
+        }
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -46,12 +53,6 @@ class EventsViewController: BaseViewController {
                 }
             }
         }
-    }
-    
-    
-    func updateUI() {
-        thumbnailTopLabel.text = exploreDistrict?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }
 }
 

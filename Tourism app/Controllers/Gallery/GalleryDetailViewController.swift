@@ -20,8 +20,9 @@ class GalleryDetailViewController: BaseViewController {
     let collectionElementKindMoreLoader = "MoreLoader"
     
     var galleryDetail: GalleryModel?
-    var districtId: Int?
-    
+    var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +35,12 @@ class GalleryDetailViewController: BaseViewController {
         collectionView.delegate = self
         collectionView.register(UINib(nibName: collectionElementKindHeader, bundle: nil), forSupplementaryViewOfKind: collectionElementKindHeader, withReuseIdentifier: "header")
         if galleryDetail == nil{
-            fetch(route: .fetchGallery, method: .post, parameters: ["district_id": districtId ?? 0], model: GalleryModel.self)
+            if exploreDistrict != nil{
+                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GalleryModel.self)
+            }
+            else if attractionDistrict != nil{
+                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
+            }
         }
     }
     

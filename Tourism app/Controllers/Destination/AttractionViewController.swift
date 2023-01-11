@@ -24,6 +24,7 @@ class AttractionViewController: BaseViewController {
     var locationCategory: LocationCategory = .district
     var exploreDistrict: ExploreDistrict?
     var attractionDetail: AttractionModel?
+    var attractionDistrict: AttractionsDistrict?
 
 
     override func viewWillAppear(_ animated: Bool) {
@@ -33,14 +34,18 @@ class AttractionViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        updateUI()
-        fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id], model: AttractionModel.self)
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: AttractionModel.self)
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: AttractionModel.self)
+        }
     }
     
-    func updateUI() {
-        thumbnailTopLabel.text = exploreDistrict?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-    }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
@@ -71,13 +76,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        switch locationCategory {
-        case .district:
-            print("erg er")
-//            Switcher.goToDestination(delegate: self, type: .tourismSpot)
-        case .tourismSpot:
-            print("do nothing")
-        }
+        Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
     }
 }
 

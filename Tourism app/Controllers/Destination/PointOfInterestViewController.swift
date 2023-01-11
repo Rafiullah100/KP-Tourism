@@ -20,8 +20,9 @@ class PointOfInterestViewController: BaseViewController {
     }
     var locationCategory: LocationCategory?
     var category: PoiCategoriesModel?
-    var district: ExploreDistrict?
-    
+    var exploreDistrict: ExploreDistrict?
+    var attractionsDistrict: AttractionsDistrict?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,8 +45,14 @@ class PointOfInterestViewController: BaseViewController {
             break
         }
         
-        thumbnailTopLabel.text = district?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (district?.thumbnailImage ?? "")))
+        if exploreDistrict != nil{
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        }
+        else if attractionsDistrict != nil{
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        }
     }
     
     private func fetch() {
@@ -84,7 +91,7 @@ extension PointOfInterestViewController: UICollectionViewDataSource{
 
 extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let district = district, let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
+        guard let district = exploreDistrict, let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
         Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, district: district, poiCategoryId: poiCategoryId)
     }
 }

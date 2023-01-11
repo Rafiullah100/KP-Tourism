@@ -20,19 +20,22 @@ class LocalProductsViewController: BaseViewController {
     }
     var exploreDistrict: ExploreDistrict?
     var productDetail: ProductModel?
-    
+    var attractionDistrict: AttractionsDistrict?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        updateUI()
         
-        fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ProductModel.self)
-    }
-    
-    func updateUI() {
-        thumbnailTopLabel.text = exploreDistrict?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ProductModel.self)
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ProductModel.self)
+        }
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

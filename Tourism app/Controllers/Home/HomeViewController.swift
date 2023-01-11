@@ -99,7 +99,7 @@ class HomeViewController: BaseViewController {
     }
     
     private func showMap(){
-        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 10.0)
+        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 7.0)
         let mapView = GMSMapView.map(withFrame: mapContainerView.frame, camera: camera)
         mapView.delegate = self
         mapContainerView.addSubview(mapView)
@@ -108,7 +108,7 @@ class HomeViewController: BaseViewController {
             let marker = GMSMarker()
             guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
             marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "marker"))
+            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
             marker.userData = district.id
             marker.map = mapView
         })

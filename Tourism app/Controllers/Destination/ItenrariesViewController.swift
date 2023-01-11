@@ -22,12 +22,22 @@ class ItenrariesViewController: BaseViewController {
     var locationCategory: LocationCategory?
     var ItinraryDetail: ItinraryModel?
     var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        updateUI()
-        fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
+        
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ItinraryModel.self)
+        }
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -44,11 +54,6 @@ class ItenrariesViewController: BaseViewController {
                 }
             }
         }
-    }
-    
-    func updateUI() {
-        thumbnailTopLabel.text = exploreDistrict?.title
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
     }
 }
 

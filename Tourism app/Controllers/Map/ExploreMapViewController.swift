@@ -31,6 +31,7 @@ class ExploreMapViewController: UIViewController {
 }
 
 extension ExploreMapViewController: GMSMapViewDelegate{
+    
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print(marker.userData ?? 0)
         return true

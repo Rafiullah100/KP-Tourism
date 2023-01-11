@@ -37,7 +37,6 @@ class CommonViewController: BaseViewController {
     var archeology: Archeology?
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -106,24 +105,23 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let explore = explore else { return }
         switch indexPath.row {
         case 0:
-            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, explore: explore)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 1:
             Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
         case 2:
-            Switcher.goToPOI(delegate: self, locationCategory: locationCategory, district: explore)
+            Switcher.goToPOI(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 3:
             Switcher.goToAccomodation(delegate: self, locationCategory: locationCategory)
         case 4:
-            Switcher.goToEvents(delegate: self, exploreDistrict: explore)
+            Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         case 5:
-            Switcher.gotoGallery(delegate: self, districtId: explore.id ?? 0)
+            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         case 6:
-            Switcher.goToItinrary(delegate: self, locationCategory: locationCategory, exploreDistrict: explore)
+            Switcher.goToItinrary(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 7:
-            Switcher.goToProducts(delegate: self, exploreDistrict: explore)
+            Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         default:
             break
         }
