@@ -101,7 +101,6 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(gallery)
         guard let gallery = gallery else { return }
         Switcher.gotoGalleryDetail(delegate: self, galleryDetail: gallery)
     }

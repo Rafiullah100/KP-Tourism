@@ -34,18 +34,23 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, district: ExploreDistrict, poiCategoryId: Int){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory
-        vc.district = district
+        vc.exploreDistrict = exploredistrict
+        vc.attractionDistrict = attractionDistrict
         vc.poiCategoriId = poiCategoryId
+        print(poiCategoryId)
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: POISubCatoriesModel){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
         vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDistrict
+        vc.attractionDistrict = attractionDistrict
+        vc.POISubCatories = poiSubCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -61,6 +66,7 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AttractionViewController") as! AttractionViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
+        vc.attractionDistrict = attractionDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

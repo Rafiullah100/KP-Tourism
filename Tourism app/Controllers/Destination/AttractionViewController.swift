@@ -24,6 +24,7 @@ class AttractionViewController: BaseViewController {
     var locationCategory: LocationCategory = .district
     var exploreDistrict: ExploreDistrict?
     var attractionDetail: AttractionModel?
+    
     var attractionDistrict: AttractionsDistrict?
 
 
@@ -76,7 +77,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+        Switcher.goToDestination(delegate: self, type: locationCategory, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
     }
 }
 

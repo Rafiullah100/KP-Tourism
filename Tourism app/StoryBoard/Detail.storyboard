@@ -1004,6 +1004,15 @@ L</string>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K9c-m8-yGZ">
                                                         <rect key="frame" x="203.66666666666663" y="0.0" width="189.33333333333337" height="50"/>
                                                         <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TZf-qv-2lx">
+                                                                <rect key="frame" x="56.333333333333485" y="7" width="75" height="35"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                <state key="normal" title="Button"/>
+                                                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                                                <connections>
+                                                                    <action selector="shareBtnAction:" destination="I4v-kS-obN" eventType="touchUpInside" id="0QM-jL-5IQ"/>
+                                                                </connections>
+                                                            </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="TYC-zF-iac">
                                                                 <rect key="frame" x="151.33333333333334" y="7" width="26" height="36"/>
                                                                 <subviews>
@@ -1021,7 +1030,10 @@ L</string>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
+                                                            <constraint firstItem="TYC-zF-iac" firstAttribute="top" secondItem="K9c-m8-yGZ" secondAttribute="top" constant="7" id="0oc-sN-tdb"/>
+                                                            <constraint firstAttribute="bottom" secondItem="TYC-zF-iac" secondAttribute="bottom" constant="7" id="ZDc-ex-COX"/>
                                                             <constraint firstAttribute="trailing" secondItem="TYC-zF-iac" secondAttribute="trailing" constant="12" id="nO9-HS-9BS"/>
+                                                            <constraint firstAttribute="trailing" secondItem="TYC-zF-iac" secondAttribute="trailing" constant="12" id="reV-aM-8qS"/>
                                                             <constraint firstItem="TYC-zF-iac" firstAttribute="centerY" secondItem="K9c-m8-yGZ" secondAttribute="centerY" id="tTJ-TY-Ttn"/>
                                                         </constraints>
                                                     </view>
