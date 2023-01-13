@@ -224,6 +224,19 @@ extension String{
     var asUrl: URL? {
         return URL(string: self)
     }
+    
+    func stripOutHtml() -> String? {
+        do {
+            guard let data = self.data(using: .unicode) else {
+                return nil
+            }
+            let attributed = try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+            return attributed.string
+        } catch {
+            return nil
+        }
+    }
+     
 }
 
 extension UIApplication {
@@ -403,6 +416,14 @@ extension UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default))
         self.present(alert, animated: true, completion: nil)
+    }
+    
+    public func share(text: String, image: UIImage){
+        let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+
+        DispatchQueue.main.async {
+            self.present(activityViewController, animated: true, completion: nil)
+        }
     }
 }
 

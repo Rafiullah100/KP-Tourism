@@ -18,16 +18,23 @@ class AboutViewController: BaseViewController {
     
 //    var contacts: [Contacts]?
     var exploreDistrict: ExploreDistrict?
-    
+    var attractionDistrict: AttractionsDistrict?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        
-        thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-        thumbnailBottomLabel.text = "\(exploreDistrict?.title ?? "")"
-        welcomeLabel.text = "Welcome to \(exploreDistrict?.title ?? "")"
-        textView.text = "\(exploreDistrict?.description ?? "")"
+        if exploreDistrict != nil {
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            thumbnailBottomLabel.text = "\(exploreDistrict?.title ?? "")"
+            welcomeLabel.text = "Welcome to \(exploreDistrict?.title ?? "")"
+            textView.text = "\(exploreDistrict?.description ?? "")"
+        }
+        else if attractionDistrict != nil{
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            thumbnailBottomLabel.text = "\(attractionDistrict?.title ?? "")"
+            welcomeLabel.text = "Welcome to \(attractionDistrict?.title ?? "")"
+            textView.text = "\(attractionDistrict?.description ?? "")"
+        }
     }
 }
 

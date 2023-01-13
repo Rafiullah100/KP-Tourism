@@ -17,7 +17,7 @@ class AdventureTableViewCell: UITableViewCell {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (adventure?.thumbnailImage ?? "")))
             titleLable.text = adventure?.title
-            descriptionLabel.text = adventure?.adventureDescription
+            descriptionLabel.text = adventure?.adventureDescription.stripOutHtml()
         }
     }
     

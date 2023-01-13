@@ -16,16 +16,29 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     @IBOutlet weak var thumbnail: UIImageView!
+    @IBOutlet weak var containerView: UIView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
     
     var locationCategory: LocationCategory?
     var locationManager: CLLocationManager!
+    var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
+    
+    
+    var travelVC: TravelViewController {
+        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "TravelViewController") as! TravelViewController
+    }
+    var navigationVC: NavigationViewController {
+        UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "NavigationViewController") as! NavigationViewController
+    }
+    
+    var travel: Travel?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        mapTextual(travel: .textual)
         locationManager = CLLocationManager()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -36,20 +49,21 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
             }
         }
         updateUI()
+        show(travelVC, sender: self)
+    }
+    
+    override func show(_ vc: UIViewController, sender: Any?) {
+        add(vc, in: containerView)
     }
     
     func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
         }
     }
     
@@ -69,29 +83,15 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     @IBAction func textualButtonAction(_ sender: Any) {
-        mapTextual(travel: .textual)
+        show(travelVC, sender: self)
     }
+    
+    @IBAction func mapBtnAction(_ sender: Any) {
+        show(navigationVC, sender: self)
+    }
+    
     
     @IBAction func naviigationButtonAction(_ sender: Any) {
-        Switcher.goToNavigation(delegate: self, locationCategory: locationCategory!)
-    }
-    
-    private func mapTextual(travel: Travel){
-//        switch travel {
-//        case .textual:
-//            textualButton.setTitleColor(.black, for: .normal)
-//            navigationButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
-//            textualButton.backgroundColor = Constants.darkGrayColor
-//            navigationButton.backgroundColor = Constants.lightGrayColor
-//            textualView.isHidden = false
-//            mapContainerView.isHidden = true
-//        case .navigation:
-//            textualButton.setTitleColor(Constants.blackishGrayColor, for: .normal)
-//            navigationButton.setTitleColor(.black, for: .normal)
-//            textualButton.backgroundColor = Constants.lightGrayColor
-//            navigationButton.backgroundColor = Constants.darkGrayColor
-//            textualView.isHidden = true
-//            mapContainerView.isHidden = false
-//        }
+//        Switcher.goToNavigation(delegate: self, locationCategory: locationCategory!)
     }
 }

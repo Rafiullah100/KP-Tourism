@@ -17,9 +17,10 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
-    static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict){
+    static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
         vc.exploreDistrict = exploreDetail
+        vc.attractionDistrict = attractionDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -71,9 +72,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToGettingHere(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToGettingHere(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GettingHereViewController") as! GettingHereViewController
         vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDistrict
+        vc.attractionDistrict = attractionDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

@@ -25,6 +25,10 @@ class AdventureDetailViewController: BaseViewController {
         titLabel.text = adventureDetail?.locationTitle
         adventureTypeLabel.text = adventureDetail?.title
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (adventureDetail?.thumbnailImage ?? "")))
-        textView.text = adventureDetail?.adventureDescription
+        textView.text = adventureDetail?.adventureDescription.stripOutHtml()
+    }
+    
+    @IBAction func shareBtnAction(_ sender: Any) {
+        self.share(text: adventureDetail?.adventureDescription ?? "", image: imageView.image ?? UIImage())
     }
 }

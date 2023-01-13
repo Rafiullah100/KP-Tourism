@@ -41,4 +41,8 @@ class EventDetailViewController: BaseViewController {
         let dateStr = dateFormatter.string(from: date).capitalized
         openDateLabel.text = "\(dateStr) | OPEN"
     }
+    
+    @IBAction func shareBtnAction(_ sender: Any) {
+        self.share(text: eventDetail?.eventDescription ?? "", image: imageView.image ?? UIImage())
+    }
 }

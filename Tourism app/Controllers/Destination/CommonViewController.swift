@@ -41,32 +41,15 @@ class CommonViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .back1
-        desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
+        desintationArray = Constants.desintationArray
         updateUI()
     }
-
-//    override func showFilter() {
-//        filterView.isHidden = !filterView.isHidden
-//    }
     
     @IBAction func gotoAbout(_ sender: Any) {
-        guard let explore = explore else { return  }
-        Switcher.gotoAbout(delegate: self, exploreDetail: explore)
+        Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction)
     }
     
     func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            welcomeLabel.text = "Welcome to Swat"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            welcomeLabel.text = "Welcome to Kalam"
-            thumbnail.image = UIImage(named: "iten")
-        }
         if explore != nil{
             thumbnailTopLabel.text = explore?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
@@ -109,7 +92,7 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 0:
             Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 1:
-            Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory)
+            Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 2:
             Switcher.goToPOI(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
         case 3:

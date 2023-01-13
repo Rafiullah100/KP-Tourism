@@ -10,10 +10,6 @@ import GoogleMaps
 
 class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
 
-    @IBOutlet weak var thumbnail: UIImageView!
-    @IBOutlet public weak var thumbnailBottomLabel: UILabel!
-    @IBOutlet weak var thumbnailTopLabel: UILabel!
-    
     @IBOutlet weak var mapViewContainer: UIView!
     var locationManager: CLLocationManager!
     var locationCategory: LocationCategory?
@@ -30,22 +26,7 @@ class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
                 self.locationManager.startUpdatingLocation()
             }
         }
-        updateUI()
-    }
-    
-    func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
-        }
+        setupMap()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -54,15 +35,12 @@ class NavigationViewController: BaseViewController, CLLocationManagerDelegate {
         manager.stopUpdatingLocation()
     }
     
-    private func setupMap(lat: Double, lon: Double){
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 12.0)
+    private func setupMap(lat: Double? = nil, lon: Double? = nil){
+        let camera = GMSCameraPosition.camera(withLatitude: 34.0151, longitude: 71.5249, zoom: 12.0)
         let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
         mapView.isMyLocationEnabled = true
         mapView.settings.myLocationButton = true
         mapView.settings.compassButton = true
         mapViewContainer.addSubview(mapView)
-    }
-    @IBAction func navigationBtnAction(_ sender: Any) {
-        Switcher.goToGettingHere(delegate: self, locationCategory: locationCategory!)
     }
 }

@@ -50,6 +50,10 @@ class PackageDetailViewController: BaseViewController {
         descriptionLabel.text = tourDetail?.description
         
     }
+    
+    @IBAction func shareBtnAction(_ sender: Any) {
+        self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+    }
 }
 
 extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSource{
@@ -87,6 +91,7 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         tableViewHeight.constant = tableView.contentSize.height
     }
+    
 }
 
 

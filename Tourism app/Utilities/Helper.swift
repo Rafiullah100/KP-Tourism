@@ -44,4 +44,25 @@ class Helper{
 
         return nil
     }
+    
+    public func share(text: String, image: UIImage){
+//        var objectsToShare = [Any]()
+//        guard let imageUrl = URL(string: Route.baseUrl + (blogDetail?.thumbnailImage ?? "")) else {
+//            print("Invalid url!")
+//            return
+//        }
+//        URLSession.shared.dataTask(with: imageUrl) { (data, _, _) in
+//            guard let data = data,
+//                let image = UIImage(data: data) else{ return }
+//            objectsToShare.append(image)
+//            guard let blogDescription: String = self.blogDetail?.blogDescription else {return}
+//            objectsToShare.append(blogDescription)
+//            let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: objectsToShare, applicationActivities: nil)
+//
+//            DispatchQueue.main.async {
+//                self.present(activityViewController, animated: true, completion: nil)
+//            }
+//        }.resume()
+        
+    }
 }

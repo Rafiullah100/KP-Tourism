@@ -39,8 +39,8 @@ class HomeViewController: BaseViewController {
     lazy var galleryVC: UIViewController = {
         UIStoryboard(name: "Gallery", bundle: nil).instantiateViewController(withIdentifier: "GalleryViewController")
     }()
-    var mapVC: UIViewController {
-        UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController")
+    var mapVC: ExploreMapViewController {
+        UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
     }
     
     var cellType: CellType?
@@ -76,6 +76,10 @@ class HomeViewController: BaseViewController {
         fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
@@ -88,7 +92,7 @@ class HomeViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.model = explore
                     self.tableView.reloadData()
-                    self.showMap()
+                    self.show(self.mapVC, sender: self)
                 }
             case .failure(let error):
                 if error == .noInternet {
@@ -97,21 +101,12 @@ class HomeViewController: BaseViewController {
             }
         }
     }
-    
-    private func showMap(){
-        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 7.0)
-        let mapView = GMSMapView.map(withFrame: mapContainerView.frame, camera: camera)
-        mapView.delegate = self
-        mapContainerView.addSubview(mapView)
-    
-        (model as? ExploreModel)?.attractions.rows.forEach({ district in
-            let marker = GMSMarker()
-            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
-            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
-            marker.userData = district.id
-            marker.map = mapView
-        })
+
+    override func show(_ vc: UIViewController, sender: Any?) {
+        let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
+        vc.exploreDistrict = (model as? ExploreModel)?.attractions.rows
+        vc.attractionDistrict = (model as? AttractionModel)?.attractions.rows
+        add(vc, in: mapContainerView)
     }
 }
 

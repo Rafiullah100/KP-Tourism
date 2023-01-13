@@ -35,4 +35,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
 
+    @IBAction func shareBtnAction(_ sender: Any) {
+        self.share(text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
+    }
 }

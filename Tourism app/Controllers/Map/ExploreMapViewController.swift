@@ -10,23 +10,57 @@ import GoogleMaps
 
 class ExploreMapViewController: UIViewController {
 
-    let arr = [Coordinates(lat: 35.2227, long: 72.4258), Coordinates(lat: 35.2072, long: 72.5456), Coordinates(lat: 35.1404, long: 72.5353), Coordinates(lat: 35.1706, long: 72.3711)]
-    
+    var exploreDistrict: [ExploreDistrict]?
+    var attractionDistrict: [AttractionsDistrict]?
+    var eventDistrict: [EventListModel]?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 10.0)
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        loadMap()
+    }
+    
+    private func loadMap(){
+        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 7.0)
         let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
         mapView.delegate = self
         view.addSubview(mapView)
     
-        for item in arr {
+        //explore
+        exploreDistrict?.forEach({ district in
             let marker = GMSMarker()
-            marker.position = CLLocationCoordinate2D(latitude: item.lat, longitude: item.long)
-            marker.iconView = CustomMakerView(frame: CGRect(x: 0, y: 0, width: 55, height: 30))
-            marker.icon = UIImage(named: "marker")
-            marker.userData = item
+            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
+            marker.userData = district.id
+            marker.title = district.title
             marker.map = mapView
-        }
+        })
+        
+        //attractions
+        attractionDistrict?.forEach({ district in
+            let marker = GMSMarker()
+            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
+            marker.userData = district.id
+            marker.map = mapView
+        })
+        
+        //events
+        eventDistrict?.forEach({ district in
+            let marker = GMSMarker()
+            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
+            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
+            marker.userData = district.id
+            
+            marker.map = mapView
+        })
     }
 }
 
@@ -35,5 +69,9 @@ extension ExploreMapViewController: GMSMapViewDelegate{
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print(marker.userData ?? 0)
         return true
+    }
+    
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        return UIView()
     }
 }
