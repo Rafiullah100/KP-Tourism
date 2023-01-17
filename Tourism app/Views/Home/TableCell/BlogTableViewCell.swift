@@ -22,6 +22,7 @@ class BlogTableViewCell: UITableViewCell {
             commentsLabel.text = "\(blog?.comments.commentsCount ?? 0)"
             likesLabel.text = "\(blog?.likes.likesCount ?? 0)"
             locationLabel.text = "\(blog?.districts.title ?? ""), \(blog?.attractions.title ?? "")"
+            
         }
     }
     

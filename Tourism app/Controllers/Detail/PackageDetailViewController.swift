@@ -47,7 +47,7 @@ class PackageDetailViewController: BaseViewController {
 //        tableView.rowHeight = UITableView.automaticDimension
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.thumbnail_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
         packageNameLabel.text = tourDetail?.title
-        descriptionLabel.text = tourDetail?.description
+        descriptionLabel.text = tourDetail?.description?.stripOutHtml()
         
     }
     
@@ -68,7 +68,7 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
         cell.departureTimeLabel.text = tourDetail?.activities?[indexPath.row].departure_time
         cell.departureDateLabel.text = tourDetail?.activities?[indexPath.row].departure_date
         cell.stayinLabel.text = tourDetail?.activities?[indexPath.row].stay_in
-        cell.descriptionLabel.text = tourDetail?.activities?[indexPath.row].description
+        cell.descriptionLabel.text = tourDetail?.activities?[indexPath.row].description?.stripOutHtml()
         if indexPath.row == selectedRow{
             cell.expandableView.isHidden = false
             cell.imgView.image = #imageLiteral(resourceName: "expand")

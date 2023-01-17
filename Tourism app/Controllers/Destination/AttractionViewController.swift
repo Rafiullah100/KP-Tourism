@@ -21,20 +21,24 @@ class AttractionViewController: BaseViewController {
         }
     }
     
-    var locationCategory: LocationCategory = .district
+    var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDetail: AttractionModel?
     
     var attractionDistrict: AttractionsDistrict?
 
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        
+        if locationCategory == .district {
+            sectionLabel.text = "Attractions"
+        }
+        else if locationCategory == .tourismSpot{
+            sectionLabel.text = "What to see"
+        }
+        
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
@@ -77,7 +81,12 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.goToDestination(delegate: self, type: locationCategory, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+        if locationCategory == .district{
+            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+        }
+        else if locationCategory == .tourismSpot{
+            Switcher.gotoAttractionDetail(delegate: self, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+        }
     }
 }
 

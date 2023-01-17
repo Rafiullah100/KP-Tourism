@@ -35,6 +35,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
+    static func gotoAttractionDetail(delegate: UIViewController, attractionDistrict: AttractionsDistrict? = nil, archeologyDistrict: ArcheologyAttractions? = nil){
+        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AttractionDetailViewController") as! AttractionDetailViewController
+        vc.attractionDistrict = attractionDistrict
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory

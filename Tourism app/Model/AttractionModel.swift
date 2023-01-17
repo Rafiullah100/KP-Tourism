@@ -7,22 +7,22 @@
 
 import Foundation
 
-
 struct AttractionModel: Codable {
     let attractions: HomeAttractions
 }
 
+// MARK: - Attractions
 struct HomeAttractions: Codable {
     let count: Int
     let rows: [AttractionsDistrict]
 }
 
-
+// MARK: - Row
 struct AttractionsDistrict: Codable {
     let id: Int
     let title, slug: String
     let districtID: Int
-    let isTopAttraction, family, adults: Bool
+    let isFeatured, isTop, family, adults: Bool
     let locationTitle: String
     let latitude, longitude: String?
     let description, displayImage, previewImage: String
@@ -36,7 +36,8 @@ struct AttractionsDistrict: Codable {
     enum CodingKeys: String, CodingKey {
         case id, title, slug
         case districtID = "district_id"
-        case isTopAttraction = "is_top_attraction"
+        case isFeatured = "is_featured"
+        case isTop = "is_top"
         case family, adults
         case locationTitle = "location_title"
         case latitude, longitude, description
@@ -51,11 +52,11 @@ struct AttractionsDistrict: Codable {
     }
 }
 
+// MARK: - AttractionGallery
 struct AttractionGallery: Codable {
     let id, attractionID, subAttractionID: Int
-    let type, title: String
-    let imageURL, videoURL: String?
-    let virtualURL: String?
+    let type, title, imageURL: String
+    let videoURL, virtualURL: String?
     let status, isDeleted: Int
     let createdAt, updatedAt: String
 
@@ -70,5 +71,3 @@ struct AttractionGallery: Codable {
         case status, isDeleted, createdAt, updatedAt
     }
 }
-
-

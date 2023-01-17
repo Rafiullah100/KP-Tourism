@@ -20,38 +20,19 @@ class EventTableViewCell: UITableViewCell {
     var event: EventListModel?{
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (event?.thumbnailImage ?? "")))
-            titleLabel.text = event?.locationTitle
-            typeLabel.text = event?.title
+            titleLabel.text = event?.title
+            typeLabel.text = event?.locationTitle
+            opendateLabel.text = "\(event?.startDate ?? "") | \(event?.isExpired ?? "")"
+            if event?.isExpired == "Closed" {
+                statusView.backgroundColor = .red
+            }
+            else{
+                statusView.backgroundColor = .green
+            }
             shadow()
-            openDate()
-            endDate()
         }
     }
     
-    func openDate() {
-        let startDate = event?.startDate ?? ""
-        print(startDate)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let date = dateFormatter.date(from: startDate)
-        dateFormatter.dateFormat = "d MMM"
-        guard let date = date else { return  }
-        let dateStr = dateFormatter.string(from: date).capitalized
-        opendateLabel.text = "\(dateStr) | OPEN"
-    }
-    
-    func endDate() {
-        let endDate = event?.startDate ?? ""
-        let dateFormatter = DateFormatter()
-        let date = dateFormatter.date(from: endDate)
-        guard let date = date else { return }
-        if date <= Date() {
-            statusView.backgroundColor = .red
-        }
-        else{
-            statusView.backgroundColor = .green
-        }
-    }
     
     func shadow()  {
         counterView.layer.shadowColor = UIColor.lightGray.cgColor

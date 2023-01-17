@@ -30,7 +30,7 @@ class ProductTableViewCell: UITableViewCell {
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
             ownerNameLAbel.text = "\(product?.users.name ?? "")"
             locationLabel.text = "\(product?.districts.title ?? "")"
-//            uploadedTimeLabel.text =  "\(product.)"
+            uploadedTimeLabel.text =  "\(product?.createdAt ?? "")"
         }
     }
     

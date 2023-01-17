@@ -15,6 +15,7 @@ class ProductDetailViewController: BaseViewController {
     @IBOutlet weak var thumbnailImageView: UIImageView!
     var productDetail: LocalProduct?
     
+    @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var ownerNameLabel: UILabel!
     @IBOutlet weak var onwerImageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
@@ -28,6 +29,8 @@ class ProductDetailViewController: BaseViewController {
         productNameLabel.text = productDetail?.title
         descriptionTextView.text = productDetail?.localProductDescription
         onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        uploadTimeLabel.text = productDetail?.createdAt
+        locationLabel.text = productDetail?.districts.title
     }
     
     

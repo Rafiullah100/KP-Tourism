@@ -205,7 +205,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
-            Switcher.goToDestination(delegate: self, type: .district, attractionDistrict: (model as! AttractionModel).attractions.rows[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: (model as! AttractionModel).attractions.rows[indexPath.row])
         case .south:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions.rows[indexPath.row])
         default:
