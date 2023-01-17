@@ -17,10 +17,12 @@ class BlogDetailViewController: BaseViewController {
     @IBOutlet weak var likeLabel: UILabel!
     var blogDetail: Blog?
     
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
             tableView.dataSource = self
+            tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
         }
     }
     override func viewDidLoad() {
@@ -36,6 +38,15 @@ class BlogDetailViewController: BaseViewController {
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
     }
     
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        tableView.layoutIfNeeded()
+
+        tableViewHeight.constant = tableView.contentSize.height
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 0
+    }
+    
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
     }
@@ -44,12 +55,19 @@ class BlogDetailViewController: BaseViewController {
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return 20
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell_identifier")!
-        cell.textLabel?.text = "My text"
+        let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat{
+        return 66.0
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+        return UITableView.automaticDimension
     }
 }
