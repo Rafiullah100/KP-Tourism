@@ -126,6 +126,7 @@
 		522B1ACA295DAE6B007B9B82 /* AdventureModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522B1AC9295DAE6B007B9B82 /* AdventureModel.swift */; };
 		522B1ACC295DBB41007B9B82 /* BlogsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522B1ACB295DBB41007B9B82 /* BlogsModel.swift */; };
 		522BD19C2966D88300CF900D /* ArcheologyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 522BD19B2966D88300CF900D /* ArcheologyModel.swift */; };
+		52365F1C297956360053FBAD /* call-icon.gif in Resources */ = {isa = PBXBuildFile; fileRef = 52365F1B297956360053FBAD /* call-icon.gif */; };
 		5243EF47295184C4003E930A /* HomeViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5243EF46295184C4003E930A /* HomeViewController+Extension.swift */; };
 		5243EF4929518611003E930A /* URLSession+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5243EF4829518611003E930A /* URLSession+Extension.swift */; };
 		5250793F2935F91000C8D004 /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5250793A2935F90F00C8D004 /* AppError.swift */; };
@@ -303,6 +304,8 @@
 		522B1AC9295DAE6B007B9B82 /* AdventureModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureModel.swift; sourceTree = "<group>"; };
 		522B1ACB295DBB41007B9B82 /* BlogsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlogsModel.swift; sourceTree = "<group>"; };
 		522BD19B2966D88300CF900D /* ArcheologyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcheologyModel.swift; sourceTree = "<group>"; };
+		52365F1A29790B520053FBAD /* Tourism app.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Tourism app.entitlements"; sourceTree = "<group>"; };
+		52365F1B297956360053FBAD /* call-icon.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "call-icon.gif"; sourceTree = "<group>"; };
 		5243EF46295184C4003E930A /* HomeViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Extension.swift"; sourceTree = "<group>"; };
 		5243EF4829518611003E930A /* URLSession+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Extension.swift"; sourceTree = "<group>"; };
 		5250793A2935F90F00C8D004 /* AppError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
@@ -617,6 +620,7 @@
 		018EF81328F3D53A00E061CB /* Tourism app */ = {
 			isa = PBXGroup;
 			children = (
+				52365F1A29790B520053FBAD /* Tourism app.entitlements */,
 				018EF85128F3F55900E061CB /* AppDelegate */,
 				525079392935F8FB00C8D004 /* Networking */,
 				014BD44C292893C100DF50E5 /* Model */,
@@ -624,7 +628,7 @@
 				018EF85228F3F56A00E061CB /* Controllers */,
 				018EF85028F3F53E00E061CB /* StoryBoard */,
 				018EF81D28F3D53F00E061CB /* Assets.xcassets */,
-				011D9AC12914CB6E00FDE0E2 /* logo.gif */,
+				52365F1D297956420053FBAD /* gif */,
 				018EF84B28F3F42700E061CB /* Utilities */,
 				018EF82228F3D53F00E061CB /* Info.plist */,
 			);
@@ -738,6 +742,15 @@
 				7D7BB19498DF4372E5A08863 /* Pods-Tourism app.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		52365F1D297956420053FBAD /* gif */ = {
+			isa = PBXGroup;
+			children = (
+				011D9AC12914CB6E00FDE0E2 /* logo.gif */,
+				52365F1B297956360053FBAD /* call-icon.gif */,
+			);
+			path = gif;
 			sourceTree = "<group>";
 		};
 		525079392935F8FB00C8D004 /* Networking */ = {
@@ -930,6 +943,7 @@
 				01115CB02902841A00E89978 /* Header.xib in Resources */,
 				52EE7718293DF58200FD13D9 /* StatusCollectionViewCell.xib in Resources */,
 				01209EEE28F7CBCD00503682 /* DestProductCollectionViewCell.xib in Resources */,
+				52365F1C297956360053FBAD /* call-icon.gif in Resources */,
 				528315272941B242009B01C8 /* WishlistCollectionViewCell.xib in Resources */,
 				01F7C4C929011BDC008D0C23 /* ImageCollectionViewCell.xib in Resources */,
 				018EF84128F3E17F00E061CB /* Roboto-Black.ttf in Resources */,
@@ -1252,6 +1266,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Tourism app/Tourism app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9K786374U5;
@@ -1285,6 +1300,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Tourism app/Tourism app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9K786374U5;

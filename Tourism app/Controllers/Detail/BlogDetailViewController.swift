@@ -9,6 +9,12 @@ import UIKit
 import SDWebImage
 class BlogDetailViewController: BaseViewController {
 
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var commentTextView: UITextView!{
+        didSet{
+            commentTextView.delegate = self
+        }
+    }
     @IBOutlet weak var blogTitleLabel: UILabel!
     @IBOutlet weak var autherLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
@@ -27,6 +33,12 @@ class BlogDetailViewController: BaseViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 66.0
+        
+        commentTextView.text = "Message.."
+        commentTextView.textColor = UIColor.lightGray
+        
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = blogDetail?.title
@@ -40,11 +52,6 @@ class BlogDetailViewController: BaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        tableView.layoutIfNeeded()
-
-        tableViewHeight.constant = tableView.contentSize.height
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 0
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
@@ -55,19 +62,53 @@ class BlogDetailViewController: BaseViewController {
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+        cell.commentLabel.text = "These Pods Are Used All Around The World And Are Ideal For Adventurous. \(indexPath.row)"
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat{
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 66.0
     }
-
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat{
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        tableViewHeight.constant = tableView.contentSize.height
+        tableView.layoutIfNeeded()
+        scrollView.layoutIfNeeded()
+    }
+}
+
+extension BlogDetailViewController: UITextViewDelegate {
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+//        print("Content Height \(self.textView.contentSize.height) ")
+//        if(self.textView.contentSize.height < self.textHeightConstraint.constant) {
+//            self.textEntry.isScrollEnabled = false
+//        } else {
+//            self.textEntry.isScrollEnabled = true
+//        }
+//        toolBarHeight.constant = textView.contentSize.height + 20
+        return true
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if commentTextView.textColor == UIColor.lightGray || commentTextView.text == "Message.." {
+            commentTextView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if commentTextView.text.isEmpty {
+            commentTextView.text = "Message.."
+            commentTextView.textColor = UIColor.lightGray
+        }
     }
 }

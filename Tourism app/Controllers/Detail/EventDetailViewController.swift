@@ -15,6 +15,7 @@ class EventDetailViewController: BaseViewController {
     @IBOutlet weak var openDateLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var interestGoingLabel: UILabel!
     
     var eventDetail: EventListModel?
     
@@ -27,12 +28,14 @@ class EventDetailViewController: BaseViewController {
         eventTypeLabel.text = eventDetail?.locationTitle
         descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.thumbnailImage ?? "")))
-        
+        if eventDetail?.socialEventUsers?.count != 0 {
+            interestGoingLabel.text = "\(eventDetail?.socialEventUsers?[0].userCount ?? 0) Interested"
+        }
         if eventDetail?.isExpired == "Closed" {
             statusView.backgroundColor = .red
         }
         else{
-            statusView.backgroundColor = .green
+            statusView.backgroundColor = Constants.appColor
         }
     }
     

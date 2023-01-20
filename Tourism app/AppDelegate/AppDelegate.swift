@@ -9,13 +9,15 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import IQKeyboardManager
+import FBSDKLoginKit
+import FBSDKCoreKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+
         window = UIWindow(frame: UIScreen.main.bounds)
         IQKeyboardManager.shared().isEnabled = true
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
@@ -24,6 +26,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .selected)
         setupGoogleMap()
+        FBSDKCoreKit.ApplicationDelegate.shared.application(
+                    application,
+                    didFinishLaunchingWithOptions: launchOptions
+                )
         return true
     }
     

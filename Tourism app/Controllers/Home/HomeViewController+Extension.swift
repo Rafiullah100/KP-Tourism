@@ -10,18 +10,7 @@ import UIKit
 extension HomeViewController{
     
     func configureTabbar(){
-        section = [Sections(title: "Explore", image: "explore", selectedImage: "explore-s"),
-                   Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
-                   Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-                   Sections(title: "South KP", image: "south", selectedImage: "south-s"),
-                   Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
-                   Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
-                   Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
-                   Sections(title: "Events", image: "event", selectedImage: "event-s"),
-                   Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
-                   Sections(title: "Local Products", image: "product", selectedImage: "product-s"),
-        ]
-        for item in section {
+        for item in Constants.section {
             let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
             tabbarItems.append(tabbarItem)
         }
@@ -32,8 +21,8 @@ extension HomeViewController{
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
         tabbarView.isScrollEnabled = true
-        tabbarView.setTitleFont(UIFont(name: "Roboto-Light", size: 12.0), for: .normal)
-        tabbarView.setTitleFont(UIFont(name: "Roboto-Medium", size: 12.0), for: .selected)
+        tabbarView.setTitleFont(Constants.lightFont, for: .normal)
+        tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
         tabbarView.setTitleColor(.darkGray, for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self

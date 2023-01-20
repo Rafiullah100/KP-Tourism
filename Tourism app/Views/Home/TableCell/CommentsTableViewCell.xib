@@ -56,12 +56,35 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="05A-bq-zw7">
                                                 <rect key="frame" x="0.0" y="10" width="264" height="46"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2O-ia-Mq5">
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MLT-8M-pE7">
                                                         <rect key="frame" x="0.0" y="0.0" width="264" height="17.666666666666668"/>
-                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9tv-Aw-9wP">
+                                                                <rect key="frame" x="0.0" y="0.0" width="264" height="17.666666666666668"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2O-ia-Mq5">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="132" height="17.666666666666668"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 min" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUC-CU-0tz">
+                                                                        <rect key="frame" x="132" y="0.0" width="132" height="17.666666666666668"/>
+                                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
+                                                                        <nil key="textColor"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                        </subviews>
+                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <constraints>
+                                                            <constraint firstItem="9tv-Aw-9wP" firstAttribute="top" secondItem="MLT-8M-pE7" secondAttribute="top" id="JUr-L9-gMy"/>
+                                                            <constraint firstAttribute="bottom" secondItem="9tv-Aw-9wP" secondAttribute="bottom" id="mvV-RQ-XEi"/>
+                                                            <constraint firstAttribute="trailing" secondItem="9tv-Aw-9wP" secondAttribute="trailing" id="xR9-Is-O1S"/>
+                                                            <constraint firstItem="9tv-Aw-9wP" firstAttribute="leading" secondItem="MLT-8M-pE7" secondAttribute="leading" id="zRZ-AL-qhg"/>
+                                                        </constraints>
+                                                    </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Lorem Ipsum is simply dummy text of the printing and typese" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TN4-6a-D1O">
                                                         <rect key="frame" x="0.0" y="17.666666666666671" width="264" height="28.333333333333329"/>
                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="12"/>
@@ -99,6 +122,11 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="commentLabel" destination="TN4-6a-D1O" id="5IA-l8-8UD"/>
+                <outlet property="nameLabel" destination="n2O-ia-Mq5" id="0WW-Qb-fHH"/>
+                <outlet property="userImageView" destination="4Qa-Ql-djq" id="8U8-Yp-W0r"/>
+            </connections>
             <point key="canvasLocation" x="155.72519083969465" y="27.464788732394368"/>
         </tableViewCell>
     </objects>

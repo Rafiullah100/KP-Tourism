@@ -226,7 +226,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
             tableViewContainer.isHidden = false
         }
         addChild(title: item.title ?? "")
-//        tableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         tableView.reloadData()
     }
     

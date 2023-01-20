@@ -6,9 +6,10 @@
 //
 
 import UIKit
-
+import FBSDKLoginKit
+import FBSDKCoreKit
 class LoginViewController: BaseViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -16,6 +17,35 @@ class LoginViewController: BaseViewController {
         viewControllerTitle = "Login"
     }
 
+    @IBAction func fbLoginBtnAction(_ sender: Any) {
+        let fbLoginManager : LoginManager = LoginManager()
+        fbLoginManager.logIn(permissions: ["email"], from: self) { (result, error) -> Void in
+            if (error == nil){
+                let fbloginresult : LoginManagerLoginResult = result!
+                if (result?.isCancelled)!{
+                    return
+                }
+                if(fbloginresult.grantedPermissions.contains("email"))
+                {
+                    self.getFBUserData()
+                }
+            }
+        }
+    }
+    
+    func getFBUserData(){
+        guard let token = AccessToken.current?.tokenString else { return }
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields": "email"], tokenString: token, version: nil, httpMethod: .get)
+        request.start{ (connection, result, error) in
+            if error == nil{
+                guard let json = result as? NSDictionary else { return }
+                if let email = json["email"] as? String {
+                    print("\(email)")
+                }
+            }
+        }
+    }
+    
     @IBAction func gotoSignUp(_ sender: Any) {
         Switcher.goToSignupVC(delegate: self)
     }

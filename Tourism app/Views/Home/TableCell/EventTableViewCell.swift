@@ -16,6 +16,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var statusView: UIView!
     
+    @IBOutlet weak var interestGoingLabel: UILabel!
     @IBOutlet weak var counterView: UIView!
     var event: EventListModel?{
         didSet{
@@ -23,11 +24,14 @@ class EventTableViewCell: UITableViewCell {
             titleLabel.text = event?.title
             typeLabel.text = event?.locationTitle
             opendateLabel.text = "\(event?.startDate ?? "") | \(event?.isExpired ?? "")"
+            if event?.socialEventUsers?.count != 0 {
+                interestGoingLabel.text = "\(event?.socialEventUsers?[0].userCount ?? 0)"
+            }
             if event?.isExpired == "Closed" {
                 statusView.backgroundColor = .red
             }
             else{
-                statusView.backgroundColor = .green
+                statusView.backgroundColor = Constants.appColor
             }
             shadow()
         }

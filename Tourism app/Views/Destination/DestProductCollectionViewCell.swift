@@ -26,7 +26,7 @@ class DestProductCollectionViewCell: UICollectionViewCell {
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
             ownerNameLabel.text = "\(product?.users.name ?? "")"
             locationLabel.text = "\(product?.districts.title ?? "")"
-//            uploadedTimeLabel.text =  "\(product.)"
+            uploadTimeLabel.text = "\(product?.createdAt ?? "")"
         }
     }
     

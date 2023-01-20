@@ -20,6 +20,7 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
     
+    @IBOutlet weak var travelTypeLabel: UILabel!
     var locationCategory: LocationCategory?
     var locationManager: CLLocationManager!
     var exploreDistrict: ExploreDistrict?
@@ -39,15 +40,15 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        DispatchQueue.global().async {
-            if CLLocationManager.locationServicesEnabled() {
-                self.locationManager.startUpdatingLocation()
-            }
-        }
+//        locationManager = CLLocationManager()
+//        locationManager.delegate = self
+//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+//        locationManager.requestAlwaysAuthorization()
+//        DispatchQueue.global().async {
+//            if CLLocationManager.locationServicesEnabled() {
+//                self.locationManager.startUpdatingLocation()
+//            }
+//        }
         updateUI()
         show(travelVC, sender: self)
     }
@@ -67,20 +68,20 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let userLocation:CLLocation = locations[0] as CLLocation
-        setupMap(lat: userLocation.coordinate.latitude, lon: userLocation.coordinate.longitude)
-        manager.stopUpdatingLocation()
-    }
-    
-    private func setupMap(lat: Double, lon: Double){
-        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 12.0)
-        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
-        mapView.isMyLocationEnabled = true
-        mapView.settings.myLocationButton = true
-        mapView.settings.compassButton = true
-//        mapContainerView.addSubview(mapView)
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        let userLocation:CLLocation = locations[0] as CLLocation
+//        setupMap(lat: userLocation.coordinate.latitude, lon: userLocation.coordinate.longitude)
+//        manager.stopUpdatingLocation()
+//    }
+//
+//    private func setupMap(lat: Double, lon: Double){
+//        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 12.0)
+//        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
+//        mapView.isMyLocationEnabled = true
+//        mapView.settings.myLocationButton = true
+//        mapView.settings.compassButton = true
+////        mapContainerView.addSubview(mapView)
+//    }
     
     @IBAction func textualButtonAction(_ sender: Any) {
         show(travelVC, sender: self)

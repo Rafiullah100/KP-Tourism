@@ -429,7 +429,7 @@ extension UIViewController {
 
 extension UICollectionView{
     func setEmptyView() {
-        let image = UIImage(named: "no-internet")
+        let image = UIImage(named: "")
         let emptyImageView = UIImageView(image: image)
         emptyImageView.contentMode = .scaleAspectFit
         if let _ = image {

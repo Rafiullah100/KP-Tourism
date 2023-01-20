@@ -18,6 +18,7 @@ class AttractionViewController: BaseViewController {
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.register(UINib(nibName: "DestAttractCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier())
+
         }
     }
     
@@ -32,22 +33,17 @@ class AttractionViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         
-        if locationCategory == .district {
-            sectionLabel.text = "Attractions"
-        }
-        else if locationCategory == .tourismSpot{
-            sectionLabel.text = "What to see"
-        }
-        
         if exploreDistrict != nil {
+            sectionLabel.text = "Attractions"
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction"], model: AttractionModel.self)
         }
         else if attractionDistrict != nil{
+            sectionLabel.text = "What to see"
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction"], model: AttractionModel.self)
         }
     }
     
@@ -58,7 +54,7 @@ class AttractionViewController: BaseViewController {
             case .success(let attractions):
                 DispatchQueue.main.async {
                     self.attractionDetail = attractions as? AttractionModel
-                    self.collectionView.reloadData()
+                    self.attractionDetail?.attractions.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
                 }
             case .failure(let error):
                 if error == .noInternet {
