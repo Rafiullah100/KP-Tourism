@@ -8,6 +8,8 @@
 import UIKit
 import FBSDKLoginKit
 import FBSDKCoreKit
+import GoogleSignIn
+import Firebase
 class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
@@ -17,6 +19,17 @@ class LoginViewController: BaseViewController {
         viewControllerTitle = "Login"
     }
 
+    @IBAction func googleSigninBtn(_ sender: Any) {
+        guard let clientID = Constants.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        GIDSignIn.sharedInstance.signIn(withPresenting: Helper.shared.rootVC()) { result, error in
+            if error == nil{
+                print(result?.user.profile?.email ?? "")
+            }
+        }
+    }
+    
     @IBAction func fbLoginBtnAction(_ sender: Any) {
         let fbLoginManager : LoginManager = LoginManager()
         fbLoginManager.logIn(permissions: ["email"], from: self) { (result, error) -> Void in
@@ -32,6 +45,7 @@ class LoginViewController: BaseViewController {
             }
         }
     }
+
     
     func getFBUserData(){
         guard let token = AccessToken.current?.tokenString else { return }

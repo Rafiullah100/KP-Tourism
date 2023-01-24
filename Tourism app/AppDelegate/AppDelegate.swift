@@ -11,13 +11,16 @@ import GooglePlaces
 import IQKeyboardManager
 import FBSDKLoginKit
 import FBSDKCoreKit
+import FirebaseCore
+import GoogleSignIn
+import Firebase
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate{
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
+        FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
         IQKeyboardManager.shared().isEnabled = true
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
@@ -30,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     application,
                     didFinishLaunchingWithOptions: launchOptions
                 )
+
         return true
     }
     

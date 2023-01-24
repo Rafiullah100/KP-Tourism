@@ -26,10 +26,24 @@ extension HomeViewController{
         tabbarView.setTitleColor(.darkGray, for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
+        tabbarView.bounces = false
+        tabbarView.showsVerticalScrollIndicator = false
+        tabbarView.alwaysBounceVertical = false
+        tabbarView.bouncesZoom = false
+        tabbarView.shouldIgnoreScrollingAdjustment = false
+        tabbarView.scrollsToTop = false
         tabbarView.minItemWidth = 10
+        tabbarView.delegate = self
+        tabbarView.contentInsetAdjustmentBehavior = .never
         self.add(mapVC, in: mapContainerView)
         cellType = .explore
         galleryContainer.isHidden = true
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
+            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+        }
     }
     
     func shadow()  {

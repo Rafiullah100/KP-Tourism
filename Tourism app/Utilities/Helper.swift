@@ -65,4 +65,12 @@ class Helper{
 //        }.resume()
         
     }
+    
+    public func rootVC()-> UIViewController{
+        let scenes = UIApplication.shared.connectedScenes
+        let windowScenes = scenes.first as? UIWindowScene
+        let window = windowScenes?.windows.first
+        guard let rootViewController = window?.rootViewController else { return UIViewController() }
+        return rootViewController
+    }
 }

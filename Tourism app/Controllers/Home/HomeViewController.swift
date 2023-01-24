@@ -137,6 +137,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return (model as? BlogsModel)?.blog.count ?? 0
         case .product:
             return (model as? ProductModel)?.localProducts.count ?? 0
+        case .visitKP:
+            return 5
         default:
             return 0
         }
@@ -180,6 +182,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
             cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
+            return cell
+        case .visitKP:
+            let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
             return cell
         default:
             return UITableViewCell()
@@ -272,10 +277,15 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
         else if title == tabbarItems[8].title{
             mapButton.isHidden = true
+            cellType = .explore
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
+        }
+        else if title == tabbarItems[9].title{
+            mapButton.isHidden = true
             cellType = .blog
             fetch(route: .fetchBlogs, method: .post, model: BlogsModel.self)
         }
-        else if title == tabbarItems[9].title{
+        else if title == tabbarItems[10].title{
             mapButton.isHidden = true
             cellType = .product
             fetch(route: .fetchProduct, method: .post, model: ProductModel.self)

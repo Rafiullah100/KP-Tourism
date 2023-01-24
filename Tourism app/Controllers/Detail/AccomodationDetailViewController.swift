@@ -15,7 +15,7 @@ class AccomodationDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .backWithTitle
-        viewControllerTitle = "Accomodations"
+        viewControllerTitle = "T-NEE Hotel | Accomodation"
         detailView.isHidden = true
         // Do any additional setup after loading the view.
     }

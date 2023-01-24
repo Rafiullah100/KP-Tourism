@@ -23,7 +23,7 @@ class EventDetailViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "Events"
+        viewControllerTitle = "Events, \(eventDetail?.locationTitle ?? "")"
         titLabel.text = eventDetail?.title
         eventTypeLabel.text = eventDetail?.locationTitle
         descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()

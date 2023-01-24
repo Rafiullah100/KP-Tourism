@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 struct Constants {
     static let deviceType = "iOS"
     static let appColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
@@ -15,6 +16,8 @@ struct Constants {
     static let tableViewOffset: CGFloat = -30
     
     static var googleMapApiKey = "AIzaSyBC2Xdb2ato7ULwuGnDjPLXLAvqUZx_1VM"
+    
+    static var clientID = FirebaseApp.app()?.options.clientID
     
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
@@ -34,6 +37,7 @@ struct Constants {
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
               Sections(title: "Events", image: "event", selectedImage: "event-s"),
+              Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
               Sections(title: "Local Products", image: "product", selectedImage: "product-s"),
    ]

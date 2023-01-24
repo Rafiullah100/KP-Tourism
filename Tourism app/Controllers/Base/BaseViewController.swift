@@ -154,13 +154,15 @@ class BaseViewController: UIViewController {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         imageView.image = UIImage(named: "Back")
         let label = UILabel(frame: CGRect(x: 35, y: 0, width: 250, height: 30))
-
+        let stringArray = viewControllerTitle?.split(separator: "|")
         let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Medium", size: 18) ?? UIFont()]
-//        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto", size: 10) ?? UIFont()]
-        let firstString = NSMutableAttributedString(string: viewControllerTitle ?? "", attributes: firstAttributes)
-//        let secondString = NSAttributedString(string: "Swat", attributes: secondAttributes)
-
-//        firstString.append(secondString)
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Light", size: 10) ?? UIFont()]
+        let firstString = NSMutableAttributedString(string: String(stringArray?[0] ?? ""), attributes: firstAttributes)
+        var secondString = NSAttributedString("")
+        if stringArray?.count ?? 0 > 1{
+            secondString = NSAttributedString(string: String("| \(stringArray?[1] ?? "")"), attributes: secondAttributes)
+        }
+        firstString.append(secondString)
         label.textColor = .white
         label.attributedText = firstString
         let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))

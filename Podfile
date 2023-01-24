@@ -21,4 +21,7 @@ pod 'SVProgressHUD'
 pod 'Toast-Swift', '~> 5.0.0'
 pod 'AARatingBar'
 pod 'FBSDKLoginKit'
+pod 'Firebase/Core'
+pod 'Firebase/Auth'
+pod 'GoogleSignIn'
 end
