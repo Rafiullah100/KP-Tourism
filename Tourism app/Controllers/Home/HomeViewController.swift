@@ -50,7 +50,7 @@ class HomeViewController: BaseViewController {
         case collapsed
     }
     
-    var cardHandleAreaHeight:CGFloat = 60
+    var cardHandleAreaHeight: CGFloat = 60
     
     var cardVisible = true
     var nextState:CardState {
@@ -112,7 +112,6 @@ class HomeViewController: BaseViewController {
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         switch cellType {
         case .explore:
             siteLabel.text = "\((model as? ExploreModel)?.attractions.rows.count ?? 0) Explore Sites"
@@ -145,7 +144,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         switch cellType {
         case .explore:
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
@@ -184,8 +182,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
             return cell
         case .visitKP:
-            let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
-            return cell
+            return UITableViewCell()
         default:
             return UITableViewCell()
         }
@@ -277,18 +274,18 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
         else if title == tabbarItems[8].title{
             mapButton.isHidden = true
-            cellType = .explore
-            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
-        }
-        else if title == tabbarItems[9].title{
-            mapButton.isHidden = true
             cellType = .blog
             fetch(route: .fetchBlogs, method: .post, model: BlogsModel.self)
         }
-        else if title == tabbarItems[10].title{
+        else if title == tabbarItems[9].title{
             mapButton.isHidden = true
             cellType = .product
             fetch(route: .fetchProduct, method: .post, model: ProductModel.self)
+        }
+        else if title == tabbarItems[10].title{
+//            mapButton.isHidden = true
+//            cellType = .explore
+//            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
         }
     }
 }

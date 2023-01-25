@@ -41,8 +41,10 @@ extension HomeViewController{
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
-            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+        if scrollView == tabbarView {
+            if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
+                scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+            }
         }
     }
     

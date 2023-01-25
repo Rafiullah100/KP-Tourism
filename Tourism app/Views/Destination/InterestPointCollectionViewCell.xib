@@ -28,23 +28,28 @@
                         <rect key="frame" x="2" y="2" width="76" height="76"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="M2y-4c-hfi">
-                                <rect key="frame" x="0.0" y="0.0" width="76" height="71"/>
+                                <rect key="frame" x="0.0" y="0.0" width="76" height="76"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G5H-NY-sPU">
-                                        <rect key="frame" x="0.0" y="0.0" width="76" height="56"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="76" height="61"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iNP-t8-UUm">
-                                                <rect key="frame" x="0.0" y="0.0" width="76" height="56"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="76" height="61"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ff-Pi-OyK">
-                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="54"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="76" height="59"/>
                                                         <subviews>
-                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Food" translatesAutoresizingMaskIntoConstraints="NO" id="eBE-WB-l9N">
-                                                                <rect key="frame" x="13" y="2" width="50" height="50"/>
+                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Food" translatesAutoresizingMaskIntoConstraints="NO" id="eBE-WB-l9N">
+                                                                <rect key="frame" x="3" y="-0.5" width="70" height="60"/>
                                                                 <constraints>
-                                                                    <constraint firstAttribute="width" constant="50" id="CoK-qE-fQA"/>
-                                                                    <constraint firstAttribute="height" constant="50" id="eBq-2v-zcH"/>
+                                                                    <constraint firstAttribute="width" constant="70" id="CoK-qE-fQA"/>
+                                                                    <constraint firstAttribute="height" constant="60" id="eBq-2v-zcH"/>
                                                                 </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                        <real key="value" value="5"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -54,7 +59,7 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gic-Kt-96h">
-                                                        <rect key="frame" x="0.0" y="54" width="76" height="2"/>
+                                                        <rect key="frame" x="0.0" y="59" width="76" height="2"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9YQ-mi-xbh">
                                                                 <rect key="frame" x="23" y="0.0" width="30" height="2"/>
@@ -84,11 +89,11 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMb-4F-1Rt">
-                                        <rect key="frame" x="0.0" y="56" width="76" height="15"/>
+                                        <rect key="frame" x="0.0" y="61" width="76" height="15"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1h-H9-j8Y">
-                                                <rect key="frame" x="27" y="2" width="22.5" height="11"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="9"/>
+                                                <rect key="frame" x="24.5" y="1" width="27" height="13"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -105,7 +110,7 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="bottom" secondItem="M2y-4c-hfi" secondAttribute="bottom" constant="5" id="4aR-vD-gZU"/>
+                            <constraint firstAttribute="bottom" secondItem="M2y-4c-hfi" secondAttribute="bottom" id="4aR-vD-gZU"/>
                             <constraint firstItem="M2y-4c-hfi" firstAttribute="leading" secondItem="OWj-RF-FIR" secondAttribute="leading" id="95d-0T-TSK"/>
                             <constraint firstAttribute="trailing" secondItem="M2y-4c-hfi" secondAttribute="trailing" id="DYZ-dI-JaQ"/>
                             <constraint firstItem="M2y-4c-hfi" firstAttribute="top" secondItem="OWj-RF-FIR" secondAttribute="top" id="UmT-0C-uHG"/>

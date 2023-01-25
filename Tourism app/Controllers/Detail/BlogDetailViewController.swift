@@ -22,6 +22,8 @@ class BlogDetailViewController: BaseViewController {
     
     @IBOutlet weak var likeLabel: UILabel!
     var blogDetail: Blog?
+    var allComments: CommentsModel?
+    
     
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
@@ -48,6 +50,7 @@ class BlogDetailViewController: BaseViewController {
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
+        fetch(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0], model: CommentsModel.self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -57,17 +60,32 @@ class BlogDetailViewController: BaseViewController {
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
     }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let comments):
+                DispatchQueue.main.async {
+                    self.allComments = comments as? CommentsModel
+                    print(self.allComments)
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
 }
 
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return allComments?.comments?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-        cell.commentLabel.text = "These Pods Are Used All Around The World And Are Ideal For Adventurous. \(indexPath.row)"
+        cell.commentLabel.text = allComments?.comments?.rows?[indexPath.row].comment
         return cell
     }
 
@@ -95,6 +113,10 @@ extension BlogDetailViewController: UITextViewDelegate {
 //            self.textEntry.isScrollEnabled = true
 //        }
 //        toolBarHeight.constant = textView.contentSize.height + 20
+        if text == "\n" {
+            textView.resignFirstResponder()
+//            doComment(route: .doComment, method: .post, model: DoCommentModel.self)
+        }
         return true
     }
     
@@ -111,4 +133,5 @@ extension BlogDetailViewController: UITextViewDelegate {
             commentTextView.textColor = UIColor.lightGray
         }
     }
+    
 }

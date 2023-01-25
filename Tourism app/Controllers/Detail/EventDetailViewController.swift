@@ -37,6 +37,7 @@ class EventDetailViewController: BaseViewController {
         else{
             statusView.backgroundColor = Constants.appColor
         }
+        view.bringSubviewToFront(statusView)
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {

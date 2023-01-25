@@ -37,9 +37,9 @@ struct Constants {
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
               Sections(title: "Events", image: "event", selectedImage: "event-s"),
-              Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
               Sections(title: "Local Products", image: "product", selectedImage: "product-s"),
+              Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
    ]
     
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]

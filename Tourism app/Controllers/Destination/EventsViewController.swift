@@ -27,6 +27,7 @@ class EventsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
@@ -45,6 +46,8 @@ class EventsViewController: BaseViewController {
             case .success(let events):
                 DispatchQueue.main.async {
                     self.eventDetail = events as? EventsModel
+                    self.eventDetail?.events.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+
                     self.tableView.reloadData()
                 }
             case .failure(let error):

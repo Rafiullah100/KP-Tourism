@@ -57,7 +57,6 @@ class PointOfInterestViewController: BaseViewController {
             }
         }
     }
-      
     
     override func show(_ vc: UIViewController, sender: Any?) {
         add(vc)
