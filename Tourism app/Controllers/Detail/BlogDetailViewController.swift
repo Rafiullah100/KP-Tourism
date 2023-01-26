@@ -50,7 +50,11 @@ class BlogDetailViewController: BaseViewController {
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
-        fetch(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0], model: CommentsModel.self)
+        reloadComment()
+    }
+    
+    private func reloadComment(){
+        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0], model: CommentsModel.self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -61,13 +65,27 @@ class BlogDetailViewController: BaseViewController {
         self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let result):
+                DispatchQueue.main.async {
+                    if (result as? SuccessModel)?.success == true{
+                        self.reloadComment()
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
                 DispatchQueue.main.async {
                     self.allComments = comments as? CommentsModel
-                    print(self.allComments)
                     self.tableView.reloadData()
                 }
             case .failure(let error):
@@ -80,7 +98,7 @@ class BlogDetailViewController: BaseViewController {
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allComments?.comments?.count ?? 0
+        return allComments?.comments?.rows?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -115,7 +133,7 @@ extension BlogDetailViewController: UITextViewDelegate {
 //        toolBarHeight.constant = textView.contentSize.height + 20
         if text == "\n" {
             textView.resignFirstResponder()
-//            doComment(route: .doComment, method: .post, model: DoCommentModel.self)
+            doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": textView.text ?? ""], model: SuccessModel.self)
         }
         return true
     }

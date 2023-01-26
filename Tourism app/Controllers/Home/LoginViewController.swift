@@ -12,6 +12,12 @@ import GoogleSignIn
 import Firebase
 class LoginViewController: BaseViewController {
     
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    
+    var login: LoginModel?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -45,7 +51,6 @@ class LoginViewController: BaseViewController {
             }
         }
     }
-
     
     func getFBUserData(){
         guard let token = AccessToken.current?.tokenString else { return }
@@ -65,6 +70,39 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func LoginBtnAction(_ sender: Any) {
-        Switcher.goToFeedsVC(delegate: self)
+        validateLoginFields()
+    }
+    
+    func loginUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let login):
+                DispatchQueue.main.async {
+                    self.login = login as? LoginModel
+                    if self.login?.success == true{
+                        UserDefaults.standard.isLoginned = true
+                        UserDefaults.standard.accessToken = self.login?.token
+                        Switcher.goToFeedsVC(delegate: self)
+                    }
+                    else{
+                        //show alert
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func validateLoginFields(){
+        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
+        guard passwordTextField.text == passwordTextField.text else { return }
+        let parameters = ["username": email, "password": password]
+        print(parameters)
+        loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
+    }
+    
+    private func changeTabbar(){
+//        tabBarController?.setViewControllers(<#T##viewControllers: [UIViewController]?##[UIViewController]?#>, animated: <#T##Bool#>)
     }
 }

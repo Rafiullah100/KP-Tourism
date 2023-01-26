@@ -31,11 +31,16 @@ class FeedsViewController: UIViewController {
         topBarView.addBottomShadow()
         tableView.rowHeight = UITableView.automaticDimension
     }
+    
     @IBAction func chatBtnAction(_ sender: Any) {
         Switcher.goToChatListVC(delegate: self)
     }
     @IBAction func profileBtnAction(_ sender: Any) {
         Switcher.goToProfileVC(delegate: self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
 }
 

@@ -12,6 +12,11 @@ class SignupViewController: BaseViewController {
     let pickerView = UIPickerView()
     let userType = ["Tourist", "Seller"]
     
+    @IBOutlet weak var confirmTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var lastNameTextField: UITextField!
+    @IBOutlet weak var firstNameTextFeild: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var userTypeTextField: UITextField!
     @IBOutlet weak var userTypeButton: UIButton!
     
@@ -23,6 +28,38 @@ class SignupViewController: BaseViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
         userTypeButton.setTitle(userType[0], for: .normal)
+    }
+    
+    
+    
+    @IBAction func signupBtnAction(_ sender: Any) {
+        validateSignupFields()
+    }
+    
+    func registerUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let result):
+                DispatchQueue.main.async {
+                    if (result as! SuccessModel).success == true{
+                        Switcher.goToLoginVC(delegate: self)
+                    }
+                    else{
+                        //show alert
+                    }
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    private func validateSignupFields(){
+        guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, let lastName = lastNameTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text else { return }
+        guard passwordTextField.text == confirmTextField.text else { return }
+        let parameters = ["username": email, "name": firstName + " " + lastName, "password": password, "confirm_password": confirmPassword, "mobile_no": "123", "user_type": "user"]
+        print(parameters)
+        registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
     }
     
     @IBAction func gotoLogin(_ sender: Any) {

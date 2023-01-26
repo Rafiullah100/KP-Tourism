@@ -470,7 +470,7 @@ details, account, weather and account activity</string>
                                                                 <rect key="frame" x="10" y="0.0" width="373" height="104"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3VP-sM-EMK">
-                                                                        <rect key="frame" x="0.0" y="20.5" width="311" height="63"/>
+                                                                        <rect key="frame" x="0.0" y="20.5" width="311" height="63.5"/>
                                                                         <string key="text">Get travel deals, offers, suggestions,
 personalized recommendation
 and more</string>
@@ -634,7 +634,7 @@ and more</string>
         <!--Weather Alert View Controller-->
         <scene sceneID="krA-Z0-MFL">
             <objects>
-                <viewController storyboardIdentifier="AlertViewController" id="guj-F8-Iaf" customClass="WeatherAlertViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherAlertViewController" id="guj-F8-Iaf" customClass="WeatherAlertViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="RAG-ek-XRE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1320,6 +1320,10 @@ and more</string>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="U8L-9U-7Dk"/>
+                    <connections>
+                        <outlet property="emailTextField" destination="tpz-dV-zij" id="IeQ-qj-pfA"/>
+                        <outlet property="passwordTextField" destination="PCy-IP-vvE" id="7sf-21-dY3"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="13j-mF-0y3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1558,7 +1562,7 @@ and more</string>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdz-lk-0xU">
                                                                         <rect key="frame" x="0.0" y="53.5" width="394" height="53"/>
                                                                         <subviews>
-                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z6h-XE-aWe">
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z6h-XE-aWe">
                                                                                 <rect key="frame" x="10" y="0.0" width="384" height="52.5"/>
                                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits"/>
@@ -1585,7 +1589,7 @@ and more</string>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKn-TU-4cp">
                                                                         <rect key="frame" x="0.0" y="106.5" width="394" height="53.5"/>
                                                                         <subviews>
-                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Username" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nxv-UU-Pjs">
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nxv-UU-Pjs">
                                                                                 <rect key="frame" x="10" y="0.0" width="384" height="53"/>
                                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits"/>
@@ -1753,6 +1757,9 @@ and more</string>
                                                                                         <real key="value" value="5"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
+                                                                                <connections>
+                                                                                    <action selector="signupBtnAction:" destination="A0r-95-ik5" eventType="touchUpInside" id="vLw-ec-M2K"/>
+                                                                                </connections>
                                                                             </button>
                                                                         </subviews>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -2035,6 +2042,11 @@ and more</string>
                     </view>
                     <navigationItem key="navigationItem" id="GRY-K2-F6o"/>
                     <connections>
+                        <outlet property="confirmTextField" destination="LXG-fq-r6M" id="UB2-p4-QZ8"/>
+                        <outlet property="emailTextField" destination="4z2-bY-mrH" id="xho-Oq-jKL"/>
+                        <outlet property="firstNameTextFeild" destination="z6h-XE-aWe" id="jup-OI-ESD"/>
+                        <outlet property="lastNameTextField" destination="Nxv-UU-Pjs" id="IJ1-zy-J9g"/>
+                        <outlet property="passwordTextField" destination="RvF-L3-EKu" id="95W-dh-JLU"/>
                         <outlet property="userTypeButton" destination="VT7-sn-JEC" id="TYl-g5-ieA"/>
                         <outlet property="userTypeTextField" destination="mRP-pb-2Yo" id="Sbl-g1-09d"/>
                     </connections>
