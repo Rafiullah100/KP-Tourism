@@ -23,16 +23,18 @@ class ExploreTableViewCell: UITableViewCell {
         didSet{
             districtLabel.text = district?.title
             imageSDWebImageSrc = []
-            district?.attractions.forEach({ attration in
-                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ?? ""))
-                if let sdURL = imageUrl{
-                    imageSDWebImageSrc.append(sdURL)
-                    slideShow.slideshowInterval = 2.0
-                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-                    slideShow.isUserInteractionEnabled = false
-                    slideShow.setImageInputs(imageSDWebImageSrc)
-                }
-            })
+            DispatchQueue.main.async {
+                self.district?.attractions.forEach({ attration in
+                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ?? ""))
+                    if let sdURL = imageUrl{
+                        self.imageSDWebImageSrc.append(sdURL)
+                        self.slideShow.slideshowInterval = 2.0
+                        self.slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+                        self.slideShow.isUserInteractionEnabled = false
+                        self.slideShow.setImageInputs(self.imageSDWebImageSrc)
+                    }
+                })
+            }
         }
     }
     

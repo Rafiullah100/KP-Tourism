@@ -137,7 +137,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .product:
             return (model as? ProductModel)?.localProducts.count ?? 0
         case .visitKP:
-            return 5
+            return 4
         default:
             return 0
         }
@@ -182,7 +182,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
             return cell
         case .visitKP:
-            return UITableViewCell()
+            let cell: VisitKPTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! VisitKPTableViewCell
+            return cell
         default:
             return UITableViewCell()
         }
@@ -210,6 +211,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: (model as! AttractionModel).attractions.rows[indexPath.row])
         case .south:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions.rows[indexPath.row])
+        case .visitKP:
+            Switcher.gotoVisitKP(delegate: self)
         default:
             break
         }
@@ -283,8 +286,8 @@ extension HomeViewController: MDCTabBarViewDelegate{
             fetch(route: .fetchProduct, method: .post, model: ProductModel.self)
         }
         else if title == tabbarItems[10].title{
-//            mapButton.isHidden = true
-//            cellType = .explore
+            mapButton.isHidden = true
+            cellType = .visitKP
 //            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
         }
     }

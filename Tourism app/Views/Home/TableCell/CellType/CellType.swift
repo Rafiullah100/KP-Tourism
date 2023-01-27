@@ -24,15 +24,16 @@ enum CellType: CaseIterable{
 
     func getHeight() -> CGFloat{
         switch self {
-        case .explore, .attraction, .adventure, .south, .visitKP : return 300
+        case .explore, .attraction, .adventure, .south : return 300
         case .tour, .product, .arch: return 350
         case .event, .blog: return 400
+        case .visitKP: return 150.0
         }
     }
    
     func getClass() -> UITableViewCell.Type{
         switch self {
-        case .explore, .visitKP:
+        case .explore:
             return ExploreTableViewCell.self
         case .attraction:
             return AttractionTableViewCell.self
@@ -50,6 +51,8 @@ enum CellType: CaseIterable{
             return BlogTableViewCell.self
         case .event:
             return EventTableViewCell.self
+        case .visitKP:
+            return VisitKPTableViewCell.self
         }
     }
     

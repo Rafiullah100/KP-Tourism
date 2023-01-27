@@ -15,6 +15,7 @@ enum ViewControllerType {
     case back2
     case backWithTitle
     case notification
+    case visitKP
 }
 
 enum RightButttonsType {
@@ -71,6 +72,8 @@ class BaseViewController: UIViewController {
             setupBackButtonWithTitle()
         case .notification:
             setupBackButton()
+        case .visitKP:
+            setupBackToHome()
         }
     }
     
@@ -130,6 +133,12 @@ class BaseViewController: UIViewController {
         addArrowBackButton()
     }
     
+    func setupBackToHome() {
+        navigationItem.rightBarButtonItems = []
+        navigationItem.leftBarButtonItems = []
+        backToHome()
+    }
+    
     func addArrowBackButton() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
         backButton.image = nil
@@ -173,10 +182,26 @@ class BaseViewController: UIViewController {
         let barButton = UIBarButtonItem.init(customView: buttonView)
         self.navigationItem.leftBarButtonItem = barButton
     }
+    
+    func backToHome() {
+        let button = UIButton.init(type: .custom)
+        button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        imageView.image = UIImage(named: "visit-back")
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: 100, height: 30))
+        label.textColor = .black
+        label.text = viewControllerTitle
+        let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
+        button.frame = buttonView.frame
+        buttonView.addSubview(button)
+        buttonView.addSubview(imageView)
+        buttonView.addSubview(label)
+        let barButton = UIBarButtonItem.init(customView: buttonView)
+        self.navigationItem.leftBarButtonItem = barButton
+    }
 
     func addBackButton() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
-        backButton.image = nil
         backButton.image = UIImage(named: "Back")
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = backButton

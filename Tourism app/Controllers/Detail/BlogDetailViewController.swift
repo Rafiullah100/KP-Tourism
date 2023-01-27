@@ -86,7 +86,10 @@ class BlogDetailViewController: BaseViewController {
             case .success(let comments):
                 DispatchQueue.main.async {
                     self.allComments = comments as? CommentsModel
+                    self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
                     self.tableView.reloadData()
+                    self.tableView.layoutIfNeeded()
+                    self.tableViewHeight.constant = self.tableView.contentSize.height
                 }
             case .failure(let error):
                 print(error)
@@ -107,19 +110,19 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 66.0
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 66.0
+//    }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        tableViewHeight.constant = tableView.contentSize.height
-        tableView.layoutIfNeeded()
-        scrollView.layoutIfNeeded()
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        tableViewHeight.constant = tableView.contentSize.height
+//        tableView.layoutIfNeeded()
+//        scrollView.layoutIfNeeded()
+//    }
 }
 
 extension BlogDetailViewController: UITextViewDelegate {
