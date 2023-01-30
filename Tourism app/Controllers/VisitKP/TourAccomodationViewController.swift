@@ -1,14 +1,13 @@
 //
-//  VisitKPViewController.swift
+//  TourAccomodationViewController.swift
 //  Tourism app
 //
-//  Created by MacBook Pro on 1/27/23.
+//  Created by MacBook Pro on 1/30/23.
 //
 
 import UIKit
 
-class VisitKPViewController: BaseViewController {
-
+class TourAccomodationViewController: BaseViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -16,9 +15,9 @@ class VisitKPViewController: BaseViewController {
             tableView.dataSource = self
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
         type = .visitKP
         viewControllerTitle = "Tour Planner"
         
@@ -29,9 +28,10 @@ class VisitKPViewController: BaseViewController {
     }
 }
 
-extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
+
+extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 3
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier")!
@@ -39,11 +39,11 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160.0
+        return 210.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoVisitExpVC(delegate: self)
+        Switcher.gotoTourpdfVC(delegate: self)
     }
 }
 
