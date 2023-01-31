@@ -22,6 +22,8 @@ class LoginViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .title
+        emailTextField.text = "arsalan@gmail.com"
+        passwordTextField.text = "1234567"
         viewControllerTitle = "Login"
     }
 

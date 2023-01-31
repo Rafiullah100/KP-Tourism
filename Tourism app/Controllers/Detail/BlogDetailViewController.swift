@@ -22,8 +22,7 @@ class BlogDetailViewController: BaseViewController {
     
     @IBOutlet weak var likeLabel: UILabel!
     var blogDetail: Blog?
-    var allComments: CommentsModel?
-    
+    var allComments: [CommentsRows] = [CommentsRows]()
     
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
@@ -33,10 +32,14 @@ class BlogDetailViewController: BaseViewController {
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
         }
     }
+    
+    var currentPage = 1
+    var totalPages = 1
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 66.0
+//        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 1000
         
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
@@ -45,7 +48,6 @@ class BlogDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = blogDetail?.title
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.thumbnailImage ?? "")))
-//        autherLabel.text =
         textView.text = blogDetail?.blogDescription
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
@@ -54,7 +56,8 @@ class BlogDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0], model: CommentsModel.self)
+        print(currentPage)
+        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0, "page": currentPage], model: CommentsModel.self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -85,7 +88,9 @@ class BlogDetailViewController: BaseViewController {
             switch result {
             case .success(let comments):
                 DispatchQueue.main.async {
-                    self.allComments = comments as? CommentsModel
+                    print((comments as? CommentsModel)?.comments?.rows ?? [])
+                    self.totalPages = (comments as? CommentsModel)?.comments?.count ?? 1
+                    self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                     self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
                     self.tableView.reloadData()
                     self.tableView.layoutIfNeeded()
@@ -101,28 +106,26 @@ class BlogDetailViewController: BaseViewController {
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allComments?.comments?.rows?.count ?? 0
+        return allComments.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-        cell.commentLabel.text = allComments?.comments?.rows?[indexPath.row].comment
+        cell.commentLabel.text = allComments[indexPath.row].comment
         return cell
     }
-
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 66.0
-//    }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        tableViewHeight.constant = tableView.contentSize.height
-//        tableView.layoutIfNeeded()
-//        scrollView.layoutIfNeeded()
-//    }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(currentPage, totalPages, indexPath.row, allComments.count-1)
+        if currentPage < totalPages && indexPath.row == allComments.count-1  {
+            currentPage = currentPage + 1
+            reloadComment()
+        }
+    }
 }
 
 extension BlogDetailViewController: UITextViewDelegate {
@@ -154,5 +157,4 @@ extension BlogDetailViewController: UITextViewDelegate {
             commentTextView.textColor = UIColor.lightGray
         }
     }
-    
 }

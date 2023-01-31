@@ -12,7 +12,6 @@ struct SuccessModel: Codable {
     let message: String
 }
 
-
 struct LoginModel: Codable {
     let success: Bool
     let message, token: String
@@ -21,7 +20,7 @@ struct LoginModel: Codable {
     let name, mobileNo: String?
     let profileImage, profileImageThumb: String
     let isActive: Bool
-    
+
     enum CodingKeys: String, CodingKey {
         case success, message, token
         case userID = "userId"
@@ -33,3 +32,5 @@ struct LoginModel: Codable {
         case isActive
     }
 }
+
+

@@ -10,7 +10,7 @@ import UIKit
 import SVProgressHUD
 import Toast_Swift
 extension URLSession{
-    func request<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) {
+    func request<T: Codable>(route: Route, method: Method, showLoader: Bool? = true, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) {
         
         if !Reachability.isConnectedToNetwork() {
             completion(.failure(.noInternet))

@@ -25,36 +25,44 @@ class AttractionViewController: BaseViewController {
     var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDetail: AttractionModel?
-    
     var attractionDistrict: AttractionsDistrict?
 
+    var attractionDistrictsArray: [AttractionsDistrict] = [AttractionsDistrict]()
 
+
+    var currentPage = 1
+    var totalPages = 1
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        
+        loadData(currentPage: currentPage)
+    }
+    
+    private func loadData(currentPage: Int){
         if exploreDistrict != nil {
             sectionLabel.text = "Attractions"
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction"], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage], model: AttractionModel.self)
         }
         else if attractionDistrict != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction"], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage], model: AttractionModel.self)
         }
     }
-    
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let attractions):
                 DispatchQueue.main.async {
-                    self.attractionDetail = attractions as? AttractionModel
-                    self.attractionDetail?.attractions.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
+                    self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions.rows ?? [])
+                    self.totalPages = (attractions as? AttractionModel)?.attractions.count ?? 1
+                    self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
                 }
             case .failure(let error):
                 if error == .noInternet {
@@ -67,21 +75,28 @@ class AttractionViewController: BaseViewController {
 
 extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return attractionDetail?.attractions.rows.count ?? 0
+        return attractionDistrictsArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestAttractCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DestAttractCollectionViewCell
-        cell.attraction = attractionDetail?.attractions.rows[indexPath.row]
+        cell.attraction = attractionDistrictsArray[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if locationCategory == .district{
-            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDistrictsArray[indexPath.row])
         }
         else if locationCategory == .tourismSpot{
-            Switcher.gotoAttractionDetail(delegate: self, attractionDistrict: attractionDetail?.attractions.rows[indexPath.row])
+            Switcher.gotoAttractionDetail(delegate: self, attractionDistrict: attractionDistrictsArray[indexPath.row])
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if currentPage < totalPages && indexPath.row == attractionDistrictsArray.count-1  {
+            currentPage = currentPage + 1
+            loadData(currentPage: currentPage)
         }
     }
 }

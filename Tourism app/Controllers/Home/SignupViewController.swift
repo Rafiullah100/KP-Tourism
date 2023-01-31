@@ -18,16 +18,15 @@ class SignupViewController: BaseViewController {
     @IBOutlet weak var firstNameTextFeild: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var userTypeTextField: UITextField!
-    @IBOutlet weak var userTypeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .title
         viewControllerTitle = "Sign up"
         userTypeTextField.inputView = pickerView
+        userTypeTextField.text = userType[0]
         pickerView.delegate = self
         pickerView.dataSource = self
-        userTypeButton.setTitle(userType[0], for: .normal)
     }
     
     
@@ -65,10 +64,6 @@ class SignupViewController: BaseViewController {
     @IBAction func gotoLogin(_ sender: Any) {
         Switcher.goToLoginVC(delegate: self)
     }
-    
-    @IBAction func userTypeBtnAction(_ sender: Any) {
-        userTypeTextField.becomeFirstResponder()
-    }
 }
 
 extension SignupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -85,6 +80,6 @@ extension SignupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        userTypeButton.setTitle(userType[row], for: .normal)
+        userTypeTextField.text = userType[row]
     }
 }
