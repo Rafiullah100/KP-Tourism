@@ -27,7 +27,7 @@ class AttractionTableViewCell: UITableViewCell {
         didSet{
             label.text = attraction?.title
             imageSDWebImageSrc = []
-            attraction?.attractionGalleries.forEach({ attration in
+            attraction?.attractionGalleries?.forEach({ attration in
                 let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? "" ))
                 if let sdURL = imageUrl{
                     imageSDWebImageSrc.append(sdURL)

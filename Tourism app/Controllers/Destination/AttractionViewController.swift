@@ -60,8 +60,8 @@ class AttractionViewController: BaseViewController {
             switch result {
             case .success(let attractions):
                 DispatchQueue.main.async {
-                    self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions.rows ?? [])
-                    self.totalPages = (attractions as? AttractionModel)?.attractions.count ?? 1
+                    self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions?.rows ?? [])
+                    self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
                     self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
                 }
             case .failure(let error):
@@ -94,7 +94,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if currentPage < totalPages && indexPath.row == attractionDistrictsArray.count-1  {
+        if indexPath.row == attractionDistrictsArray.count-1  {
             currentPage = currentPage + 1
             loadData(currentPage: currentPage)
         }

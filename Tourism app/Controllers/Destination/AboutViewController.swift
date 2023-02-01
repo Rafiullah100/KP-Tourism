@@ -25,13 +25,15 @@ class AboutViewController: BaseViewController {
         type = .back1
         if exploreDistrict != nil {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            thumbnailBottomLabel.text = "\(exploreDistrict?.title ?? "")"
+            thumbnailTopLabel.text = "\(exploreDistrict?.title ?? "")"
+            thumbnailBottomLabel.text = "\(exploreDistrict?.locationTitle ?? "")"
             welcomeLabel.text = "Welcome to \(exploreDistrict?.title ?? "")"
             textView.text = "\(exploreDistrict?.description?.stripOutHtml() ?? "")"
         }
         else if attractionDistrict != nil{
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            thumbnailBottomLabel.text = "\(attractionDistrict?.title ?? "")"
+            thumbnailTopLabel.text = "\(exploreDistrict?.title ?? "")"
+            thumbnailBottomLabel.text = "\(attractionDistrict?.locationTitle ?? "")"
             welcomeLabel.text = "Welcome to \(attractionDistrict?.title ?? "")"
             textView.text = "\(attractionDistrict?.description.stripOutHtml() ?? "")"
         }

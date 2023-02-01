@@ -63,9 +63,16 @@ class HomeViewController: BaseViewController {
     var section = [Sections]()
     var tabbarItems = [UITabBarItem]()
     var model: Codable?
-    var totalPages: Int?
-    var currentPage: Int?
     
+    //pagination
+    var totalCount = 1
+    var currentPage = 1
+    var limit = 5
+    //explore
+    var exploreDistrict: [ExploreDistrict] = [ExploreDistrict]()
+    var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
+    var localProducts: [LocalProduct] = [LocalProduct]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -73,7 +80,7 @@ class HomeViewController: BaseViewController {
         type = .back1
         setupCard()
         configureTabbar()
-        fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
+        fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,6 +98,18 @@ class HomeViewController: BaseViewController {
             case .success(let explore):
                 DispatchQueue.main.async {
                     self.model = explore
+                    if self.cellType == .explore {
+                        self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions.rows ?? [])
+                        self.totalCount = (explore as? ExploreModel)?.attractions.count ?? 0
+                    }
+                    else if self.cellType == .attraction{
+                        self.attractionDistrict.append(contentsOf: (explore as? AttractionModel)?.attractions?.rows ?? [])
+                        self.totalCount = (explore as? AttractionModel)?.attractions?.count ?? 0
+                    }
+                    else if self.cellType == .product{
+                        self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
+                        self.totalCount = 1
+                    }
                     self.tableView.reloadData()
                     self.show(self.mapVC, sender: self)
                 }
@@ -105,7 +124,7 @@ class HomeViewController: BaseViewController {
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
         vc.exploreDistrict = (model as? ExploreModel)?.attractions.rows
-        vc.attractionDistrict = (model as? AttractionModel)?.attractions.rows
+        vc.attractionDistrict = (model as? AttractionModel)?.attractions?.rows
         add(vc, in: mapContainerView)
     }
 }
@@ -114,11 +133,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch cellType {
         case .explore:
-            siteLabel.text = "\((model as? ExploreModel)?.attractions.rows.count ?? 0) Explore Sites"
-            return (model as? ExploreModel)?.attractions.rows.count ?? 0
+            siteLabel.text = "\(exploreDistrict.count) Explore Sites"
+            return exploreDistrict.count
         case .attraction:
-            siteLabel.text = "\((model as? AttractionModel)?.attractions.rows.count ?? 0) Attraction Sites"
-            return (model as? AttractionModel)?.attractions.rows.count ?? 0
+            siteLabel.text = "\(attractionDistrict.count) Attraction Sites"
+            return attractionDistrict.count
         case .adventure:
             return (model as? AdventureModel)?.adventures.count ?? 0
         case .south:
@@ -135,7 +154,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .blog:
             return (model as? BlogsModel)?.blog.count ?? 0
         case .product:
-            return (model as? ProductModel)?.localProducts.count ?? 0
+            return localProducts.count
         case .visitKP:
             return 4
         default:
@@ -147,11 +166,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         switch cellType {
         case .explore:
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
-            cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
+            cell.district = exploreDistrict[indexPath.row]
             return cell
         case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
-            cell.attraction = (model as? AttractionModel)?.attractions.rows[indexPath.row]
+            cell.attraction = attractionDistrict[indexPath.row]
             return cell
         case .adventure:
             let cell: AdventureTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AdventureTableViewCell
@@ -179,7 +198,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
-            cell.product = (model as? ProductModel)?.localProducts[indexPath.row]
+            cell.product = localProducts[indexPath.row]
             return cell
         case .visitKP:
             let cell: VisitKPTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! VisitKPTableViewCell
@@ -196,7 +215,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cellType {
         case .explore:
-            Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as! ExploreModel).attractions.rows[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[indexPath.row])
         case .event:
             Switcher.gotoEventDetail(delegate: self, event: (model as! EventsModel).events[indexPath.row])
         case .tour:
@@ -204,11 +223,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .blog:
             Switcher.gotoBlogDetail(delegate: self, blogDetail: (model as! BlogsModel).blog[indexPath.row])
         case .product:
-            Switcher.gotoProductDetail(delegate: self, product: (model as! ProductModel).localProducts[indexPath.row])
+            Switcher.gotoProductDetail(delegate: self, product: localProducts[indexPath.row])
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
-            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: (model as! AttractionModel).attractions.rows[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDistrict[indexPath.row])
         case .south:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions.rows[indexPath.row])
         case .visitKP:
@@ -235,15 +254,19 @@ extension HomeViewController: MDCTabBarViewDelegate{
     }
     
     private func addChild(title: String){
+        attractionDistrict = []
+        exploreDistrict = []
+        localProducts = []
+        currentPage = 1
         if title == tabbarItems[0].title {
             mapButton.isHidden = false
             cellType = .explore
-            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
         }
         else if title == tabbarItems[1].title{
             mapButton.isHidden = false
             cellType = .attraction
-            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction"], model: AttractionModel.self)
+            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
         }
         else if title == tabbarItems[2].title{
             mapButton.isHidden = true
@@ -283,12 +306,33 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if title == tabbarItems[9].title{
             mapButton.isHidden = true
             cellType = .product
-            fetch(route: .fetchProduct, method: .post, model: ProductModel.self)
+            fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
         }
         else if title == tabbarItems[10].title{
             mapButton.isHidden = true
             cellType = .visitKP
-//            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern"], model: ExploreModel.self)
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(totalCount, currentPage)
+        if cellType == .explore{
+            if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
+                currentPage = currentPage + 1
+                fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
+            }
+        }
+        else if cellType == .attraction{
+            if attractionDistrict.count != totalCount && indexPath.row == attractionDistrict.count - 1  {
+                currentPage = currentPage + 1
+                fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
+            }
+        }
+        else if cellType == .product{
+//            if localProducts.count != totalCount && indexPath.row == localProducts.count - 1  {
+//                currentPage = currentPage + 1
+//                fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
+//            }
         }
     }
 }

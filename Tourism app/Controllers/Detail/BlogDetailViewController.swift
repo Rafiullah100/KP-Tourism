@@ -10,6 +10,7 @@ import SDWebImage
 class BlogDetailViewController: BaseViewController {
 
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var commentTextView: UITextView!{
         didSet{
             commentTextView.delegate = self
@@ -34,12 +35,12 @@ class BlogDetailViewController: BaseViewController {
     }
     
     var currentPage = 1
-    var totalPages = 1
+    var totalCount = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 1000
+        scrollView.delegate = self
+        tableView.estimatedRowHeight = 0
         
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
@@ -89,7 +90,7 @@ class BlogDetailViewController: BaseViewController {
             case .success(let comments):
                 DispatchQueue.main.async {
                     print((comments as? CommentsModel)?.comments?.rows ?? [])
-                    self.totalPages = (comments as? CommentsModel)?.comments?.count ?? 1
+                    self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                     self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                     self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
                     self.tableView.reloadData()
@@ -117,14 +118,6 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(currentPage, totalPages, indexPath.row, allComments.count-1)
-        if currentPage < totalPages && indexPath.row == allComments.count-1  {
-            currentPage = currentPage + 1
-            reloadComment()
-        }
     }
 }
 
@@ -155,6 +148,17 @@ extension BlogDetailViewController: UITextViewDelegate {
         if commentTextView.text.isEmpty {
             commentTextView.text = "Message.."
             commentTextView.textColor = UIColor.lightGray
+        }
+    }
+}
+
+extension BlogDetailViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
         }
     }
 }

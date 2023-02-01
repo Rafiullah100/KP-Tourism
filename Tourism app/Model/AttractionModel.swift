@@ -8,30 +8,30 @@
 import Foundation
 
 struct AttractionModel: Codable {
-    let attractions: HomeAttractions
+    let attractions: HomeAttractions?
 }
 
 // MARK: - Attractions
 struct HomeAttractions: Codable {
-    let count: Int
-    let rows: [AttractionsDistrict]
+    let count: Int?
+    let rows: [AttractionsDistrict]?
 }
 
 // MARK: - Row
 struct AttractionsDistrict: Codable {
-    let id: Int
-    let title, slug: String
-    let districtID: Int
-    let isFeatured, isTop, family, adults: Bool
-    let locationTitle: String
+    let id: Int?
+    let title, slug: String?
+    let districtID: Int?
+    let isFeatured, isTop, family, adults: Bool?
+    let locationTitle: String?
     let latitude, longitude: String?
     let description, displayImage, previewImage: String
-    let authorID: Int
+    let authorID: Int?
     let parentID: Int?
-    let type: String
-    let status, viewsCounter, isDeleted: Int
-    let createdAt, updatedAt: String
-    let attractionGalleries: [AttractionGallery]
+    let type: String?
+    let status, viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
+    let attractionGalleries: [AttractionGallery]?
 
     enum CodingKeys: String, CodingKey {
         case id, title, slug
@@ -54,11 +54,11 @@ struct AttractionsDistrict: Codable {
 
 // MARK: - AttractionGallery
 struct AttractionGallery: Codable {
-    let id, attractionID, subAttractionID: Int
-    let type, title, imageURL: String
+    let id, attractionID, subAttractionID: Int?
+    let type, title, imageURL: String?
     let videoURL, virtualURL: String?
-    let status, isDeleted: Int
-    let createdAt, updatedAt: String
+    let status, isDeleted: Int?
+    let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id
