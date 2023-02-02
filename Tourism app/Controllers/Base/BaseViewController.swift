@@ -186,12 +186,13 @@ class BaseViewController: UIViewController {
     func backToHome() {
         let button = UIButton.init(type: .custom)
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 10, height: 10))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 10, height: 10))
         imageView.image = UIImage(named: "visit-back")
-        let label = UILabel(frame: CGRect(x: 15, y: 0, width: 100, height: 30))
+        let label = UILabel(frame: CGRect(x: 15, y: 0, width: 110, height: 30))
         label.textColor = .black
         label.text = viewControllerTitle
-        let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
+        label.font = UIFont(name: "Roboto-Bold", size: 18.0)
+        let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 120, height: 30))
         button.frame = buttonView.frame
         buttonView.addSubview(button)
         buttonView.addSubview(imageView)

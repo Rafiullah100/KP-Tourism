@@ -36,6 +36,7 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 1
+    var limit = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +59,7 @@ class BlogDetailViewController: BaseViewController {
     
     private func reloadComment(){
         print(currentPage)
-        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0, "page": currentPage], model: CommentsModel.self)
+        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0, "page": currentPage, "limit": limit], model: CommentsModel.self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -102,6 +103,8 @@ class BlogDetailViewController: BaseViewController {
             }
         }
     }
+    @IBAction func loginTocomment(_ sender: Any) {
+    }
 }
 
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
@@ -141,6 +144,12 @@ extension BlogDetailViewController: UITextViewDelegate {
         if commentTextView.textColor == UIColor.lightGray || commentTextView.text == "Message.." {
             commentTextView.text = nil
             textView.textColor = UIColor.black
+        }
+        
+        if !(UserDefaults.standard.isLoginned ?? false) {
+            commentTextView.resignFirstResponder()
+            Switcher.presentLoginVC(delegate: self)
+            return
         }
     }
     

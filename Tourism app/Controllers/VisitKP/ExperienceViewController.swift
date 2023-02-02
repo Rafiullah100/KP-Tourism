@@ -39,7 +39,7 @@ extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoTourDestinationVC(delegate: self)
+        Switcher.gotoTourInformationVC(delegate: self)
     }
 }
 

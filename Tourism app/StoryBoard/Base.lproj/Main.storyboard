@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Roboto-Black.ttf">
+            <string>Roboto-Black</string>
+        </array>
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
@@ -623,6 +626,7 @@ and more</string>
         <scene sceneID="8Y5-Vp-3mh">
             <objects>
                 <tabBarController storyboardIdentifier="TabbarViewController" id="06W-oa-RYB" customClass="TabbarViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="93A-Q6-ctu"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3zy-ye-syV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -670,7 +674,7 @@ and more</string>
                                                                 </connections>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hID-v8-9ev">
-                                                                <rect key="frame" x="53.5" y="7.5000000000000009" width="100.5" height="15.5"/>
+                                                                <rect key="frame" x="53.5" y="7.5" width="100.5" height="15.5"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -1065,27 +1069,35 @@ and more</string>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zL0-c0-Dgb">
                                                                                 <rect key="frame" x="57" y="0.0" width="272" height="53"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lju-zr-kXz">
-                                                                                        <rect key="frame" x="0.0" y="15" width="192" height="24"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                                                                        <nil key="textColor"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdC-LW-dWl">
-                                                                                        <rect key="frame" x="196" y="8.5" width="66" height="35"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" title="SIGN UP"/>
-                                                                                        <connections>
-                                                                                            <action selector="gotoSignUp:" destination="Qsm-Qr-yxF" eventType="touchUpInside" id="F8I-Zh-iVn"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="xQG-EQ-Utb">
+                                                                                        <rect key="frame" x="15.5" y="11.5" width="241" height="30"/>
+                                                                                        <subviews>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lju-zr-kXz">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="178" height="30"/>
+                                                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                                                                <nil key="textColor"/>
+                                                                                                <nil key="highlightedColor"/>
+                                                                                            </label>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MdC-LW-dWl">
+                                                                                                <rect key="frame" x="183" y="0.0" width="58" height="30"/>
+                                                                                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="15"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="SIGN UP">
+                                                                                                    <color key="titleColor" name="tabbar-tint"/>
+                                                                                                </state>
+                                                                                                <connections>
+                                                                                                    <action selector="gotoSignUp:" destination="Qsm-Qr-yxF" eventType="touchUpInside" id="F8I-Zh-iVn"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                    </stackView>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                 <constraints>
+                                                                                    <constraint firstItem="xQG-EQ-Utb" firstAttribute="centerX" secondItem="zL0-c0-Dgb" secondAttribute="centerX" id="2Co-EB-Qx9"/>
                                                                                     <constraint firstAttribute="height" constant="53" id="9DS-xF-6Hi"/>
                                                                                     <constraint firstAttribute="width" constant="272" id="GYC-Dk-IXP"/>
+                                                                                    <constraint firstItem="xQG-EQ-Utb" firstAttribute="centerY" secondItem="zL0-c0-Dgb" secondAttribute="centerY" id="vE3-Mm-FPv"/>
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>
@@ -1528,7 +1540,7 @@ and more</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gUr-AC-sk1">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUr-AC-sk1">
                                 <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQf-qs-eyv">
@@ -1774,27 +1786,35 @@ and more</string>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zxG-jt-zid">
                                                                                 <rect key="frame" x="27" y="0.0" width="320" height="53"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Already have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzb-7k-OTP">
-                                                                                        <rect key="frame" x="13" y="10" width="221" height="33"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
-                                                                                        <nil key="textColor"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrf-eT-khp">
-                                                                                        <rect key="frame" x="242" y="8.5" width="66" height="35"/>
-                                                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" title="LOGIN"/>
-                                                                                        <connections>
-                                                                                            <action selector="gotoLogin:" destination="A0r-95-ik5" eventType="touchUpInside" id="EQY-3f-eZB"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="9E1-t7-mzJ">
+                                                                                        <rect key="frame" x="38" y="11.5" width="244.5" height="30"/>
+                                                                                        <subviews>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Already have an account?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzb-7k-OTP">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="195.5" height="30"/>
+                                                                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="17"/>
+                                                                                                <nil key="textColor"/>
+                                                                                                <nil key="highlightedColor"/>
+                                                                                            </label>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hrf-eT-khp">
+                                                                                                <rect key="frame" x="200.5" y="0.0" width="44" height="30"/>
+                                                                                                <fontDescription key="fontDescription" name="Roboto-Black" family="Roboto" pointSize="15"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="LOGIN">
+                                                                                                    <color key="titleColor" name="tabbar-tint"/>
+                                                                                                </state>
+                                                                                                <connections>
+                                                                                                    <action selector="gotoLogin:" destination="A0r-95-ik5" eventType="touchUpInside" id="EQY-3f-eZB"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                    </stackView>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                 <constraints>
+                                                                                    <constraint firstItem="9E1-t7-mzJ" firstAttribute="centerX" secondItem="zxG-jt-zid" secondAttribute="centerX" id="CBE-RM-g9h"/>
                                                                                     <constraint firstAttribute="height" constant="53" id="VFj-OB-U7q"/>
                                                                                     <constraint firstAttribute="width" constant="320" id="gmF-AX-7eu"/>
+                                                                                    <constraint firstItem="9E1-t7-mzJ" firstAttribute="centerY" secondItem="zxG-jt-zid" secondAttribute="centerY" id="i3x-MW-uiu"/>
                                                                                 </constraints>
                                                                             </view>
                                                                         </subviews>

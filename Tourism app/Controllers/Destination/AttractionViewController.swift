@@ -94,7 +94,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == attractionDistrictsArray.count-1  {
+        if totalPages != attractionDistrictsArray.count && indexPath.row == attractionDistrictsArray.count-1  {
             currentPage = currentPage + 1
             loadData(currentPage: currentPage)
         }
