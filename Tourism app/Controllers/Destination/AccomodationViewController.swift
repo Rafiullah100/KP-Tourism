@@ -20,40 +20,61 @@ class AccomodationViewController: BaseViewController {
     }
     var locationCategory: LocationCategory?
 
+    
+    var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
+    var accomodationDetail: AccomodationModel?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        updateUI()
+//        updateUI()
+        
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: AccomodationModel.self)
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: AccomodationModel.self)
+        }
     }
     
-    func updateUI() {
-        switch locationCategory {
-        case .district:
-            thumbnailTopLabel.text = "Swat"
-            thumbnailBottomLabel.text = "KP"
-            thumbnail.image = UIImage(named: "Path 94")
-        case .tourismSpot:
-            thumbnailTopLabel.text = "Kalam"
-            thumbnailBottomLabel.text = "Swat"
-            thumbnail.image = UIImage(named: "iten")
-        default:
-            break
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let accomodation):
+                DispatchQueue.main.async {
+                    self.accomodationDetail = accomodation as? AccomodationModel
+                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
+            }
         }
     }
 }
 
 extension AccomodationViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return accomodationDetail?.accomodations.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AccomodationTableViewCell = tableView.dequeueReusableCell(withIdentifier: AccomodationTableViewCell.celldentifier) as! AccomodationTableViewCell
+        cell.accomodationDetail = accomodationDetail?.accomodations[indexPath.row]
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoAccomodationDetail(delegate: self)
+        guard let accomodation = accomodationDetail?.accomodations[indexPath.row] else { return }
+        Switcher.gotoAccomodationDetail(delegate: self, AccomodationDetail: accomodation)
     }
 }
 

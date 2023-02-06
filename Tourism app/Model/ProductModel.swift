@@ -11,8 +11,9 @@ import Foundation
 // MARK: - Welcome
 struct ProductModel: Codable {
     let localProducts: [LocalProduct]
-
+    let count: Int
     enum CodingKeys: String, CodingKey {
+        case count
         case localProducts = "local_products"
     }
 }

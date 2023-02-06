@@ -6,16 +6,31 @@
 //
 
 import UIKit
-
+import SDWebImage
 class AccomodationTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var locationLabel: UILabel!
+    
+    @IBOutlet weak var familyLabel: UILabel!
+    @IBOutlet weak var cancellationLabel: UILabel!
+    @IBOutlet weak var breakfastLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
+    @IBOutlet weak var imgView: UIImageView!
     static var celldentifier = "cell_identifier"
+    
+    
+    var accomodationDetail: Accomodation?{
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.thumbnailImage ?? "")))
+            titleLabel.text = accomodationDetail?.title
+            locationLabel.text = accomodationDetail?.locationTitle
+        }
+    }
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        bgView.layer.borderWidth = 0.5
-        bgView.layer.borderColor = UIColor.lightGray.cgColor
-        bgView.layer.cornerRadius = 15.0    }
+    }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

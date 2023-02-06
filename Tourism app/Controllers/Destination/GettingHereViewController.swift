@@ -36,51 +36,30 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     
     var travel: Travel?
     
+    var gettingHere: GettingHereModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-//        locationManager = CLLocationManager()
-//        locationManager.delegate = self
-//        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-//        locationManager.requestAlwaysAuthorization()
-//        DispatchQueue.global().async {
-//            if CLLocationManager.locationServicesEnabled() {
-//                self.locationManager.startUpdatingLocation()
-//            }
-//        }
-        updateUI()
-        show(travelVC, sender: self)
-    }
-    
-    override func show(_ vc: UIViewController, sender: Any?) {
-        add(vc, in: containerView)
-    }
-    
-    func updateUI() {
+
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GettingHereModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GettingHereModel.self)
         }
     }
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        let userLocation:CLLocation = locations[0] as CLLocation
-//        setupMap(lat: userLocation.coordinate.latitude, lon: userLocation.coordinate.longitude)
-//        manager.stopUpdatingLocation()
-//    }
-//
-//    private func setupMap(lat: Double, lon: Double){
-//        let camera = GMSCameraPosition.camera(withLatitude: lat, longitude: lon, zoom: 12.0)
-//        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
-//        mapView.isMyLocationEnabled = true
-//        mapView.settings.myLocationButton = true
-//        mapView.settings.compassButton = true
-////        mapContainerView.addSubview(mapView)
+    override func show(_ vc: UIViewController, sender: Any?) {
+        let vc: TravelViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "TravelViewController") as! TravelViewController
+        vc.gettingArray = gettingHere?.gettingHeres
+        add(vc, in: containerView)
+    }
+
 //    }
     
     @IBAction func textualButtonAction(_ sender: Any) {
@@ -94,5 +73,19 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     
     @IBAction func naviigationButtonAction(_ sender: Any) {
 //        Switcher.goToNavigation(delegate: self, locationCategory: locationCategory!)
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let gettingHere):
+                DispatchQueue.main.async {
+                    self.gettingHere = gettingHere as? GettingHereModel
+                    self.show(self.travelVC, sender: self)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }

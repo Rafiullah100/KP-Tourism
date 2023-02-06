@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 struct Slides {
     let image: String?
     let title: String?
@@ -19,11 +19,11 @@ class TravelCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var textView: UITextView!
     
-    var slide: Slides?{
+    var slide: GettingHere?{
         didSet{
-            imgView.image = UIImage(named: slide?.image ?? "")
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (slide?.imageURL ?? "")))
             label.text = slide?.title
-            textView.text = slide?.description
+            textView.text = slide?.description.stripOutHtml()
         }
     }
 }
@@ -39,13 +39,13 @@ class TravelViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     var currentPage = 0
     
-    let slides = Constants.slides
+    var gettingArray: [GettingHere]?
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     @IBAction func nextBtn(_ sender: Any) {
-        if currentPage < slides.count - 1{
+        if currentPage < (gettingArray?.count ?? 0) - 1{
             currentPage = currentPage + 1
             collectionView.isPagingEnabled = false
             collectionView.scrollToItem(at: IndexPath(row: currentPage, section: 0), at: .centeredHorizontally, animated: true)
@@ -64,12 +64,12 @@ class TravelViewController: UIViewController {
 
 extension TravelViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return slides.count
+        return gettingArray?.count ?? 0
     }
-    
+     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! TravelCollectionViewCell
-        cell.slide = slides[indexPath.row]
+        cell.slide = gettingArray?[indexPath.row]
         return cell
     }
     

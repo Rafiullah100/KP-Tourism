@@ -37,6 +37,7 @@ class WeatherAlertViewController: UIViewController {
     }
     
     var cellType: CellType?
+    var warnings: [Warning]?
     
     
     override func viewDidLoad() {
@@ -57,6 +58,7 @@ class WeatherAlertViewController: UIViewController {
     }
     
     @IBAction func alertBtnAction(_ sender: Any) {
+        fetch(route: .fetchAlerts, method: .get, model: AlertModel.self)
         changeCell(type: .AlertTableViewCell)
     }
     
@@ -76,14 +78,38 @@ class WeatherAlertViewController: UIViewController {
             weatherLabel.textColor = Constants.blackishGrayColor
             weatherMiddleView.isHidden = true
         }
+        textField.resignFirstResponder()
         tableView.reloadData()
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let alerts):
+                DispatchQueue.main.async {
+                    self.warnings = (alerts as? AlertModel)?.warnings
+                    self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
+            }
+        }
     }
 }
 
 extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        switch cellType {
+        case .AlertTableViewCell:
+            return warnings?.count ?? 0
+        case .WeatherTableViewCell:
+            return 5
+        default:
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -93,6 +119,7 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
             return cell
         case .AlertTableViewCell:
             let cell: AlertTableViewCell = tableView.dequeueReusableCell(withIdentifier: AlertTableViewCell.cellIdentifier) as! AlertTableViewCell
+            cell.warning = warnings?[indexPath.row]
             return cell
         default:
            return UITableViewCell()

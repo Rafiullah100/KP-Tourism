@@ -211,7 +211,7 @@ class BaseViewController: UIViewController {
     func addCrossButton() {
         let crossButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
         crossButton.image = nil
-        crossButton.image = UIImage(named: "cross")
+//        crossButton.image = UIImage(named: "cross")
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = crossButton
     }

@@ -41,6 +41,11 @@
                                         <constraints>
                                             <constraint firstAttribute="width" constant="160" id="RbB-4Z-b8E"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                <real key="value" value="15"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="rHx-KL-1s8">
                                         <rect key="frame" x="169" y="0.0" width="208" height="134"/>
@@ -233,6 +238,17 @@
                             <constraint firstItem="owb-xF-oT1" firstAttribute="leading" secondItem="V6X-T7-B7f" secondAttribute="leading" constant="2" id="CUA-aF-3zi"/>
                             <constraint firstAttribute="trailing" secondItem="owb-xF-oT1" secondAttribute="trailing" constant="2" id="kDd-vs-K5l"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="15"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -247,6 +263,12 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="bgView" destination="V6X-T7-B7f" id="RGg-ki-QJ8"/>
+                <outlet property="breakfastLabel" destination="lOh-I9-1bY" id="NCC-ph-3tB"/>
+                <outlet property="cancellationLabel" destination="Y0T-ef-ovv" id="dVM-Zj-7RY"/>
+                <outlet property="familyLabel" destination="pvq-ee-Iz8" id="PHN-Uf-QIF"/>
+                <outlet property="imgView" destination="icA-y9-QNm" id="g3q-VW-F64"/>
+                <outlet property="locationLabel" destination="LsB-X8-V7p" id="mQ1-vm-X6F"/>
+                <outlet property="titleLabel" destination="WtK-At-zec" id="TFc-1V-uj6"/>
             </connections>
             <point key="canvasLocation" x="139.85507246376812" y="147.99107142857142"/>
         </tableViewCell>

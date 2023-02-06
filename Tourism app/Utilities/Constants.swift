@@ -30,9 +30,9 @@ struct Constants {
     static let desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
     
     static let section =  [Sections(title: "Home", image: "explore", selectedImage: "explore-s"),
-              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
-              Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-              Sections(title: "South KP", image: "south", selectedImage: "south-s"),
+//              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
+//              Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
+//              Sections(title: "South KP", image: "south", selectedImage: "south-s"),
               Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),

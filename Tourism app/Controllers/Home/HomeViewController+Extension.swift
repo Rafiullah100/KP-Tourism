@@ -10,10 +10,15 @@ import UIKit
 extension HomeViewController{
     
     func configureTabbar(){
+        var tag = 0
         for item in Constants.section {
             let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            tabbarItem.tag = tag
+            tag = tag + 1
             tabbarItems.append(tabbarItem)
         }
+        
+        print(Constants.section)
         tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
         tabbarView.bottomDividerColor = .groupTableViewBackground

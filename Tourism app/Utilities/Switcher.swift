@@ -14,7 +14,7 @@ class Switcher {
     static func goToTabbar(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "TabbarViewController") as! TabbarViewController
         vc.modalPresentationStyle = .fullScreen
-        delegate.navigationController?.pushViewController(vc, animated: false)
+        delegate.present(vc, animated: true)
     }
     
     static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
@@ -97,9 +97,10 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAccomodation(delegate: UIViewController, locationCategory: LocationCategory){
+    static func goToAccomodation(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AccomodationViewController") as! AccomodationViewController
-        vc.locationCategory = locationCategory
+        vc.exploreDistrict = exploreDistrict
+        vc.attractionDistrict = attractionDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -191,8 +192,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoAccomodationDetail(delegate: UIViewController){
+    static func gotoAccomodationDetail(delegate: UIViewController, AccomodationDetail: Accomodation){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AccomodationDetailViewController") as! AccomodationDetailViewController
+        vc.accomodationDetail = AccomodationDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

@@ -31,6 +31,9 @@ enum Route {
     case registration
     case login
     case doComment
+    case fetchAlerts
+    case fetchAccomodation
+    case fetchGettingHere
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -75,7 +78,12 @@ enum Route {
             return "api/mobile/auth/login"
         case .doComment:
             return "api/mobile/blogs/do_comment"
-
+        case .fetchAlerts:
+           return "api/mobile/notifications/list"
+        case .fetchAccomodation:
+            return "api/mobile/districts/accomodations"
+        case .fetchGettingHere:
+            return "api/mobile/districts/gettinghere"
         }
     }
 }

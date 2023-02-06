@@ -105,7 +105,7 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 2:
             Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction)
         case 3:
-            Switcher.goToAccomodation(delegate: self, locationCategory: .district)
+            Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         case 4:
             Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         case 5:

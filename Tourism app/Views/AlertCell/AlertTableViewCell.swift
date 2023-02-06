@@ -10,6 +10,17 @@ import UIKit
 class AlertTableViewCell: UITableViewCell {
     static let cellIdentifier = "cell_identifier"
 
+    @IBOutlet weak var isSafeLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    var warning: Warning? {
+        didSet{
+            titleLabel.text = warning?.title
+            descriptionLabel.text = warning?.description
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

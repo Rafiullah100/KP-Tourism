@@ -76,6 +76,8 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+
         shadow()
         type = .back1
         setupCard()
@@ -83,8 +85,9 @@ class HomeViewController: BaseViewController {
         fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
     }
     
+    
     override func viewDidAppear(_ animated: Bool) {
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+//        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,7 +111,7 @@ class HomeViewController: BaseViewController {
                     }
                     else if self.cellType == .product{
                         self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
-                        self.totalCount = 1
+                        self.totalCount = (explore as? ProductModel)?.count ?? 0
                     }
                     self.tableView.reloadData()
                     self.show(self.mapVC, sender: self)
@@ -241,7 +244,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension HomeViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
-        if item.title == tabbarItems[5].title{
+        if item.tag == 2{
             galleryContainer.isHidden = false
             tableViewContainer.isHidden = true
         }
@@ -249,66 +252,66 @@ extension HomeViewController: MDCTabBarViewDelegate{
             galleryContainer.isHidden = true
             tableViewContainer.isHidden = false
         }
-        addChild(title: item.title ?? "")
+        addChild(tag: item.tag)
         tableView.reloadData()
     }
     
-    private func addChild(title: String){
+    private func addChild(tag: Int){
         attractionDistrict = []
         exploreDistrict = []
         localProducts = []
         currentPage = 1
-        if title == tabbarItems[0].title {
+        if tag == 0 {
             mapButton.isHidden = false
             cellType = .explore
             fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
         }
-        else if title == tabbarItems[1].title{
-            mapButton.isHidden = false
-            cellType = .attraction
-            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
-        }
-        else if title == tabbarItems[2].title{
-            mapButton.isHidden = true
-            cellType = .adventure
-            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
-        }
-        else if title == tabbarItems[3].title{
-            mapButton.isHidden = false
-            cellType = .south
-            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
-        }
-        else if title == tabbarItems[4].title{
+//        else if title == tabbarItems[1].title{
+//            mapButton.isHidden = false
+//            cellType = .attraction
+//            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
+//        }
+//        else if title == tabbarItems[2].title{
+//            mapButton.isHidden = true
+//            cellType = .adventure
+//            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
+//        }
+//        else if title == tabbarItems[3].title{
+//            mapButton.isHidden = false
+//            cellType = .south
+//            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
+//        }
+        else if tag == 1{
             mapButton.isHidden = true
             cellType = .tour
             fetch(route: .fetchTourPackage, method: .get, model: TourModel.self)
         }
-        else if title == tabbarItems[5].title{
+        else if tag == 2{
             mapButton.isHidden = true
             self.add(galleryVC, in: galleryContainer)
             fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
         }
-        else if title == tabbarItems[6].title{
+        else if tag == 3{
             mapButton.isHidden = false
             cellType = .arch
             fetch(route: .fetchArcheology, method: .post, model: ArcheologyModel.self)
         }
-        else if title == tabbarItems[7].title{
+        else if tag == 4{
             mapButton.isHidden = false
             cellType = .event
             fetch(route: .fetchAllEvents, method: .get, model: EventsModel.self)
         }
-        else if title == tabbarItems[8].title{
+        else if tag == 5{
             mapButton.isHidden = true
             cellType = .blog
             fetch(route: .fetchBlogs, method: .post, model: BlogsModel.self)
         }
-        else if title == tabbarItems[9].title{
+        else if tag == 6{
             mapButton.isHidden = true
             cellType = .product
             fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
         }
-        else if title == tabbarItems[10].title{
+        else if tag == 7{
             mapButton.isHidden = true
             cellType = .visitKP
         }
@@ -329,10 +332,10 @@ extension HomeViewController: MDCTabBarViewDelegate{
             }
         }
         else if cellType == .product{
-//            if localProducts.count != totalCount && indexPath.row == localProducts.count - 1  {
-//                currentPage = currentPage + 1
-//                fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
-//            }
+            if localProducts.count != totalCount && indexPath.row == localProducts.count - 1  {
+                currentPage = currentPage + 1
+                fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
+            }
         }
     }
 }
