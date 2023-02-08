@@ -340,5 +340,12 @@ class Switcher {
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
+    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel){
+        let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewerViewController") as! ViewerViewController
+        vc.galleryDetail = galleryDetail
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true)
+    }
+    
 }
 

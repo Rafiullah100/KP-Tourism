@@ -78,18 +78,19 @@ extension HomeViewController{
         case .changed:
             updateInteractiveTransition(fractionCompleted: fractionComplete)
         case .ended:
-            if nextState == .collapsed {
-                if translation.y > 20 {
-                    continueInteractiveTransition()
-                }
-                mapButton.isHidden = true
-            }
-            else{
-                let name = Notification.Name(Constants.enableScrolling)
-                NotificationCenter.default.post(name: name, object: nil)
-                continueInteractiveTransition()
-                mapButton.isHidden = false
-            }
+            continueInteractiveTransition()
+//            if nextState == .collapsed {
+//                if translation.y > 20 {
+//                    continueInteractiveTransition()
+//                    mapButton.isHidden = true
+//                }
+//            }
+//            else{
+//                let name = Notification.Name(Constants.enableScrolling)
+//                NotificationCenter.default.post(name: name, object: nil)
+//                continueInteractiveTransition()
+//                mapButton.isHidden = false
+//            }
         default:
             break
         }
@@ -100,8 +101,10 @@ extension HomeViewController{
             let frameAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1) {
                 switch state {
                 case .expanded:
+                    self.mapButton.isHidden = false
                     self.contentView.frame.origin.y = 0
                 case .collapsed:
+                    self.mapButton.isHidden = true
                     self.contentView.frame.origin.y = self.contentView.frame.height - self.cardHandleAreaHeight
                 }
             }

@@ -85,13 +85,13 @@ class BaseViewController: UIViewController {
            appearance.backgroundColor = .clear
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-           navigationController?.navigationBar.frame = CGRect(x: 0, y: 30, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+           navigationController?.navigationBar.frame = CGRect(x: 0, y: 20, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
         }else{
             self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.backgroundColor = .clear
-            navigationController?.navigationBar.frame = CGRect(x: 0, y: 30, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+            navigationController?.navigationBar.frame = CGRect(x: 0, y: 20, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
         }
     }
     
@@ -104,7 +104,7 @@ class BaseViewController: UIViewController {
         navigationItem.leftBarButtonItems = []
         addTitleLabel()
         navigationItem.rightBarButtonItems = []
-        addCrossButton()
+//        addCrossButton()
     }
     
     func setupBackBarButtonItemsWithLikeButton() {
@@ -186,8 +186,9 @@ class BaseViewController: UIViewController {
     func backToHome() {
         let button = UIButton.init(type: .custom)
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 10, width: 10, height: 10))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         imageView.image = UIImage(named: "visit-back")
+        imageView.contentMode = .scaleAspectFit
         let label = UILabel(frame: CGRect(x: 15, y: 0, width: 110, height: 30))
         label.textColor = .black
         label.text = viewControllerTitle

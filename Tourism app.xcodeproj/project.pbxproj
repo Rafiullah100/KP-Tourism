@@ -114,6 +114,7 @@
 		01F7C4C829011BDC008D0C23 /* ImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F7C4C629011BDC008D0C23 /* ImageCollectionViewCell.swift */; };
 		01F7C4C929011BDC008D0C23 /* ImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01F7C4C729011BDC008D0C23 /* ImageCollectionViewCell.xib */; };
 		5203CBD02967F34200605EF3 /* ItinraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5203CBCF2967F34200605EF3 /* ItinraryModel.swift */; };
+		5206D9F229925B7B00970707 /* ViewerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5206D9F129925B7B00970707 /* ViewerViewController.swift */; };
 		52074024297FB7C600C0DFA9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 52074023297FB7C600C0DFA9 /* GoogleService-Info.plist */; };
 		520DABC329375E81006D8E6B /* AdventureDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DABC229375E81006D8E6B /* AdventureDetailViewController.swift */; };
 		520DABC529376D7C006D8E6B /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520DABC429376D7C006D8E6B /* PackageDetailViewController.swift */; };
@@ -307,6 +308,7 @@
 		01F7C4C729011BDC008D0C23 /* ImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageCollectionViewCell.xib; sourceTree = "<group>"; };
 		3F5CE33CAF4BFCF65B25F723 /* Pods_Tourism_app.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tourism_app.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5203CBCF2967F34200605EF3 /* ItinraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItinraryModel.swift; sourceTree = "<group>"; };
+		5206D9F129925B7B00970707 /* ViewerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewerViewController.swift; sourceTree = "<group>"; };
 		52074023297FB7C600C0DFA9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		520DABC229375E81006D8E6B /* AdventureDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdventureDetailViewController.swift; sourceTree = "<group>"; };
 		520DABC429376D7C006D8E6B /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
@@ -436,6 +438,7 @@
 			children = (
 				0185E6992903E8550072EC5D /* source */,
 				01176F61290A849900A5AF1E /* GalleryDetailViewController.swift */,
+				5206D9F129925B7B00970707 /* ViewerViewController.swift */,
 			);
 			path = Gallery;
 			sourceTree = "<group>";
@@ -1193,6 +1196,7 @@
 				01176F60290A7DC800A5AF1E /* Constants.swift in Sources */,
 				525079432935F91000C8D004 /* ApiResponse.swift in Sources */,
 				522AF1F52940B08000DEB1BF /* FollowerTableViewCell.swift in Sources */,
+				5206D9F229925B7B00970707 /* ViewerViewController.swift in Sources */,
 				52A6428E298CEA92003BCF6B /* AlertModel.swift in Sources */,
 				526CFE6F29388B43000CA330 /* ProductDetailViewController.swift in Sources */,
 				0113827728FFFF940080442F /* TourTableViewCell.swift in Sources */,
@@ -1356,9 +1360,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Munawla.Tourism-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1390,9 +1397,12 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "Munawla.Tourism-app";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

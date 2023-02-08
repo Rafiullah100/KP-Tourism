@@ -31,17 +31,17 @@ class AccomodationDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "\(accomodationDetail?.title ?? "") | Accomodation"
         detailView.isHidden = true
-        // Do any additional setup after loading the view.
         
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.thumbnailImage ?? "")))
         nameLabel.text = "\(accomodationDetail?.title ?? "")"
         locationLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
         textView.text = "\(accomodationDetail?.description ?? "")"
-//        familyLabel.text = "\(accomodationDetail?.family ?? "")"
+        familyLabel.text = accomodationDetail?.family == true ? "Family" : "Adult"
         addressLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
 //        ratingLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
-//        priceLabel.text = "\(accomodationDetail?.priceFrom ?? "")"
-        bedLabel.text = "\(accomodationDetail?.noRoom ?? 0)"
+        priceLabel.text = "\(accomodationDetail?.priceFrom ?? 0) PER NIGHT"
+        bedLabel.text = "Rs. \(accomodationDetail?.noRoom ?? 0) Bed"
+        parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
     }
     @IBAction func showDetailBtn(_ sender: Any) {
         if detailView.isHidden == true {

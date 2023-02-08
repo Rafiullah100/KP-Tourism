@@ -26,6 +26,7 @@ class HomeViewController: BaseViewController {
     
     @IBOutlet weak var siteLabel: UILabel!
     
+    @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -39,9 +40,9 @@ class HomeViewController: BaseViewController {
     lazy var galleryVC: UIViewController = {
         UIStoryboard(name: "Gallery", bundle: nil).instantiateViewController(withIdentifier: "GalleryViewController")
     }()
-    var mapVC: ExploreMapViewController {
+    lazy var mapVC: UIViewController = {
         UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
-    }
+    }()
     
     var cellType: CellType?
     
@@ -72,19 +73,16 @@ class HomeViewController: BaseViewController {
     var exploreDistrict: [ExploreDistrict] = [ExploreDistrict]()
     var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
     var localProducts: [LocalProduct] = [LocalProduct]()
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-
+        textField.delegate = self
         shadow()
         type = .back1
         setupCard()
         configureTabbar()
-        fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
+        serverCall(cell: .explore)
     }
-    
     
     override func viewDidAppear(_ animated: Bool) {
 //        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -102,8 +100,9 @@ class HomeViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.model = explore
                     if self.cellType == .explore {
-                        self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions.rows ?? [])
-                        self.totalCount = (explore as? ExploreModel)?.attractions.count ?? 0
+                        self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions ?? [])
+                        self.totalCount = (explore as? ExploreModel)?.count ?? 0
+                        print(self.totalCount)
                     }
                     else if self.cellType == .attraction{
                         self.attractionDistrict.append(contentsOf: (explore as? AttractionModel)?.attractions?.rows ?? [])
@@ -126,7 +125,7 @@ class HomeViewController: BaseViewController {
 
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
-        vc.exploreDistrict = (model as? ExploreModel)?.attractions.rows
+        vc.exploreDistrict = (model as? ExploreModel)?.attractions
         vc.attractionDistrict = (model as? AttractionModel)?.attractions?.rows
         add(vc, in: mapContainerView)
     }
@@ -144,8 +143,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .adventure:
             return (model as? AdventureModel)?.adventures.count ?? 0
         case .south:
-            siteLabel.text = "\((model as? ExploreModel)?.attractions.rows.count ?? 0) South KP Sites"
-            return (model as? ExploreModel)?.attractions.rows.count ?? 0
+            siteLabel.text = "\((model as? ExploreModel)?.attractions.count ?? 0) South KP Sites"
+            return (model as? ExploreModel)?.attractions.count ?? 0
         case .tour:
             return (model as? TourModel)?.tour.count ?? 0
         case .event:
@@ -181,7 +180,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .south:
             let cell: SouthTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! SouthTableViewCell
-            cell.district = (model as? ExploreModel)?.attractions.rows[indexPath.row]
+            cell.district = (model as? ExploreModel)?.attractions[indexPath.row]
             return cell
         case .tour:
             let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
@@ -232,7 +231,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .attraction:
             Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDistrict[indexPath.row])
         case .south:
-            Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions.rows[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions[indexPath.row])
         case .visitKP:
             Switcher.gotoVisitKP(delegate: self)
         default:
@@ -264,7 +263,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         if tag == 0 {
             mapButton.isHidden = false
             cellType = .explore
-            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
+            serverCall(cell: .explore)
         }
 //        else if title == tabbarItems[1].title{
 //            mapButton.isHidden = false
@@ -322,7 +321,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         if cellType == .explore{
             if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
                 currentPage = currentPage + 1
-                fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern", "limit": limit, "page": currentPage], model: ExploreModel.self)
+                serverCall(cell: .explore)
             }
         }
         else if cellType == .attraction{
@@ -338,11 +337,35 @@ extension HomeViewController: MDCTabBarViewDelegate{
             }
         }
     }
+    
+    private func serverCall(cell: CellType){
+        switch cell {
+        case .explore:
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern,southern", "search": textField.text ?? "", "limit": limit, "page": currentPage], model: ExploreModel.self)
+        default: break
+            //ejnre
+        }
+    }
 }
 
 extension HomeViewController: GMSMapViewDelegate{
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print(marker.userData ?? 0)
+        return true
+    }
+}
+
+extension HomeViewController: UITextFieldDelegate{
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch cellType {
+        case .explore:
+            currentPage = 1
+            exploreDistrict = []
+            serverCall(cell: .explore)
+            textField.resignFirstResponder()
+        default:
+            break
+        }
         return true
     }
 }

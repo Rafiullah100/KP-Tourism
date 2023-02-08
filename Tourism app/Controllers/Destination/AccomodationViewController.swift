@@ -33,7 +33,7 @@ class AccomodationViewController: BaseViewController {
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: AccomodationModel.self)
+            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": 2], model: AccomodationModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title

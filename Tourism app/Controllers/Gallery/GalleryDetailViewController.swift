@@ -140,6 +140,10 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ASCollectionViewElement.Header, withReuseIdentifier: "header", for: indexPath)
         return header
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!)
+    }
 }
     
     class GridCell: UICollectionViewCell {

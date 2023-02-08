@@ -59,6 +59,7 @@ class PackageDetailViewController: BaseViewController {
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.thumbnail_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
         packageNameLabel.text = tourDetail?.title
         descriptionLabel.text = tourDetail?.description?.stripOutHtml()
+        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
     }
     
     private func reload(){
