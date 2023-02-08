@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class ItenrariesCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier = "cell_identifier"
     @IBOutlet weak var imageBackgroundView: UIView!
@@ -16,11 +16,21 @@ class ItenrariesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    var itinrary: ItinraryRow? {
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (itinrary?.thumbnailImage ?? "")))
+            nameLabel.text = itinrary?.title
+            descriptionLabel.text = itinrary?.description
+//            dateLabel.text = itinrary.
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         bgView.layer.borderWidth = 0.5
         bgView.layer.borderColor = UIColor.lightGray.cgColor
-        bgView.layer.cornerRadius = 5.0    }
+        bgView.layer.cornerRadius = 5.0
+    }
 
 }
 

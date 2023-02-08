@@ -347,5 +347,11 @@ class Switcher {
         delegate.present(vc, animated: true)
     }
     
+    static func goToItinraryDetail(delegate: UIViewController, itinraryDetail: ItinraryRow){
+        let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ItinraryDetailViewController") as! ItinraryDetailViewController
+        vc.itinraryDetail = itinraryDetail
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

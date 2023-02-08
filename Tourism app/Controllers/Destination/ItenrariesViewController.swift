@@ -31,7 +31,7 @@ class ItenrariesViewController: BaseViewController {
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": 5], model: ItinraryModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
@@ -59,12 +59,18 @@ class ItenrariesViewController: BaseViewController {
 
 extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ItinraryDetail?.itineraries.count ?? 0
+        return ItinraryDetail?.itineraries.rows.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ItenrariesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ItenrariesCollectionViewCell.cellIdentifier, for: indexPath) as! ItenrariesCollectionViewCell
+        cell.itinrary = ItinraryDetail?.itineraries.rows[indexPath.row]
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let ItinraryDetail = ItinraryDetail?.itineraries.rows[indexPath.row] else { return }
+        Switcher.goToItinraryDetail(delegate: self, itinraryDetail: ItinraryDetail)
     }
 }
 
