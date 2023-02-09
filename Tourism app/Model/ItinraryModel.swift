@@ -93,9 +93,9 @@ struct ItinraryRow: Codable {
     let approvedBy: String?
     let viewsCounter, isDeleted: Int
     let createdAt, updatedAt: String
-    let fromDistricts: Districts
+    let fromDistricts: ItinraryDistricts
     let activities: [ItinraryActivity]
-    let toDistricts: Districts
+    let toDistricts: ItinraryDistricts
 //    let comments, likes: [JSONAny]
 
     enum CodingKeys: String, CodingKey {

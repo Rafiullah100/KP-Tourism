@@ -40,7 +40,7 @@ class AccomodationDetailViewController: BaseViewController {
         addressLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
 //        ratingLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
         priceLabel.text = "\(accomodationDetail?.priceFrom ?? 0) PER NIGHT"
-        bedLabel.text = "Rs. \(accomodationDetail?.noRoom ?? 0) Bed"
+        bedLabel.text = "\(accomodationDetail?.noRoom ?? 0) Bed"
         parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
     }
     @IBAction func showDetailBtn(_ sender: Any) {

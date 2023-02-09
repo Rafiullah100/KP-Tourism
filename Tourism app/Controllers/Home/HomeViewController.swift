@@ -158,7 +158,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .product:
             return localProducts.count
         case .visitKP:
-            return 4
+            return (model as? VisitKPModel)?.attractions.rows.count ?? 0
         default:
             return 0
         }
@@ -204,6 +204,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .visitKP:
             let cell: VisitKPTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! VisitKPTableViewCell
+            cell.visit = (model as? VisitKPModel)?.attractions.rows[indexPath.row]
             return cell
         default:
             return UITableViewCell()
@@ -283,7 +284,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 1{
             mapButton.isHidden = true
             cellType = .tour
-            fetch(route: .fetchTourPackage, method: .get, model: TourModel.self)
+            fetch(route: .fetchTourPackage, method: .post, model: TourModel.self)
         }
         else if tag == 2{
             mapButton.isHidden = true
@@ -313,6 +314,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 7{
             mapButton.isHidden = true
             cellType = .visitKP
+            fetch(route: .fetchVisitKp, method: .post, model: VisitKPModel.self)
         }
     }
     

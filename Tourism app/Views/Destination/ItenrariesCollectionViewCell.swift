@@ -16,12 +16,16 @@ class ItenrariesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var daysLabel: UILabel!
     var itinrary: ItinraryRow? {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (itinrary?.thumbnailImage ?? "")))
             nameLabel.text = itinrary?.title
             descriptionLabel.text = itinrary?.description
-//            dateLabel.text = itinrary.
+            dateLabel.text = itinrary?.activities[0].departureDate
+            locationLabel.text = itinrary?.activities[0].fromPlace
+            daysLabel.text = "\(itinrary?.activities.count ?? 0) days"
         }
     }
     

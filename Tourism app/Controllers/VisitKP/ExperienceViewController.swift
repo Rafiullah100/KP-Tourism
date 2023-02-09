@@ -7,6 +7,19 @@
 
 import UIKit
 
+class VisitExperienceCollectionViewCell: UICollectionViewCell {
+    //
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var bgImageView: UIImageView!
+    
+    var experience: Destination? {
+        didSet {
+            label.text = experience?.title
+            bgImageView.image = UIImage(named: experience?.image ?? "")
+        }
+    }
+}
+
 class ExperienceViewController: BaseViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!{
@@ -30,11 +43,12 @@ class ExperienceViewController: BaseViewController {
 
 extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return Constants.visitExperienceArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath)
+        let cell: VisitExperienceCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! VisitExperienceCollectionViewCell
+        cell.experience = Constants.visitExperienceArray[indexPath.row]
         return cell
     }
     

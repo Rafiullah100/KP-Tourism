@@ -23,6 +23,9 @@ class WeatherAlertViewController: UIViewController {
         case AlertTableViewCell
     }
     
+    //  return "/forecasts/v1/daily/5day/258970?apikey=YxA9P1FHvaurvZAk0kAc7d7utlJWGR97 HTTP/1.1"
+
+    
     let pickerView = UIPickerView()
     let userType = ["Swat", "Lower Dir", "Upper Dir", "Shangla", "Buner", "Malakand"]
 
@@ -43,14 +46,17 @@ class WeatherAlertViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        cellType = .WeatherTableViewCell
         pickerView.delegate = self
         pickerView.dataSource = self
         textField.isHidden = true
         textField.inputView = pickerView
+        cellType = .WeatherTableViewCell
+//        serverCall(type: .WeatherTableViewCell)
+        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
     }
     
     @IBAction func updateBtnAction(_ sender: Any) {
+        cellType = .WeatherTableViewCell
         changeCell(type: .WeatherTableViewCell)
     }
     @IBAction func dropDownBtnAction(_ sender: Any) {
@@ -58,7 +64,7 @@ class WeatherAlertViewController: UIViewController {
     }
     
     @IBAction func alertBtnAction(_ sender: Any) {
-        fetch(route: .fetchAlerts, method: .get, model: AlertModel.self)
+        cellType = .AlertTableViewCell
         changeCell(type: .AlertTableViewCell)
     }
     
@@ -66,12 +72,14 @@ class WeatherAlertViewController: UIViewController {
         cellType = type
         switch type {
         case .WeatherTableViewCell:
+            serverCall(type: .WeatherTableViewCell)
             weatherView.backgroundColor = Constants.darkGrayColor
             weatherLabel.textColor = .black
             alertView.backgroundColor = Constants.lightGrayColor
             alertLabel.textColor = Constants.blackishGrayColor
             weatherMiddleView.isHidden = false
         case .AlertTableViewCell:
+            serverCall(type: .AlertTableViewCell)
             alertView.backgroundColor = Constants.darkGrayColor
             alertLabel.textColor = .black
             weatherView.backgroundColor = Constants.lightGrayColor
@@ -82,13 +90,31 @@ class WeatherAlertViewController: UIViewController {
         tableView.reloadData()
     }
     
+    private func serverCall(type: CellType){
+        switch type {
+        case .AlertTableViewCell:
+            fetch(route: .fetchAlerts, method: .get, model: AlertModel.self)
+        case .WeatherTableViewCell:
+            fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
+        }
+    }
+    
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let alerts):
                 DispatchQueue.main.async {
-                    self.warnings = (alerts as? AlertModel)?.warnings
-                    self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    switch self.cellType {
+                    case .AlertTableViewCell:
+                        self.warnings = (alerts as? AlertModel)?.warnings
+                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    case .WeatherTableViewCell:
+                        print(alerts)
+//                        self.warnings = (alerts as? AlertModel)?.warnings
+//                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    case .none:
+                        print("none")
+                    }
                 }
             case .failure(let error):
                 if error == .noInternet {

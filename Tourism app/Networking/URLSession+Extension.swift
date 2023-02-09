@@ -48,7 +48,13 @@ extension URLSession{
     func createRequest(route: Route,
                                method: Method,
                                parameters: [String: Any]? = nil) -> URLRequest? {
-        let urlString = Route.baseUrl + route.description
+        var urlString = ""
+        if route == .weatherApi  {
+            urlString = route.description
+        }
+        else{
+            urlString = Route.baseUrl + route.description
+        }
         print(urlString)
         guard let url = urlString.asUrl else { return nil }
         var urlRequest = URLRequest(url: url)

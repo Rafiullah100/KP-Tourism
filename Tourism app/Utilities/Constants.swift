@@ -17,6 +17,8 @@ struct Constants {
     
     static var googleMapApiKey = "AIzaSyBC2Xdb2ato7ULwuGnDjPLXLAvqUZx_1VM"
     
+    static var weatherApiKey = "YxA9P1FHvaurvZAk0kAc7d7utlJWGR97"
+    
     static var clientID = FirebaseApp.app()?.options.clientID
     
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
@@ -43,6 +45,11 @@ struct Constants {
    ]
     
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]
+    
+    static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED"), VisitArea(image: "south", background: "south-bg", title: "SOUTH")]
+    
+    
+    static let visitExperienceArray = [Destination(image: "river-bg", title: "RIVER"), Destination(image: "lake-bg", title: "LAKE"), Destination(image: "mountain-bg", title: "MOUNTAIN"), Destination(image: "ruins-bg", title: "RUINS"), Destination(image: "desert-bg", title: "DESERTS"), Destination(image: "hills-bg", title: "HILLS")]
  }
 
 enum Envoirment {

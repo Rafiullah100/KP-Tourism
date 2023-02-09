@@ -6,9 +6,20 @@
 //
 
 import UIKit
-
+import SDWebImage
 class VisitKPTableViewCell: UITableViewCell {
-
+    @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    
+    
+    
+    var visit: VisitKPRow?{
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (visit?.thumbnailImage ?? "")))
+            label.text = "\(visit?.title ?? "")"
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

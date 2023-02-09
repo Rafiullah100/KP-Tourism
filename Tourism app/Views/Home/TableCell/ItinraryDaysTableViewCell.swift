@@ -9,6 +9,25 @@ import UIKit
 
 class ItinraryDaysTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var dayLabel: UILabel!
+    
+    @IBOutlet weak var toPlaceDescLabel: UILabel!
+    @IBOutlet weak var toPlaceLabel: UILabel!
+    @IBOutlet weak var fromPlaceDescLabel: UILabel!
+    @IBOutlet weak var fromPlaceLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    var activity: ItinraryActivity? {
+        didSet {
+            dayLabel.text = "DAY \(activity?.day ?? 1)"
+            fromPlaceLabel.text = "\(activity?.fromPlace ?? "")"
+            toPlaceLabel.text = "\(activity?.toPlace ?? "")"
+            fromPlaceDescLabel.text = "\(activity?.departureTime ?? "") START JOURNEY FROM \(activity?.fromPlace ?? "")"
+            toPlaceDescLabel.text = "00 REACH \(activity?.toPlace ?? "")"
+            descriptionLabel.text = "\(activity?.description.stripOutHtml() ?? "")"
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

@@ -23,6 +23,12 @@ struct Destination {
     let title: String
 }
 
+struct VisitArea {
+    let image: String
+    let background: String
+    let title: String
+}
+
 struct Contacts {
     let photo: String?
     let department: String?
