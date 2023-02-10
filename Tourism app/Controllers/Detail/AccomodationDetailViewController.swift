@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class AccomodationDetailViewController: BaseViewController {
   
+    @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var parkingLabel: UILabel!
     @IBOutlet weak var bathLabel: UILabel!
@@ -52,5 +53,7 @@ class AccomodationDetailViewController: BaseViewController {
             detailView.isHidden = true
             dropDownImageView.image = UIImage(named: "expand")
         }
+    }
+    @IBAction func likeBtnAction(_ sender: Any) {
     }
 }

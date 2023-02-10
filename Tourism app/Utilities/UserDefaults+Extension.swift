@@ -11,6 +11,7 @@ extension UserDefaults {
     private enum UserDefaultsKeys: String {
         case accessToken
         case isLoginned
+        case userID
     }
     
     var accessToken: String? {
@@ -28,6 +29,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.isLoginned.rawValue)
+        }
+    }
+    
+    var userID: Int? {
+        get {
+            integer(forKey: UserDefaultsKeys.userID.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.userID.rawValue)
         }
     }
 

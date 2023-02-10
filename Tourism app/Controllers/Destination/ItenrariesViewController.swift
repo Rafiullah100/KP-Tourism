@@ -31,7 +31,8 @@ class ItenrariesViewController: BaseViewController {
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": 5], model: ItinraryModel.self)
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
+                //id = 5
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title

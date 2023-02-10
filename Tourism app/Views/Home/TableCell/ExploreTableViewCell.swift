@@ -21,11 +21,17 @@ class ExploreTableViewCell: UITableViewCell {
     
     var district: ExploreDistrict? {
         didSet{
+            if district?.userLike == 0 {
+                favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+            }
+            else{
+                favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+            }
             districtLabel.text = district?.title
             imageSDWebImageSrc = []
             DispatchQueue.main.async {
                 self.district?.attractions.forEach({ attration in
-                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ?? ""))
+                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ))
                     if let sdURL = imageUrl{
                         self.imageSDWebImageSrc.append(sdURL)
                         self.slideShow.slideshowInterval = 2.0

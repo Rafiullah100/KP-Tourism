@@ -36,6 +36,7 @@ enum Route {
     case fetchGettingHere
     case fetchVisitKp
     case weatherApi
+    case likeApi
     
     var description: String {
         switch self {
@@ -74,7 +75,7 @@ enum Route {
         case .fetchAttractionByDistrict:
             return "api/mobile/attractions/getbydistrict"
         case .fetchComment:
-          return "api/mobile/blogs/get_comments_by_blog"
+          return "api/mobile/likes_comments/get_comments"
         case .registration:
             return "api/mobile/auth/register"
         case .login:
@@ -90,7 +91,9 @@ enum Route {
         case .fetchVisitKp:
             return "api/mobile/visitkp/list"
         case .weatherApi:
-            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/258970?apikey=YxA9P1FHvaurvZAk0kAc7d7utlJWGR97"
+            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/258970?apikey=Nx8fVetx3yB9xfvSAql3kICyQFTU1hHK"
+        case .likeApi:
+            return "api/mobile/likes_comments/do_like"
         }
     }
 }

@@ -14,6 +14,7 @@ class AdventureDetailViewController: BaseViewController {
     @IBOutlet weak var adventureTypeLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet weak var favoriteBtn: UIButton!
     var adventureDetail: Adventure?
     
     override func viewDidLoad() {
@@ -30,5 +31,7 @@ class AdventureDetailViewController: BaseViewController {
     
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: adventureDetail?.adventureDescription ?? "", image: imageView.image ?? UIImage())
+    }
+    @IBAction func likeBtnAction(_ sender: Any) {
     }
 }

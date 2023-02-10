@@ -28,11 +28,12 @@ class ExploreMapViewController: UIViewController {
         //explore
         exploreDistrict?.forEach({ district in
             let marker = GMSMarker()
-            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
+            guard let latitude = Double(district.latitude ), let longitude = Double(district.longitude ) else { return }
             marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
             marker.userData = district.id
             marker.title = district.title
+            marker.snippet = district.title
             marker.map = mapView
         })
         
@@ -53,7 +54,6 @@ class ExploreMapViewController: UIViewController {
             marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
             marker.userData = district.id
-            
             marker.map = mapView
         })
     }
@@ -63,6 +63,7 @@ extension ExploreMapViewController: GMSMapViewDelegate{
     
     func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
         print(marker.userData ?? 0)
+        mapView.selectedMarker = marker
         return true
     }
     

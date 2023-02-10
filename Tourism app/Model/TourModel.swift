@@ -17,6 +17,9 @@ struct TourModel : Codable {
 }
 
 struct TourPackage : Codable {
+    let startDate: String?
+    let endDate: String?
+    
     let id : Int?
     let uuid : String?
     let user_id : Int?
@@ -49,12 +52,14 @@ struct TourPackage : Codable {
     let is_featured : Bool?
     let approved_by : Int?
     let views_counter : Int?
+    let duration_days: String?
+    
     let from_districts : FromDistricts?
     let to_districts : ToDistricts?
     let comments : [TourPackageComment]?
     let likes : [TourPackageLikes]?
     let activities : [TourActivities]?
-    
+    let userLike: Int?
     enum CodingKeys: String, CodingKey {
         
         case id = "id"
@@ -94,6 +99,10 @@ struct TourPackage : Codable {
         case comments = "comments"
         case likes = "likes"
         case activities = "activities"
+        case duration_days = "duration_days"
+        case startDate = "startDate"
+        case endDate = "endDate"
+        case userLike
     }
 }
 

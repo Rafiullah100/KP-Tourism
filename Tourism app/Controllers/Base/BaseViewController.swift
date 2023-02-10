@@ -118,7 +118,7 @@ class BaseViewController: UIViewController {
         navigationItem.rightBarButtonItems = []
         navigationItem.leftBarButtonItems = []
         addBackButton()
-        shareFilterBtns()
+//        shareFilterBtns()
     }
     
     func setupBackButtonWithTitle() {

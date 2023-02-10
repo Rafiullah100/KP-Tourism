@@ -26,7 +26,8 @@ struct EventListModel: Codable {
     let isExpired: String?
     let durationDays: String?
     let socialEventUsers: [SocialEventUser]?
-
+    let userLike: Int?
+    
     enum CodingKeys: String, CodingKey {
         case id, uuid
         case districtID = "district_id"
@@ -45,6 +46,7 @@ struct EventListModel: Codable {
         case isExpired = "is_expired"
         case durationDays = "duration_days"
         case socialEventUsers = "social_event_users"
+        case userLike
     }
 }
 

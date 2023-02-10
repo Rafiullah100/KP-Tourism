@@ -84,6 +84,7 @@ class LoginViewController: BaseViewController {
                     if self.login?.success == true{
                         UserDefaults.standard.isLoginned = true
                         UserDefaults.standard.accessToken = self.login?.token
+                        UserDefaults.standard.userID = self.login?.userID
                         Switcher.goToFeedsVC(delegate: self)
                     }
                     else{

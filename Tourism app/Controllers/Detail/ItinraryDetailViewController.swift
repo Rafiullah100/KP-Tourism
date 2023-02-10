@@ -9,6 +9,7 @@ import UIKit
 
 class ItinraryDetailViewController: BaseViewController {
 
+    @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeLabel: UILabel!
     @IBOutlet weak var tableviewHeight: NSLayoutConstraint!
@@ -32,6 +33,8 @@ class ItinraryDetailViewController: BaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.tableviewHeight.constant = self.tableView.contentSize.height
+    }
+    @IBAction func likeBtnAction(_ sender: Any) {
     }
 }
 

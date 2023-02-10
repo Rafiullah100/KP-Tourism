@@ -169,6 +169,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .explore:
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
             cell.district = exploreDistrict[indexPath.row]
+            cell.actionBlock = {
+                print(self.exploreDistrict[indexPath.row].id)
+                self.like(route: .likeApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id, "section": "district"], model: SuccessModel.self, exploreCell: cell)
+            }
             return cell
         case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
@@ -185,6 +189,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .tour:
             let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
             cell.tour = (model as? TourModel)?.tour[indexPath.row]
+            cell.actionBlock = {
+                let packageID = (self.model as? TourModel)?.tour[indexPath.row].id
+                self.like(route: .likeApi, method: .post, parameters: ["section_id": packageID ?? 0, "section": "tour_package"], model: SuccessModel.self, tourCell: cell)
+            }
             return cell
         case .event:
             let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
@@ -266,21 +274,21 @@ extension HomeViewController: MDCTabBarViewDelegate{
             cellType = .explore
             serverCall(cell: .explore)
         }
-//        else if title == tabbarItems[1].title{
-//            mapButton.isHidden = false
-//            cellType = .attraction
-//            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
-//        }
-//        else if title == tabbarItems[2].title{
-//            mapButton.isHidden = true
-//            cellType = .adventure
-//            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
-//        }
-//        else if title == tabbarItems[3].title{
-//            mapButton.isHidden = false
-//            cellType = .south
-//            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
-//        }
+        //        else if title == tabbarItems[1].title{
+        //            mapButton.isHidden = false
+        //            cellType = .attraction
+        //            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
+        //        }
+        //        else if title == tabbarItems[2].title{
+        //            mapButton.isHidden = true
+        //            cellType = .adventure
+        //            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
+        //        }
+        //        else if title == tabbarItems[3].title{
+        //            mapButton.isHidden = false
+        //            cellType = .south
+        //            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
+        //        }
         else if tag == 1{
             mapButton.isHidden = true
             cellType = .tour
@@ -299,7 +307,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 4{
             mapButton.isHidden = false
             cellType = .event
-            fetch(route: .fetchAllEvents, method: .get, model: EventsModel.self)
+            fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
         }
         else if tag == 5{
             mapButton.isHidden = true
@@ -343,9 +351,38 @@ extension HomeViewController: MDCTabBarViewDelegate{
     private func serverCall(cell: CellType){
         switch cell {
         case .explore:
-            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern,southern", "search": textField.text ?? "", "limit": limit, "page": currentPage], model: ExploreModel.self)
+            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern,southern", "search": textField.text ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage], model: ExploreModel.self)
         default: break
             //ejnre
+        }
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                DispatchQueue.main.async {
+                    let successDetail = like as? SuccessModel
+                    if  self.cellType == .explore{
+                        if successDetail?.message == "Liked"{
+                            exploreCell?.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                        }
+                        else{
+                            exploreCell?.favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+                        }
+                    }
+                    else if self.cellType == .tour{
+                        if successDetail?.message == "Liked"{
+                            tourCell?.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                        }
+                        else{
+                            tourCell?.favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
         }
     }
 }

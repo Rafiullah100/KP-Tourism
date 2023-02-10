@@ -38,6 +38,7 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var daysLabel: UILabel!
     @IBOutlet weak var packageNameLabel: UILabel!
     
+    @IBOutlet weak var likeLabel: UILabel!
     var selectedRow: Int?
     var tourDetail: TourPackage?
     
@@ -49,6 +50,19 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var eventTypeLabel: UILabel!
+    
+    @IBOutlet weak var registrationLabel: UILabel!
+    @IBOutlet weak var amountLabel: UILabel!
+    
+    @IBOutlet weak var districtNameLabel: UILabel!
+    
+    @IBOutlet weak var durationDateLabel: UILabel!
+    @IBOutlet weak var viewsLabel: UILabel!
+    @IBOutlet weak var counterLabel: UILabel!
+    
+    @IBOutlet weak var favoriteIcon: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -59,7 +73,18 @@ class PackageDetailViewController: BaseViewController {
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.thumbnail_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
         packageNameLabel.text = tourDetail?.title
         descriptionLabel.text = tourDetail?.description?.stripOutHtml()
-        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
+        daysLabel.text = tourDetail?.duration_days
+        
+        eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
+        amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
+        favoriteIcon.image = tourDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite")
+        likeLabel.text = "0 Liked"
+        durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
+        viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
+        counterLabel.text = "\(tourDetail?.number_of_people ?? 0)"
+        districtNameLabel.text = tourDetail?.to_districts?.title
+        registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
+//        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
     }
     
     private func reload(){
@@ -67,6 +92,24 @@ class PackageDetailViewController: BaseViewController {
         self.tableView.reloadData()
         self.tableView.layoutIfNeeded()
         self.tableViewHeight.constant = self.tableView.contentSize.height
+    }
+    
+    @IBAction func likeBtnAction(_ sender: Any) {
+        self.like(route: .likeApi, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                let successDetail = like as? SuccessModel
+                DispatchQueue.main.async {
+                    self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart")
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
+        }
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {

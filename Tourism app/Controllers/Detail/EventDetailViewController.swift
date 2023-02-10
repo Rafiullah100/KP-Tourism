@@ -17,6 +17,7 @@ class EventDetailViewController: BaseViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var interestGoingLabel: UILabel!
     
+    @IBOutlet weak var favoriteBtn: UIButton!
     var eventDetail: EventListModel?
     
     override func viewDidLoad() {
@@ -38,10 +39,30 @@ class EventDetailViewController: BaseViewController {
         else{
             statusView.backgroundColor = Constants.appColor
         }
+        favoriteBtn.setImage(eventDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite"), for: .normal)
+
         view.bringSubviewToFront(statusView)
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: eventDetail?.eventDescription ?? "", image: imageView.image ?? UIImage())
+    }
+    @IBAction func likeBtnAction(_ sender: Any) {
+        self.like(route: .likeApi, method: .post, parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event"], model: SuccessModel.self)
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                let successDetail = like as? SuccessModel
+                DispatchQueue.main.async {
+                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
+        }
     }
 }

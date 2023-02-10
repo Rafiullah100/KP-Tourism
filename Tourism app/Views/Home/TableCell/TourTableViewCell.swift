@@ -14,10 +14,21 @@ class TourTableViewCell: UITableViewCell {
     @IBOutlet weak var destinationLabel: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+
+    var actionBlock: (() -> Void)? = nil
     
     @IBOutlet weak var likesLabel: UILabel!
     var tour: TourPackage?{
         didSet{
+            
+            if tour?.userLike == 0 {
+                favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+            }
+            else{
+                favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+            }
+            
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (tour?.thumbnail_image ?? "")))
             label.text = tour?.title
             destinationLabel.text = tour?.to_districts?.title
@@ -47,4 +58,7 @@ class TourTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func favoriteBtnAction(_ sender: Any) {
+        actionBlock?()
+    }
 }

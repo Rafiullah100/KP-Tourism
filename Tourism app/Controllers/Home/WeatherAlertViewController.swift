@@ -41,7 +41,7 @@ class WeatherAlertViewController: UIViewController {
     
     var cellType: CellType?
     var warnings: [Warning]?
-    
+    var weatherDetail: WeatherModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -102,16 +102,15 @@ class WeatherAlertViewController: UIViewController {
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
-            case .success(let alerts):
+            case .success(let model):
                 DispatchQueue.main.async {
                     switch self.cellType {
                     case .AlertTableViewCell:
-                        self.warnings = (alerts as? AlertModel)?.warnings
+                        self.warnings = (model as? AlertModel)?.warnings
                         self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
                     case .WeatherTableViewCell:
-                        print(alerts)
-//                        self.warnings = (alerts as? AlertModel)?.warnings
-//                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                        self.weatherDetail = model as? WeatherModel
+                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
                     case .none:
                         print("none")
                     }
@@ -132,7 +131,7 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
         case .AlertTableViewCell:
             return warnings?.count ?? 0
         case .WeatherTableViewCell:
-            return 5
+            return weatherDetail?.dailyForecasts?.count ?? 0
         default:
             return 0
         }

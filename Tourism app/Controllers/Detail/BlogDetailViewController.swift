@@ -21,6 +21,7 @@ class BlogDetailViewController: BaseViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var likeLabel: UILabel!
     var blogDetail: Blog?
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -54,12 +55,13 @@ class BlogDetailViewController: BaseViewController {
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
+        favoriteBtn.setImage(blogDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite"), for: .normal)
         reloadComment()
     }
     
     private func reloadComment(){
         print(currentPage)
-        fetchComment(route: .fetchComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? 0, "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
     }
     
     override func viewWillLayoutSubviews() {
@@ -90,9 +92,9 @@ class BlogDetailViewController: BaseViewController {
             switch result {
             case .success(let comments):
                 DispatchQueue.main.async {
-                    print((comments as? CommentsModel)?.comments?.rows ?? [])
-                    self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                    self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                    print((comments as? CommentsModel)?.comments.rows ?? [])
+                    self.totalCount = (comments as? CommentsModel)?.comments.count ?? 1
+                    self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments.rows ?? [])
                     self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
                     self.tableView.reloadData()
                     self.tableView.layoutIfNeeded()
@@ -103,7 +105,28 @@ class BlogDetailViewController: BaseViewController {
             }
         }
     }
+    
     @IBAction func loginTocomment(_ sender: Any) {
+    }
+    
+    @IBAction func likeBtnAction(_ sender: Any) {
+        self.like(route: .likeApi, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
+
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                let successDetail = like as? SuccessModel
+                DispatchQueue.main.async {
+                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
+        }
     }
 }
 
