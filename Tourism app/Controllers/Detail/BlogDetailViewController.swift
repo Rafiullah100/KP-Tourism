@@ -55,7 +55,7 @@ class BlogDetailViewController: BaseViewController {
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
-        favoriteBtn.setImage(blogDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite"), for: .normal)
+        favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
         reloadComment()
     }
     

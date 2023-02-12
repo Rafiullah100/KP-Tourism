@@ -6,7 +6,8 @@
 //
 
 import UIKit
-
+import AVFoundation
+import AVKit
 class ViewerCell: UICollectionViewCell {
     
     @IBOutlet weak var imgView: UIImageView!
@@ -22,11 +23,18 @@ class ViewerViewController: UIViewController {
     }
     
     var galleryDetail: GalleryModel?
+    var position: IndexPath?
 
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.centeredVertically, .centeredHorizontally], animated: false)
+        collectionView.reloadData()
     }
 }
 

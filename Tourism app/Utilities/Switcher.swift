@@ -340,9 +340,10 @@ class Switcher {
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
-    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel){
+    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel, position: IndexPath){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewerViewController") as! ViewerViewController
         vc.galleryDetail = galleryDetail
+        vc.position = position
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
@@ -350,6 +351,17 @@ class Switcher {
     static func goToItinraryDetail(delegate: UIViewController, itinraryDetail: ItinraryRow){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ItinraryDetailViewController") as! ItinraryDetailViewController
         vc.itinraryDetail = itinraryDetail
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func goToPOIDetailVC(delegate: UIViewController /*locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int*/){
+        let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIDetailViewController") as! POIDetailViewController
+//        vc.locationCategory = locationCategory
+//        vc.exploreDistrict = exploredistrict
+//        vc.attractionDistrict = attractionDistrict
+//        vc.poiCategoriId = poiCategoryId
+//        print(poiCategoryId)
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

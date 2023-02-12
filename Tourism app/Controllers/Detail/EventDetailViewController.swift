@@ -39,7 +39,7 @@ class EventDetailViewController: BaseViewController {
         else{
             statusView.backgroundColor = Constants.appColor
         }
-        favoriteBtn.setImage(eventDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite"), for: .normal)
+        favoriteBtn.setImage(eventDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
 
         view.bringSubviewToFront(statusView)
     }
@@ -58,7 +58,6 @@ class EventDetailViewController: BaseViewController {
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
                     self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
-
                 }
             case .failure(let error):
                 print("error \(error)")

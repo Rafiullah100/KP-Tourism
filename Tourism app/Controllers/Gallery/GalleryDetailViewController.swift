@@ -8,6 +8,9 @@
 import UIKit
 import MaterialComponents.MaterialTabs_TabBarView
 import SDWebImage
+import AVFoundation
+import AVKit
+
 class GalleryDetailViewController: BaseViewController {
 
     @IBOutlet weak var containerView: UIView!
@@ -23,6 +26,9 @@ class GalleryDetailViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
 
+    var mediaType: MediaType?
+    var player = AVPlayer()
+    var playerViewController = AVPlayerViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +83,7 @@ class GalleryDetailViewController: BaseViewController {
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10
+        mediaType = .image
 //        self.add(imageVC, in: containerView)
     }
     
@@ -84,14 +91,33 @@ class GalleryDetailViewController: BaseViewController {
         super.viewWillAppear(animated)
        //
     }
+    
+    private func playVideo(url: String){
+        let videoURL = URL(string: Route.baseUrl + url)
+        guard let videoURL = videoURL else { return }
+        player = AVPlayer(url: videoURL)
+        playerViewController.player = player
+        self.present(playerViewController, animated: true)
+    }
 }
 
 extension GalleryDetailViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
-        addChild(tag: item.tag)
+        switch item.tag {
+        case 0:
+            mediaType = .image
+        case 1:
+            mediaType = .video
+        case 2:
+            mediaType = .virtual
+        default:
+            break
+        }
+        collectionView.reloadData()
     }
     
     private func addChild(tag: Int){
+        
 //        self.remove(from: containerView)
 //        if tag == 0 {
 //            self.add(imageVC, in: containerView)
@@ -105,8 +131,19 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
     }
 }
 
-extension GalleryDetailViewController: ASCollectionViewDelegate {
-
+extension GalleryDetailViewController: ASCollectionViewDelegate, UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch mediaType {
+        case .image:
+            Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!, position: indexPath)
+        case .video:
+            playVideo(url: galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")
+        case .virtual:
+            playVideo(url: galleryDetail?.virtual_tours?.rows?[indexPath.row].virtual_url ?? "")
+        default:
+            break
+        }
+    }
     func loadMoreInASCollectionView(_ asCollectionView: ASCollectionView) {
         if numberOfItems > 30 {
             collectionView.enableLoadMore = false
@@ -121,18 +158,46 @@ extension GalleryDetailViewController: ASCollectionViewDelegate {
 extension GalleryDetailViewController: ASCollectionViewDataSource {
     
     func numberOfItemsInASCollectionView(_ asCollectionView: ASCollectionView) -> Int {
-        return galleryDetail?.images?.rows?.count ?? 0
+        switch mediaType {
+        case .image:
+            return galleryDetail?.images?.rows?.count ?? 0
+        case .video:
+            return galleryDetail?.videos?.rows?.count ?? 0
+        case .virtual:
+            return galleryDetail?.virtual_tours?.rows?.count ?? 0
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
-        gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        switch mediaType {
+        case .image:
+            gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        case .video:
+            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+        case .virtual:
+            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+        default:
+            return gridCell
+        }
         return gridCell
     }
-    
+    //imgView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (images?.video_url ?? "")))
     func collectionView(_ asCollectionView: ASCollectionView, parallaxCellForItemAtIndexPath indexPath: IndexPath) -> ASCollectionViewParallaxCell {
         let parallaxCell = collectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
         parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        switch mediaType {
+        case .image:
+            parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        case .video:
+            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+        case .virtual:
+            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+        default:
+            return parallaxCell
+        }
         return parallaxCell
     }
     
@@ -141,9 +206,10 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         return header
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!)
-    }
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!)
+//    }
+    
 }
     
     class GridCell: UICollectionViewCell {

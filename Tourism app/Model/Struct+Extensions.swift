@@ -45,5 +45,11 @@ enum DetailType {
     case adventure
 }
 
+enum MediaType: CaseIterable {
+    case image
+    case video
+    case virtual
+}
+
 
 //this is struct

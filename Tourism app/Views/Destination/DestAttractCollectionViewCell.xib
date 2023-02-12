@@ -34,16 +34,16 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="imA-kJ-22s">
-                        <rect key="frame" x="12" y="276" width="262" height="19"/>
+                        <rect key="frame" x="12" y="276.33333333333331" width="262" height="18.666666666666686"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Mahudand, Kalam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VLZ-3X-hVb">
-                                <rect key="frame" x="0.0" y="0.0" width="168.5" height="19"/>
+                                <rect key="frame" x="0.0" y="0.0" width="169" height="18.666666666666668"/>
                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Khyber Pkhtunkhwa" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oL3-7F-EAE">
-                                <rect key="frame" x="168.5" y="9.5" width="93.5" height="9.5"/>
+                                <rect key="frame" x="169" y="9.3333333333333712" width="93" height="9.3333333333333357"/>
                                 <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="8"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -58,6 +58,9 @@
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                         <state key="normal" image="unfavorite"/>
+                        <connections>
+                            <action selector="likeBtnActio:" destination="zeR-Qp-KVM" eventType="touchUpInside" id="hJY-Cy-EAc"/>
+                        </connections>
                     </button>
                 </subviews>
             </view>
@@ -76,6 +79,7 @@
             <size key="customSize" width="286" height="184"/>
             <connections>
                 <outlet property="attractionLabel" destination="VLZ-3X-hVb" id="xHg-wQ-Brn"/>
+                <outlet property="favoriteBtn" destination="Rbo-Qs-egT" id="DYQ-XW-iKG"/>
                 <outlet property="imgView" destination="Kzw-jt-sOD" id="fJT-GH-Iij"/>
                 <outlet property="provinceLabel" destination="oL3-7F-EAE" id="SFY-ts-g1J"/>
             </connections>

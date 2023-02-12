@@ -9,12 +9,6 @@ import UIKit
 import SDWebImage
 class GalleryViewController: BaseViewController {
 
-    enum MediaType: String {
-        case image
-        case video
-        case virtual
-    }
-    
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageCollectionView: UICollectionView!{
         didSet{

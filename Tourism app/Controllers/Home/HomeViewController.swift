@@ -292,7 +292,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 1{
             mapButton.isHidden = true
             cellType = .tour
-            fetch(route: .fetchTourPackage, method: .post, model: TourModel.self)
+            fetch(route: .fetchTourPackage, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: TourModel.self)
         }
         else if tag == 2{
             mapButton.isHidden = true
@@ -312,12 +312,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 5{
             mapButton.isHidden = true
             cellType = .blog
-            fetch(route: .fetchBlogs, method: .post, model: BlogsModel.self)
+            fetch(route: .fetchBlogs, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: BlogsModel.self)
         }
         else if tag == 6{
             mapButton.isHidden = true
             cellType = .product
-            fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
+            fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? ""], model: ProductModel.self)
         }
         else if tag == 7{
             mapButton.isHidden = true

@@ -389,7 +389,7 @@
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kyd-pM-47E">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="814"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ohc-Pc-D2J">
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Ohc-Pc-D2J">
                                             <size key="itemSize" width="414" height="812"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -406,17 +406,15 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GdX-cv-23N">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qMg-Hy-1kC">
-                                                                    <rect key="frame" x="32" y="154.5" width="350" height="503"/>
-                                                                    <constraints>
-                                                                        <constraint firstAttribute="width" constant="350" id="8k5-4b-ISm"/>
-                                                                        <constraint firstAttribute="height" constant="503" id="YNc-bl-oi4"/>
-                                                                    </constraints>
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qMg-Hy-1kC">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                                                 </imageView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="centerY" secondItem="GdX-cv-23N" secondAttribute="centerY" id="MPM-dE-Cxk"/>
-                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="centerX" secondItem="GdX-cv-23N" secondAttribute="centerX" id="pOO-SZ-uCb"/>
+                                                                <constraint firstAttribute="bottom" secondItem="qMg-Hy-1kC" secondAttribute="bottom" id="2Ac-b8-AN1"/>
+                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="leading" secondItem="GdX-cv-23N" secondAttribute="leading" id="Jdc-SS-8wI"/>
+                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="top" secondItem="GdX-cv-23N" secondAttribute="top" id="cHt-Bs-4MW"/>
+                                                                <constraint firstAttribute="trailing" secondItem="qMg-Hy-1kC" secondAttribute="trailing" id="y3R-x2-xw1"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>

@@ -77,7 +77,7 @@ class PackageDetailViewController: BaseViewController {
         
         eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
         amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
-        favoriteIcon.image = tourDetail?.userLike == 0 ? UIImage(named: "white-heart") : UIImage(named: "favorite")
+        favoriteIcon.image = tourDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart")
         likeLabel.text = "0 Liked"
         durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
         viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"

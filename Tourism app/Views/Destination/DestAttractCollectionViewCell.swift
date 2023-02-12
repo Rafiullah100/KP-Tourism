@@ -8,13 +8,23 @@
 import UIKit
 
 class DestAttractCollectionViewCell: UICollectionViewCell {
-
+    @IBOutlet weak var favoriteBtn: UIButton!
+    
     @IBOutlet weak var provinceLabel: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var attractionLabel: UILabel!
-    
+    var actionBlock: (() -> Void)? = nil
+
     var attraction: AttractionsDistrict?{
         didSet{
+            
+            if attraction?.userLike == 1 {
+                favoriteBtn.setImage(UIImage(named: "fav"), for: .normal)
+            }
+            else{
+                favoriteBtn.setImage(UIImage(named: "unfavorite-gray"), for: .normal)
+            }
+            
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.displayImage ?? "")))
             attractionLabel.text = attraction?.title
         }
@@ -24,5 +34,8 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+    }
+    @IBAction func likeBtnActio(_ sender: Any) {
+        actionBlock?()
     }
 }

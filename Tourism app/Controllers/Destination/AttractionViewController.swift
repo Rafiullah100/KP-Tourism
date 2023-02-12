@@ -45,13 +45,13 @@ class AttractionViewController: BaseViewController {
             sectionLabel.text = "Attractions"
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
         else if attractionDistrict != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
     }
     
@@ -80,6 +80,9 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestAttractCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DestAttractCollectionViewCell
+        cell.actionBlock = {
+            self.like(route: .likeApi, method: .post, parameters: ["section_id": self.attractionDistrictsArray[indexPath.row].id ?? 0, "section": "attraction"], model: SuccessModel.self, cell: cell)
+        }
         cell.attraction = attractionDistrictsArray[indexPath.row]
         return cell
     }
@@ -97,6 +100,20 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
         if totalPages != attractionDistrictsArray.count && indexPath.row == attractionDistrictsArray.count-1  {
             currentPage = currentPage + 1
             loadData(currentPage: currentPage)
+        }
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, cell: DestAttractCollectionViewCell) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                let successDetail = like as? SuccessModel
+                DispatchQueue.main.async {
+                    cell.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
         }
     }
 }

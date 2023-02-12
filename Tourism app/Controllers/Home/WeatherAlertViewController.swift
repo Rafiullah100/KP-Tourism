@@ -9,6 +9,8 @@ import UIKit
 
 class WeatherAlertViewController: UIViewController {
 
+    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var districtLabel: UILabel!
     @IBOutlet weak var alertView: UIView!
     @IBOutlet weak var alertLabel: UILabel!
     @IBOutlet weak var weatherView: UIView!
@@ -52,6 +54,7 @@ class WeatherAlertViewController: UIViewController {
         textField.inputView = pickerView
         cellType = .WeatherTableViewCell
 //        serverCall(type: .WeatherTableViewCell)
+  
         fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
     }
     
@@ -99,6 +102,11 @@ class WeatherAlertViewController: UIViewController {
         }
     }
     
+    private func updateUI(){
+        districtLabel.text = dropDownLabel.text
+        descriptionLabel.text = weatherDetail?.headline?.text
+    }
+    
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
@@ -110,7 +118,8 @@ class WeatherAlertViewController: UIViewController {
                         self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
                     case .WeatherTableViewCell:
                         self.weatherDetail = model as? WeatherModel
-                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                        self.tableView.reloadData()
+                        self.updateUI()
                     case .none:
                         print("none")
                     }
@@ -141,6 +150,7 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
         switch cellType {
         case .WeatherTableViewCell:
             let cell: WeatherTableViewCell = tableView.dequeueReusableCell(withIdentifier: WeatherTableViewCell.cellIdentifier) as! WeatherTableViewCell
+            cell.dailyForecast = weatherDetail?.dailyForecasts?[indexPath.row]
             return cell
         case .AlertTableViewCell:
             let cell: AlertTableViewCell = tableView.dequeueReusableCell(withIdentifier: AlertTableViewCell.cellIdentifier) as! AlertTableViewCell
@@ -176,6 +186,12 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
         dropDownLabel.text = userType[row]
     }
+}
+
+extension WeatherAlertViewController: UITextFieldDelegate{
+
+    
 }
