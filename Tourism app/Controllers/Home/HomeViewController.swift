@@ -85,7 +85,7 @@ class HomeViewController: BaseViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("jibiub")
+//        print("jibiub")
 //        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
