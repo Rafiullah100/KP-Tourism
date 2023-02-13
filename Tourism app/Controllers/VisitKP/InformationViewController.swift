@@ -7,6 +7,11 @@
 
 import UIKit
 
+class InformationCell: UITableViewCell {
+    //
+    @IBOutlet weak var label: UILabel!
+}
+
 class InformationViewController: BaseViewController {
 
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -32,10 +37,11 @@ class InformationViewController: BaseViewController {
 
 extension InformationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return Constants.traveleInformation.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier")!
+        let cell: InformationCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! InformationCell
+        cell.label.text = Constants.traveleInformation[indexPath.row]
         return cell
     }
     

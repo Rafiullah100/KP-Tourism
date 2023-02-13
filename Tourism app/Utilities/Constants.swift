@@ -40,7 +40,7 @@ struct Constants {
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
               Sections(title: "Events", image: "event", selectedImage: "event-s"),
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
-              Sections(title: "Local Products", image: "product", selectedImage: "product-s"),
+              Sections(title: "KP Local Products", image: "product", selectedImage: "product-s"),
               Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
    ]
     
@@ -50,6 +50,8 @@ struct Constants {
     
     
     static let visitExperienceArray = [Destination(image: "river-bg", title: "RIVER"), Destination(image: "lake-bg", title: "LAKE"), Destination(image: "mountain-bg", title: "MOUNTAIN"), Destination(image: "ruins-bg", title: "RUINS"), Destination(image: "desert-bg", title: "DESERTS"), Destination(image: "hills-bg", title: "HILLS")]
+    
+    static let traveleInformation: [String] = ["Young Adults", "Kids", "Seniors", "Disable (Wheelchair)"]
  }
 
 enum Envoirment {

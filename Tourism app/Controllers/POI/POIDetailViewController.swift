@@ -6,8 +6,13 @@
 //
 
 import UIKit
+import SDWebImage
+class POIDedetailCell: UICollectionViewCell {
+    //
+    @IBOutlet weak var imgView: UIImageView!
+}
 
-class POIDetailViewController: UIViewController {
+class POIDetailViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
@@ -18,19 +23,38 @@ class POIDetailViewController: UIViewController {
             collectionView.dataSource = self
         }
     }
+    @IBOutlet weak var nameLabel: UILabel!
+    
+    @IBOutlet weak var descriptionLabel: UITextView!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var placeLabel: UILabel!
+    
+    var poiDetail: POISubCatoryModel?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        type = .back1
+        descriptionLabel.text = poiDetail?.description.stripOutHtml()
+        placeLabel.text = poiDetail?.locationTitle
+        categoryLabel.text = poiDetail?.poiCategories.title
+        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Medium", size: 16) ?? UIFont()]
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Light", size: 12) ?? UIFont()]
+        let name = NSMutableAttributedString(string: "\(poiDetail?.title ?? "") | ", attributes: firstAttributes)
+        let poi = NSMutableAttributedString(string: "Point Of Interest", attributes: secondAttributes)
+        name.append(poi)
+        nameLabel.attributedText = name
     }
 }
 
 extension POIDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return poiDetail?.poiGalleries.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath)
+        let cell: POIDedetailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! POIDedetailCell
+        cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiDetail?.poiGalleries[indexPath.row].imageURL ?? "")))
         return cell
     }
 }

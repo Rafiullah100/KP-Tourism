@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class POIServicesViewController: BaseViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
@@ -42,7 +43,7 @@ class POIServicesViewController: BaseViewController {
         else if attractionDistrict != nil{
             districtId = attractionDistrict?.id
         }
-        let parameters = ["district_id": districtId ?? 0, "poi_category_id": poiCategoriId ?? 0] as [String : Any]
+        let parameters = ["district_id": districtId ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         print(parameters)
         URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
             switch result {
@@ -93,6 +94,7 @@ extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToPOIDetailVC(delegate: self)
+        guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }
+        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail)
     }
 }

@@ -355,8 +355,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIDetailVC(delegate: UIViewController /*locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int*/){
+    static func goToPOIDetailVC(delegate: UIViewController, poiDetail: POISubCatoryModel /*locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int*/){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIDetailViewController") as! POIDetailViewController
+        vc.poiDetail = poiDetail
 //        vc.locationCategory = locationCategory
 //        vc.exploreDistrict = exploredistrict
 //        vc.attractionDistrict = attractionDistrict
