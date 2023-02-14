@@ -10,6 +10,12 @@ import UIKit
 class InformationCell: UITableViewCell {
     //
     @IBOutlet weak var label: UILabel!
+    
+    @IBOutlet weak var checkImgView: UIImageView!
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        checkImgView.image = selected ? UIImage(named: "check") : UIImage(named: "uncheck")
+    }
 }
 
 class InformationViewController: BaseViewController {
@@ -32,6 +38,10 @@ class InformationViewController: BaseViewController {
         tableView.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
     }
+    
+    @IBAction func moveForwardBtn(_ sender: Any) {
+        Switcher.gotoTourAccomodationVC(delegate: self)
+    }
 }
 
 
@@ -50,6 +60,6 @@ extension InformationViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoTourDestinationVC(delegate: self)
+//        Switcher.gotoTourAccomodationVC(delegate: self)
     }
 }

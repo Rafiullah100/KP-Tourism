@@ -12,6 +12,9 @@ extension UserDefaults {
         case accessToken
         case isLoginned
         case userID
+        case userEmail
+        case districtKey
+
     }
     
     var accessToken: String? {
@@ -38,6 +41,24 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.userID.rawValue)
+        }
+    }
+    
+    var userEmail: String? {
+        get {
+            string(forKey: UserDefaultsKeys.userEmail.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.userEmail.rawValue)
+        }
+    }
+    
+    var districtKey: Int? {
+        get {
+            integer(forKey: UserDefaultsKeys.districtKey.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.districtKey.rawValue)
         }
     }
 

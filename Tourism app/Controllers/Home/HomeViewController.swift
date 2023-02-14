@@ -243,7 +243,12 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .south:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: (model as? ExploreModel)?.attractions[indexPath.row])
         case .visitKP:
-            Switcher.gotoVisitKP(delegate: self)
+            if (model as! VisitKPModel).attractions.rows[indexPath.row].isWizard == true {
+                Switcher.gotoVisitKP(delegate: self)
+            }
+            else{
+                Switcher.goToWizardVC(delegate: self, visitDetail: (model as! VisitKPModel).attractions.rows[indexPath.row])
+            }
         default:
             break
         }

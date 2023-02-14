@@ -12,10 +12,10 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var bgImageView: UIImageView!
     
-    var experience: Destination? {
+    var experience: DistrictCategorory? {
         didSet {
             label.text = experience?.title
-            bgImageView.image = UIImage(named: experience?.image ?? "")
+            bgImageView.sd_setImage(with: URL(string: Route.baseUrl + (experience?.icon ?? "")))
         }
     }
 }
@@ -30,31 +30,50 @@ class ExperienceViewController: BaseViewController {
     }
     @IBOutlet weak var collectionViewHeigh: NSLayoutConstraint!
    
+    var districtCategries: [DistrictCategorory]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        collectionViewHeigh.constant = CGFloat.greatestFiniteMagnitude
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-        collectionViewHeigh.constant = collectionView.contentSize.height
+        fetch(route: .districtCategoriesApi, method: .post, model: DistrictCatModel.self)
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let category):
+                DispatchQueue.main.async {
+                    self.districtCategries = (category as! DistrictCatModel).districtCategorories
+                    self.collectionViewHeigh.constant = CGFloat.greatestFiniteMagnitude
+                    self.collectionView.reloadData()
+                    self.collectionView.layoutIfNeeded()
+                    self.collectionViewHeigh.constant = self.collectionView.contentSize.height
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.collectionView.noInternet()
+                }
+            }
+        }
     }
 }
 
 extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return Constants.visitExperienceArray.count
+        return districtCategries?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: VisitExperienceCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! VisitExperienceCollectionViewCell
-        cell.experience = Constants.visitExperienceArray[indexPath.row]
+        cell.experience = districtCategries?[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoTourInformationVC(delegate: self)
+        Switcher.gotoTourDestinationVC(delegate: self)
     }
+    
 }
 
 extension ExperienceViewController: UICollectionViewDelegateFlowLayout{

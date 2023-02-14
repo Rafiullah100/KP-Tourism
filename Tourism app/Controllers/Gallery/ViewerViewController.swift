@@ -23,9 +23,10 @@ class ViewerViewController: UIViewController {
     }
     
     var galleryDetail: GalleryModel?
+    var poiGallery: [PoiGallery]?
     var position: IndexPath?
-
     
+    var galleryType: galleryType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,19 +34,33 @@ class ViewerViewController: UIViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.centeredVertically, .centeredHorizontally], animated: false)
+        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.left], animated: false)
         collectionView.reloadData()
     }
 }
 
 extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return galleryDetail?.images?.rows?.count ?? 0
+        switch galleryType {
+        case .gallery:
+            return galleryDetail?.images?.rows?.count ?? 0
+        case .poi:
+            return poiGallery?.count ?? 0
+        default:
+            return 0
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ViewerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! ViewerCell
-        cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        switch galleryType {
+        case .gallery:
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+        case .poi:
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiGallery?[indexPath.row].imageURL ?? "")))
+        default:
+            return cell
+        }
         return cell
     }
 }

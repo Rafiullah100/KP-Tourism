@@ -7,6 +7,14 @@
 
 import UIKit
 
+class TravelAccomodation: UITableViewCell {
+    //
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var imgView: UIImageView!
+    
+    
+}
+
 class TourAccomodationViewController: BaseViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
@@ -31,10 +39,12 @@ class TourAccomodationViewController: BaseViewController {
 
 extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return Constants.traveleAccomodation.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier")!
+        let cell: TravelAccomodation = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! TravelAccomodation
+        cell.imgView.image = UIImage(named: Constants.traveleAccomodation[indexPath.row].image)
+        cell.label.text = Constants.traveleAccomodation[indexPath.row].title
         return cell
     }
     

@@ -42,7 +42,7 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoTourAccomodationVC(delegate: self)
+        Switcher.gotoTourInformationVC(delegate: self)
     }
 }
 

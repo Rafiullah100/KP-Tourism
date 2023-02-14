@@ -34,6 +34,7 @@ class POIDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(poiDetail?.poiGalleries)
         type = .back1
         descriptionLabel.text = poiDetail?.description.stripOutHtml()
         placeLabel.text = poiDetail?.locationTitle
@@ -56,6 +57,10 @@ extension POIDetailViewController: UICollectionViewDelegate, UICollectionViewDat
         let cell: POIDedetailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! POIDedetailCell
         cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiDetail?.poiGalleries[indexPath.row].imageURL ?? "")))
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Switcher.gotoViewerVC(delegate: self, position: indexPath, poiGallery: poiDetail?.poiGalleries, type: .poi)
     }
 }
 

@@ -29,7 +29,6 @@ class WeatherAlertViewController: UIViewController {
 
     
     let pickerView = UIPickerView()
-    let userType = ["Swat", "Lower Dir", "Upper Dir", "Shangla", "Buner", "Malakand"]
 
     
     @IBOutlet weak var tableView: UITableView!{
@@ -44,6 +43,8 @@ class WeatherAlertViewController: UIViewController {
     var cellType: CellType?
     var warnings: [Warning]?
     var weatherDetail: WeatherModel?
+    var districtList: [DistrictsListRow]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +56,8 @@ class WeatherAlertViewController: UIViewController {
         cellType = .WeatherTableViewCell
 //        serverCall(type: .WeatherTableViewCell)
   
-        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
+//        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
+        fetchDistrictKeys(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
     }
     
     @IBAction func updateBtnAction(_ sender: Any) {
@@ -131,6 +133,21 @@ class WeatherAlertViewController: UIViewController {
             }
         }
     }
+    
+    func fetchDistrictKeys<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let model):
+                DispatchQueue.main.async {
+                    self.districtList = (model as! DistrictListModel).districts?.rows
+                    self.pickerView.reloadAllComponents()
+                    self.serverCall(type: .WeatherTableViewCell)
+                }
+            case .failure(let error):
+                print("Erorr \(error)")
+            }
+        }
+    }
 }
 
 extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource{
@@ -178,16 +195,17 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        userType.count
+        return self.districtList?.count ?? 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return userType[row]
+        return self.districtList?[row].title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
-        dropDownLabel.text = userType[row]
+        UserDefaults.standard.districtKey = self.districtList?[row].mapbox_location_key
+        dropDownLabel.text = self.districtList?[row].title
     }
 }
 

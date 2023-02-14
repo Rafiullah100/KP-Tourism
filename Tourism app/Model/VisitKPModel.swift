@@ -31,3 +31,22 @@ struct VisitKPRow: Codable {
         case isWizard = "is_wizard"
     }
 }
+
+
+///
+///
+///
+//experience model
+struct DistrictCatModel: Codable {
+    let districtCategorories: [DistrictCategorory]
+
+    enum CodingKeys: String, CodingKey {
+        case districtCategorories = "district_categorories"
+    }
+}
+
+// MARK: - DistrictCategorory
+struct DistrictCategorory: Codable {
+    let id: Int
+    let title, icon, createdAt: String
+}

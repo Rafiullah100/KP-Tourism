@@ -51,5 +51,8 @@ enum MediaType: CaseIterable {
     case virtual
 }
 
-
+enum galleryType: CaseIterable {
+    case gallery
+    case poi
+}
 //this is struct

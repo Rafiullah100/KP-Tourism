@@ -46,12 +46,14 @@ struct Constants {
     
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]
     
-    static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED"), VisitArea(image: "south", background: "south-bg", title: "SOUTH")]
+    static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED"), VisitArea(image: "south-map", background: "south-bg", title: "SOUTH")]
     
     
     static let visitExperienceArray = [Destination(image: "river-bg", title: "RIVER"), Destination(image: "lake-bg", title: "LAKE"), Destination(image: "mountain-bg", title: "MOUNTAIN"), Destination(image: "ruins-bg", title: "RUINS"), Destination(image: "desert-bg", title: "DESERTS"), Destination(image: "hills-bg", title: "HILLS")]
     
-    static let traveleInformation: [String] = ["Young Adults", "Kids", "Seniors", "Disable (Wheelchair)"]
+    static let traveleInformation: [String] = ["YOUNG ADULTS", "KIDS", "SENIORS", "DISABLE (WHEELCHAIR)"]
+    
+    static let traveleAccomodation = [Destination(image: "resthouse", title: "GOVENMENT REST HOUSE"), Destination(image: "camping", title: "CAMPING PODS"), Destination(image: "hotel", title: "PRIVATE HOTELS"), Destination(image: "ptdc", title: "PTDC HOTELS")]
  }
 
 enum Envoirment {

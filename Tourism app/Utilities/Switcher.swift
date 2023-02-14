@@ -340,10 +340,12 @@ class Switcher {
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
-    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel, position: IndexPath){
+    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel? = nil, position: IndexPath, poiGallery: [PoiGallery]? = nil, type: galleryType){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewerViewController") as! ViewerViewController
         vc.galleryDetail = galleryDetail
         vc.position = position
+        vc.poiGallery = poiGallery
+        vc.galleryType = type
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
@@ -363,6 +365,13 @@ class Switcher {
 //        vc.attractionDistrict = attractionDistrict
 //        vc.poiCategoriId = poiCategoryId
 //        print(poiCategoryId)
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func goToWizardVC(delegate: UIViewController, visitDetail: VisitKPRow){
+        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "WizardViewController") as! WizardViewController
+        vc.visitDetail = visitDetail
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

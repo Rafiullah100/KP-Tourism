@@ -37,7 +37,9 @@ enum Route {
     case fetchVisitKp
     case weatherApi
     case likeApi
-    
+    case districtCategoriesApi
+    case districtListApi
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -94,6 +96,10 @@ enum Route {
             return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/1771429?apikey=Nx8fVetx3yB9xfvSAql3kICyQFTU1hHK"
         case .likeApi:
             return "api/mobile/likes_comments/do_like"
+        case .districtCategoriesApi:
+            return "api/mobile/districts/getcategories"
+        case .districtListApi:
+            return "api/mobile/districts/list"
         }
     }
 }
