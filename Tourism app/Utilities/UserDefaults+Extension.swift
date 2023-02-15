@@ -14,7 +14,11 @@ extension UserDefaults {
         case userID
         case userEmail
         case districtKey
-
+        case area
+        case experience
+        case destination
+        case information
+        case accomodation
     }
     
     var accessToken: String? {
@@ -59,6 +63,51 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.districtKey.rawValue)
+        }
+    }
+    
+    var area: String? {
+        get {
+            string(forKey: UserDefaultsKeys.area.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.area.rawValue)
+        }
+    }
+    
+    var experience: String? {
+        get {
+            string(forKey: UserDefaultsKeys.experience.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.experience.rawValue)
+        }
+    }
+    
+    var destination: String? {
+        get {
+            string(forKey: UserDefaultsKeys.destination.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.destination.rawValue)
+        }
+    }
+    
+    var information: String? {
+        get {
+            string(forKey: UserDefaultsKeys.information.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.information.rawValue)
+        }
+    }
+    
+    var accomodation: String? {
+        get {
+            string(forKey: UserDefaultsKeys.accomodation.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.accomodation.rawValue)
         }
     }
 

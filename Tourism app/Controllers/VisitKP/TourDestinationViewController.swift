@@ -6,8 +6,30 @@
 //
 
 import UIKit
+import SDWebImage
+class TourAccomodatioCell: UITableViewCell {
+    //
+    @IBOutlet weak var selectedImgView: UIImageView!
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var imgView: UIImageView!
+    
+    var list: DistrictsListRow? {
+        didSet {
+            label.text = list?.title
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (list?.thumbnail_image ?? "")))
+        }
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedImgView.isHidden = selected ? false : true
+    }
+}
 
 class TourDestinationViewController: BaseViewController {
+    
+    @IBOutlet weak var forwardButton: UIButton!
+    
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -16,24 +38,59 @@ class TourDestinationViewController: BaseViewController {
         }
     }
     
+    var districtList: [DistrictsListRow]?
+    var isSelected: Bool?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
         
-        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableViewHeight.constant = tableView.contentSize.height
+//        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
+//        tableView.reloadData()
+//        tableView.layoutIfNeeded()
+//        tableViewHeight.constant = tableView.contentSize.height
+        
+        fetchList(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
+    }
+    
+    func fetchList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let model):
+                DispatchQueue.main.async {
+                    self.districtList = (model as! DistrictListModel).districts?.rows
+                    self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
+                    self.tableView.reloadData()
+                    self.tableView.layoutIfNeeded()
+                    self.tableViewHeight.constant = self.tableView.contentSize.height
+                }
+            case .failure(let error):
+                print("Erorr \(error)")
+            }
+        }
+    }
+    
+    
+    @IBAction func forwardBtnAction(_ sender: Any) {
+        if isSelected == true{
+            Switcher.gotoTourInformationVC(delegate: self)
+        }
+    }
+    
+    @IBAction func backBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
 }
 
 extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return districtList?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier")!
+        let cell: TourAccomodatioCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! TourAccomodatioCell
+        cell.list = districtList?[indexPath.row]
         return cell
     }
     
@@ -42,7 +99,9 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoTourInformationVC(delegate: self)
+//        Switcher.gotoTourInformationVC(delegate: self)
+        isSelected = true
+        UserDefaults.standard.destination = districtList?[indexPath.row].title
     }
 }
 

@@ -11,17 +11,27 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
     //
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var bgImageView: UIImageView!
-    
+    @IBOutlet weak var selectedImgView: UIImageView!
+
     var experience: DistrictCategorory? {
         didSet {
             label.text = experience?.title
             bgImageView.sd_setImage(with: URL(string: Route.baseUrl + (experience?.icon ?? "")))
         }
     }
+    
+    
+    
+    override var isSelected: Bool{
+        didSet{
+            selectedImgView.isHidden = isSelected ? false : true
+        }
+    }
 }
 
 class ExperienceViewController: BaseViewController {
 
+    @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -31,7 +41,8 @@ class ExperienceViewController: BaseViewController {
     @IBOutlet weak var collectionViewHeigh: NSLayoutConstraint!
    
     var districtCategries: [DistrictCategorory]?
-    
+    var isSelected: Bool?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
@@ -57,6 +68,16 @@ class ExperienceViewController: BaseViewController {
             }
         }
     }
+    
+    @IBAction func forwardBtnAction(_ sender: Any) {
+        if isSelected == true{
+            Switcher.gotoTourDestinationVC(delegate: self)
+        }
+    }
+    @IBAction func backBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+
+    }
 }
 
 extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -71,7 +92,9 @@ extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoTourDestinationVC(delegate: self)
+//        Switcher.gotoTourDestinationVC(delegate: self)
+        isSelected = true
+        UserDefaults.standard.experience = districtCategries?[indexPath.row].title
     }
     
 }

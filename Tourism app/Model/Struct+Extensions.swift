@@ -56,3 +56,12 @@ enum galleryType: CaseIterable {
     case poi
 }
 //this is struct
+
+
+struct TourDetail {
+    let area: String?
+    let experience: String?
+    let destination: String?
+    let information: String?
+    let accomodation: String?
+}

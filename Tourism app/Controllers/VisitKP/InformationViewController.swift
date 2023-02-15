@@ -16,10 +16,12 @@ class InformationCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         checkImgView.image = selected ? UIImage(named: "check") : UIImage(named: "uncheck")
     }
+
 }
 
 class InformationViewController: BaseViewController {
 
+    @IBOutlet weak var forwardButton: UIButton!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -27,6 +29,9 @@ class InformationViewController: BaseViewController {
             tableView.dataSource = self
         }
     }
+    
+    var isSelected: Bool?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +44,13 @@ class InformationViewController: BaseViewController {
         tableViewHeight.constant = tableView.contentSize.height
     }
     
+    @IBAction func backBtnAction(_ sender: Any) {
+        Switcher.gotoTourInformationVC(delegate: self)
+    }
     @IBAction func moveForwardBtn(_ sender: Any) {
-        Switcher.gotoTourAccomodationVC(delegate: self)
+        if isSelected == true{
+            Switcher.gotoTourAccomodationVC(delegate: self)
+        }
     }
 }
 
@@ -61,5 +71,7 @@ extension InformationViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        Switcher.gotoTourAccomodationVC(delegate: self)
+        isSelected = true
+        UserDefaults.standard.information = Constants.traveleInformation[indexPath.row]
     }
 }

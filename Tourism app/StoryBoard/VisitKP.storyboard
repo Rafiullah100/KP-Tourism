@@ -65,7 +65,7 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What part of KP would you like visit ?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fah-hg-Due">
-                                                                                        <rect key="frame" x="47" y="14.333333333333341" width="299.33333333333326" height="21.333333333333329"/>
+                                                                                        <rect key="frame" x="47" y="14.333333333333341" width="299.33333333333331" height="21.333333333333329"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="18"/>
                                                                                         <color key="textColor" name="tabbar-tint"/>
                                                                                         <nil key="highlightedColor"/>
@@ -129,12 +129,20 @@
                                                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                     <nil key="highlightedColor"/>
                                                                                                                 </label>
+                                                                                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-mark-visit" translatesAutoresizingMaskIntoConstraints="NO" id="sJL-sj-XvE">
+                                                                                                                    <rect key="frame" x="293" y="10" width="30" height="30"/>
+                                                                                                                    <constraints>
+                                                                                                                        <constraint firstAttribute="height" constant="30" id="0A4-6O-me7"/>
+                                                                                                                        <constraint firstAttribute="width" constant="30" id="9n6-fi-vJd"/>
+                                                                                                                    </constraints>
+                                                                                                                </imageView>
                                                                                                             </subviews>
                                                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                             <constraints>
                                                                                                                 <constraint firstItem="lO3-Gy-kgR" firstAttribute="leading" secondItem="4a2-Qg-nWE" secondAttribute="leading" id="DUs-Av-yhO"/>
                                                                                                                 <constraint firstAttribute="trailing" secondItem="aWm-T9-zlt" secondAttribute="trailing" id="EjC-Tf-tM6"/>
                                                                                                                 <constraint firstItem="MDv-Wm-dTe" firstAttribute="leading" secondItem="yi5-jm-69Q" secondAttribute="trailing" constant="21.333333333333371" id="LiT-OD-Bh9"/>
+                                                                                                                <constraint firstItem="sJL-sj-XvE" firstAttribute="top" secondItem="4a2-Qg-nWE" secondAttribute="top" constant="10" id="N8T-lx-M90"/>
                                                                                                                 <constraint firstItem="MDv-Wm-dTe" firstAttribute="centerY" secondItem="yi5-jm-69Q" secondAttribute="centerY" id="YGH-YJ-h0s"/>
                                                                                                                 <constraint firstAttribute="trailing" secondItem="lO3-Gy-kgR" secondAttribute="trailing" id="YJi-W5-N4M"/>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="lO3-Gy-kgR" secondAttribute="bottom" id="aDm-nW-aCq"/>
@@ -142,6 +150,7 @@
                                                                                                                 <constraint firstItem="aWm-T9-zlt" firstAttribute="leading" secondItem="4a2-Qg-nWE" secondAttribute="leading" id="h1r-FQ-pw6"/>
                                                                                                                 <constraint firstItem="aWm-T9-zlt" firstAttribute="top" secondItem="4a2-Qg-nWE" secondAttribute="top" id="siw-jD-iAf"/>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="aWm-T9-zlt" secondAttribute="bottom" id="t94-9I-dIl"/>
+                                                                                                                <constraint firstAttribute="trailing" secondItem="sJL-sj-XvE" secondAttribute="trailing" constant="10" id="zPA-4C-q8S"/>
                                                                                                             </constraints>
                                                                                                         </view>
                                                                                                     </subviews>
@@ -156,6 +165,7 @@
                                                                                                     <outlet property="bgImageView" destination="aWm-T9-zlt" id="Mt4-Du-BUA"/>
                                                                                                     <outlet property="imgView" destination="yi5-jm-69Q" id="JFy-PZ-MPs"/>
                                                                                                     <outlet property="nameLabel" destination="MDv-Wm-dTe" id="7tZ-my-W7S"/>
+                                                                                                    <outlet property="selectedImgView" destination="sJL-sj-XvE" id="SCO-Pq-LL2"/>
                                                                                                 </connections>
                                                                                             </tableViewCell>
                                                                                         </prototypes>
@@ -180,6 +190,9 @@
                                                                                         </constraints>
                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                         <state key="normal" image="tour-forward"/>
+                                                                                        <connections>
+                                                                                            <action selector="forwardBtnAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="HbW-PN-gmW"/>
+                                                                                        </connections>
                                                                                     </button>
                                                                                 </subviews>
                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -357,11 +370,20 @@
                                                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                     <nil key="highlightedColor"/>
                                                                                                                 </label>
+                                                                                                                <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-mark-visit" translatesAutoresizingMaskIntoConstraints="NO" id="9kf-ws-q8P">
+                                                                                                                    <rect key="frame" x="135" y="10" width="25" height="25"/>
+                                                                                                                    <constraints>
+                                                                                                                        <constraint firstAttribute="height" constant="25" id="8Fd-tw-vLC"/>
+                                                                                                                        <constraint firstAttribute="width" constant="25" id="8HW-yW-usA"/>
+                                                                                                                    </constraints>
+                                                                                                                </imageView>
                                                                                                             </subviews>
                                                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                             <constraints>
                                                                                                                 <constraint firstItem="2Mu-Rg-gdC" firstAttribute="leading" secondItem="y1h-Ur-GK7" secondAttribute="leading" id="NiD-WP-DFd"/>
+                                                                                                                <constraint firstAttribute="trailing" secondItem="9kf-ws-q8P" secondAttribute="trailing" constant="10" id="R1S-DJ-W6C"/>
                                                                                                                 <constraint firstItem="NQI-U9-5DK" firstAttribute="leading" secondItem="y1h-Ur-GK7" secondAttribute="leading" id="Rs5-vo-c2G"/>
+                                                                                                                <constraint firstItem="9kf-ws-q8P" firstAttribute="top" secondItem="y1h-Ur-GK7" secondAttribute="top" constant="10" id="UFL-Gv-C0S"/>
                                                                                                                 <constraint firstItem="zav-vb-6dV" firstAttribute="centerX" secondItem="y1h-Ur-GK7" secondAttribute="centerX" id="Xwf-tw-Evo"/>
                                                                                                                 <constraint firstAttribute="trailing" secondItem="2Mu-Rg-gdC" secondAttribute="trailing" id="aJP-ca-N3h"/>
                                                                                                                 <constraint firstItem="NQI-U9-5DK" firstAttribute="top" secondItem="y1h-Ur-GK7" secondAttribute="top" id="aYo-ap-YBb"/>
@@ -388,6 +410,7 @@
                                                                                                 <connections>
                                                                                                     <outlet property="bgImageView" destination="2Mu-Rg-gdC" id="sYu-hU-Kdi"/>
                                                                                                     <outlet property="label" destination="zav-vb-6dV" id="2NA-h1-M4C"/>
+                                                                                                    <outlet property="selectedImgView" destination="9kf-ws-q8P" id="TPc-cf-cjY"/>
                                                                                                 </connections>
                                                                                             </collectionViewCell>
                                                                                         </cells>
@@ -411,11 +434,19 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="151.66666666666666" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-backward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="HOb-DZ-uHD"/>
+                                                                                                    <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="ocf-wr-h6f"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSP-1M-vYP">
                                                                                                 <rect key="frame" x="201.66666666666663" y="0.0" width="151.33333333333337" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-forward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="78k-wg-4gR"/>
+                                                                                                    <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="PoP-hJ-HJ1"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -483,9 +514,11 @@
                     <connections>
                         <outlet property="collectionView" destination="vgp-bc-lO7" id="y4g-1N-A0P"/>
                         <outlet property="collectionViewHeigh" destination="vg3-HB-7ZJ" id="GbD-xt-l5A"/>
+                        <outlet property="forwardButton" destination="YSP-1M-vYP" id="Mbw-mQ-CpV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aXC-Uc-2ea" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="3eK-kn-H91" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="35.877862595419849" y="-2.1126760563380285"/>
         </scene>
@@ -558,7 +591,7 @@
                                                                                             <constraint firstAttribute="height" constant="588" id="qf1-Vi-bmw"/>
                                                                                         </constraints>
                                                                                         <prototypes>
-                                                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cellIdentifier" rowHeight="230" id="Ijj-FS-HGw">
+                                                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="cellIdentifier" rowHeight="230" id="Ijj-FS-HGw" customClass="TourAccomodatioCell" customModule="Tourism_app" customModuleProvider="target">
                                                                                                 <rect key="frame" x="0.0" y="50" width="333" height="230"/>
                                                                                                 <autoresizingMask key="autoresizingMask"/>
                                                                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ijj-FS-HGw" id="lZo-wg-0uY">
@@ -570,6 +603,11 @@
                                                                                                             <subviews>
                                                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tour-destination" translatesAutoresizingMaskIntoConstraints="NO" id="M3W-F2-21y">
                                                                                                                     <rect key="frame" x="0.0" y="0.0" width="333" height="210"/>
+                                                                                                                    <userDefinedRuntimeAttributes>
+                                                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                                            <real key="value" value="15"/>
+                                                                                                                        </userDefinedRuntimeAttribute>
+                                                                                                                    </userDefinedRuntimeAttributes>
                                                                                                                 </imageView>
                                                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6RG-Sv-w4i">
                                                                                                                     <rect key="frame" x="13.333333333333332" y="177.66666666666666" width="35.666666666666671" height="19"/>
@@ -577,16 +615,30 @@
                                                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                     <nil key="highlightedColor"/>
                                                                                                                 </label>
+                                                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-mark-visit" translatesAutoresizingMaskIntoConstraints="NO" id="7f5-Gu-imy">
+                                                                                                                    <rect key="frame" x="298" y="10" width="25" height="25"/>
+                                                                                                                    <constraints>
+                                                                                                                        <constraint firstAttribute="width" constant="25" id="Y5U-Sp-dzj"/>
+                                                                                                                        <constraint firstAttribute="height" constant="25" id="udB-xJ-MP4"/>
+                                                                                                                    </constraints>
+                                                                                                                </imageView>
                                                                                                             </subviews>
                                                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                             <constraints>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="M3W-F2-21y" secondAttribute="bottom" id="6db-Bq-4wS"/>
                                                                                                                 <constraint firstAttribute="trailing" secondItem="M3W-F2-21y" secondAttribute="trailing" id="NwE-a5-gpR"/>
+                                                                                                                <constraint firstItem="7f5-Gu-imy" firstAttribute="top" secondItem="TMJ-4X-Oqs" secondAttribute="top" constant="10" id="Rdu-9l-iWN"/>
                                                                                                                 <constraint firstItem="6RG-Sv-w4i" firstAttribute="leading" secondItem="TMJ-4X-Oqs" secondAttribute="leading" constant="13.33" id="WUg-hT-9Ld"/>
                                                                                                                 <constraint firstItem="M3W-F2-21y" firstAttribute="top" secondItem="TMJ-4X-Oqs" secondAttribute="top" id="XIe-C5-D0c"/>
+                                                                                                                <constraint firstAttribute="trailing" secondItem="7f5-Gu-imy" secondAttribute="trailing" constant="10" id="cUE-Tp-Ce1"/>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="6RG-Sv-w4i" secondAttribute="bottom" constant="13.33" id="dK0-mX-uIf"/>
                                                                                                                 <constraint firstItem="M3W-F2-21y" firstAttribute="leading" secondItem="TMJ-4X-Oqs" secondAttribute="leading" id="zyW-k5-vjY"/>
                                                                                                             </constraints>
+                                                                                                            <userDefinedRuntimeAttributes>
+                                                                                                                <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                                    <real key="value" value="15"/>
+                                                                                                                </userDefinedRuntimeAttribute>
+                                                                                                            </userDefinedRuntimeAttributes>
                                                                                                         </view>
                                                                                                     </subviews>
                                                                                                     <constraints>
@@ -596,6 +648,11 @@
                                                                                                         <constraint firstItem="TMJ-4X-Oqs" firstAttribute="leading" secondItem="lZo-wg-0uY" secondAttribute="leading" id="tnk-2h-FeE"/>
                                                                                                     </constraints>
                                                                                                 </tableViewCellContentView>
+                                                                                                <connections>
+                                                                                                    <outlet property="imgView" destination="M3W-F2-21y" id="VpU-MW-Iow"/>
+                                                                                                    <outlet property="label" destination="6RG-Sv-w4i" id="Thy-dj-hMF"/>
+                                                                                                    <outlet property="selectedImgView" destination="7f5-Gu-imy" id="CvT-n2-H67"/>
+                                                                                                </connections>
                                                                                             </tableViewCell>
                                                                                         </prototypes>
                                                                                     </tableView>
@@ -618,11 +675,17 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-backward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="dG4-q4-wf9" eventType="touchUpInside" id="1Zn-vh-Myz"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8l-yQ-3bb">
                                                                                                 <rect key="frame" x="196.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-forward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="dG4-q4-wf9" eventType="touchUpInside" id="fxm-J5-eYZ"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -688,6 +751,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="forwardButton" destination="j8l-yQ-3bb" id="oWl-TO-AaD"/>
                         <outlet property="tableView" destination="f1a-lx-ZQq" id="5Z7-qB-meC"/>
                         <outlet property="tableViewHeight" destination="qf1-Vi-bmw" id="WV3-5I-cps"/>
                     </connections>
@@ -799,9 +863,17 @@
                                                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                     <nil key="highlightedColor"/>
                                                                                                                 </label>
+                                                                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="check-mark-visit" translatesAutoresizingMaskIntoConstraints="NO" id="G4P-ML-Ysv">
+                                                                                                                    <rect key="frame" x="258" y="10" width="25" height="25"/>
+                                                                                                                    <constraints>
+                                                                                                                        <constraint firstAttribute="width" constant="25" id="FFa-TU-LmI"/>
+                                                                                                                        <constraint firstAttribute="height" constant="25" id="wVU-L5-Ipt"/>
+                                                                                                                    </constraints>
+                                                                                                                </imageView>
                                                                                                             </subviews>
                                                                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                             <constraints>
+                                                                                                                <constraint firstAttribute="trailing" secondItem="G4P-ML-Ysv" secondAttribute="trailing" constant="10" id="ARz-Bt-VAl"/>
                                                                                                                 <constraint firstItem="7va-D9-JNE" firstAttribute="centerY" secondItem="ww5-8s-PMz" secondAttribute="centerY" id="HAI-xs-olL"/>
                                                                                                                 <constraint firstItem="MYi-F6-6Cv" firstAttribute="leading" secondItem="ww5-8s-PMz" secondAttribute="leading" id="JRt-o9-58Z"/>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="MYi-F6-6Cv" secondAttribute="bottom" id="QxH-eE-2gF"/>
@@ -812,6 +884,7 @@
                                                                                                                 <constraint firstItem="MYi-F6-6Cv" firstAttribute="top" secondItem="ww5-8s-PMz" secondAttribute="top" id="cCt-bB-Cw7"/>
                                                                                                                 <constraint firstItem="j9K-3D-Jtc" firstAttribute="leading" secondItem="ww5-8s-PMz" secondAttribute="leading" id="iX5-zE-G7b"/>
                                                                                                                 <constraint firstAttribute="bottom" secondItem="j9K-3D-Jtc" secondAttribute="bottom" id="tvN-C8-zXV"/>
+                                                                                                                <constraint firstItem="G4P-ML-Ysv" firstAttribute="top" secondItem="ww5-8s-PMz" secondAttribute="top" constant="10" id="v5w-36-7jV"/>
                                                                                                             </constraints>
                                                                                                         </view>
                                                                                                     </subviews>
@@ -825,6 +898,7 @@
                                                                                                 <connections>
                                                                                                     <outlet property="imgView" destination="j9K-3D-Jtc" id="z5N-Tk-Y1D"/>
                                                                                                     <outlet property="label" destination="7va-D9-JNE" id="Pmn-hi-Rsb"/>
+                                                                                                    <outlet property="selectedImgView" destination="G4P-ML-Ysv" id="I72-bI-KHY"/>
                                                                                                 </connections>
                                                                                             </tableViewCell>
                                                                                         </prototypes>
@@ -848,11 +922,17 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-backward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="giu-9b-A4m" eventType="touchUpInside" id="GSu-1d-Say"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGC-Se-Xvu">
                                                                                                 <rect key="frame" x="196.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-forward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="giu-9b-A4m" eventType="touchUpInside" id="Ucf-UQ-CPe"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                         </subviews>
                                                                                     </stackView>
@@ -918,6 +998,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="forwardButton" destination="MGC-Se-Xvu" id="IzZ-Ec-AB6"/>
                         <outlet property="tableView" destination="Hm0-1n-joo" id="UQ7-3t-z6z"/>
                         <outlet property="tableViewHeight" destination="frf-Dg-yD8" id="b7w-hc-Eye"/>
                     </connections>
@@ -1031,6 +1112,9 @@
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="tour-backward"/>
+                                <connections>
+                                    <action selector="backBtnAction:" destination="iSW-rM-AbD" eventType="touchUpInside" id="RZH-Rc-1W9"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fUw-wb-WZb"/>
@@ -1211,6 +1295,9 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="171.66666666666666" height="40"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="tour-backward"/>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="BSd-sd-VA4" eventType="touchUpInside" id="nLe-0B-T3V"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4t-Lj-mc1">
                                                                                                 <rect key="frame" x="221.66666666666663" y="0.0" width="171.33333333333337" height="40"/>
@@ -1284,6 +1371,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="forwardButton" destination="K4t-Lj-mc1" id="z8d-MQ-hk5"/>
                         <outlet property="tableView" destination="RUI-hQ-igW" id="JaK-mQ-ybY"/>
                         <outlet property="tableViewHeight" destination="jQZ-fY-HkN" id="zzv-UV-LQw"/>
                     </connections>
@@ -1329,7 +1417,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
-                                        <color key="backgroundColor" name="tabbar-tint"/>
+                                        <color key="backgroundColor" red="0.63921568627450975" green="0.63529411764705879" blue="0.63529411764705879" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="0Jd-oi-eg3"/>
                                             <constraint firstItem="Fw6-v4-cYA" firstAttribute="leading" secondItem="JVT-Iw-DR0" secondAttribute="leading" constant="10" id="AfH-aY-zEZ"/>
@@ -1420,6 +1508,7 @@
     <resources>
         <image name="Mask Group 15" width="1077" height="843"/>
         <image name="River" width="169" height="148"/>
+        <image name="check-mark-visit" width="170.66667175292969" height="170.66667175292969"/>
         <image name="north" width="462" height="577"/>
         <image name="north-visit" width="852" height="483"/>
         <image name="tour-acc-bg" width="719" height="627"/>

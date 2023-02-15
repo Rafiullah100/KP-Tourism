@@ -125,7 +125,6 @@ extension UIView {
             self.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: offset.right).isActive = true
         }
     }
-    
 }
 
 extension UIColor{

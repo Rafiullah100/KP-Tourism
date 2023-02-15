@@ -141,6 +141,8 @@ class WeatherAlertViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.districtList = (model as! DistrictListModel).districts?.rows
                     self.pickerView.reloadAllComponents()
+                    UserDefaults.standard.districtKey = self.districtList?[0].mapbox_location_key
+                    self.dropDownLabel.text = self.districtList?[0].title
                     self.serverCall(type: .WeatherTableViewCell)
                 }
             case .failure(let error):
@@ -177,6 +179,7 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
            return UITableViewCell()
         }
     }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch cellType {
         case .WeatherTableViewCell:
@@ -203,13 +206,12 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
         UserDefaults.standard.districtKey = self.districtList?[row].mapbox_location_key
+        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
         dropDownLabel.text = self.districtList?[row].title
     }
 }
 
 extension WeatherAlertViewController: UITextFieldDelegate{
-
     
 }

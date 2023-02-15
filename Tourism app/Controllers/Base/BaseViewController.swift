@@ -185,7 +185,7 @@ class BaseViewController: UIViewController {
     
     func backToHome() {
         let button = UIButton.init(type: .custom)
-        button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(backToParent), for: .touchUpInside)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 10, height: 30))
         imageView.image = UIImage(named: "visit-back")
         imageView.contentMode = .scaleAspectFit
@@ -200,6 +200,15 @@ class BaseViewController: UIViewController {
         buttonView.addSubview(label)
         let barButton = UIBarButtonItem.init(customView: buttonView)
         self.navigationItem.leftBarButtonItem = barButton
+    }
+    
+    @objc func backToParent() {
+        for controller in self.navigationController!.viewControllers as Array {
+            if controller.isKind(of: HomeViewController.self) {
+                self.navigationController!.popToViewController(controller, animated: true)
+                break
+            }
+        }
     }
 
     func addBackButton() {

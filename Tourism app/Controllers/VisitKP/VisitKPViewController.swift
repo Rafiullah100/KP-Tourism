@@ -12,6 +12,7 @@ class AreaTableViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
+    @IBOutlet weak var selectedImgView: UIImageView!
     @IBOutlet weak var bgImageView: UIImageView!
     var area: VisitArea? {
         didSet {
@@ -20,6 +21,12 @@ class AreaTableViewCell: UITableViewCell {
             bgImageView.image = UIImage(named: area?.background ?? "")
         }
     }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedImgView.isHidden = selected ? false : true
+    }
+
 }
 
 class VisitKPViewController: BaseViewController {
@@ -31,6 +38,9 @@ class VisitKPViewController: BaseViewController {
             tableView.dataSource = self
         }
     }
+    
+    var isSelected: Bool?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -41,6 +51,12 @@ class VisitKPViewController: BaseViewController {
         tableView.reloadData()
         tableView.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
+    }
+    
+    @IBAction func forwardBtnAction(_ sender: Any) {
+        if isSelected == true{
+            Switcher.gotoVisitExpVC(delegate: self)
+        }
     }
 }
 
@@ -59,7 +75,9 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoVisitExpVC(delegate: self)
+//        Switcher.gotoVisitExpVC(delegate: self)
+        isSelected = true
+        UserDefaults.standard.area = Constants.visitkpArray[indexPath.row].title
     }
 }
 

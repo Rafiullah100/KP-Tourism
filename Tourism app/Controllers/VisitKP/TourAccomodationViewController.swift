@@ -11,11 +11,18 @@ class TravelAccomodation: UITableViewCell {
     //
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var selectedImgView: UIImageView!
     
-    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedImgView.isHidden = selected ? false : true
+    }
 }
 
 class TourAccomodationViewController: BaseViewController {
+  
+    @IBOutlet weak var forwardButton: UIButton!
+    
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -23,6 +30,8 @@ class TourAccomodationViewController: BaseViewController {
             tableView.dataSource = self
         }
     }
+    var isSelected: Bool?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +42,16 @@ class TourAccomodationViewController: BaseViewController {
         tableView.reloadData()
         tableView.layoutIfNeeded()
         tableViewHeight.constant = tableView.contentSize.height
+    }
+    
+    @IBAction func forwardBtnAction(_ sender: Any) {
+        if isSelected == true{
+            Switcher.gotoTourpdfVC(delegate: self)
+        }
+    }
+    
+    @IBAction func backBtnAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -53,7 +72,9 @@ extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoTourpdfVC(delegate: self)
+//        Switcher.gotoTourpdfVC(delegate: self)
+        isSelected = true
+        UserDefaults.standard.accomodation = Constants.traveleAccomodation[indexPath.row].title
     }
 }
 

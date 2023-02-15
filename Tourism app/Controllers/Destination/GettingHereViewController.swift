@@ -41,7 +41,7 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-
+        travel = .textual
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
@@ -55,18 +55,29 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     override func show(_ vc: UIViewController, sender: Any?) {
-        let vc: TravelViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "TravelViewController") as! TravelViewController
-        vc.gettingArray = gettingHere?.gettingHeres
-        add(vc, in: containerView)
+        switch travel {
+        case .textual:
+            let vc: TravelViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "TravelViewController") as! TravelViewController
+            vc.gettingArray = gettingHere?.gettingHeres
+            add(vc, in: containerView)
+        case .navigation:
+            let vc: NavigationViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "NavigationViewController") as! NavigationViewController
+//            vc.gettingArray = gettingHere?.gettingHeres
+            add(vc, in: containerView)
+        default:
+            break
+        }
     }
 
 //    }
     
     @IBAction func textualButtonAction(_ sender: Any) {
+        travel = .textual
         show(travelVC, sender: self)
     }
     
     @IBAction func mapBtnAction(_ sender: Any) {
+        travel = .navigation
         show(navigationVC, sender: self)
     }
     

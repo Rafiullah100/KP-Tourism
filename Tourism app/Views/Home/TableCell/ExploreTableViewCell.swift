@@ -31,7 +31,7 @@ class ExploreTableViewCell: UITableViewCell {
             imageSDWebImageSrc = []
             DispatchQueue.main.async {
                 self.district?.attractions.forEach({ attration in
-                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage ))
+                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage))
                     if let sdURL = imageUrl{
                         self.imageSDWebImageSrc.append(sdURL)
                         self.slideShow.slideshowInterval = 2.0

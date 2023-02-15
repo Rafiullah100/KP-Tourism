@@ -9,6 +9,9 @@ import Foundation
 import UIKit
 import Firebase
 struct Constants {
+        
+    static let tourDetail = TourDetail(area: "", experience: "", destination: "", information: "", accomodation: "")
+    
     static let deviceType = "iOS"
     static let appColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
     
@@ -17,7 +20,7 @@ struct Constants {
     
     static var googleMapApiKey = "AIzaSyBC2Xdb2ato7ULwuGnDjPLXLAvqUZx_1VM"
     
-    static var weatherApiKey = "YxA9P1FHvaurvZAk0kAc7d7utlJWGR97"
+    static var weatherApiKey = "Nx8fVetx3yB9xfvSAql3kICyQFTU1hHK"
     
     static var clientID = FirebaseApp.app()?.options.clientID
     
