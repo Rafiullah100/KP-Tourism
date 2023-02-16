@@ -53,8 +53,8 @@ class ProfileViewController: UIViewController {
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
         tabbarView.isScrollEnabled = false
-        tabbarView.setTitleFont(UIFont(name: "Roboto-Medium", size: 15.0), for: .normal)
-        tabbarView.setTitleFont(UIFont(name: "Roboto-Medium", size: 15.0), for: .selected)
+        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .normal)
+        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
         tabbarView.setTitleColor(.lightGray, for: .normal)
         tabbarView.setTitleColor(.black, for: .selected)
 //        tabbarView.tabBarDelegate = self

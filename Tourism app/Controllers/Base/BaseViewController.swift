@@ -164,8 +164,8 @@ class BaseViewController: UIViewController {
         imageView.image = UIImage(named: "Back")
         let label = UILabel(frame: CGRect(x: 35, y: 0, width: 250, height: 30))
         let stringArray = viewControllerTitle?.split(separator: "|")
-        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Medium", size: 18) ?? UIFont()]
-        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Roboto-Light", size: 10) ?? UIFont()]
+        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Medium", size: 18) ?? UIFont()]
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()]
         let firstString = NSMutableAttributedString(string: String(stringArray?[0] ?? ""), attributes: firstAttributes)
         var secondString = NSAttributedString("")
         if stringArray?.count ?? 0 > 1{

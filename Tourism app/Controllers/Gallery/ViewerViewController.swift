@@ -8,13 +8,27 @@
 import UIKit
 import AVFoundation
 import AVKit
-class ViewerCell: UICollectionViewCell {
-    
+class ViewerCell: UICollectionViewCell, UIScrollViewDelegate {
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgView: UIImageView!
+    
+    var value: Int?{
+        didSet{
+           scrollView.minimumZoomScale = 1.0
+           scrollView.maximumZoomScale = 5.0
+           scrollView.delegate = self
+        }
+    }
+    
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+            return imgView
+    }
 }
 
-class ViewerViewController: UIViewController {
+class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
+   
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -27,7 +41,7 @@ class ViewerViewController: UIViewController {
     var position: IndexPath?
     
     var galleryType: galleryType?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -37,6 +51,7 @@ class ViewerViewController: UIViewController {
         collectionView.scrollToItem(at: position ?? IndexPath(), at: [.left], animated: false)
         collectionView.reloadData()
     }
+
 }
 
 extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -53,10 +68,13 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ViewerCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! ViewerCell
+        
         switch galleryType {
         case .gallery:
+            cell.value = indexPath.row
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .poi:
+            cell.value = indexPath.row
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiGallery?[indexPath.row].imageURL ?? "")))
         default:
             return cell

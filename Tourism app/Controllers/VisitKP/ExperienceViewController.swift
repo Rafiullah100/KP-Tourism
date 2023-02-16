@@ -20,8 +20,6 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    
-    
     override var isSelected: Bool{
         didSet{
             selectedImgView.isHidden = isSelected ? false : true

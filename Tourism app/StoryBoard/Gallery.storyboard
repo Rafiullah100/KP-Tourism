@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Poppins-Medium.ttf">
+            <string>Poppins-Medium</string>
+        </array>
         <array key="Roboto-Medium.ttf">
             <string>Roboto-Medium</string>
         </array>
@@ -406,15 +409,28 @@
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GdX-cv-23N">
                                                             <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qMg-Hy-1kC">
+                                                                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xmh-RH-QN8">
                                                                     <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
-                                                                </imageView>
+                                                                    <subviews>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swat" translatesAutoresizingMaskIntoConstraints="NO" id="qMg-Hy-1kC">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="812"/>
+                                                                        </imageView>
+                                                                    </subviews>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="bottom" secondItem="qMg-Hy-1kC" secondAttribute="bottom" id="18a-au-PYR"/>
+                                                                        <constraint firstItem="qMg-Hy-1kC" firstAttribute="width" secondItem="Xmh-RH-QN8" secondAttribute="width" id="1az-GL-kw5"/>
+                                                                        <constraint firstItem="qMg-Hy-1kC" firstAttribute="top" secondItem="Xmh-RH-QN8" secondAttribute="top" id="6kH-hH-Sb5"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="qMg-Hy-1kC" secondAttribute="trailing" id="Adm-SA-Opi"/>
+                                                                        <constraint firstItem="qMg-Hy-1kC" firstAttribute="height" secondItem="Xmh-RH-QN8" secondAttribute="height" id="mYF-uR-fY3"/>
+                                                                        <constraint firstItem="qMg-Hy-1kC" firstAttribute="leading" secondItem="Xmh-RH-QN8" secondAttribute="leading" id="x4j-ml-9VI"/>
+                                                                    </constraints>
+                                                                </scrollView>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="bottom" secondItem="qMg-Hy-1kC" secondAttribute="bottom" id="2Ac-b8-AN1"/>
-                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="leading" secondItem="GdX-cv-23N" secondAttribute="leading" id="Jdc-SS-8wI"/>
-                                                                <constraint firstItem="qMg-Hy-1kC" firstAttribute="top" secondItem="GdX-cv-23N" secondAttribute="top" id="cHt-Bs-4MW"/>
-                                                                <constraint firstAttribute="trailing" secondItem="qMg-Hy-1kC" secondAttribute="trailing" id="y3R-x2-xw1"/>
+                                                                <constraint firstItem="Xmh-RH-QN8" firstAttribute="leading" secondItem="GdX-cv-23N" secondAttribute="leading" id="EA0-ks-ZTH"/>
+                                                                <constraint firstItem="Xmh-RH-QN8" firstAttribute="top" secondItem="GdX-cv-23N" secondAttribute="top" id="iPj-ww-NBp"/>
+                                                                <constraint firstAttribute="trailing" secondItem="Xmh-RH-QN8" secondAttribute="trailing" id="t9H-ig-x2K"/>
+                                                                <constraint firstAttribute="bottom" secondItem="Xmh-RH-QN8" secondAttribute="bottom" id="zSt-h5-P0o"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -428,6 +444,7 @@
                                                 <size key="customSize" width="414" height="812"/>
                                                 <connections>
                                                     <outlet property="imgView" destination="qMg-Hy-1kC" id="QXw-hc-dcL"/>
+                                                    <outlet property="scrollView" destination="Xmh-RH-QN8" id="O6Y-Yi-bcl"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
@@ -488,7 +505,7 @@
                                                                 </constraints>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="90 Attraction sites" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UWE-Es-Djh">
-                                                                <rect key="frame" x="143.5" y="30" width="99.5" height="14.5"/>
+                                                                <rect key="frame" x="144.5" y="30" width="97.5" height="14"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="12"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -559,7 +576,7 @@
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Images" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zup-Af-2Fq">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="369" height="15.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -637,7 +654,7 @@
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Videos" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DPj-EI-ge6">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="369" height="15.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -715,7 +732,7 @@
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Virtual Tours" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8jL-I5-1Cx">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="369" height="15.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
+                                                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
@@ -826,6 +843,7 @@
         <image name="arrow-forward" width="17" height="10"/>
         <image name="gallery-image" width="15" height="15"/>
         <image name="placeholder" width="1000" height="624"/>
+        <image name="swat" width="1104" height="936"/>
         <image name="unfavorite" width="22" height="21"/>
         <image name="video-icon" width="14" height="14"/>
         <systemColor name="opaqueSeparatorColor">

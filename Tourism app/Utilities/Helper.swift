@@ -73,4 +73,12 @@ class Helper{
         guard let rootViewController = window?.rootViewController else { return UIViewController() }
         return rootViewController
     }
+    
+//    public func gradient(view: UIView){
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = view.bounds
+//        gradientLayer.colors = [UIColor(hex: "327425"), UIColor(hex: "084F24")]
+//        view.layer.addSubview(gradientLayer)
+//    }
 }
+

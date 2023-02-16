@@ -29,7 +29,6 @@ class WeatherTableViewCell: UITableViewCell {
             
             let stringArray = dailyForecast?.date?.split(separator: "T")
             dateLabel.text = "\(stringArray?[0] ?? "")"
-
         }
     }
     

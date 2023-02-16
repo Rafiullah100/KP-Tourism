@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class EventDetailViewController: BaseViewController {
 
+    @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titLabel: UILabel!
     @IBOutlet weak var eventTypeLabel: UILabel!
@@ -39,10 +40,18 @@ class EventDetailViewController: BaseViewController {
         else{
             statusView.backgroundColor = Constants.appColor
         }
+        
+//        setGradientBackground()
         favoriteBtn.setImage(eventDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
-
         view.bringSubviewToFront(statusView)
     }
+    
+//    func setGradientBackground() {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.statusBarView.bounds
+//        gradientLayer.colors = [UIColor(hex: "#084F24").cgColor, UIColor(hex: "#327425").cgColor]
+//        self.statusBarView.layer.insertSublayer(gradientLayer, at: 1)
+//    }
     
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: eventDetail?.eventDescription ?? "", image: imageView.image ?? UIImage())

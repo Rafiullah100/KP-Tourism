@@ -125,6 +125,13 @@ extension UIView {
             self.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: offset.right).isActive = true
         }
     }
+    
+    func gradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.bounds
+        gradientLayer.colors = [UIColor(hex: "#327425"), UIColor(hex: "#084F24")]
+        self.layer.addSublayer(gradientLayer)
+    }
 }
 
 extension UIColor{
@@ -167,6 +174,8 @@ extension UIColor{
             }
         self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(50) / 255)
         }
+    
+    
 }
 
 
@@ -290,9 +299,9 @@ public extension UITableView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Roboto-Medium", size: 18)
+        titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
         messageLabel.textColor = UIColor.black
-        messageLabel.font = UIFont(name: "Roboto-Light", size: 16)
+        messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
         titleLabel.text = "No Data!"
         messageLabel.text = ""
         messageLabel.numberOfLines = 0
@@ -326,9 +335,9 @@ public extension UITableView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Roboto-Medium", size: 16)
+        titleLabel.font = UIFont(name: "Poppins-Medium", size: 16)
         messageLabel.textColor = UIColor.black
-        messageLabel.font = UIFont(name: "Roboto-Light", size: 14)
+        messageLabel.font = UIFont(name: "Poppins-Light", size: 14)
         titleLabel.text = "No Internet"
         messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."
         messageLabel.numberOfLines = 0
@@ -440,9 +449,9 @@ extension UICollectionView{
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Roboto-Medium", size: 18)
+        titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
         messageLabel.textColor = UIColor.black
-        messageLabel.font = UIFont(name: "Roboto-Light", size: 16)
+        messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
         titleLabel.text = "No Data!"
         messageLabel.text = ""
         messageLabel.numberOfLines = 0
@@ -476,9 +485,9 @@ extension UICollectionView{
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Roboto-Medium", size: 16)
+        titleLabel.font = UIFont(name: "Poppins-Medium", size: 16)
         messageLabel.textColor = UIColor.black
-        messageLabel.font = UIFont(name: "Roboto-Light", size: 14)
+        messageLabel.font = UIFont(name: "Poppins-Light", size: 14)
         titleLabel.text = "No Internet"
         messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."
         messageLabel.numberOfLines = 0
