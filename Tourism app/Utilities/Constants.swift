@@ -24,6 +24,8 @@ struct Constants {
     
     static var clientID = FirebaseApp.app()?.options.clientID
     
+    static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"
+    
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
     static let blackishGrayColor = #colorLiteral(red: 0.6039215686, green: 0.6039215686, blue: 0.6039215686, alpha: 1)

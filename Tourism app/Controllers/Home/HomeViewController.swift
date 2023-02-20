@@ -114,7 +114,6 @@ class HomeViewController: BaseViewController {
                         self.totalCount = (explore as? ProductModel)?.count ?? 0
                     }
                     self.tableView.reloadData()
-                    self.show(self.mapVC, sender: self)
                 }
             case .failure(let error):
                 if error == .noInternet {
@@ -126,7 +125,7 @@ class HomeViewController: BaseViewController {
 
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
-        vc.exploreDistrict = (model as? ExploreModel)?.attractions
+        vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = (model as? AttractionModel)?.attractions?.rows
         add(vc, in: mapContainerView)
     }

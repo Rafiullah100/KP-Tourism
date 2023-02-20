@@ -2,11 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -35,6 +30,13 @@
 		<string>fbapi</string>
 		<string>fb-messenger-share-api</string>
 	</array>
+	<key>MBXAccessToken</key>
+	<string>sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ</string>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Poppins-Light.ttf</string>
@@ -42,6 +44,17 @@
 		<string>Poppins-Medium.ttf</string>
 		<string>Poppins-SemiBold.ttf</string>
 		<string>Poppins-Black.ttf</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Your precise location is used to calculate turn-by-turn directions, show your location on the map, and help improve the map.</string>
+	<key>NSLocationTemporaryUsageDescriptionDictionary</key>
+	<dict>
+		<key>LocationAccuracyAuthorizationDescription</key>
+		<string>Please enable precise location. Turn-by-turn directions only work when precise location data is available.</string>
+	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
@@ -62,7 +75,5 @@
 			</array>
 		</dict>
 	</dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
 </dict>
 </plist>

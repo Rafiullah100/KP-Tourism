@@ -114,6 +114,31 @@ PODS:
     - ImageSlideshow/Core
     - SDWebImage (>= 3.7)
   - IQKeyboardManager (6.5.11)
+  - MapboxCommon (23.3.1)
+  - MapboxCoreMaps (10.11.1):
+    - MapboxCommon (~> 23.3)
+  - MapboxCoreNavigation (2.10.0):
+    - MapboxDirections (~> 2.9.1)
+    - MapboxMobileEvents (~> 1.0)
+    - MapboxNavigationNative (~> 123.2)
+  - MapboxDirections (2.9.1):
+    - Polyline (~> 5.0)
+    - Turf (~> 2.6.1)
+  - MapboxMaps (10.11.0):
+    - MapboxCommon (= 23.3.1)
+    - MapboxCoreMaps (= 10.11.1)
+    - MapboxMobileEvents (= 1.0.10)
+    - Turf (~> 2.0)
+  - MapboxMobileEvents (1.0.10)
+  - MapboxNavigation (2.10.0):
+    - MapboxCoreNavigation (= 2.10.0)
+    - MapboxMaps (~> 10.10)
+    - MapboxMobileEvents (~> 1.0)
+    - MapboxSpeech (~> 2.0)
+    - Solar-dev (~> 3.0)
+  - MapboxNavigationNative (123.3.1):
+    - MapboxCommon (~> 23.2)
+  - MapboxSpeech (2.1.1)
   - MaterialComponents/AnimationTiming (124.2.0)
   - MaterialComponents/Availability (124.2.0)
   - MaterialComponents/private/Color (124.2.0):
@@ -135,14 +160,17 @@ PODS:
     - nanopb/encode (= 2.30909.0)
   - nanopb/decode (2.30909.0)
   - nanopb/encode (2.30909.0)
+  - Polyline (5.1.0)
   - PromisesObjC (2.1.1)
   - SDWebImage (5.15.0):
     - SDWebImage/Core (= 5.15.0)
   - SDWebImage/Core (5.15.0)
+  - Solar-dev (3.0.1)
   - SVProgressHUD (2.2.5)
   - SwiftGifOrigin (1.7.0)
   - TabbedPageView (0.2.7)
   - Toast-Swift (5.0.1)
+  - Turf (2.6.1)
   - UBottomSheet (1.0.10)
 
 DEPENDENCIES:
@@ -155,6 +183,8 @@ DEPENDENCIES:
   - GoogleSignIn
   - ImageSlideshow/SDWebImage
   - IQKeyboardManager
+  - MapboxMaps (= 10.11.0)
+  - MapboxNavigation (~> 2.9)
   - "MaterialComponents/Tabs+TabBarView"
   - SVProgressHUD
   - SwiftGifOrigin
@@ -185,15 +215,27 @@ SPEC REPOS:
     - GTMSessionFetcher
     - ImageSlideshow
     - IQKeyboardManager
+    - MapboxCommon
+    - MapboxCoreMaps
+    - MapboxCoreNavigation
+    - MapboxDirections
+    - MapboxMaps
+    - MapboxMobileEvents
+    - MapboxNavigation
+    - MapboxNavigationNative
+    - MapboxSpeech
     - MaterialComponents
     - MDFInternationalization
     - nanopb
+    - Polyline
     - PromisesObjC
     - SDWebImage
+    - Solar-dev
     - SVProgressHUD
     - SwiftGifOrigin
     - TabbedPageView
     - Toast-Swift
+    - Turf
     - UBottomSheet
 
 SPEC CHECKSUMS:
@@ -218,17 +260,29 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: c9e714f7eec91a55641e2bab9f45fd83a219b882
   ImageSlideshow: be305b54eaf2b2cfc7a7141c7c734605d44dc07d
   IQKeyboardManager: ef43ce1ba1e5aaf4adf222c0a46f39761f246879
+  MapboxCommon: 762407ce0c8353d9b9a0d0b72f9dc1c30d1dc904
+  MapboxCoreMaps: 03e7214fabb54d496ff56314ff8159dd264b6093
+  MapboxCoreNavigation: 2934eedbdee8637c84b8c418ecde5eb32d710ec2
+  MapboxDirections: 7bc4a887fd214052c7df5a5ed3f87ea4cbe37e54
+  MapboxMaps: 7981622c06558adbabbe1c7543ba4d18d26ecb23
+  MapboxMobileEvents: de50b3a4de180dd129c326e09cd12c8adaaa46d6
+  MapboxNavigation: e5e91d7dd4c79b151417074575f76647062f78b3
+  MapboxNavigationNative: d6da5a4928e5a134bcac26fda9bc2a41e4d0494d
+  MapboxSpeech: cd25ef99c3a3d2e0da72620ff558276ea5991a77
   MaterialComponents: 1a9b2d9d45b1601ae544de85089adc4c464306d4
   MDFInternationalization: d697c55307816222a55685c4ccb1044ffb030c12
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
+  Polyline: 2a1f29f87f8d9b7de868940f4f76deb8c678a5b1
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SDWebImage: 9bec4c5cdd9579e1f57104735ee0c37df274d593
+  Solar-dev: 4612dc9878b9fed2667d23b327f1d4e54e16e8d0
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   SwiftGifOrigin: fbd6cf37afcfcf97a5c3db996ddc0492e5c5c145
   TabbedPageView: a7455be8df9a9c23fae07d6cef55fbbe88fbc73f
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
+  Turf: 469ce2c3d22e5e8e4818d5a3b254699a5c89efa4
   UBottomSheet: a40ddcad489bb6d5f6171ffa96f161e558fcfaf0
 
-PODFILE CHECKSUM: d130fd0f56f102617f7e2e0e16d57a1db86bc082
+PODFILE CHECKSUM: 466aa7708ec964e3b26c0b2074a67cd2f1c3a65a
 
 COCOAPODS: 1.11.3

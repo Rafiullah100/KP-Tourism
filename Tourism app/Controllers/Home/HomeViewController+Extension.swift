@@ -104,6 +104,7 @@ extension HomeViewController{
                     self.mapButton.isHidden = false
                     self.contentView.frame.origin.y = 0
                 case .collapsed:
+                    self.show(self.mapVC, sender: self)
                     self.mapButton.isHidden = true
                     self.contentView.frame.origin.y = self.contentView.frame.height - self.cardHandleAreaHeight
                 }

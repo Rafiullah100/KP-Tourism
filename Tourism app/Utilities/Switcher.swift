@@ -64,7 +64,7 @@ class Switcher {
     }
     
     static func goToNavigation(delegate: UIViewController, locationCategory: LocationCategory){
-        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "NavigationViewController") as! NavigationViewController
+        let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GettingHereMapViewController") as! GettingHereMapViewController
         vc.locationCategory = locationCategory
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)

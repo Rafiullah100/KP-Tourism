@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import GoogleMaps
+import MapboxMaps
 
 class ExploreMapViewController: UIViewController {
 
@@ -14,60 +14,71 @@ class ExploreMapViewController: UIViewController {
     var attractionDistrict: [AttractionsDistrict]?
     var eventDistrict: [EventListModel]?
 
+    var mapView: MapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMap()
     }
     
     private func loadMap(){
-        let camera = GMSCameraPosition.camera(withLatitude: 35.2227, longitude: 72.4258, zoom: 7.0)
-        let mapView = GMSMapView.map(withFrame: view.frame, camera: camera)
-        mapView.delegate = self
-        view.addSubview(mapView)
-    
+        let myResourceOptions = ResourceOptions(accessToken: Constants.mapboxSecretKey)
+        let myMapInitOptions = MapInitOptions(resourceOptions: myResourceOptions)
+        mapView = MapView(frame: view.bounds, mapInitOptions: myMapInitOptions)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//        mapView.delegate = self
+
+        mapView.location.delegate = self
+        mapView.location.options.activityType = .other
+        mapView.location.options.puckType = .puck2D()
+        mapView.location.locationProvider.startUpdatingLocation()
+        mapView.mapboxMap.onNext(event: .mapLoaded) { [self]_ in
+            self.locationUpdate(newLocation: mapView.location.latestLocation!)
+        }
+        self.view.addSubview(mapView)
+        print(exploreDistrict?.count ?? 0)
         //explore
         exploreDistrict?.forEach({ district in
-            let marker = GMSMarker()
-            guard let latitude = Double(district.latitude ), let longitude = Double(district.longitude ) else { return }
-            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
-            marker.userData = district.id
-            marker.title = district.title
-            marker.snippet = district.title
-            marker.map = mapView
+            guard let lat = Double(district.latitude), let lon = Double(district.longitude)  else { return }
+            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
+            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage() , name: "marker")
+            pointAnnotation.iconAnchor = .bottom
+            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
+            pointAnnotationManager.annotations = [pointAnnotation]
         })
         
         //attractions
         attractionDistrict?.forEach({ district in
-            let marker = GMSMarker()
-            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
-            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
-            marker.userData = district.id
-            marker.map = mapView
+            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
+            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
+            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage(), name: "marker")
+            pointAnnotation.iconAnchor = .bottom
+            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
+            pointAnnotationManager.annotations = [pointAnnotation]
         })
         
         //events
         eventDistrict?.forEach({ district in
-            let marker = GMSMarker()
-            guard let latitude = Double(district.latitude ?? ""), let longitude = Double(district.longitude ?? "") else { return }
-            marker.position = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            marker.iconView = UIImageView(image: UIImage(named: "marker")!.withRenderingMode(.alwaysOriginal))
-            marker.userData = district.id
-            marker.map = mapView
+            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
+            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
+            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage(), name: "marker")
+            pointAnnotation.iconAnchor = .bottom
+            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
+            pointAnnotationManager.annotations = [pointAnnotation]
         })
     }
 }
 
-extension ExploreMapViewController: GMSMapViewDelegate{
+extension ExploreMapViewController: LocationPermissionsDelegate, LocationConsumer {
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print(marker.userData ?? 0)
-        mapView.selectedMarker = marker
-        return true
-    }
-    
-    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        return UIView()
+    func locationUpdate(newLocation: Location) {
+        mapView.camera.fly(to: CameraOptions(center: newLocation.coordinate, zoom: 7.0), duration: 2.0)
     }
 }
+
+//extension ExploreMapViewController: MGLMapViewDelegate{
+//    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+//
+//    }
+//}
+

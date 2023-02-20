@@ -24,4 +24,8 @@ pod 'FBSDKLoginKit'
 pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'GoogleSignIn'
+pod 'MapboxMaps', '10.11.0'
+pod 'MapboxNavigation', '~> 2.9'
+#pod 'Mapbox-iOS-SDK', '~> 4.9'
+
 end

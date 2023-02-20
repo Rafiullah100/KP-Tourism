@@ -68,6 +68,8 @@ class DestinationDetailViewController: BaseViewController {
         self.add(attractionVC, in: contentView)
     }
 
+    @IBAction func getDirectionBtnAction(_ sender: Any) {
+    }
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

@@ -34,7 +34,6 @@ class POIDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(poiDetail?.poiGalleries)
         type = .back1
         descriptionLabel.text = poiDetail?.description.stripOutHtml()
         placeLabel.text = poiDetail?.locationTitle
