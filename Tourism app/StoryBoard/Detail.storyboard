@@ -130,10 +130,21 @@
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QjQ-sg-gFf">
+                                                                <rect key="frame" x="0.0" y="0.0" width="121.66666666666667" height="50"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <connections>
+                                                                    <action selector="directionBtnAction:" destination="W5W-uT-gMT" eventType="touchUpInside" id="zxT-Ba-HdO"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstAttribute="trailing" secondItem="QjQ-sg-gFf" secondAttribute="trailing" id="Dcr-Kf-b1K"/>
                                                             <constraint firstItem="OIp-dQ-JY6" firstAttribute="centerY" secondItem="GwU-Zy-Fjg" secondAttribute="centerY" id="DgG-uN-LCa"/>
+                                                            <constraint firstItem="QjQ-sg-gFf" firstAttribute="leading" secondItem="GwU-Zy-Fjg" secondAttribute="leading" id="ELU-im-fet"/>
+                                                            <constraint firstAttribute="bottom" secondItem="QjQ-sg-gFf" secondAttribute="bottom" id="elF-Yp-Fmb"/>
                                                             <constraint firstItem="OIp-dQ-JY6" firstAttribute="centerX" secondItem="GwU-Zy-Fjg" secondAttribute="centerX" id="iZm-jl-c0w"/>
+                                                            <constraint firstItem="QjQ-sg-gFf" firstAttribute="top" secondItem="GwU-Zy-Fjg" secondAttribute="top" id="jAr-vi-9n7"/>
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQ9-mt-jGa">
@@ -1225,10 +1236,10 @@ saaj.jh ghyggt fgf</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="486"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tu5-JX-0iZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="423.33333333333331"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="428.33333333333331"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mFc-wR-LVH">
-                                                                <rect key="frame" x="8" y="20" width="377" height="403.33333333333331"/>
+                                                                <rect key="frame" x="8" y="20" width="377" height="408.33333333333331"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N9G-QD-adm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="20"/>
@@ -1271,20 +1282,21 @@ saaj.jh ghyggt fgf</string>
                                                                             </view>
                                                                         </subviews>
                                                                         <constraints>
+                                                                            <constraint firstAttribute="height" constant="20" id="HqX-Uo-fGB"/>
                                                                             <constraint firstAttribute="trailing" secondItem="zAV-UO-SRB" secondAttribute="trailing" constant="120" id="Uek-XJ-4Xf"/>
                                                                         </constraints>
                                                                     </stackView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Uploaded a month ago " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jHU-bq-FWx">
-                                                                        <rect key="frame" x="0.0" y="28" width="377" height="17.666666666666671"/>
+                                                                        <rect key="frame" x="0.0" y="28" width="377" height="22.666666666666671"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="17.666666666666671" id="Bce-RP-qlU"/>
+                                                                            <constraint firstAttribute="height" priority="250" constant="20" id="Bce-RP-qlU"/>
                                                                         </constraints>
                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vVB-Yv-M8P">
-                                                                        <rect key="frame" x="0.0" y="53.666666666666686" width="377" height="241"/>
+                                                                        <rect key="frame" x="0.0" y="58.666666666666686" width="377" height="241"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="250" id="NBp-Ns-Owl"/>
@@ -1300,7 +1312,7 @@ L</string>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     </textView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fl6-2k-jc0">
-                                                                        <rect key="frame" x="0.0" y="302.66666666666663" width="377" height="100.66666666666669"/>
+                                                                        <rect key="frame" x="0.0" y="307.66666666666663" width="377" height="100.66666666666669"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="dE5-ia-Bwn">
                                                                                 <rect key="frame" x="10" y="10" width="357" height="80.666666666666671"/>
@@ -1986,6 +1998,9 @@ ed do eiusmod tempor </string>
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
                                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                                 <state key="normal" image="direction-green"/>
+                                                                                                <connections>
+                                                                                                    <action selector="directionBtnAction:" destination="0g4-9e-Y7I" eventType="touchUpInside" id="Yg3-tD-WoU"/>
+                                                                                                </connections>
                                                                                             </button>
                                                                                         </subviews>
                                                                                         <constraints>

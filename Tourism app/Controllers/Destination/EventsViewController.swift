@@ -23,7 +23,6 @@ class EventsViewController: BaseViewController {
     var eventDetail: EventsModel?
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1

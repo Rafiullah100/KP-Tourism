@@ -8,7 +8,7 @@
 import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
-import GoogleMaps
+//import GoogleMaps
 
 class HomeViewController: BaseViewController {
 
@@ -73,12 +73,18 @@ class HomeViewController: BaseViewController {
     var exploreDistrict: [ExploreDistrict] = [ExploreDistrict]()
     var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
     var localProducts: [LocalProduct] = [LocalProduct]()
+    var event: [EventListModel] = [EventListModel]()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        if #available(iOS 13, *) {
+//           UIApplication.shared.delegate?.window??.overrideUserInterfaceStyle = .dark
+//        }
         textField.delegate = self
         shadow()
         type = .back1
+        cellType = .explore
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
@@ -113,6 +119,9 @@ class HomeViewController: BaseViewController {
                         self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
                         self.totalCount = (explore as? ProductModel)?.count ?? 0
                     }
+                    else if self.cellType == .event{
+                        self.event = (explore as? EventsModel)?.events ?? []
+                    }
                     self.tableView.reloadData()
                 }
             case .failure(let error):
@@ -126,7 +135,6 @@ class HomeViewController: BaseViewController {
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
         vc.exploreDistrict = exploreDistrict
-        vc.attractionDistrict = (model as? AttractionModel)?.attractions?.rows
         add(vc, in: mapContainerView)
     }
 }
@@ -138,21 +146,17 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             siteLabel.text = "\(exploreDistrict.count) Explore Sites"
             return exploreDistrict.count
         case .attraction:
-            siteLabel.text = "\(attractionDistrict.count) Attraction Sites"
             return attractionDistrict.count
         case .adventure:
             return (model as? AdventureModel)?.adventures.count ?? 0
         case .south:
-            siteLabel.text = "\((model as? ExploreModel)?.attractions.count ?? 0) South KP Sites"
             return (model as? ExploreModel)?.attractions.count ?? 0
         case .tour:
             return (model as? TourModel)?.tour.count ?? 0
         case .event:
-            siteLabel.text = "\((model as? EventsModel)?.events.count ?? 0)  Events"
             return (model as? EventsModel)?.events.count ?? 0
         case .arch:
-            siteLabel.text = "\((model as? ArcheologyModel)?.archeology?.count ?? 0) Archeology Sites"
-            return (model as? ArcheologyModel)?.archeology?.count ?? 0
+            return (model as? ArcheologyModel)?.archeology.count ?? 0
         case .blog:
             return (model as? BlogsModel)?.blog.count ?? 0
         case .product:
@@ -170,7 +174,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
             cell.district = exploreDistrict[indexPath.row]
             cell.actionBlock = {
-                print(self.exploreDistrict[indexPath.row].id)
                 self.like(route: .likeApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id, "section": "district"], model: SuccessModel.self, exploreCell: cell)
             }
             return cell
@@ -200,7 +203,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .arch:
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
-            cell.archeology = (model as? ArcheologyModel)?.archeology?[indexPath.row]
+            cell.archeology = (model as? ArcheologyModel)?.archeology[indexPath.row]
             return cell
         case .blog:
             let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
@@ -305,12 +308,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
             fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
         }
         else if tag == 3{
-            mapButton.isHidden = false
+            mapButton.isHidden = true
             cellType = .arch
-            fetch(route: .fetchArcheology, method: .post, model: ArcheologyModel.self)
+            fetch(route: .fetchArcheology, method: .post, parameters: ["limit": 30, "page": 1], model: ArcheologyModel.self)
         }
         else if tag == 4{
-            mapButton.isHidden = false
+            mapButton.isHidden = true
             cellType = .event
             fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
         }
@@ -329,10 +332,10 @@ extension HomeViewController: MDCTabBarViewDelegate{
             cellType = .visitKP
             fetch(route: .fetchVisitKp, method: .post, model: VisitKPModel.self)
         }
+        setupCard()
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(totalCount, currentPage)
         if cellType == .explore{
             if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
                 currentPage = currentPage + 1
@@ -392,12 +395,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
     }
 }
 
-extension HomeViewController: GMSMapViewDelegate{
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        print(marker.userData ?? 0)
-        return true
-    }
-}
 
 extension HomeViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

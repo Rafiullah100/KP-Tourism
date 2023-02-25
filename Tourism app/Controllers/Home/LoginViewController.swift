@@ -21,6 +21,7 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationItem.hidesBackButton = true
         type = .title
         emailTextField.text = "arsalan@gmail.com"
         passwordTextField.text = "1234567"

@@ -70,6 +70,7 @@ class DestinationDetailViewController: BaseViewController {
 
     @IBAction func getDirectionBtnAction(_ sender: Any) {
     }
+    
     @IBAction func back(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

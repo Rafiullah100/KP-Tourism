@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import GoogleMaps
+//import GoogleMaps
 import SwiftGifOrigin
 import MapboxMaps
 import MapboxDirections
@@ -15,7 +15,7 @@ import MapboxNavigation
 import CoreLocation
 
 
-class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
+class GettingHereViewController: BaseViewController {
     enum Travel {
         case textual
         case navigation
@@ -31,12 +31,13 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var travelTypeLabel: UILabel!
     var locationCategory: LocationCategory?
-    var locationManager: CLLocationManager!
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
+    var locationManager = CLLocationManager()
+
     
     var travelVC: TravelViewController {
         UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "TravelViewController") as! TravelViewController
@@ -64,6 +65,17 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
     override func show(_ vc: UIViewController, sender: Any?) {
         switch travel {
         case .textual:
@@ -79,7 +91,6 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
             directionbutton.isHidden = false
             let vc: GettingHereMapViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "GettingHereMapViewController") as! GettingHereMapViewController
             vc.gettingArray = gettingHere?.gettingHeres
-            vc.delegate = self
             add(vc, in: containerView)
         default:
             break
@@ -93,8 +104,9 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
     
     private func showRoute(){
-        let origin = Waypoint(coordinate: originCoordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0), name: "")
-        let destination = Waypoint(coordinate: destinationCoordinate ?? CLLocationCoordinate2D(latitude: 0, longitude: 0), name: "")
+        guard let originCoordinate = originCoordinate, let latitude: Double = Double(gettingHere?.gettingHeres[0].districts.latitude ?? ""), let longitude: Double = Double(gettingHere?.gettingHeres[0].districts.longitude ?? "") else { return  }
+        let origin = Waypoint(coordinate: originCoordinate, name: "")
+        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), name: "")
         
         // Set options
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
@@ -140,10 +152,9 @@ class GettingHereViewController: BaseViewController, CLLocationManagerDelegate {
     }
 }
 
-
-extension GettingHereViewController: DirectionDelegate{
-    func showDirection(origin: CLLocationCoordinate2D, destination: CLLocationCoordinate2D) {
-        self.originCoordinate = origin
-        self.destinationCoordinate = destination
+extension GettingHereViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
     }
 }

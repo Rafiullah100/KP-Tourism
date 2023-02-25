@@ -8,52 +8,51 @@
 import UIKit
 //import GoogleMaps
 import MapboxMaps
+import Mapbox
 
-
-protocol DirectionDelegate {
-    func showDirection(origin: CLLocationCoordinate2D, destination: CLLocationCoordinate2D)
-}
 
 class GettingHereMapViewController: BaseViewController, CLLocationManagerDelegate {
     
     @IBOutlet weak var mapViewContainer: UIView!
-    var locationManager: CLLocationManager!
+    var locationManager = CLLocationManager()
     var locationCategory: LocationCategory?
     
     var gettingArray: [GettingHere]?
-    internal var mapView: MapView!
-    var destinationCoordinate: CLLocationCoordinate2D?
-    var originCoordinate: CLLocationCoordinate2D?
     
-    var delegate: DirectionDelegate?
+    var mapView = MGLMapView()
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        
-        let myResourceOptions = ResourceOptions(accessToken: Constants.mapboxSecretKey)
-        let myMapInitOptions = MapInitOptions(resourceOptions: myResourceOptions)
-        mapView = MapView(frame: mapViewContainer.bounds, mapInitOptions: myMapInitOptions)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.location.delegate = self
-        
-        mapView.location.options.activityType = .other
-        mapView.location.options.puckType = .puck2D()
-        mapView.location.locationProvider.startUpdatingLocation()
-        mapView.mapboxMap.onNext(event: .mapLoaded) { [self]_ in
-            self.locationUpdate(newLocation: mapView.location.latestLocation!)
+        loadMap()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
         }
-        self.mapViewContainer.addSubview(mapView)
+    }
+    
+    func loadMap() {
+        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
+        let mapView = MGLMapView(frame: mapViewContainer.bounds, styleURL: url)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
+        mapView.styleURL = MGLStyle.streetsStyleURL
+        mapView.tintColor = .darkGray
+        mapViewContainer.addSubview(mapView)
         
-        //show marker
         gettingArray?.forEach({ point in
             guard let lat = Double(point.districts.latitude), let lon = Double(point.districts.longitude)  else { return }
-            destinationCoordinate = CLLocationCoordinate2DMake(lat, lon)
-            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
-            pointAnnotation.image = .init(image: UIImage(named: "marker")!, name: "marker")
-            pointAnnotation.iconAnchor = .bottom
-            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
-            pointAnnotationManager.annotations = [pointAnnotation]
+            let point = MGLPointAnnotation()
+            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            mapView.addAnnotation(point)
         })
     }
     
@@ -62,12 +61,3 @@ class GettingHereMapViewController: BaseViewController, CLLocationManagerDelegat
     }
 }
 
-
-extension GettingHereMapViewController: LocationPermissionsDelegate, LocationConsumer {
-    func locationUpdate(newLocation: Location) {
-        originCoordinate = CLLocationCoordinate2D(latitude: newLocation.location.coordinate.latitude, longitude: newLocation.location.coordinate.longitude)
-        guard let originCoordinate = originCoordinate, let destinationCoordinate = destinationCoordinate else { return }
-        delegate?.showDirection(origin: originCoordinate, destination: destinationCoordinate)
-        mapView.camera.fly(to: CameraOptions(center: newLocation.coordinate, zoom: 7.0), duration: 2.0)
-    }
-}

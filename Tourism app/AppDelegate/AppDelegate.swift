@@ -6,8 +6,7 @@
 //
 
 import UIKit
-import GoogleMaps
-import GooglePlaces
+//import GoogleMaps
 import IQKeyboardManager
 import FBSDKLoginKit
 import FBSDKCoreKit
@@ -26,21 +25,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .normal)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.gray], for: .selected)
-        setupGoogleMap()
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "tabbarTextColor") ?? UIColor()], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "tabbarTextColor") ?? UIColor()], for: .selected)
+//        setupGoogleMap()
         FBSDKCoreKit.ApplicationDelegate.shared.application(
                     application,
                     didFinishLaunchingWithOptions: launchOptions
                 )
+//        if #available(iOS 13, *){
+//            window?.overrideUserInterfaceStyle = .unspecified
+//        }
 
         return true
     }
     
-    func setupGoogleMap(){
-        GMSPlacesClient.provideAPIKey(Constants.googleMapApiKey)
-        GMSServices.provideAPIKey(Constants.googleMapApiKey)
-    }
+//    func setupGoogleMap(){
+//        GMSPlacesClient.provideAPIKey(Constants.googleMapApiKey)
+//        GMSServices.provideAPIKey(Constants.googleMapApiKey)
+//    }
 
     // MARK: UISceneSession Lifecycle
 

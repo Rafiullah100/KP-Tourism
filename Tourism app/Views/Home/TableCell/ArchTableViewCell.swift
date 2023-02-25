@@ -27,19 +27,19 @@ class ArchTableViewCell: UITableViewCell {
     
     var archeology: Archeology? {
         didSet{
-            districtLabel.text = archeology?.title
-            archeologyLabel.text = archeology?.districts?.title
+            districtLabel.text = archeology?.attractions.title
+            archeologyLabel.text = archeology?.attractions.title
             imageSDWebImageSrc = []
-            archeology?.archeologyAttractions?.forEach({ attration in
-                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.image_url ?? ""), placeholder: UIImage(named: "placeholder"))
-                if let sdURL = imageUrl{
-                    imageSDWebImageSrc.append(sdURL)
-                    slideShow.slideshowInterval = 2.0
-                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-                    slideShow.isUserInteractionEnabled = false
-                    slideShow.setImageInputs(imageSDWebImageSrc)
-                }
-            })
+//            archeology?.forEach({ attration in
+//                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))
+//                if let sdURL = imageUrl{
+//                    imageSDWebImageSrc.append(sdURL)
+//                    slideShow.slideshowInterval = 2.0
+//                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
+//                    slideShow.isUserInteractionEnabled = false
+//                    slideShow.setImageInputs(imageSDWebImageSrc)
+//                }
+//            })
         }
     }
 }

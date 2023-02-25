@@ -7,6 +7,11 @@
 
 import UIKit
 import SDWebImage
+import MapboxDirections
+import MapboxCoreNavigation
+import MapboxNavigation
+import MapboxMaps
+
 class EventDetailViewController: BaseViewController {
 
     @IBOutlet weak var statusBarView: UIView!
@@ -20,6 +25,10 @@ class EventDetailViewController: BaseViewController {
     
     @IBOutlet weak var favoriteBtn: UIButton!
     var eventDetail: EventListModel?
+    internal var mapView: MapView!
+    var destinationCoordinate: CLLocationCoordinate2D?
+    var originCoordinate: CLLocationCoordinate2D?
+    var locationManager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,6 +55,17 @@ class EventDetailViewController: BaseViewController {
         view.bringSubviewToFront(statusView)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
 //    func setGradientBackground() {
 //        let gradientLayer = CAGradientLayer()
 //        gradientLayer.frame = self.statusBarView.bounds
@@ -53,9 +73,29 @@ class EventDetailViewController: BaseViewController {
 //        self.statusBarView.layer.insertSublayer(gradientLayer, at: 1)
 //    }
     
+    @IBAction func directionBtnAction(_ sender: Any) {
+        guard let originCoordinate = originCoordinate, let lat: Double = Double(eventDetail?.latitude ?? ""),let lon: Double = Double(eventDetail?.longitude ?? "") else { return  }
+        let origin = Waypoint(coordinate: originCoordinate, name: "")
+        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), name: "")
+        
+        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let self = self else { return }
+                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true, completion: nil)
+            }
+        }
+    }
+    
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: eventDetail?.eventDescription ?? "", image: imageView.image ?? UIImage())
     }
+    
     @IBAction func likeBtnAction(_ sender: Any) {
         self.like(route: .likeApi, method: .post, parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event"], model: SuccessModel.self)
     }
@@ -72,5 +112,12 @@ class EventDetailViewController: BaseViewController {
                 print("error \(error)")
             }
         }
+    }
+}
+
+extension EventDetailViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
     }
 }

@@ -77,10 +77,7 @@ extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDa
 
 extension ItenrariesViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellsAcross: CGFloat = 2
-        let spaceBetweenCells: CGFloat = 5
-        let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-        return CGSize(width: width, height: width)
+        Helper.shared.cellSize(collectionView: collectionView, space: 5, cellsAcross: 2)
     }
 }
 

@@ -6,79 +6,105 @@
 //
 
 import UIKit
-import MapboxMaps
-
+import MapboxDirections
+import MapboxCoreNavigation
+import MapboxNavigation
+import CoreLocation
+import Mapbox
 class ExploreMapViewController: UIViewController {
-
+    
     var exploreDistrict: [ExploreDistrict]?
-    var attractionDistrict: [AttractionsDistrict]?
-    var eventDistrict: [EventListModel]?
-
-    var mapView: MapView!
+    
+    var mapView = MGLMapView()
+    //    @IBOutlet weak var markerView: MarkerView!
+    var destinationCoordinate: CLLocationCoordinate2D?
+    var originCoordinate: CLLocationCoordinate2D?
+    var locationManager = CLLocationManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loadMap()
     }
     
-    private func loadMap(){
-        let myResourceOptions = ResourceOptions(accessToken: Constants.mapboxSecretKey)
-        let myMapInitOptions = MapInitOptions(resourceOptions: myResourceOptions)
-        mapView = MapView(frame: view.bounds, mapInitOptions: myMapInitOptions)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-//        mapView.delegate = self
-
-        mapView.location.delegate = self
-        mapView.location.options.activityType = .other
-        mapView.location.options.puckType = .puck2D()
-        mapView.location.locationProvider.startUpdatingLocation()
-        mapView.mapboxMap.onNext(event: .mapLoaded) { [self]_ in
-            self.locationUpdate(newLocation: mapView.location.latestLocation!)
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
         }
-        self.view.addSubview(mapView)
-        print(exploreDistrict?.count ?? 0)
-        //explore
-        exploreDistrict?.forEach({ district in
-            guard let lat = Double(district.latitude), let lon = Double(district.longitude)  else { return }
-            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
-            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage() , name: "marker")
-            pointAnnotation.iconAnchor = .bottom
-            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
-            pointAnnotationManager.annotations = [pointAnnotation]
-        })
-        
-        //attractions
-        attractionDistrict?.forEach({ district in
-            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
-            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
-            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage(), name: "marker")
-            pointAnnotation.iconAnchor = .bottom
-            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
-            pointAnnotationManager.annotations = [pointAnnotation]
-        })
-        
-        //events
-        eventDistrict?.forEach({ district in
-            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
-            var pointAnnotation = PointAnnotation(coordinate: CLLocationCoordinate2DMake(lat, lon))
-            pointAnnotation.image = .init(image: UIImage(named: "marker") ?? UIImage(), name: "marker")
-            pointAnnotation.iconAnchor = .bottom
-            let pointAnnotationManager = mapView.annotations.makePointAnnotationManager()
-            pointAnnotationManager.annotations = [pointAnnotation]
-        })
     }
-}
-
-extension ExploreMapViewController: LocationPermissionsDelegate, LocationConsumer {
     
-    func locationUpdate(newLocation: Location) {
-        mapView.camera.fly(to: CameraOptions(center: newLocation.coordinate, zoom: 7.0), duration: 2.0)
+    private func loadMap(){
+        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
+        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
+        mapView.styleURL = MGLStyle.streetsStyleURL
+        mapView.tintColor = .darkGray
+        view.addSubview(mapView)
+        mapView.delegate = self
+    }
+    
+}
+
+extension ExploreMapViewController: MGLMapViewDelegate{
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        exploreDistrict?.forEach({ district in
+            print(district.latitude, district.longitude)
+            guard let lat = Double(district.latitude), let lon = Double(district.longitude)  else { return }
+            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: district.title, subtitle: district.locationTitle, image: UIImage(named: "dummy") ?? UIImage())
+//            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            mapView.addAnnotation(point)
+        })
+    }
+
+
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
+    }
+
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        return nil
+    }
+//
+//    private func mapView(_ mapView: MGLMapView, calloutViewFor annotation: CustomAnnotation) -> MGLCalloutView? {
+//        let title = annotation.title ?? nil
+//        let subtitle = annotation.subtitle ?? nil
+//        let image = UIImage(named: "dummy")!
+//        let customAnnotation = CustomAnnotation(coordinate: annotation.coordinate, title: title ?? "", subtitle: subtitle ?? "", image: image)
+//        mapView.setCenter(CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), zoomLevel: 7, animated: false)
+//        return MarkerView(annotation: customAnnotation, annotationPoint: mapView.convert(annotation.coordinate, toPointTo: nil))
+//    }
+    
+    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
+        guard let originCoordinate = originCoordinate else { return  }
+        let origin = Waypoint(coordinate: originCoordinate, name: "")
+        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), name: "")
+        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
+        
+        // Request a route using MapboxDirections.swift
+        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let response):
+                guard let self = self else { return }
+                // Pass the first generated route to the the NavigationViewController
+                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true, completion: nil)
+            }
+        }
     }
 }
 
-//extension ExploreMapViewController: MGLMapViewDelegate{
-//    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-//
-//    }
-//}
-
+extension ExploreMapViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
+    }
+}

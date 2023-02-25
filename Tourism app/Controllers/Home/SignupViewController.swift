@@ -21,6 +21,7 @@ class SignupViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationItem.hidesBackButton = true
         type = .title
         viewControllerTitle = "Sign up"
         userTypeTextField.inputView = pickerView
@@ -28,8 +29,6 @@ class SignupViewController: BaseViewController {
         pickerView.delegate = self
         pickerView.dataSource = self
     }
-    
-    
     
     @IBAction func signupBtnAction(_ sender: Any) {
         validateSignupFields()

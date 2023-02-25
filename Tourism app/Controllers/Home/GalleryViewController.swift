@@ -33,6 +33,7 @@ class GalleryViewController: BaseViewController {
     }
     
     var gallery: GalleryModel?
+    var mediaType: MediaType?
     
     
     override func viewDidLoad() {
@@ -95,8 +96,18 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let gallery = gallery else { return }
-        Switcher.gotoGalleryDetail(delegate: self, galleryDetail: gallery)
+        switch collectionView {
+        case imageCollectionView:
+            mediaType = .image
+        case videoCollectionView:
+            mediaType = .video
+        case virtualCollectionView:
+            mediaType = .virtual
+        default:
+            break
+        }
+        guard let gallery = gallery, let mediaType = mediaType else { return }
+        Switcher.gotoGalleryDetail(delegate: self, galleryDetail: gallery, mediaType: mediaType)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

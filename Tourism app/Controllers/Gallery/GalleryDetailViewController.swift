@@ -73,7 +73,17 @@ class GalleryDetailViewController: BaseViewController {
           UITabBarItem(title: "Videos", image: UIImage(named: ""), tag: 1),
           UITabBarItem(title: "Virtual Tours", image: UIImage(named: ""), tag: 2),
         ]
-        tabbarView.selectedItem = tabbarView.items[0]
+        switch mediaType {
+        case .image:
+            tabbarView.selectedItem = tabbarView.items[0]
+        case .video:
+            tabbarView.selectedItem = tabbarView.items[1]
+        case .virtual:
+            tabbarView.selectedItem = tabbarView.items[2]
+        default:
+            break
+        }
+//        tabbarView.selectedItem = tabbarView.items[0]
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .fixed
         tabbarView.isScrollEnabled = false
@@ -83,8 +93,6 @@ class GalleryDetailViewController: BaseViewController {
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10
-        mediaType = .image
-//        self.add(imageVC, in: containerView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -111,7 +119,7 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
         case 2:
             mediaType = .virtual
         default:
-            break
+            mediaType = .image
         }
         collectionView.reloadData()
     }
@@ -144,6 +152,7 @@ extension GalleryDetailViewController: ASCollectionViewDelegate, UICollectionVie
             break
         }
     }
+    
     func loadMoreInASCollectionView(_ asCollectionView: ASCollectionView) {
         if numberOfItems > 30 {
             collectionView.enableLoadMore = false
@@ -176,9 +185,11 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         case .image:
             gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+//            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+            gridCell.imageView.image = UIImage(named: "placeholder")
         case .virtual:
-            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+            gridCell.imageView.image = UIImage(named: "placeholder")
+//            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
         default:
             return gridCell
         }
@@ -192,9 +203,11 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         case .image:
             parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+//            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
+            parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
         case .virtual:
-            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+//            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+            parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
         default:
             return parallaxCell
         }

@@ -21,14 +21,15 @@ extension HomeViewController{
         print(Constants.section)
         tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = .groupTableViewBackground
+        tabbarView.bottomDividerColor = UIColor(named: "lineColor") ?? UIColor()
+        tabbarView.backgroundColor = UIColor(named: "backgroundColor") ?? UIColor()
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
         tabbarView.isScrollEnabled = true
         tabbarView.setTitleFont(Constants.lightFont, for: .normal)
         tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
-        tabbarView.setTitleColor(.darkGray, for: .normal)
+        tabbarView.setTitleColor(UIColor(named: "sectionTextColor") ?? UIColor(), for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.bounces = false
@@ -41,7 +42,6 @@ extension HomeViewController{
         tabbarView.delegate = self
         tabbarView.contentInsetAdjustmentBehavior = .never
         self.add(mapVC, in: mapContainerView)
-        cellType = .explore
         galleryContainer.isHidden = true
     }
     
@@ -62,7 +62,12 @@ extension HomeViewController{
     
     func setupCard() {
         let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCardPan(recognizer:)))
-        contentView.addGestureRecognizer(panGestureRecognizer)
+//        if cellType == .explore{
+            contentView.addGestureRecognizer(panGestureRecognizer)
+//        }
+//        else{
+//            contentView.removeGestureRecognizer(panGestureRecognizer)
+//        }
         self.view.bringSubviewToFront(topView)
     }
     
@@ -72,27 +77,17 @@ extension HomeViewController{
         var fractionComplete = translation.y / contentView.frame.height
         fractionComplete = cardVisible ? fractionComplete : -fractionComplete
         print("fractionComplete: \(translation.y)")
-        switch recognizer.state {
-        case .began:
-            startInteractiveTransition(state: nextState, duration: 0.9)
-        case .changed:
-            updateInteractiveTransition(fractionCompleted: fractionComplete)
-        case .ended:
-            continueInteractiveTransition()
-//            if nextState == .collapsed {
-//                if translation.y > 20 {
-//                    continueInteractiveTransition()
-//                    mapButton.isHidden = true
-//                }
-//            }
-//            else{
-//                let name = Notification.Name(Constants.enableScrolling)
-//                NotificationCenter.default.post(name: name, object: nil)
-//                continueInteractiveTransition()
-//                mapButton.isHidden = false
-//            }
-        default:
-            break
+        if cellType == .explore {
+            switch recognizer.state {
+            case .began:
+                startInteractiveTransition(state: nextState, duration: 0.9)
+            case .changed:
+                updateInteractiveTransition(fractionCompleted: fractionComplete)
+            case .ended:
+                continueInteractiveTransition()
+            default:
+                break
+            }
         }
     }
     
