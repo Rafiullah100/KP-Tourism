@@ -17,6 +17,7 @@ class AdventureDetailViewController: BaseViewController {
     @IBOutlet weak var favoriteBtn: UIButton!
     var adventureDetail: Adventure?
     
+    @IBOutlet weak var statusBarView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -27,6 +28,11 @@ class AdventureDetailViewController: BaseViewController {
         adventureTypeLabel.text = adventureDetail?.title
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (adventureDetail?.thumbnailImage ?? "")))
         textView.text = adventureDetail?.adventureDescription.stripOutHtml()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarView.addGradient()
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {

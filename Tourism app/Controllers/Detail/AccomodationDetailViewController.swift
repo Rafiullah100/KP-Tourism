@@ -15,6 +15,7 @@ import CoreLocation
 
 class AccomodationDetailViewController: BaseViewController {
   
+    @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var parkingLabel: UILabel!
@@ -55,6 +56,7 @@ class AccomodationDetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        statusBarView.addGradient()
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {

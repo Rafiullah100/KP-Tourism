@@ -5,15 +5,14 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Roboto-Bold.ttf">
-            <string>Roboto-Bold</string>
+        <array key="Poppins-Medium.ttf">
+            <string>Poppins-Medium</string>
         </array>
-        <array key="Roboto-Light.ttf">
-            <string>Roboto-Light</string>
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
         </array>
     </customFonts>
     <objects>
@@ -50,8 +49,8 @@
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heavy Rainfall Warning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vws-bx-R42">
                                                         <rect key="frame" x="33" y="0.0" width="352" height="21"/>
-                                                        <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="14"/>
-                                                        <nil key="textColor"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
@@ -69,27 +68,12 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Sy-8F-hRY">
                                         <rect key="frame" x="0.0" y="22" width="390" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ed-2D-LXQ">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ed-2D-LXQ">
                                                 <rect key="frame" x="10" y="5" width="375" height="45"/>
-                                                <attributedString key="attributedText">
-                                                    <fragment>
-                                                        <string key="content">KP Tourism : Heavy Rainfall expected in Madyan, Swat
-today around </string>
-                                                        <attributes>
-                                                            <font key="NSFont" size="13" name="Roboto-Light"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content="1PM - 7PM">
-                                                        <attributes>
-                                                            <font key="NSFont" size="13" name="Roboto-Bold"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                    <fragment content=" .">
-                                                        <attributes>
-                                                            <font key="NSFont" size="13" name="Roboto-Light"/>
-                                                        </attributes>
-                                                    </fragment>
-                                                </attributedString>
+                                                <string key="text">KP Tourism : Heavy Rainfall expected in Madyan, Swat
+today around 1PM - 7PM .</string>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -126,9 +110,9 @@ today around </string>
                                         <rect key="frame" x="0.0" y="78" width="390" height="54"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Safe for Travelling " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wkf-g9-dpn">
-                                                <rect key="frame" x="10" y="3" width="130" height="15.5"/>
-                                                <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="13"/>
-                                                <nil key="textColor"/>
+                                                <rect key="frame" x="10" y="3" width="134" height="17"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -142,7 +126,6 @@ today around </string>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="5DH-qa-WCP" firstAttribute="top" secondItem="HuX-gn-okD" secondAttribute="top" constant="10" id="5Df-kc-jly"/>
                             <constraint firstAttribute="trailing" secondItem="fBa-5a-JPl" secondAttribute="trailing" constant="1" id="5Yx-wX-8JV"/>
@@ -173,8 +156,5 @@ today around </string>
     <resources>
         <image name="al-cell-bg" width="368" height="132"/>
         <image name="alert-fill" width="22.5" height="21"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

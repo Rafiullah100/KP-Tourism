@@ -9,6 +9,7 @@ import UIKit
 
 class ItinraryDetailViewController: BaseViewController {
 
+    @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var placeLabel: UILabel!
@@ -28,6 +29,11 @@ class ItinraryDetailViewController: BaseViewController {
         type = .back1
         placeLabel.text = "\(itinraryDetail?.fromDistricts.title ?? "") - \(itinraryDetail?.toDistricts.title ?? "")"
         textView.text = itinraryDetail?.description
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarView.addGradient()
     }
     
     override func viewWillLayoutSubviews() {

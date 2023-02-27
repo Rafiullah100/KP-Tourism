@@ -21,15 +21,15 @@ extension HomeViewController{
         print(Constants.section)
         tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = UIColor(named: "lineColor") ?? UIColor()
-        tabbarView.backgroundColor = UIColor(named: "backgroundColor") ?? UIColor()
+        tabbarView.bottomDividerColor = Helper.shared.lineColor()
+        tabbarView.backgroundColor = Helper.shared.backgroundColor()
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
         tabbarView.isScrollEnabled = true
         tabbarView.setTitleFont(Constants.lightFont, for: .normal)
         tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
-        tabbarView.setTitleColor(UIColor(named: "sectionTextColor") ?? UIColor(), for: .normal)
+        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.bounces = false

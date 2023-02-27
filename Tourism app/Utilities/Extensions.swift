@@ -22,6 +22,17 @@ extension NSMutableAttributedString {
 
 
 extension UIView {
+    
+    func addGradient() {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.bounds
+        gradientLayer.colors = [UIColor(named: "#084F24")?.cgColor ?? UIColor(), UIColor(named: "#327425")?.cgColor ?? UIColor()]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        self.layer.addSublayer(gradientLayer)
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
     func roundCorners(corners: UIRectCorner, radius: CGFloat) {
         let path = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let mask = CAShapeLayer()
@@ -126,12 +137,12 @@ extension UIView {
         }
     }
     
-    func gradient() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = self.bounds
-        gradientLayer.colors = [UIColor(hex: "#327425"), UIColor(hex: "#084F24")]
-        self.layer.addSublayer(gradientLayer)
-    }
+//    func addGradient() {
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = self.bounds
+//        gradientLayer.colors = [UIColor(hex: "#327425"), UIColor(hex: "#084F24")]
+//        self.layer.addSublayer(gradientLayer)
+//    }
 }
 
 extension UIColor{
@@ -298,9 +309,9 @@ public extension UITableView {
         let titleLabel = UILabel()
         let messageLabel = UILabel()
         
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = Helper.shared.textColor()
         titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
-        messageLabel.textColor = UIColor.black
+        messageLabel.textColor = Helper.shared.textColor()
         messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
         titleLabel.text = "No Data!"
         messageLabel.text = ""
@@ -334,9 +345,9 @@ public extension UITableView {
         let titleLabel = UILabel()
         let messageLabel = UILabel()
         
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = Helper.shared.textColor()
         titleLabel.font = UIFont(name: "Poppins-Medium", size: 16)
-        messageLabel.textColor = UIColor.black
+        messageLabel.textColor = Helper.shared.textColor()
         messageLabel.font = UIFont(name: "Poppins-Light", size: 14)
         titleLabel.text = "No Internet"
         messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."
@@ -391,6 +402,7 @@ extension CGRect {
 
 
 extension UIViewController {
+    
     func add(_ child: UIViewController, in container: UIView) {
         addChild(child)
         container.addSubview(child.view)
@@ -448,9 +460,9 @@ extension UICollectionView{
         let titleLabel = UILabel()
         let messageLabel = UILabel()
         
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = Helper.shared.textColor()
         titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
-        messageLabel.textColor = UIColor.black
+        messageLabel.textColor = Helper.shared.textColor()
         messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
         titleLabel.text = "No Data!"
         messageLabel.text = ""
@@ -484,9 +496,9 @@ extension UICollectionView{
         let titleLabel = UILabel()
         let messageLabel = UILabel()
         
-        titleLabel.textColor = UIColor.black
+        titleLabel.textColor = Helper.shared.textColor()
         titleLabel.font = UIFont(name: "Poppins-Medium", size: 16)
-        messageLabel.textColor = UIColor.black
+        messageLabel.textColor = Helper.shared.textColor()
         messageLabel.font = UIFont(name: "Poppins-Light", size: 14)
         titleLabel.text = "No Internet"
         messageLabel.text = "You're currently offline. Please connect with Wifi and try again later."

@@ -244,36 +244,47 @@
                                         <rect key="frame" x="8" y="5" width="398" height="50"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2TG-Pn-xWm">
-                                                <rect key="frame" x="5" y="3" width="342" height="43"/>
+                                                <rect key="frame" x="5" y="3" width="342" height="44"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search-bg" translatesAutoresizingMaskIntoConstraints="NO" id="cpR-y6-L9H">
-                                                        <rect key="frame" x="-29" y="-10" width="401" height="73"/>
-                                                    </imageView>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="UdB-da-Tw3">
-                                                        <rect key="frame" x="11" y="13.5" width="17.5" height="17.5"/>
+                                                        <rect key="frame" x="11" y="14" width="17.5" height="17.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="17.5" id="dEG-Kf-gZE"/>
                                                             <constraint firstAttribute="width" constant="17.5" id="mvD-kl-kPD"/>
                                                         </constraints>
                                                     </imageView>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Anything...." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bo7-jM-sla">
-                                                        <rect key="frame" x="41" y="6" width="295" height="34"/>
+                                                        <rect key="frame" x="41" y="6" width="295" height="35"/>
+                                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="color" keyPath="placeHolderColor">
+                                                                <color key="value" name="placeholderColor"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                     </textField>
                                                 </subviews>
+                                                <color key="backgroundColor" name="searchBarColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="trailing" secondItem="cpR-y6-L9H" secondAttribute="trailing" constant="-30" id="0Vg-Xt-osH"/>
                                                     <constraint firstAttribute="trailing" secondItem="bo7-jM-sla" secondAttribute="trailing" constant="6" id="AcK-ao-Yoh"/>
                                                     <constraint firstItem="UdB-da-Tw3" firstAttribute="centerY" secondItem="2TG-Pn-xWm" secondAttribute="centerY" constant="0.75" id="BkG-cD-OCH"/>
-                                                    <constraint firstItem="cpR-y6-L9H" firstAttribute="leading" secondItem="UdB-da-Tw3" secondAttribute="trailing" constant="-57.5" id="HGj-on-3Pt"/>
                                                     <constraint firstItem="bo7-jM-sla" firstAttribute="leading" secondItem="UdB-da-Tw3" secondAttribute="trailing" constant="12.5" id="K8c-Fh-7tP"/>
-                                                    <constraint firstItem="cpR-y6-L9H" firstAttribute="top" secondItem="2TG-Pn-xWm" secondAttribute="top" constant="-10" id="PSH-Lm-6Q8"/>
-                                                    <constraint firstAttribute="bottom" secondItem="cpR-y6-L9H" secondAttribute="bottom" constant="-20" id="RSC-Up-8jQ"/>
                                                     <constraint firstAttribute="bottom" secondItem="bo7-jM-sla" secondAttribute="bottom" constant="3" id="d5l-QP-C87"/>
                                                     <constraint firstItem="UdB-da-Tw3" firstAttribute="leading" secondItem="2TG-Pn-xWm" secondAttribute="leading" constant="11" id="rIQ-vc-JIB"/>
                                                     <constraint firstItem="bo7-jM-sla" firstAttribute="top" secondItem="2TG-Pn-xWm" secondAttribute="top" constant="6" id="vMY-wv-s6X"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                        <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                        <real key="value" value="1"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="22"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kTV-8H-vjF">
                                                 <rect key="frame" x="355" y="7" width="40" height="40"/>
@@ -311,14 +322,13 @@
                                                 </userDefinedRuntimeAttributes>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" name="backgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="2TG-Pn-xWm" firstAttribute="leading" secondItem="HcP-6g-fUP" secondAttribute="leading" constant="5" id="1oR-Dd-H2g"/>
                                             <constraint firstItem="2TG-Pn-xWm" firstAttribute="top" secondItem="HcP-6g-fUP" secondAttribute="top" constant="3" id="Dmz-XR-Ig5"/>
                                             <constraint firstItem="kTV-8H-vjF" firstAttribute="leading" secondItem="2TG-Pn-xWm" secondAttribute="trailing" constant="8" id="KF9-1M-7rv"/>
                                             <constraint firstAttribute="trailing" secondItem="kTV-8H-vjF" secondAttribute="trailing" constant="3" id="Lce-e7-ZWQ"/>
                                             <constraint firstItem="kTV-8H-vjF" firstAttribute="top" secondItem="HcP-6g-fUP" secondAttribute="top" constant="7" id="SKi-Vh-ErM"/>
-                                            <constraint firstAttribute="bottom" secondItem="2TG-Pn-xWm" secondAttribute="bottom" constant="4" id="VNI-Ql-vKC"/>
+                                            <constraint firstAttribute="bottom" secondItem="2TG-Pn-xWm" secondAttribute="bottom" constant="3" id="VNI-Ql-vKC"/>
                                             <constraint firstAttribute="bottom" secondItem="kTV-8H-vjF" secondAttribute="bottom" constant="3" id="n8V-fz-WMA"/>
                                         </constraints>
                                     </view>
@@ -673,7 +683,7 @@ and more</string>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weather Updates" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hID-v8-9ev">
                                                                 <rect key="frame" x="46.5" y="6" width="114" height="18.5"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
-                                                                <nil key="textColor"/>
+                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
@@ -782,6 +792,7 @@ and more</string>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QNf-HE-zLQ">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="90" height="30"/>
+                                                                                <color key="textColor" name="backgroundColor"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                 <textInputTraits key="textInputTraits"/>
                                                                             </textField>
@@ -794,7 +805,7 @@ and more</string>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swat" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plg-Vm-CUj">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="70" height="20"/>
                                                                                         <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="13"/>
-                                                                                        <nil key="textColor"/>
+                                                                                        <color key="textColor" name="backgroundColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                     </label>
                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="drop-down" translatesAutoresizingMaskIntoConstraints="NO" id="JvE-gs-cyZ">
@@ -813,6 +824,9 @@ and more</string>
                                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                <state key="normal">
+                                                                                    <color key="titleColor" name="backgroundColor"/>
+                                                                                </state>
                                                                                 <connections>
                                                                                     <action selector="dropDownBtnAction:" destination="guj-F8-Iaf" eventType="touchUpInside" id="rMb-ei-c7u"/>
                                                                                 </connections>
@@ -895,7 +909,7 @@ and more</string>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="JZd-xH-v1I"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="backgroundColor" name="backgroundColor"/>
                         <constraints>
                             <constraint firstItem="i8A-p0-dzB" firstAttribute="bottom" secondItem="JZd-xH-v1I" secondAttribute="bottom" constant="2" id="U3n-ch-l0L"/>
                             <constraint firstItem="i8A-p0-dzB" firstAttribute="leading" secondItem="JZd-xH-v1I" secondAttribute="leading" id="W3W-9I-CS3"/>
@@ -2074,11 +2088,16 @@ and more</string>
         <image name="profile" width="21" height="21"/>
         <image name="profile-s" width="20" height="20"/>
         <image name="search" width="17.5" height="17.5"/>
-        <image name="search-bg" width="392" height="103"/>
         <namedColor name="TabBar-color">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="backgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="placeholderColor">
+            <color red="0.92199999094009399" green="0.92199999094009399" blue="0.96099996566772461" alpha="0.30000001192092896" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="searchBarColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabbar-tint">

@@ -46,7 +46,7 @@ class BaseViewController: UIViewController {
         if let titleLabel = titleLabel {
             titleLabel.text = viewControllerTitle ?? ""
             titleLabel.font = UIFont(name: "Poppins-Medium", size: 21)
-            titleLabel.textColor = UIColor.white
+            titleLabel.textColor = Helper.shared.backgroundColor()
             self.navigationItem.titleView = titleLabel
         }
     }
@@ -152,7 +152,7 @@ class BaseViewController: UIViewController {
         if let titleLabel = titleLabel {
             titleLabel.text = viewControllerTitle
             titleLabel.font = UIFont(name: "Roboto-Bold", size: 18)
-            titleLabel.textColor = UIColor.black
+            titleLabel.textColor = Helper.shared.textColor()
             self.navigationItem.titleView = titleLabel
         }
     }

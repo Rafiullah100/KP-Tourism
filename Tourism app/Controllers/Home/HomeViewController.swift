@@ -78,9 +78,16 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if #available(iOS 13, *) {
-//           UIApplication.shared.delegate?.window??.overrideUserInterfaceStyle = .dark
-//        }
+//        searchBgView.layer.shadowColor = UIColor.black.cgColor
+//        searchBgView.layer.shadowOffset = CGSize(width: 1, height: 1)
+//        searchBgView.layer.shadowOpacity = 0.4
+//        searchBgView.layer.shadowRadius = 2.0
+        notificationView.layer.cornerRadius = 20
+        notificationView.layer.shadowColor = UIColor.black.cgColor
+        notificationView.layer.shadowOpacity = 1
+        notificationView.layer.shadowOffset = .zero
+        notificationView.layer.shadowRadius = 10
+        
         textField.delegate = self
         shadow()
         type = .back1
@@ -88,11 +95,6 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        print("jibiub")
-//        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     override func viewWillAppear(_ animated: Bool) {

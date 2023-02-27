@@ -80,6 +80,27 @@ class Helper{
         return rootViewController
     }
     
+    public func lineColor() -> UIColor{
+        guard let color = UIColor(named: "lineColor") else { return UIColor() }
+        return color
+    }
+    
+    public func backgroundColor() -> UIColor{
+        guard let color = UIColor(named: "backgroundColor") else { return UIColor() }
+        return color
+    }
+    
+    
+    public func sectionTextColor() -> UIColor{
+        guard let color = UIColor(named: "sectionTextColor") else { return UIColor() }
+        return color
+    }
+    
+    public func textColor() -> UIColor{
+        guard let color = UIColor(named: "textColor") else { return UIColor() }
+        return color
+    }
+    
     
 //    public func gradient(view: UIView){
 //        let gradientLayer = CAGradientLayer()

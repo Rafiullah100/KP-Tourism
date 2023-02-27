@@ -57,6 +57,8 @@ class EventDetailViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        statusBarView.addGradient()
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
@@ -65,13 +67,6 @@ class EventDetailViewController: BaseViewController {
             locationManager.startUpdatingLocation()
         }
     }
-    
-//    func setGradientBackground() {
-//        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame = self.statusBarView.bounds
-//        gradientLayer.colors = [UIColor(hex: "#084F24").cgColor, UIColor(hex: "#327425").cgColor]
-//        self.statusBarView.layer.insertSublayer(gradientLayer, at: 1)
-//    }
     
     @IBAction func directionBtnAction(_ sender: Any) {
         guard let originCoordinate = originCoordinate, let lat: Double = Double(eventDetail?.latitude ?? ""),let lon: Double = Double(eventDetail?.longitude ?? "") else { return  }

@@ -81,6 +81,7 @@ class CommonViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
     }
 }
 
@@ -109,7 +110,7 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 4:
             Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
         case 5:
-            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image)
         case 6:
             Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction)
         case 7:

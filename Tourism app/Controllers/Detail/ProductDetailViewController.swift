@@ -21,6 +21,7 @@ class ProductDetailViewController: BaseViewController {
     @IBOutlet weak var textView: UITextView!
     
     @IBOutlet weak var favoriteBtn: UIButton!
+    @IBOutlet weak var statusBarView: UIView!
     
     
     override func viewDidLoad() {
@@ -38,6 +39,10 @@ class ProductDetailViewController: BaseViewController {
         favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarView.addGradient()
+    }
     
     @IBAction func socialButton(_ sender: Any) {
     }

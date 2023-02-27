@@ -62,6 +62,7 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var counterLabel: UILabel!
     
     @IBOutlet weak var favoriteIcon: UIImageView!
+    @IBOutlet weak var statusBarView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +86,11 @@ class PackageDetailViewController: BaseViewController {
         districtNameLabel.text = tourDetail?.to_districts?.title
         registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
 //        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarView.addGradient()
     }
     
     private func reload(){

@@ -50,6 +50,10 @@ class GalleryDetailViewController: BaseViewController {
         }
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
@@ -90,6 +94,8 @@ class GalleryDetailViewController: BaseViewController {
         tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 12.0), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 12.0), for: .selected)
         tabbarView.setTitleColor(.darkGray, for: .normal)
+        tabbarView.backgroundColor = Helper.shared.backgroundColor()
+        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10

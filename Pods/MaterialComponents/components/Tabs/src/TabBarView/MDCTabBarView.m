@@ -41,7 +41,7 @@ static const CGFloat kDefaultMinItemWidth = 90;
 
 /// Outer edge padding from spec: https://material.io/go/design-tabs#spec.
 static const UIEdgeInsets kDefaultItemViewContentInsetsTextAndImage = {
-    .top = 12, .right = 16, .bottom = 12, .left = 16};
+    .top = 8, .right = 12, .bottom = 8, .left = 12};
 
 /**
  Edge insets for text-only Tabs. Although top and bottom are not specified, we insert some

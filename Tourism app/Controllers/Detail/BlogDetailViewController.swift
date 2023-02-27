@@ -26,6 +26,7 @@ class BlogDetailViewController: BaseViewController {
     var blogDetail: Blog?
     var allComments: [CommentsRows] = [CommentsRows]()
     
+    @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -62,6 +63,11 @@ class BlogDetailViewController: BaseViewController {
     private func reloadComment(){
         print(currentPage)
         fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        statusBarView.addGradient()
     }
     
     override func viewWillLayoutSubviews() {
