@@ -35,7 +35,10 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        topProfileView.addBottomShadow()
+        topProfileView.layer.shadowColor = UIColor.black.cgColor
+        topProfileView.layer.shadowOpacity = 1
+        topProfileView.layer.shadowOffset = .zero
+        topProfileView.layer.shadowRadius = 10
         topProfileView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 30.0)
         configureTabbar()
     }
@@ -57,7 +60,6 @@ class ProfileViewController: UIViewController {
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
         tabbarView.setTitleColor(.lightGray, for: .normal)
         tabbarView.setTitleColor(.black, for: .selected)
-//        tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 100.0
     }
     
@@ -70,6 +72,7 @@ class ProfileViewController: UIViewController {
         scrollHeight += tableViewHeight.constant
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: scrollHeight + 10.0)
     }
+    
     @IBAction func followerBtnAction(_ sender: Any) {
         Switcher.showFollower(delegate: self)
     }
@@ -110,7 +113,6 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout{
             let cellsAcross: CGFloat = 3
             let spaceBetweenCells: CGFloat = 2
             let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-            print(width)
             return CGSize(width: width, height: width)
         default:
             break

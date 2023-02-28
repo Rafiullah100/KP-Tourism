@@ -32,6 +32,9 @@ class FeedsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
     }
     
+    @IBAction func postBtnAction(_ sender: Any) {
+        Switcher.gotoPostVC(delegate: self, postType: .post)
+    }
     @IBAction func chatBtnAction(_ sender: Any) {
         Switcher.goToChatListVC(delegate: self)
     }
@@ -53,11 +56,17 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row == 0{
+            Switcher.gotoPostVC(delegate: self, postType: .story)
+        }
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80, height: 110)
+        return CGSize(width: 80, height: 100)
     }
 }
 

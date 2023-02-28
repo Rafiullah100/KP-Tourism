@@ -65,3 +65,8 @@ struct TourDetail {
     let information: String?
     let accomodation: String?
 }
+
+enum PostType {
+    case post
+    case story
+}

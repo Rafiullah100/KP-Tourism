@@ -184,18 +184,16 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
             return 0
         }
     }
-    
+    //            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
         switch mediaType {
         case .image:
             gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-//            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
             gridCell.imageView.image = UIImage(named: "placeholder")
         case .virtual:
             gridCell.imageView.image = UIImage(named: "placeholder")
-//            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
         default:
             return gridCell
         }
@@ -204,15 +202,12 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
     //imgView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (images?.video_url ?? "")))
     func collectionView(_ asCollectionView: ASCollectionView, parallaxCellForItemAtIndexPath indexPath: IndexPath) -> ASCollectionViewParallaxCell {
         let parallaxCell = collectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
-        parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         switch mediaType {
         case .image:
             parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-//            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")))
             parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
         case .virtual:
-//            parallaxCell.parallaxImageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
             parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
         default:
             return parallaxCell

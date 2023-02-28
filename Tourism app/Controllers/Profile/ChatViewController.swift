@@ -31,6 +31,7 @@ class ChatViewController: UIViewController {
     }
     
     var items = ["NayaPay why are you charging Rs 244.97 exchange rate when dollar rate is Rs 224.74 that is very big difference in the rates and very disappointing 😞 as I liked the nayapay service very much. and this is unbearable to pay extra Rs 20 per dollar when the dollar is already at it's peak rate.. 😔😔", "NayaPay why are you charging Rs 244.97 exchange rate", "when dollar rate is Rs 224.74 that is very big difference in the rates", "when the dollar", "in the rates and very disappointing 😞 as I liked the nayapay service very much"]
+    let messageTextViewMaxHeight: CGFloat = 100
 
     
     override func viewDidLoad() {
@@ -45,7 +46,7 @@ class ChatViewController: UIViewController {
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-//        toolBarHeight.constant = textView.contentSize.height
+        toolBarHeight.constant = textView.contentSize.height
     }
 }
 
@@ -84,16 +85,16 @@ extension ChatViewController: UITableViewDelegate {
 }
 
 extension ChatViewController: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        print("Content Height \(self.textView.contentSize.height) ")
-//        if(self.textView.contentSize.height < self.textHeightConstraint.constant) {
-//            self.textEntry.isScrollEnabled = false
-//        } else {
-//            self.textEntry.isScrollEnabled = true
-//        }
-        toolBarHeight.constant = textView.contentSize.height + 20
-        return true
-    }
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+////        print("Content Height \(self.textView.contentSize.height) ")
+////        if(self.textView.contentSize.height < self.textHeightConstraint.constant) {
+////            self.textEntry.isScrollEnabled = false
+////        } else {
+////            self.textEntry.isScrollEnabled = true
+////        }
+//        toolBarHeight.constant = textView.contentSize.height
+//        return true
+//    }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == UIColor.lightGray || textView.text == "Message.." {
@@ -106,6 +107,18 @@ extension ChatViewController: UITextViewDelegate {
         if textView.text.isEmpty {
             textView.text = "Message.."
             textView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView.contentSize.height >= self.messageTextViewMaxHeight
+        {
+            textView.isScrollEnabled = true
+        }
+        else
+        {
+            textView.frame.size.height = textView.contentSize.height
+            textView.isScrollEnabled = false
         }
     }
 }
