@@ -380,7 +380,7 @@ class Switcher {
     
     static func gotoPostVC(delegate: UIViewController, postType: PostType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         vc.postType = postType
         delegate.present(vc, animated: true, completion: nil)

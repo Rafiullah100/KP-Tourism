@@ -29,7 +29,7 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1vN-h3-4dg">
                         <rect key="frame" x="0.0" y="0.0" width="400" height="350"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2Jn-ep-r9Z">
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2Jn-ep-r9Z">
                                 <rect key="frame" x="0.0" y="0.0" width="400" height="350"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HiY-cC-YgE">
@@ -41,6 +41,11 @@
                                                     <constraint firstAttribute="height" constant="40" id="B42-W6-5v8"/>
                                                     <constraint firstAttribute="width" constant="40" id="iuC-Vq-1X3"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="20"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -51,13 +56,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wL1-bE-Puh">
-                                        <rect key="frame" x="50" y="0.0" width="350" height="350"/>
+                                        <rect key="frame" x="54" y="0.0" width="346" height="350"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fM1-Q4-FQP">
-                                                <rect key="frame" x="0.0" y="0.0" width="350" height="335"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="346" height="335"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9pU-dV-g6G">
-                                                        <rect key="frame" x="0.0" y="0.0" width="350" height="25"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="346" height="25"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="XQW-0z-faA">
                                                                 <rect key="frame" x="0.0" y="3" width="197.66666666666666" height="16.666666666666668"/>
@@ -86,7 +91,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o5S-pg-q1E">
-                                                                <rect key="frame" x="324" y="10" width="18" height="5"/>
+                                                                <rect key="frame" x="320" y="10" width="18" height="5"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="5" id="3T3-dD-wSv"/>
                                                                     <constraint firstAttribute="width" constant="18" id="g5C-Yh-oFm"/>
@@ -106,10 +111,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DRl-IW-ox8">
-                                                        <rect key="frame" x="0.0" y="30" width="350" height="19.666666666666671"/>
+                                                        <rect key="frame" x="0.0" y="30" width="346" height="19.666666666666671"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMK-hp-P9t">
-                                                                <rect key="frame" x="0.0" y="0.0" width="334" height="19.666666666666668"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="330" height="19.666666666666668"/>
                                                                 <string key="text">Seriously, can someone tell @pinsky to stop talking about Comic Sans. It’s getting annoying... Seriously, can someone tell @pinsky to stop talking about Comic Sans. It’s getting annoying... Seriously, can someone tell @pinsky to stop talking about Comic Sans. It’s getting annoying...</string>
                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                 <color key="textColor" red="0.18823529411764706" green="0.19607843137254902" blue="0.23529411764705882" alpha="1" colorSpace="calibratedRGB"/>
@@ -125,10 +130,15 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TQ3-f9-elc">
-                                                        <rect key="frame" x="0.0" y="54.666666666666657" width="350" height="249.99999999999997"/>
+                                                        <rect key="frame" x="0.0" y="54.666666666666657" width="346" height="249.99999999999997"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swat-dest" translatesAutoresizingMaskIntoConstraints="NO" id="Pdg-BW-wQ2">
-                                                                <rect key="frame" x="0.0" y="8" width="342" height="234"/>
+                                                                <rect key="frame" x="0.0" y="8" width="338" height="234"/>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
                                                             </imageView>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -141,16 +151,16 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cI1-Yq-LBn">
-                                                        <rect key="frame" x="0.0" y="309.66666666666669" width="350" height="25.333333333333314"/>
+                                                        <rect key="frame" x="0.0" y="309.66666666666669" width="346" height="25.333333333333314"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bRi-lx-Y1E">
-                                                                <rect key="frame" x="0.0" y="0.0" width="350" height="25.333333333333332"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="346" height="25.333333333333332"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8qq-2x-Q3q">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="25.333333333333332"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="25.333333333333332"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="tdS-Dl-K1J">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="25.333333333333332"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="25.333333333333332"/>
                                                                                 <subviews>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dXl-x9-SQg">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="25.333333333333332" height="25.333333333333332"/>
@@ -162,7 +172,7 @@
                                                                                         <state key="normal" image="Arrow---Top"/>
                                                                                     </button>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9,230" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OGJ-Nw-8vr">
-                                                                                        <rect key="frame" x="27.333333333333332" y="0.0" width="60.333333333333343" height="25.333333333333332"/>
+                                                                                        <rect key="frame" x="27.333333333333332" y="0.0" width="59.333333333333343" height="25.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                         <color key="textColor" red="0.41568627450980389" green="0.43137254901960786" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <nil key="highlightedColor"/>
@@ -179,10 +189,10 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fy4-l0-rFE">
-                                                                        <rect key="frame" x="87.666666666666657" y="0.0" width="87.333333333333343" height="25.333333333333332"/>
+                                                                        <rect key="frame" x="86.666666666666657" y="0.0" width="86.333333333333343" height="25.333333333333332"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Cnq-SF-glO">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="87.333333333333329" height="25.333333333333332"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="86.333333333333329" height="25.333333333333332"/>
                                                                                 <subviews>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6d-GD-uJ3">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25.333333333333332"/>
@@ -194,7 +204,7 @@
                                                                                         <state key="normal" image="comment-icon"/>
                                                                                     </button>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="11" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6Z-M4-qho">
-                                                                                        <rect key="frame" x="27.000000000000004" y="0.0" width="60.333333333333343" height="25.333333333333332"/>
+                                                                                        <rect key="frame" x="27.000000000000004" y="0.0" width="59.333333333333343" height="25.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                         <color key="textColor" red="0.41568627450000001" green="0.43137254899999999" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <nil key="highlightedColor"/>
@@ -211,10 +221,10 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ckK-8F-38Q">
-                                                                        <rect key="frame" x="175" y="0.0" width="87.666666666666686" height="25.333333333333332"/>
+                                                                        <rect key="frame" x="173" y="0.0" width="86.666666666666686" height="25.333333333333332"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="ocg-z7-eZ0">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="25.333333333333332"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="86.666666666666671" height="25.333333333333332"/>
                                                                                 <subviews>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kPy-Av-uxe">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="25.333333333333332" height="25.333333333333332"/>
@@ -226,7 +236,7 @@
                                                                                         <state key="normal" image="save-icon"/>
                                                                                     </button>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Save" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Aw-5t-Z9v">
-                                                                                        <rect key="frame" x="27.333333333333346" y="0.0" width="60.333333333333343" height="25.333333333333332"/>
+                                                                                        <rect key="frame" x="27.333333333333346" y="0.0" width="59.333333333333343" height="25.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                         <color key="textColor" red="0.41568627450000001" green="0.43137254899999999" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <nil key="highlightedColor"/>
@@ -243,10 +253,10 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="86Q-K5-r8s">
-                                                                        <rect key="frame" x="262.66666666666669" y="0.0" width="87.333333333333314" height="25.333333333333332"/>
+                                                                        <rect key="frame" x="259.66666666666669" y="0.0" width="86.333333333333314" height="25.333333333333332"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="zgw-LX-Qcz">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="87.333333333333329" height="25.333333333333332"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="86.333333333333329" height="25.333333333333332"/>
                                                                                 <subviews>
                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z3w-Ne-IHW">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="25" height="25.333333333333332"/>
@@ -258,7 +268,7 @@
                                                                                         <state key="normal" image="share-feed-icon"/>
                                                                                     </button>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="raV-Bb-gY6">
-                                                                                        <rect key="frame" x="27.000000000000004" y="0.0" width="60.333333333333343" height="25.333333333333332"/>
+                                                                                        <rect key="frame" x="27.000000000000004" y="0.0" width="59.333333333333343" height="25.333333333333332"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                         <color key="textColor" red="0.41568627450000001" green="0.43137254899999999" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                                                         <nil key="highlightedColor"/>
@@ -318,8 +328,13 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="commentCountLabel" destination="n6Z-M4-qho" id="yoJ-xp-e4u"/>
                 <outlet property="imgView" destination="Pdg-BW-wQ2" id="UB8-mB-ymm"/>
                 <outlet property="imgbgView" destination="TQ3-f9-elc" id="tR9-mj-7u6"/>
+                <outlet property="likeCountLabel" destination="OGJ-Nw-8vr" id="dvQ-gc-tOb"/>
+                <outlet property="nameLabel" destination="upy-Ts-cjI" id="AOS-pA-9D9"/>
+                <outlet property="postLabel" destination="iMK-hp-P9t" id="8B2-hx-Zkr"/>
+                <outlet property="userImageView" destination="EiU-2k-7TY" id="1zE-AL-b1f"/>
             </connections>
             <point key="canvasLocation" x="-114.50381679389312" y="19.718309859154932"/>
         </tableViewCell>

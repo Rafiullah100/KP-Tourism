@@ -70,3 +70,9 @@ enum PostType {
     case post
     case story
 }
+
+enum ProfileSection: CaseIterable {
+    case post
+    case product
+    case blog
+}

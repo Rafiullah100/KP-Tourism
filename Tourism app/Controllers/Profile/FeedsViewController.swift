@@ -24,12 +24,19 @@ class FeedsViewController: UIViewController {
         }
     }
     
+    var newsFeed: [FeedModel]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
         tableView.rowHeight = UITableView.automaticDimension
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        fetchFeeds(route: .fetchFeeds, method: .post, model: NewsFeedModel.self)
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -44,6 +51,21 @@ class FeedsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    
+    func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let feeds):
+                DispatchQueue.main.async {
+                    self.newsFeed = (feeds as! NewsFeedModel).feeds
+                    self.tableView.reloadData()
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
 
@@ -72,14 +94,12 @@ extension FeedsViewController: UICollectionViewDelegateFlowLayout{
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return newsFeed?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
-        if indexPath.row == 1 {
-            cell.imgbgView.isHidden = true
-        }
+        cell.feed = newsFeed?[indexPath.row]
         return cell
     }
 }

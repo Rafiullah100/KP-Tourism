@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class BlogDetailViewController: BaseViewController {
 
+    @IBOutlet weak var commentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var commentTextView: UITextView!{
@@ -36,6 +37,21 @@ class BlogDetailViewController: BaseViewController {
         }
     }
     
+    lazy var customAccessoryView: KeyboardInputAccessoryView = {
+        return Bundle.main.loadNibNamed("KeyboardInputAccessoryView", owner: nil)![0] as! KeyboardInputAccessoryView
+    }()
+
+//    private lazy var keyboardView: KeyboardInputAccessoryView = {
+//        return KeyboardInputAccessoryView.view(controller: self)
+//    }()
+//    override var inputAccessoryView: UIView? {
+//        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
+//    }
+//    override var canBecomeFirstResponder: Bool {
+//        return keyboardView.canBecomeFirstResponder
+//    }
+    
+    
     var currentPage = 1
     var totalCount = 1
     var limit = 10
@@ -44,10 +60,10 @@ class BlogDetailViewController: BaseViewController {
         super.viewDidLoad()
         scrollView.delegate = self
         tableView.estimatedRowHeight = 0
-        
+        customAccessoryView.delegate = self
+        commentTextView.inputAccessoryView = customAccessoryView
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
-        
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = blogDetail?.title
@@ -72,6 +88,7 @@ class BlogDetailViewController: BaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
@@ -154,34 +171,38 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
 }
 
 extension BlogDetailViewController: UITextViewDelegate {
-    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-//        print("Content Height \(self.textView.contentSize.height) ")
-//        if(self.textView.contentSize.height < self.textHeightConstraint.constant) {
-//            self.textEntry.isScrollEnabled = false
-//        } else {
-//            self.textEntry.isScrollEnabled = true
+//    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+////        print("Content Height \(self.textView.contentSize.height) ")
+////        if(self.textView.contentSize.height < self.textHeightConstraint.constant) {
+////            self.textEntry.isScrollEnabled = false
+////        } else {
+////            self.textEntry.isScrollEnabled = true
+////        }
+////        toolBarHeight.constant = textView.contentSize.height + 20
+//        if text == "\n" {
+//            textView.resignFirstResponder()
+//            doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": textView.text ?? ""], model: SuccessModel.self)
 //        }
-//        toolBarHeight.constant = textView.contentSize.height + 20
-        if text == "\n" {
-            textView.resignFirstResponder()
-            doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": textView.text ?? ""], model: SuccessModel.self)
-        }
-        return true
-    }
-    
+//        return true
+//    }
+
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if commentTextView.textColor == UIColor.lightGray || commentTextView.text == "Message.." {
-            commentTextView.text = nil
-            textView.textColor = UIColor.black
-        }
+//        if commentTextView.textColor == UIColor.lightGray || commentTextView.text == "Message.." {
+//            commentTextView.text = nil
+//            textView.textColor = UIColor.black
+//        }
+
         
         if !(UserDefaults.standard.isLoginned ?? false) {
             commentTextView.resignFirstResponder()
             Switcher.presentLoginVC(delegate: self)
             return
         }
+        else{
+            commentView.isHidden = true
+        }
     }
-    
+
     func textViewDidEndEditing(_ textView: UITextView) {
         if commentTextView.text.isEmpty {
             commentTextView.text = "Message.."
@@ -198,5 +219,30 @@ extension BlogDetailViewController: UIScrollViewDelegate{
                 reloadComment()
             }
         }
+    }
+}
+
+//extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
+//    func scrollView() -> UIScrollView {
+//        return UIScrollView()
+//    }
+//
+//    func send(data type: String) {
+//        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": textView.text ?? ""], model: SuccessModel.self)
+//    }
+//
+//}
+
+extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
+    
+    func send(textView: UITextView) {
+        commentTextView.resignFirstResponder()
+        textView.resignFirstResponder()
+        commentView.isHidden = false
+//        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
+    }
+    
+    func scroll() -> UIScrollView {
+       return UIScrollView()
     }
 }

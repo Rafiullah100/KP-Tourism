@@ -27,5 +27,7 @@ pod 'GoogleSignIn'
 pod 'MapboxMaps'
 pod 'MapboxNavigation', '~> 2.9'
 pod 'Mapbox-iOS-SDK', '~> 4.9'
+#pod 'Alamofire'
+pod 'Alamofire', '~> 5.0.0-rc.2'
 
 end

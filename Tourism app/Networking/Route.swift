@@ -39,6 +39,9 @@ enum Route {
     case likeApi
     case districtCategoriesApi
     case districtListApi
+    case fetchFeeds
+    case postApi
+    case fetchProfile
 
     var description: String {
         switch self {
@@ -100,6 +103,12 @@ enum Route {
             return "api/mobile/districts/getcategories"
         case .districtListApi:
             return "api/mobile/districts/list"
+        case .fetchFeeds:
+            return "api/mobile/users/feeds"
+        case .postApi:
+            return "api/mobile/users/create_post?images&description"
+        case .fetchProfile:
+            return "api/mobile/users/profile"
         }
     }
 }

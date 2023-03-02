@@ -18,6 +18,7 @@ class ExploreTableViewCell: UITableViewCell {
     
     @IBOutlet weak var kpLabel: UILabel!
     var imageSDWebImageSrc = [SDWebImageSource]()
+    var slideArray = [String]()
     
     var district: ExploreDistrict? {
         didSet{
@@ -28,10 +29,18 @@ class ExploreTableViewCell: UITableViewCell {
                 favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
             }
             districtLabel.text = district?.title
+            slideArray = []
+            slideArray.append(district?.thumbnailImage ?? "")
+            self.district?.attractions.forEach({ attration in
+                self.slideArray.append(attration.previewImage)
+            })
             imageSDWebImageSrc = []
             DispatchQueue.main.async {
-                self.district?.attractions.forEach({ attration in
-                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.previewImage))
+                for i in 0..<self.slideArray.count{
+                    if i > 2{
+                        break
+                    }
+                    let imageUrl = SDWebImageSource(urlString: Route.baseUrl + self.slideArray[i])
                     if let sdURL = imageUrl{
                         self.imageSDWebImageSrc.append(sdURL)
                         self.slideShow.slideshowInterval = 2.0
@@ -39,7 +48,7 @@ class ExploreTableViewCell: UITableViewCell {
                         self.slideShow.isUserInteractionEnabled = false
                         self.slideShow.setImageInputs(self.imageSDWebImageSrc)
                     }
-                })
+                }
             }
         }
     }
