@@ -9,6 +9,7 @@ import UIKit
 import ImageSlideshow
 class ArchTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var districtLabel: UILabel!
     @IBOutlet weak var archeologyLabel: UILabel!
@@ -27,10 +28,11 @@ class ArchTableViewCell: UITableViewCell {
     
     var archeology: Archeology? {
         didSet{
-            districtLabel.text = archeology?.attractions.title
-            archeologyLabel.text = archeology?.attractions.title
+            archeologyLabel.text = archeology?.attractions?.title?.stripOutHtml()
+            districtLabel.text = archeology?.attractions?.description?.stripOutHtml()
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             imageSDWebImageSrc = []
-//            archeology?.forEach({ attration in
+//            archeology?.attractions.forEach({ attration in
 //                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))
 //                if let sdURL = imageUrl{
 //                    imageSDWebImageSrc.append(sdURL)

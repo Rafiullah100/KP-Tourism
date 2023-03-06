@@ -31,6 +31,11 @@
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swat" translatesAutoresizingMaskIntoConstraints="NO" id="0d8-9F-FVd">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                <real key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -40,6 +45,11 @@
                                     <constraint firstAttribute="trailing" secondItem="0d8-9F-FVd" secondAttribute="trailing" id="TPG-SV-mH2"/>
                                     <constraint firstAttribute="bottom" secondItem="0d8-9F-FVd" secondAttribute="bottom" id="gxb-Ry-ofY"/>
                                 </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="umX-iX-pFM">
                                 <rect key="frame" x="0.0" y="220" width="320" height="80"/>
@@ -97,6 +107,7 @@
             <connections>
                 <outlet property="archeologyLabel" destination="6In-tB-x84" id="txD-T5-xGT"/>
                 <outlet property="districtLabel" destination="pga-pV-UEC" id="V1N-p3-py3"/>
+                <outlet property="imgView" destination="0d8-9F-FVd" id="PQj-7i-ccP"/>
             </connections>
             <point key="canvasLocation" x="147.82608695652175" y="-19.419642857142858"/>
         </tableViewCell>

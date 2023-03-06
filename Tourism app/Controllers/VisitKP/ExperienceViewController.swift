@@ -19,7 +19,6 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
             bgImageView.sd_setImage(with: URL(string: Route.baseUrl + (experience?.icon ?? "")))
         }
     }
-    
     override var isSelected: Bool{
         didSet{
             selectedImgView.isHidden = isSelected ? false : true
@@ -40,7 +39,9 @@ class ExperienceViewController: BaseViewController {
    
     var districtCategries: [DistrictCategorory]?
     var isSelected: Bool?
-
+    var experienceId: Int?
+    var geoTypeId: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
@@ -69,12 +70,12 @@ class ExperienceViewController: BaseViewController {
     
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
-            Switcher.gotoTourDestinationVC(delegate: self)
+            Switcher.gotoTourDestinationVC(delegate: self, experienceID: experienceId ?? 0, geoTypeID: geoTypeId ?? "")
         }
     }
+    
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
-
     }
 }
 
@@ -91,6 +92,7 @@ extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        Switcher.gotoTourDestinationVC(delegate: self)
+        experienceId = districtCategries?[indexPath.row].id
         isSelected = true
         UserDefaults.standard.experience = districtCategries?[indexPath.row].title
     }

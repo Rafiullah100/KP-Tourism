@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SDWebImage
 class StatusCollectionViewCell: UICollectionViewCell {
 
     enum FeedCellType {
@@ -16,6 +16,7 @@ class StatusCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var statusImageView: UIImageView!
     
+    @IBOutlet weak var imgView: UIImageView!
     var cellType: FeedCellType? {
         didSet{
             switch cellType {
@@ -31,6 +32,12 @@ class StatusCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var stories: FeedStories? {
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (stories?.post_images?[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")))
+            label.text = stories?.users?.name
+        }
+    }
     
     
     override func awakeFromNib() {

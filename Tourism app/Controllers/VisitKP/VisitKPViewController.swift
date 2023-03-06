@@ -26,7 +26,6 @@ class AreaTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         selectedImgView.isHidden = selected ? false : true
     }
-
 }
 
 class VisitKPViewController: BaseViewController {
@@ -40,7 +39,8 @@ class VisitKPViewController: BaseViewController {
     }
     
     var isSelected: Bool?
-    
+    var geoTypeId: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -55,7 +55,7 @@ class VisitKPViewController: BaseViewController {
     
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
-            Switcher.gotoVisitExpVC(delegate: self)
+            Switcher.gotoVisitExpVC(delegate: self, geoTypeId: geoTypeId ?? "")
         }
     }
 }
@@ -76,6 +76,7 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        Switcher.gotoVisitExpVC(delegate: self)
+        geoTypeId = Constants.visitkpArray[indexPath.row].geoTypeID
         isSelected = true
         UserDefaults.standard.area = Constants.visitkpArray[indexPath.row].title
     }

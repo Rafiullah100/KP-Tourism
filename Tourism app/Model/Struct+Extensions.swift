@@ -27,6 +27,7 @@ struct VisitArea {
     let image: String
     let background: String
     let title: String
+    let geoTypeID: String
 }
 
 struct Contacts {

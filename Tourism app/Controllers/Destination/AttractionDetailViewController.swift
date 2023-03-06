@@ -10,7 +10,7 @@ import MapboxDirections
 import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxMaps
-
+import SVProgressHUD
 class AttractionDetailViewController: BaseViewController {
 
     @IBOutlet weak var thumbnail: UIImageView!
@@ -58,7 +58,9 @@ class AttractionDetailViewController: BaseViewController {
         let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), name: "")
         
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        SVProgressHUD.show(withStatus: "Please wait...")
+        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+            SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

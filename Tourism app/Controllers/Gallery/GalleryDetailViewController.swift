@@ -191,9 +191,9 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         case .image:
             gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-            gridCell.imageView.image = UIImage(named: "placeholder")
+            gridCell.imageView.image = UIImage(named: "thumbnail.jpg")
         case .virtual:
-            gridCell.imageView.image = UIImage(named: "placeholder")
+            gridCell.imageView.image = UIImage(named: "thumbnail.jpg")
         default:
             return gridCell
         }
@@ -206,9 +206,9 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         case .image:
             parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
         case .video:
-            parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
+            parallaxCell.parallaxImageView.image = UIImage(named: "thumbnail.jpg")
         case .virtual:
-            parallaxCell.parallaxImageView.image = UIImage(named: "placeholder")
+            parallaxCell.parallaxImageView.image = UIImage(named: "thumbnail.jpg")
         default:
             return parallaxCell
         }

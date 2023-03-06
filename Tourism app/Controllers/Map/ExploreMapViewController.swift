@@ -11,6 +11,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import CoreLocation
 import Mapbox
+import SVProgressHUD
 class ExploreMapViewController: UIViewController {
     
     var exploreDistrict: [ExploreDistrict]?
@@ -57,28 +58,28 @@ extension ExploreMapViewController: MGLMapViewDelegate{
             print(district.latitude, district.longitude)
             guard let lat = Double(district.latitude), let lon = Double(district.longitude)  else { return }
             let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: district.title, subtitle: district.locationTitle, image: UIImage(named: "dummy") ?? UIImage())
-//            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            //            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             mapView.addAnnotation(point)
         })
     }
-
-
+    
+    
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
         return true
     }
-
+    
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         return nil
     }
-//
-//    private func mapView(_ mapView: MGLMapView, calloutViewFor annotation: CustomAnnotation) -> MGLCalloutView? {
-//        let title = annotation.title ?? nil
-//        let subtitle = annotation.subtitle ?? nil
-//        let image = UIImage(named: "dummy")!
-//        let customAnnotation = CustomAnnotation(coordinate: annotation.coordinate, title: title ?? "", subtitle: subtitle ?? "", image: image)
-//        mapView.setCenter(CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), zoomLevel: 7, animated: false)
-//        return MarkerView(annotation: customAnnotation, annotationPoint: mapView.convert(annotation.coordinate, toPointTo: nil))
-//    }
+    //
+    //    private func mapView(_ mapView: MGLMapView, calloutViewFor annotation: CustomAnnotation) -> MGLCalloutView? {
+    //        let title = annotation.title ?? nil
+    //        let subtitle = annotation.subtitle ?? nil
+    //        let image = UIImage(named: "dummy")!
+    //        let customAnnotation = CustomAnnotation(coordinate: annotation.coordinate, title: title ?? "", subtitle: subtitle ?? "", image: image)
+    //        mapView.setCenter(CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), zoomLevel: 7, animated: false)
+    //        return MarkerView(annotation: customAnnotation, annotationPoint: mapView.convert(annotation.coordinate, toPointTo: nil))
+    //    }
     
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
         guard let originCoordinate = originCoordinate else { return  }
@@ -87,14 +88,16 @@ extension ExploreMapViewController: MGLMapViewDelegate{
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
         
         // Request a route using MapboxDirections.swift
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+
+        SVProgressHUD.show(withStatus: "Please wait...")
+        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+            SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let response):
                 guard let self = self else { return }
-                // Pass the first generated route to the the NavigationViewController
-                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
+                let viewController = NavigationViewController(for: IndexedRouteResponse(routeResponse: response, routeIndex: 0))
                 viewController.modalPresentationStyle = .fullScreen
                 self.present(viewController, animated: true, completion: nil)
             }

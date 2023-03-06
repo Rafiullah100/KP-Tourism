@@ -87,7 +87,7 @@ class HomeViewController: BaseViewController {
         notificationView.layer.shadowOpacity = 1
         notificationView.layer.shadowOffset = .zero
         notificationView.layer.shadowRadius = 10
-        
+        textField.inputAccessoryView = UIView()
         textField.delegate = self
         shadow()
         type = .back1
@@ -147,6 +147,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .explore:
             siteLabel.text = "\(exploreDistrict.count) Explore Sites"
             return exploreDistrict.count
+        case .investment:
+            return 4
         case .attraction:
             return attractionDistrict.count
         case .adventure:
@@ -158,7 +160,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .event:
             return (model as? EventsModel)?.events.count ?? 0
         case .arch:
-            return (model as? ArcheologyModel)?.archeology.count ?? 0
+            return (model as? ArcheologyModel)?.archeology?.count ?? 0
         case .blog:
             return (model as? BlogsModel)?.blog.count ?? 0
         case .product:
@@ -178,6 +180,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             cell.actionBlock = {
                 self.like(route: .likeApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id, "section": "district"], model: SuccessModel.self, exploreCell: cell)
             }
+            return cell
+        case .investment:
+            let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
             return cell
         case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
@@ -205,7 +210,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .arch:
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
-            cell.archeology = (model as? ArcheologyModel)?.archeology[indexPath.row]
+            cell.archeology = (model as? ArcheologyModel)?.archeology?[indexPath.row]
             return cell
         case .blog:
             let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
@@ -262,7 +267,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension HomeViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
-        if item.tag == 2{
+        if item.tag == 3{
             galleryContainer.isHidden = false
             tableViewContainer.isHidden = true
         }
@@ -301,35 +306,39 @@ extension HomeViewController: MDCTabBarViewDelegate{
         //        }
         else if tag == 1{
             mapButton.isHidden = true
+            cellType = .investment
+        }
+        else if tag == 2{
+            mapButton.isHidden = true
             cellType = .tour
             fetch(route: .fetchTourPackage, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: TourModel.self)
         }
-        else if tag == 2{
+        else if tag == 3{
             mapButton.isHidden = true
             self.add(galleryVC, in: galleryContainer)
             fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
         }
-        else if tag == 3{
+        else if tag == 4{
             mapButton.isHidden = true
             cellType = .arch
             fetch(route: .fetchArcheology, method: .post, parameters: ["limit": 30, "page": 1], model: ArcheologyModel.self)
         }
-        else if tag == 4{
+        else if tag == 5{
             mapButton.isHidden = true
             cellType = .event
             fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
         }
-        else if tag == 5{
+        else if tag == 6{
             mapButton.isHidden = true
             cellType = .blog
             fetch(route: .fetchBlogs, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: BlogsModel.self)
         }
-        else if tag == 6{
+        else if tag == 7{
             mapButton.isHidden = true
             cellType = .product
             fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? ""], model: ProductModel.self)
         }
-        else if tag == 7{
+        else if tag == 8{
             mapButton.isHidden = true
             cellType = .visitKP
             fetch(route: .fetchVisitKp, method: .post, model: VisitKPModel.self)

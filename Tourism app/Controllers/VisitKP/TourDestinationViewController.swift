@@ -20,6 +20,8 @@ class TourAccomodatioCell: UITableViewCell {
         }
     }
     
+    var experienceID: Int?
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedImgView.isHidden = selected ? false : true
@@ -40,19 +42,18 @@ class TourDestinationViewController: BaseViewController {
     
     var districtList: [DistrictsListRow]?
     var isSelected: Bool?
-    
+    var geoTypeId: String?
+    var experienceId: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        
 //        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
 //        tableView.reloadData()
 //        tableView.layoutIfNeeded()
 //        tableViewHeight.constant = tableView.contentSize.height
-        
-        fetchList(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
+        fetchList(route: .districtListApi, method: .post, parameters: ["limit": 50, "district_category_id": experienceId ?? 0, "geoType": geoTypeId ?? ""], model: DistrictListModel.self)
     }
     
     func fetchList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

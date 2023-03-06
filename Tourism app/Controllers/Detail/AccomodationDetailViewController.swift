@@ -12,7 +12,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import MapboxMaps
 import CoreLocation
-
+import SVProgressHUD
 class AccomodationDetailViewController: BaseViewController {
   
     @IBOutlet weak var statusBarView: UIView!
@@ -85,7 +85,9 @@ class AccomodationDetailViewController: BaseViewController {
         let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), name: "")
         
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        SVProgressHUD.show(withStatus: "Please wait...")
+        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+            SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)

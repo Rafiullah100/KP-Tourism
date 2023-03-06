@@ -27,6 +27,8 @@ struct Constants {
     static var kpkCoordinates = Coordinates(lat: 34.9526, long: 72.3311)
     
     static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"
+    static var mapboxPublicKey = "pk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGR6cWN2YmUxNDBhM29waDRyM3B6ZHE3In0.Dz1OdPdSp56h072TorpygA"
+
     
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
@@ -41,7 +43,7 @@ struct Constants {
     static let section =  [Sections(title: "Home", image: "explore", selectedImage: "explore-s"),
 //              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
 //              Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-//              Sections(title: "South KP", image: "south", selectedImage: "south-s"),
+              Sections(title: "Investment", image: "investment", selectedImage: "investment-s"),
               Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
@@ -53,7 +55,7 @@ struct Constants {
     
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]
     
-    static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED"), VisitArea(image: "south-map", background: "south-bg", title: "SOUTH")]
+    static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH", geoTypeID: "Northern"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND", geoTypeID: "Mid-Land"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED", geoTypeID: "Merged"), VisitArea(image: "south-map", background: "south-bg", title: "SOUTH", geoTypeID: "Southern")]
     
     
     static let visitExperienceArray = [Destination(image: "river-bg", title: "RIVER"), Destination(image: "lake-bg", title: "LAKE"), Destination(image: "mountain-bg", title: "MOUNTAIN"), Destination(image: "ruins-bg", title: "RUINS"), Destination(image: "desert-bg", title: "DESERTS"), Destination(image: "hills-bg", title: "HILLS")]

@@ -13,7 +13,7 @@ import MapboxDirections
 import MapboxCoreNavigation
 import MapboxNavigation
 import CoreLocation
-
+import SVProgressHUD
 
 class GettingHereViewController: BaseViewController {
     enum Travel {
@@ -112,7 +112,9 @@ class GettingHereViewController: BaseViewController {
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
         
         // Request a route using MapboxDirections.swift
-        Directions.shared.calculate(routeOptions) { [weak self] (session, result) in
+        SVProgressHUD.show(withStatus: "Please wait...")
+        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+            SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
