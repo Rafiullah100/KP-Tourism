@@ -12,11 +12,22 @@ class TourAccomodatioCell: UITableViewCell {
     @IBOutlet weak var selectedImgView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var imgView: UIImageView!
+    @IBOutlet weak var imageBGView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     
     var list: DistrictsListRow? {
         didSet {
             label.text = list?.title
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (list?.thumbnail_image ?? "")))
+            
+            bottomView.clipsToBounds = true
+            bottomView.layer.cornerRadius = 10
+            bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+            imageBGView.clipsToBounds = true
+            imageBGView.layer.cornerRadius = 10
+            imageBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            bottomView.viewShadow()
         }
     }
     

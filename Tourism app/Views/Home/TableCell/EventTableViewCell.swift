@@ -20,7 +20,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var counterView: UIView!
     var event: EventListModel?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (event?.thumbnailImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (event?.previewImage ?? "")))
             titleLabel.text = event?.title
             typeLabel.text = event?.locationTitle
             opendateLabel.text = "\(event?.startDate ?? "") | \(event?.isExpired ?? "")"

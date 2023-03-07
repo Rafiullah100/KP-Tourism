@@ -24,13 +24,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mPJ-5u-raz">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WQ4-XK-ie7">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="205"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swat" translatesAutoresizingMaskIntoConstraints="NO" id="0d8-9F-FVd">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="220"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="205"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
                                                 <real key="value" value="10"/>
@@ -52,7 +52,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="umX-iX-pFM">
-                                <rect key="frame" x="0.0" y="220" width="320" height="80"/>
+                                <rect key="frame" x="0.0" y="205" width="320" height="80"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="RJh-7R-I7I">
                                         <rect key="frame" x="10" y="10" width="300" height="60"/>
@@ -96,18 +96,25 @@
                 <constraints>
                     <constraint firstItem="AKN-hm-uz9" firstAttribute="top" secondItem="ead-0f-DoR" secondAttribute="top" constant="10" id="4uO-FX-6SI"/>
                     <constraint firstItem="mPJ-5u-raz" firstAttribute="leading" secondItem="ead-0f-DoR" secondAttribute="leading" id="LFL-by-go2"/>
-                    <constraint firstAttribute="bottom" secondItem="mPJ-5u-raz" secondAttribute="bottom" id="Ysl-pc-YUf"/>
+                    <constraint firstAttribute="bottom" secondItem="mPJ-5u-raz" secondAttribute="bottom" constant="15" id="Ysl-pc-YUf"/>
                     <constraint firstItem="mPJ-5u-raz" firstAttribute="top" secondItem="ead-0f-DoR" secondAttribute="top" id="ZFs-ah-cfx"/>
                     <constraint firstAttribute="trailing" secondItem="mPJ-5u-raz" secondAttribute="trailing" id="eWR-iA-oIS"/>
                     <constraint firstAttribute="trailing" secondItem="AKN-hm-uz9" secondAttribute="trailing" constant="10" id="w2r-5E-tsG"/>
                 </constraints>
+                <userDefinedRuntimeAttributes>
+                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                        <real key="value" value="10"/>
+                    </userDefinedRuntimeAttribute>
+                </userDefinedRuntimeAttributes>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="3lG-1T-oHz"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="archeologyLabel" destination="6In-tB-x84" id="txD-T5-xGT"/>
+                <outlet property="bottomView" destination="umX-iX-pFM" id="kNY-bp-nah"/>
                 <outlet property="districtLabel" destination="pga-pV-UEC" id="V1N-p3-py3"/>
-                <outlet property="imgView" destination="0d8-9F-FVd" id="PQj-7i-ccP"/>
+                <outlet property="imgBGView" destination="WQ4-XK-ie7" id="8P3-SX-l8R"/>
+                <outlet property="imgView" destination="0d8-9F-FVd" id="O6z-t4-IUP"/>
             </connections>
             <point key="canvasLocation" x="147.82608695652175" y="-19.419642857142858"/>
         </tableViewCell>

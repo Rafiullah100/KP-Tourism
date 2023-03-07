@@ -13,10 +13,22 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var selectedImgView: UIImageView!
 
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var imageBG: UIView!
     var experience: DistrictCategorory? {
         didSet {
             label.text = experience?.title
             bgImageView.sd_setImage(with: URL(string: Route.baseUrl + (experience?.icon ?? "")))
+            
+            bottomView.clipsToBounds = true
+            bottomView.layer.cornerRadius = 10
+            bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+            imageBG.clipsToBounds = true
+            imageBG.layer.cornerRadius = 10
+            imageBG.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            bottomView.viewShadow()
+
         }
     }
     override var isSelected: Bool{
@@ -24,6 +36,8 @@ class VisitExperienceCollectionViewCell: UICollectionViewCell {
             selectedImgView.isHidden = isSelected ? false : true
         }
     }
+    
+    
 }
 
 class ExperienceViewController: BaseViewController {

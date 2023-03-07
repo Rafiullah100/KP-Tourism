@@ -30,7 +30,7 @@ class ExploreTableViewCell: UITableViewCell {
             }
             districtLabel.text = district?.title
             slideArray = []
-            slideArray.append(district?.thumbnailImage ?? "")
+            slideArray.append(district?.previewImage ?? "")
             self.district?.attractions.forEach({ attration in
                 self.slideArray.append(attration.previewImage)
             })

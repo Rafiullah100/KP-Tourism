@@ -143,6 +143,13 @@ extension UIView {
 //        gradientLayer.colors = [UIColor(hex: "#327425"), UIColor(hex: "#084F24")]
 //        self.layer.addSublayer(gradientLayer)
 //    }
+    
+    func viewShadow() {
+       layer.masksToBounds = false
+       layer.shadowColor = UIColor.lightGray.cgColor
+       layer.shadowOffset = CGSize(width: 1.0, height: 1.0)
+       layer.shadowOpacity = 0.5
+    }
 }
 
 extension UIColor{

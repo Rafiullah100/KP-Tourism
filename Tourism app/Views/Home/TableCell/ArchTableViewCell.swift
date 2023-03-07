@@ -9,6 +9,8 @@ import UIKit
 import ImageSlideshow
 class ArchTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var imgBGView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var districtLabel: UILabel!
@@ -32,6 +34,8 @@ class ArchTableViewCell: UITableViewCell {
             districtLabel.text = archeology?.attractions?.description?.stripOutHtml()
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             imageSDWebImageSrc = []
+            bottomView.viewShadow()
+//            imgBGView.roundCorners(corners: [.topRight, .topLeft], radius: 10)
 //            archeology?.attractions.forEach({ attration in
 //                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))
 //                if let sdURL = imageUrl{

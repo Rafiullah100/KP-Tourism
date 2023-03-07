@@ -102,6 +102,7 @@ class Helper{
     }
     
     
+    
 //    public func gradient(view: UIView){
 //        let gradientLayer = CAGradientLayer()
 //        gradientLayer.frame = view.bounds

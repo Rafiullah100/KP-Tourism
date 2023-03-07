@@ -25,7 +25,7 @@ class ProductTableViewCell: UITableViewCell {
     
     var product: LocalProduct?{
         didSet{
-            thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = "\(product?.title ?? "")"
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
             ownerNameLAbel.text = "\(product?.users.name ?? "")"

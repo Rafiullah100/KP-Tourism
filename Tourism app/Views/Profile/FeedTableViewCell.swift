@@ -18,10 +18,13 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var commentCountLabel: UILabel!
     @IBOutlet weak var textView: ReadMoreTextView!
+    @IBOutlet weak var threeDotButton: UIButton!
+    
+    var actionBlock: (() -> Void)? = nil
     
     var feed: FeedModel? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postImages[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postImages[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
             textView.text = feed?.description
             nameLabel.text = feed?.users.name
             userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users.profileImage ?? "")))
@@ -42,4 +45,7 @@ class FeedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func threeDotBtnAction(_ sender: Any) {
+        actionBlock?()
+    }
 }

@@ -78,15 +78,8 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        searchBgView.layer.shadowColor = UIColor.black.cgColor
-//        searchBgView.layer.shadowOffset = CGSize(width: 1, height: 1)
-//        searchBgView.layer.shadowOpacity = 0.4
-//        searchBgView.layer.shadowRadius = 2.0
-        notificationView.layer.cornerRadius = 20
-        notificationView.layer.shadowColor = UIColor.black.cgColor
-        notificationView.layer.shadowOpacity = 1
-        notificationView.layer.shadowOffset = .zero
-        notificationView.layer.shadowRadius = 10
+        searchBgView.viewShadow()
+        notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
         textField.delegate = self
         shadow()
@@ -148,7 +141,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             siteLabel.text = "\(exploreDistrict.count) Explore Sites"
             return exploreDistrict.count
         case .investment:
-            return 4
+            return (model as? InvestmentModel)?.investments.rows.count ?? 0
         case .attraction:
             return attractionDistrict.count
         case .adventure:
@@ -182,7 +175,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             }
             return cell
         case .investment:
-            let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
+            let cell: InvestmentTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! InvestmentTableViewCell
+            cell.investment = (model as? InvestmentModel)?.investments.rows[indexPath.row]
             return cell
         case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
@@ -258,6 +252,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             else{
                 Switcher.goToWizardVC(delegate: self, visitDetail: (model as! VisitKPModel).attractions.rows[indexPath.row])
             }
+        case .investment:
+            guard let urlString = (model as? InvestmentModel)?.investments.rows[indexPath.row].fileURL else {
+                return
+            }
+            Switcher.gotoPDFViewer(delegate: self, url: urlString)
         default:
             break
         }
@@ -307,6 +306,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 1{
             mapButton.isHidden = true
             cellType = .investment
+            fetch(route: .fetchInvestment, method: .post, model: InvestmentModel.self)
         }
         else if tag == 2{
             mapButton.isHidden = true

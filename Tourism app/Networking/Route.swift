@@ -42,6 +42,7 @@ enum Route {
     case fetchFeeds
     case postApi
     case fetchProfile
+    case fetchInvestment
 
     var description: String {
         switch self {
@@ -109,6 +110,8 @@ enum Route {
             return "api/mobile/users/create_post?images&description"
         case .fetchProfile:
             return "api/mobile/users/profile"
+        case .fetchInvestment:
+            return "api/mobile/investments/list"
         }
     }
 }

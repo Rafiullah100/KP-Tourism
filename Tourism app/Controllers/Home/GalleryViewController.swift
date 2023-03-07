@@ -71,7 +71,7 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         case videoCollectionView:
             return self.gallery?.videos?.count ?? 0
         case virtualCollectionView:
-            return 5
+            return self.gallery?.virtual_tours?.count ?? 0
         default:
             return 0
         }
@@ -89,6 +89,7 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
             return cell
         case virtualCollectionView:
             let cell: VirtualCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: VirtualCollectionViewCell.cellIdentifier, for: indexPath) as! VirtualCollectionViewCell
+            cell.images = gallery?.virtual_tours?.rows?[indexPath.row]
             return cell
         default:
             return UICollectionViewCell()

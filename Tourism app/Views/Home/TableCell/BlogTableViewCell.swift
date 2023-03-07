@@ -17,12 +17,11 @@ class BlogTableViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     var blog: Blog?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.thumbnailImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.previewImage ?? "")))
             titleLabel.text = blog?.title
             commentsLabel.text = "\(blog?.comments.commentsCount ?? 0)"
             likesLabel.text = "\(blog?.likes.likesCount ?? 0)"
             locationLabel.text = "\(blog?.districts.title ?? ""), \(blog?.attractions.title ?? "")"
-            
         }
     }
     

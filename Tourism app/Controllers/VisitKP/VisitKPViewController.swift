@@ -9,6 +9,8 @@ import UIKit
 
 class AreaTableViewCell: UITableViewCell {
     //
+    @IBOutlet weak var imgBGView: UIView!
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     
@@ -19,8 +21,19 @@ class AreaTableViewCell: UITableViewCell {
             imgView.image = UIImage(named: area?.image ?? "")
             nameLabel.text = area?.title
             bgImageView.image = UIImage(named: area?.background ?? "")
+            
+            bottomView.clipsToBounds = true
+            bottomView.layer.cornerRadius = 10
+            bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+            imgBGView.clipsToBounds = true
+            imgBGView.layer.cornerRadius = 10
+            imgBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            
+            bottomView.viewShadow()
         }
     }
+    
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

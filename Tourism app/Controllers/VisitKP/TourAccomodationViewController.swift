@@ -13,9 +13,27 @@ class TravelAccomodation: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var selectedImgView: UIImageView!
     
+    @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var imageBGView: UIView!
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         selectedImgView.isHidden = selected ? false : true
+    }
+    
+    var travel: Destination? {
+        didSet {
+            imgView.image = UIImage(named: travel?.image ?? "")
+            label.text = travel?.title
+            
+            bottomView.clipsToBounds = true
+            bottomView.layer.cornerRadius = 10
+            bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+            imageBGView.clipsToBounds = true
+            imageBGView.layer.cornerRadius = 10
+            imageBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            bottomView.viewShadow()
+        }
     }
 }
 
@@ -62,8 +80,7 @@ extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSo
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TravelAccomodation = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! TravelAccomodation
-        cell.imgView.image = UIImage(named: Constants.traveleAccomodation[indexPath.row].image)
-        cell.label.text = Constants.traveleAccomodation[indexPath.row].title
+        cell.travel = Constants.traveleAccomodation[indexPath.row]
         return cell
     }
     

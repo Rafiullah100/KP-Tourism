@@ -29,7 +29,7 @@ class TourTableViewCell: UITableViewCell {
                 favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
             }
             
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (tour?.thumbnail_image ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (tour?.preview_image ?? "")))
             label.text = tour?.title
             destinationLabel.text = tour?.to_districts?.title
             viewsLabel.text = "\(tour?.views_counter ?? 0)"

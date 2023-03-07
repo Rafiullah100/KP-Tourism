@@ -388,5 +388,27 @@ class Switcher {
         vc.postType = postType
         delegate.present(vc, animated: true, completion: nil)
     }
+    
+    static func gotoPDFViewer(delegate: UIViewController, url: String){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewPDFViewController") as! ViewPDFViewController
+        vc.urlString = url
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
+    static func presentBottomSheet(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.sheet.rawValue, bundle: nil).instantiateViewController(withIdentifier: "BottomSheetViewController") as! BottomSheetViewController
+        let nav = UINavigationController(rootViewController: vc)
+        if let sheet = nav.sheetPresentationController {
+            if #available(iOS 16.0, *) {
+                sheet.detents = [.custom(resolver: { context in
+                    return 250.0
+                })]
+            } else {
+                sheet.detents = [.medium()]
+            }
+        }
+        delegate.present(nav, animated: true, completion: nil)
+    }
 }
 

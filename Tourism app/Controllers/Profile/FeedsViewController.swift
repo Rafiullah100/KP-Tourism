@@ -25,12 +25,18 @@ class FeedsViewController: UIViewController {
     var newsFeed: [FeedModel]?
     var stories: [FeedStories]?
     var expandedCells = Set<Int>()
+    let pickerView = UIPickerView()
+
+    let setting = ["edit", "delete"]
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
         
+        pickerView.delegate = self
+        pickerView.dataSource = self
         tableView.estimatedRowHeight = 400.0
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -103,6 +109,12 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
+        
+        cell.actionBlock = {
+            Switcher.presentBottomSheet(delegate: self)
+        }
+
+        
         cell.feed = newsFeed?[indexPath.row]
         cell.textView.shouldTrim = !expandedCells.contains(indexPath.row)
         cell.textView.setNeedsUpdateTrim()
@@ -141,5 +153,23 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell: FeedTableViewCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
         cell.textView.shouldTrim = !cell.textView.shouldTrim
+    }
+}
+
+extension FeedsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return setting.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return setting[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print("selected")
     }
 }
