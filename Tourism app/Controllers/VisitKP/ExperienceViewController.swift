@@ -69,10 +69,7 @@ class ExperienceViewController: BaseViewController {
             case .success(let category):
                 DispatchQueue.main.async {
                     self.districtCategries = (category as! DistrictCatModel).districtCategorories
-                    self.collectionViewHeigh.constant = CGFloat.greatestFiniteMagnitude
                     self.collectionView.reloadData()
-                    self.collectionView.layoutIfNeeded()
-                    self.collectionViewHeigh.constant = self.collectionView.contentSize.height
                 }
             case .failure(let error):
                 if error == .noInternet {

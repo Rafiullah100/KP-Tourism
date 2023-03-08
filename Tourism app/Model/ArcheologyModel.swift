@@ -50,7 +50,6 @@ struct ArcheologyModel : Codable {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         archeology = try values.decodeIfPresent([Archeology].self, forKey: .archeology)
     }
-
 }
 
 // MARK: - Archeology

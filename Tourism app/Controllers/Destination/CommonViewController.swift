@@ -36,7 +36,6 @@ class CommonViewController: BaseViewController {
     var attraction: AttractionsDistrict?
     var archeology: Archeology?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -46,7 +45,7 @@ class CommonViewController: BaseViewController {
     }
     
     @IBAction func gotoAbout(_ sender: Any) {
-        Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction)
+        Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction, archeology: archeology)
     }
     
     func updateUI() {
@@ -60,23 +59,22 @@ class CommonViewController: BaseViewController {
         }
         if explore != nil{
             thumbnailTopLabel.text = explore?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
             descriptionLabel.text = explore?.description.stripOutHtml()
         }
         else if attraction != nil{
             thumbnailTopLabel.text = attraction?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(attraction?.title ?? "")"
             descriptionLabel.text = attraction?.description.stripOutHtml()
         }
-//        else if archeology != nil{
-//            thumbnailTopLabel.text = archeology?.title
-//            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
-//            welcomeLabel.text = "Welcome to \(archeology?.title ?? "")"
-//            descriptionLabel.text = archeology?.
-//        }
-        
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            welcomeLabel.text = "Welcome to \(archeology?.attractions?.title ?? "")"
+            descriptionLabel.text = archeology?.attractions?.description?.stripOutHtml()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -100,21 +98,21 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.row {
         case 0:
             guard let locationCategory = locationCategory else { return }
-            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 1:
-            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 2:
-            Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 3:
-            Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 4:
-            Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 5:
-            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image)
+            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image, archeology: archeology)
         case 6:
-            Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 7:
-            Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction)
+            Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         default:
             break
         }

@@ -23,6 +23,7 @@ class ItenrariesViewController: BaseViewController {
     var ItinraryDetail: ItinraryModel?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
+    var archeology: Archeology?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,6 +39,11 @@ class ItenrariesViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
             fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ItinraryModel.self)
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: ItinraryModel.self)
         }
     }
     

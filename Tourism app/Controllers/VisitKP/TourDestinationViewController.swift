@@ -43,7 +43,6 @@ class TourDestinationViewController: BaseViewController {
     
     @IBOutlet weak var forwardButton: UIButton!
     
-    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -55,15 +54,12 @@ class TourDestinationViewController: BaseViewController {
     var isSelected: Bool?
     var geoTypeId: String?
     var experienceId: Int?
-    
+    var districtID: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-//        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-//        tableView.reloadData()
-//        tableView.layoutIfNeeded()
-//        tableViewHeight.constant = tableView.contentSize.height
         fetchList(route: .districtListApi, method: .post, parameters: ["limit": 50, "district_category_id": experienceId ?? 0, "geoType": geoTypeId ?? ""], model: DistrictListModel.self)
     }
     
@@ -73,10 +69,8 @@ class TourDestinationViewController: BaseViewController {
             case .success(let model):
                 DispatchQueue.main.async {
                     self.districtList = (model as! DistrictListModel).districts?.rows
-                    self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-                    self.tableView.reloadData()
-                    self.tableView.layoutIfNeeded()
-                    self.tableViewHeight.constant = self.tableView.contentSize.height
+                    self.districtList?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+
                 }
             case .failure(let error):
                 print("Erorr \(error)")
@@ -87,7 +81,7 @@ class TourDestinationViewController: BaseViewController {
     
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
-            Switcher.gotoTourInformationVC(delegate: self)
+            Switcher.gotoTourInformationVC(delegate: self, districtID: districtID ?? 0)
         }
     }
     
@@ -112,6 +106,7 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        Switcher.gotoTourInformationVC(delegate: self)
+        districtID = districtList?[indexPath.row].id
         isSelected = true
         UserDefaults.standard.destination = districtList?[indexPath.row].title
     }

@@ -22,7 +22,6 @@ class InformationCell: UITableViewCell {
 class InformationViewController: BaseViewController {
 
     @IBOutlet weak var forwardButton: UIButton!
-    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -31,25 +30,22 @@ class InformationViewController: BaseViewController {
     }
     
     var isSelected: Bool?
-    
+    var districtID: Int?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        
-        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableViewHeight.constant = tableView.contentSize.height
+    
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
-        Switcher.gotoTourInformationVC(delegate: self)
+        self.navigationController?.popViewController(animated: true)
     }
     @IBAction func moveForwardBtn(_ sender: Any) {
         if isSelected == true{
-            Switcher.gotoTourAccomodationVC(delegate: self)
+            Switcher.gotoTourAccomodationVC(delegate: self, districtID: districtID ?? 0)
         }
     }
 }

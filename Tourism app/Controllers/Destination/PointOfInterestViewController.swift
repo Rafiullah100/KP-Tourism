@@ -22,7 +22,7 @@ class PointOfInterestViewController: BaseViewController {
     var category: PoiCategoriesModel?
     var exploreDistrict: ExploreDistrict?
     var attractionsDistrict: AttractionsDistrict?
-
+    var archeology: Archeology?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +39,10 @@ class PointOfInterestViewController: BaseViewController {
         else if attractionsDistrict != nil{
             thumbnailTopLabel.text = attractionsDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionsDistrict?.displayImage ?? "")))
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
         }
     }
     
@@ -83,6 +87,10 @@ extension PointOfInterestViewController: UICollectionViewDelegate{
             Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
         }
         else if attractionsDistrict != nil{
+            guard let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
+            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
+        }
+        else if archeology != nil{
             guard let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
             Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
         }

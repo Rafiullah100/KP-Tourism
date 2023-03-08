@@ -16,10 +16,6 @@ import CoreLocation
 import SVProgressHUD
 
 class GettingHereViewController: BaseViewController {
-    enum Travel {
-        case textual
-        case navigation
-    }
     
     @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var listImageView: UIImageView!
@@ -33,7 +29,8 @@ class GettingHereViewController: BaseViewController {
     var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
-    
+    var archeology: Archeology?
+
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
     var locationManager = CLLocationManager()
@@ -62,6 +59,11 @@ class GettingHereViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
             fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GettingHereModel.self)
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GettingHereModel.self)
         }
     }
     

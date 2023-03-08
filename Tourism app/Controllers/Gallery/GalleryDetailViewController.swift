@@ -25,6 +25,7 @@ class GalleryDetailViewController: BaseViewController {
     var galleryDetail: GalleryModel?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
+    var archeology: Archeology?
 
     var mediaType: MediaType?
     var player = AVPlayer()
@@ -46,6 +47,9 @@ class GalleryDetailViewController: BaseViewController {
             }
             else if attractionDistrict != nil{
                 fetch(route: .fetchGallery, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
+            }
+            else if archeology != nil{
+                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GalleryModel.self)
             }
         }
     }

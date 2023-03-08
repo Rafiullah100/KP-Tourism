@@ -78,3 +78,8 @@ enum ProfileSection: CaseIterable {
     case blog
 }
 
+enum Travel {
+    case textual
+    case navigation
+}
+

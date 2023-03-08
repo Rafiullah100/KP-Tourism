@@ -257,6 +257,8 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
                 return
             }
             Switcher.gotoPDFViewer(delegate: self, url: urlString)
+        case .arch:
+            Switcher.goToDestination(delegate: self, type: .district, archeologyDistrict: (model as? ArcheologyModel)?.archeology?[indexPath.row])
         default:
             break
         }

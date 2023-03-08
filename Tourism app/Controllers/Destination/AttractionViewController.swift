@@ -9,6 +9,9 @@ import UIKit
 
 class AttractionViewController: BaseViewController {
     
+    @IBOutlet weak var constainerView: UIView!
+    @IBOutlet weak var mapImageView: UIImageView!
+    @IBOutlet weak var listImageView: UIImageView!
     @IBOutlet weak var sectionLabel: UILabel!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -22,17 +25,17 @@ class AttractionViewController: BaseViewController {
         }
     }
     
+    
     var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDetail: AttractionModel?
     var attractionDistrict: AttractionsDistrict?
+    var archeology: Archeology?
 
     var attractionDistrictsArray: [AttractionsDistrict] = [AttractionsDistrict]()
 
-
     var currentPage = 1
     var totalPages = 1
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +56,12 @@ class AttractionViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
+        else if archeology != nil{
+            sectionLabel.text = "What to see"
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+        }
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -69,6 +78,35 @@ class AttractionViewController: BaseViewController {
                     self.collectionView.noInternet()
                 }
             }
+        }
+    }
+    
+    override func show(_ vc: UIViewController, sender: Any?) {
+        let vc: AttractionMapViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AttractionMapViewController") as! AttractionMapViewController
+        vc.attractionsArray = self.attractionDistrictsArray
+        add(vc, in: constainerView)
+    }
+    
+    @IBAction func textualButtonAction(_ sender: Any) {
+        collectionView.isHidden = false
+        
+        switchBtn(travel: .textual)
+    }
+    
+    @IBAction func mapBtnAction(_ sender: Any) {
+        collectionView.isHidden = true
+        switchBtn(travel: .navigation)
+        show(UIViewController(), sender: self)
+    }
+    
+    private func switchBtn(travel: Travel){
+        switch travel {
+        case .textual:
+            listImageView.image = UIImage(named: "grid-green")
+            mapImageView.image = UIImage(named: "map-white")
+        case .navigation:
+            listImageView.image = UIImage(named: "grid-white")
+            mapImageView.image = UIImage(named: "map-green")
         }
     }
 }

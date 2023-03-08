@@ -8,6 +8,7 @@
 import Foundation
 
 struct AccomodationModel: Codable {
+    let count: Int
     let accomodations: [Accomodation]
 }
 
@@ -18,9 +19,10 @@ struct Accomodation: Codable {
     let longitude, previewImage, thumbnailImage, description: String
     let noRoom: Int
     let parking, covidSafe, family, adults: Bool
+    let type: String
+    let viewsCounter: Int
     let createdAt: String
-    let commentCount, likeCount: Int
-    let priceFrom: Int?
+    let commentCount, likeCount, priceFrom: Int
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -36,7 +38,9 @@ struct Accomodation: Codable {
         case noRoom = "no_room"
         case parking
         case covidSafe = "covid_safe"
-        case family, adults, createdAt
+        case family, adults, type
+        case viewsCounter = "views_counter"
+        case createdAt
         case commentCount = "comment_count"
         case likeCount = "like_count"
         case priceFrom = "price_from"

@@ -43,7 +43,6 @@ class AreaTableViewCell: UITableViewCell {
 
 class VisitKPViewController: BaseViewController {
 
-    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -59,11 +58,6 @@ class VisitKPViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        
-        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableViewHeight.constant = tableView.contentSize.height
     }
     
     @IBAction func forwardBtnAction(_ sender: Any) {

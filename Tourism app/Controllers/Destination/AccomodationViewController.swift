@@ -24,22 +24,33 @@ class AccomodationViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var accomodationDetail: AccomodationModel?
-    
+    var archeology: Archeology?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
 //        updateUI()
         
+        var attractionID = 0
+        
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
-            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": 2], model: AccomodationModel.self)
+            attractionID = exploreDistrict?.id ?? 0
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            fetch(route: .fetchAccomodation, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: AccomodationModel.self)
+            attractionID = attractionDistrict?.id ?? 0
         }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            attractionID = archeology?.id ?? 0
+        }
+        // id = 2
+        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": attractionID], model: AccomodationModel.self)
+
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -49,8 +60,6 @@ class AccomodationViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.accomodationDetail = accomodation as? AccomodationModel
                     self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
-
-                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 if error == .noInternet {

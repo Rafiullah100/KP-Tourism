@@ -24,9 +24,8 @@ class AttractionDetailViewController: BaseViewController {
     
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
-
     var locationManager = CLLocationManager()
-
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

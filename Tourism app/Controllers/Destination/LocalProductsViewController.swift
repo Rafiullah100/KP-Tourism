@@ -21,7 +21,8 @@ class LocalProductsViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var productDetail: ProductModel?
     var attractionDistrict: AttractionsDistrict?
-    
+    var archeology: Archeology?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -35,6 +36,11 @@ class LocalProductsViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
             fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ProductModel.self)
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: ProductModel.self)
         }
     }
     

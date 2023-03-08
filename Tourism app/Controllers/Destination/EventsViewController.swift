@@ -21,7 +21,8 @@ class EventsViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var eventDetail: EventsModel?
-    
+    var archeology: Archeology?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,11 @@ class EventsViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
             fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: EventsModel.self)
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: EventsModel.self)
         }
     }
     

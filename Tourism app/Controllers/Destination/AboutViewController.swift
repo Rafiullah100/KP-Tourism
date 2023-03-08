@@ -19,7 +19,8 @@ class AboutViewController: BaseViewController {
 //    var contacts: [Contacts]?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
-    
+    var archeology: Archeology?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -36,6 +37,13 @@ class AboutViewController: BaseViewController {
             thumbnailBottomLabel.text = "\(attractionDistrict?.locationTitle ?? "")"
             welcomeLabel.text = "Welcome to \(attractionDistrict?.title ?? "")"
             textView.text = "\(attractionDistrict?.description.stripOutHtml() ?? "")"
+        }
+        else if archeology != nil{
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            thumbnailTopLabel.text = "\(archeology?.attractions?.title ?? "")"
+            thumbnailBottomLabel.text = "\(attractionDistrict?.locationTitle ?? "")"
+            welcomeLabel.text = "Welcome to \(archeology?.attractions?.title ?? "")"
+            textView.text = "\(archeology?.attractions?.description?.stripOutHtml() ?? "")"
         }
     }
 }

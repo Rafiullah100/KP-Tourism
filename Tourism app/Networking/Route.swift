@@ -91,7 +91,7 @@ enum Route {
         case .fetchAlerts:
            return "api/mobile/notifications/list"
         case .fetchAccomodation:
-            return "api/mobile/districts/accomodations"
+            return "api/mobile/attractions/accomodations"
         case .fetchGettingHere:
             return "api/mobile/districts/gettinghere"
         case .fetchVisitKp:

@@ -76,6 +76,18 @@ class FeedsViewController: UIViewController {
             }
         }
     }
+    
+    private func actionSheet(){
+        let alert = UIAlertController(title: "", message: "choose action", preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { action in
+            print("edit tapped")
+        }))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+        }))
+        present(alert, animated: true)
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -111,7 +123,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
         
         cell.actionBlock = {
-            Switcher.presentBottomSheet(delegate: self)
+            self.actionSheet()
         }
 
         
@@ -173,3 +185,4 @@ extension FeedsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         print("selected")
     }
 }
+

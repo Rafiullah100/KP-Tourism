@@ -20,10 +20,10 @@ class TravelAccomodation: UITableViewCell {
         selectedImgView.isHidden = selected ? false : true
     }
     
-    var travel: Destination? {
-        didSet {
-            imgView.image = UIImage(named: travel?.image ?? "")
-            label.text = travel?.title
+    var accomodation: Accomodation?{
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodation?.thumbnailImage ?? "")))
+            label.text = accomodation?.title
             
             bottomView.clipsToBounds = true
             bottomView.layer.cornerRadius = 10
@@ -49,18 +49,34 @@ class TourAccomodationViewController: BaseViewController {
         }
     }
     var isSelected: Bool?
-    
+    var accomodationDetail: AccomodationModel?
+    var districtID: Int?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        
-        tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-        tableView.reloadData()
-        tableView.layoutIfNeeded()
-        tableViewHeight.constant = tableView.contentSize.height
+        //id 2
+        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": districtID ?? 0], model: AccomodationModel.self)
     }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let accomodation):
+                DispatchQueue.main.async {
+                    self.accomodationDetail = accomodation as? AccomodationModel
+                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                }
+            case .failure(let error):
+                if error == .noInternet {
+                    self.tableView.noInternet()
+                }
+            }
+        }
+    }
+
     
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
@@ -76,11 +92,12 @@ class TourAccomodationViewController: BaseViewController {
 
 extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return Constants.traveleAccomodation.count
+        return accomodationDetail?.accomodations.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: TravelAccomodation = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! TravelAccomodation
-        cell.travel = Constants.traveleAccomodation[indexPath.row]
+        cell.accomodation = accomodationDetail?.accomodations[indexPath.row]
+//        cell.travel = Constants.traveleAccomodation[indexPath.row]
         return cell
     }
     
