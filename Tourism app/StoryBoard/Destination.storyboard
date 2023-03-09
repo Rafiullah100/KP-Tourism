@@ -507,10 +507,10 @@
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SqR-vx-La1">
-                                                                <rect key="frame" x="0.0" y="30" width="398" height="586"/>
+                                                                <rect key="frame" x="0.0" y="30" width="398" height="288"/>
                                                                 <subviews>
                                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Y23-KV-aRK">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="586"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="398" height="288"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ztc-2i-bfL">
                                                                             <size key="itemSize" width="128" height="128"/>
@@ -538,7 +538,14 @@
                                                                     <constraint firstItem="Y23-KV-aRK" firstAttribute="leading" secondItem="SqR-vx-La1" secondAttribute="leading" id="i8U-Sg-cg9"/>
                                                                 </constraints>
                                                             </view>
+                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qVW-o2-aRD">
+                                                                <rect key="frame" x="0.0" y="328" width="398" height="288"/>
+                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            </view>
                                                         </subviews>
+                                                        <constraints>
+                                                            <constraint firstItem="qVW-o2-aRD" firstAttribute="height" secondItem="SqR-vx-La1" secondAttribute="height" id="Ltr-6i-AZQ"/>
+                                                        </constraints>
                                                     </stackView>
                                                 </subviews>
                                                 <color key="backgroundColor" name="backgroundColor"/>
@@ -658,6 +665,7 @@
                         <outlet property="collectionView" destination="Y23-KV-aRK" id="eaW-D3-vtv"/>
                         <outlet property="constainerView" destination="SqR-vx-La1" id="nNl-QH-5g1"/>
                         <outlet property="listImageView" destination="oPM-mN-asn" id="7wJ-zc-At0"/>
+                        <outlet property="mapContainerView" destination="qVW-o2-aRD" id="Nyn-Wk-a3B"/>
                         <outlet property="mapImageView" destination="I3R-Lb-Aqt" id="DNM-Ib-SC3"/>
                         <outlet property="sectionLabel" destination="qi5-fp-MeP" id="ls5-vs-ntn"/>
                         <outlet property="thumbnail" destination="JjS-Le-NVJ" id="car-oK-W99"/>
@@ -2438,6 +2446,7 @@ L</string>
         <!--Attraction Map View Controller-->
         <scene sceneID="tcI-99-dKI">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FXC-p2-eNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="AttractionMapViewController" modalPresentationStyle="fullScreen" id="65l-qo-4UX" customClass="AttractionMapViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NeD-Zs-OeH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
@@ -2524,7 +2533,6 @@ L</string>
                         <outlet property="mapViewContainer" destination="xNZ-as-YMY" id="Buh-9V-IGZ"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="FXC-p2-eNl" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="100" y="740"/>
         </scene>

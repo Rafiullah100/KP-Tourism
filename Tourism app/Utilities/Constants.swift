@@ -37,6 +37,7 @@ struct Constants {
     static let lightFont = UIFont(name: "Poppins-Light", size: 12.0)
     static let MediumFont = UIFont(name: "Poppins-Medium", size: 12.0)
     static let offlineColor = #colorLiteral(red: 0.7640088797, green: 0.7752518058, blue: 0.8078474402, alpha: 1)
+    static let appFontName = "Poppins"
 
     static let desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
     

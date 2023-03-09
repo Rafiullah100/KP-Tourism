@@ -53,8 +53,10 @@ class GalleryViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.gallery = gallery as? GalleryModel
                     self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?.display_image ?? "")))
+                    print(self.gallery?.virtual_tours?.count ?? 0)
                     self.imageCollectionView.reloadData()
                     self.videoCollectionView.reloadData()
+                    self.virtualCollectionView.reloadData()
                 }
             case .failure(let error):
                 print(error)

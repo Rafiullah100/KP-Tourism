@@ -24,12 +24,23 @@ enum CellType: CaseIterable{
     case visitKP
 
     func getHeight() -> CGFloat{
-        switch self {
-        case .explore, .attraction, .adventure, .south, .investment : return 300
-        case .tour, .product, .arch: return 350
-        case .event, .blog: return 400
-        case .visitKP: return 150.0
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            switch self {
+            case .explore, .attraction, .adventure, .south, .investment : return 300
+            case .tour, .product, .arch: return 350
+            case .event, .blog: return 400
+            case .visitKP: return 150.0
+            }
         }
+        else if UIDevice.current.userInterfaceIdiom == .pad{
+            switch self {
+            case .explore, .attraction, .adventure, .south, .investment : return 500
+            case .tour, .product, .arch: return 520
+            case .event, .blog: return 700
+            case .visitKP: return 300.0
+            }
+        }
+        return 0
     }
    
     func getClass() -> UITableViewCell.Type{

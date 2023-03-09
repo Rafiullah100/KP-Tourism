@@ -9,6 +9,7 @@ import UIKit
 
 class AttractionViewController: BaseViewController {
     
+    @IBOutlet weak var mapContainerView: UIView!
     @IBOutlet weak var constainerView: UIView!
     @IBOutlet weak var mapImageView: UIImageView!
     @IBOutlet weak var listImageView: UIImageView!
@@ -21,7 +22,6 @@ class AttractionViewController: BaseViewController {
             collectionView.delegate = self
             collectionView.dataSource = self
             collectionView.register(UINib(nibName: "DestAttractCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier())
-
         }
     }
     
@@ -40,6 +40,7 @@ class AttractionViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        switchBtn(travel: .textual)
         loadData(currentPage: currentPage)
     }
     
@@ -84,17 +85,14 @@ class AttractionViewController: BaseViewController {
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: AttractionMapViewController = UIStoryboard(name: "Destination", bundle: nil).instantiateViewController(withIdentifier: "AttractionMapViewController") as! AttractionMapViewController
         vc.attractionsArray = self.attractionDistrictsArray
-        add(vc, in: constainerView)
+        add(vc, in: mapContainerView)
     }
     
     @IBAction func textualButtonAction(_ sender: Any) {
-        collectionView.isHidden = false
-        
         switchBtn(travel: .textual)
     }
     
     @IBAction func mapBtnAction(_ sender: Any) {
-        collectionView.isHidden = true
         switchBtn(travel: .navigation)
         show(UIViewController(), sender: self)
     }
@@ -102,9 +100,13 @@ class AttractionViewController: BaseViewController {
     private func switchBtn(travel: Travel){
         switch travel {
         case .textual:
+            mapContainerView.isHidden = true
+            constainerView.isHidden = false
             listImageView.image = UIImage(named: "grid-green")
             mapImageView.image = UIImage(named: "map-white")
         case .navigation:
+            mapContainerView.isHidden = false
+            constainerView.isHidden = true
             listImageView.image = UIImage(named: "grid-white")
             mapImageView.image = UIImage(named: "map-green")
         }

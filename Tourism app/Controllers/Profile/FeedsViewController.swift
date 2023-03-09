@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import ReadMoreTextView
+import ExpandableLabel
 class FeedsViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!{
@@ -24,17 +24,17 @@ class FeedsViewController: UIViewController {
     
     var newsFeed: [FeedModel]?
     var stories: [FeedStories]?
-    var expandedCells = Set<Int>()
+    var states : Array<Bool>!
     let pickerView = UIPickerView()
+    var numberOfCells : NSInteger = 0
 
     let setting = ["edit", "delete"]
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
-        
+
         pickerView.delegate = self
         pickerView.dataSource = self
         tableView.estimatedRowHeight = 400.0
@@ -68,6 +68,8 @@ class FeedsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.newsFeed = (feeds as! NewsFeedModel).feeds
                     self.stories = (feeds as! NewsFeedModel).stories
+                    self.numberOfCells = self.newsFeed?.count ?? 0
+                    self.states = [Bool](repeating: true, count: self.numberOfCells)
                     self.tableView.reloadData()
                     self.collectionView.reloadData()
                 }
@@ -121,50 +123,14 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
-        
+        cell.layoutIfNeeded()
+        cell.expandableLabel.delegate = self
+//        cell.expandableLabel.collapsed = states[indexPath.row]
+        cell.feed = newsFeed?[indexPath.row]
         cell.actionBlock = {
             self.actionSheet()
         }
-
-        
-        cell.feed = newsFeed?[indexPath.row]
-        cell.textView.shouldTrim = !expandedCells.contains(indexPath.row)
-        cell.textView.setNeedsUpdateTrim()
-        cell.textView.layoutIfNeeded()
-        
-        let readMoreTextAttributes: [NSAttributedString.Key: Any] = [
-            NSAttributedString.Key.foregroundColor: view.tintColor,
-            NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 16)
-                ]
-                let readLessTextAttributes = [
-                    NSAttributedString.Key.foregroundColor: UIColor.red,
-                    NSAttributedString.Key.font: UIFont.italicSystemFont(ofSize: 16)
-                ]
-        cell.textView.attributedReadMoreText = NSAttributedString(string: "... Read more", attributes: readMoreTextAttributes)
-        cell.textView.attributedReadLessText = NSAttributedString(string: " Read less", attributes: readLessTextAttributes)
-        cell.textView.maximumNumberOfLines = 2
-        cell.textView.shouldTrim = true
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        let cell: FeedTableViewCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
-//        cell.textView.onSizeChange = { [unowned tableView, unowned self] r in
-//            let point = tableView.convert(r.bounds.origin, from: r)
-//            guard let indexPath = tableView.indexPathForRow(at: point) else { return }
-//            if r.shouldTrim {
-//                self.expandedCells.remove(indexPath.row)
-//            } else {
-//                self.expandedCells.insert(indexPath.row)
-//            }
-//            tableView.reloadData()
-//        }
-    }
-
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell: FeedTableViewCell = tableView.cellForRow(at: indexPath) as! FeedTableViewCell
-        cell.textView.shouldTrim = !cell.textView.shouldTrim
     }
 }
 
@@ -185,4 +151,8 @@ extension FeedsViewController: UIPickerViewDelegate, UIPickerViewDataSource {
         print("selected")
     }
 }
+
+
+
+
 
