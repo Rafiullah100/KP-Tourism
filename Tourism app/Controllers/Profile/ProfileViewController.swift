@@ -95,7 +95,7 @@ class ProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let userId = UserDefaults.standard.userID else { return  }
-        fetchProfile(route: .fetchProfile, method: .post, parameters: ["user_id": 2], model: ProfileModel.self)
+        fetchProfile(route: .fetchProfile, method: .post, parameters: ["user_id": userId], model: ProfileModel.self)
     }
     
     func fetchProfile<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -114,6 +114,7 @@ class ProfileViewController: UIViewController {
                     print(self.products?.count ?? 0)
                     print(self.blogs?.count ?? 0)
                     self.contentCollectionView.reloadData()
+                    self.statusCollectionView.reloadData()
                 }
             case .failure(let error):
                 print(error)

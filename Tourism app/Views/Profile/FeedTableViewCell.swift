@@ -24,9 +24,9 @@ class FeedTableViewCell: UITableViewCell {
     
     var feed: FeedModel? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postImages[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
-            nameLabel.text = feed?.users.name
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users.profileImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post_images?[0].image_url ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
+            nameLabel.text = feed?.users?.name
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"
             expandableLabel.collapsedAttributedLink = NSAttributedString(string: "Read More")
@@ -35,6 +35,12 @@ class FeedTableViewCell: UITableViewCell {
             expandableLabel.textReplacementType = .word
             expandableLabel.numberOfLines = 3
             expandableLabel.text = feed?.description
+            if UserDefaults.standard.userID ?? 0 == feed?.users?.id ?? 0 {
+                threeDotButton.isHidden = false
+            }
+            else{
+                threeDotButton.isHidden = true
+            }
         }
     }
 
@@ -65,7 +71,7 @@ extension FeedsViewController: ExpandableLabelDelegate{
         if let indexPath = tableView.indexPathForRow(at: point) as IndexPath? {
             states[indexPath.row] = false
             DispatchQueue.main.async { [weak self] in
-                self?.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                self?.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
             }
         }
         tableView.endUpdates()
@@ -80,7 +86,7 @@ extension FeedsViewController: ExpandableLabelDelegate{
         if let indexPath = tableView.indexPathForRow(at: point) as IndexPath? {
             states[indexPath.row] = true
             DispatchQueue.main.async { [weak self] in
-                self?.tableView.scrollToRow(at: indexPath, at: .top, animated: true)
+                self?.tableView.scrollToRow(at: indexPath, at: .none, animated: true)
             }
         }
         tableView.endUpdates()

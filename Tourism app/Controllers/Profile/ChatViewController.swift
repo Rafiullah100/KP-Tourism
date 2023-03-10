@@ -12,15 +12,10 @@ class CellIds {
 }
 
 class ChatViewController: UIViewController {
-    @IBOutlet weak var toolBarHeight: NSLayoutConstraint!
     @IBOutlet weak var toolBarView: UIView!
     @IBOutlet weak var topBarView: UIView!
 
-    @IBOutlet weak var textView: UITextView!{
-        didSet{
-            textView.delegate = self
-        }
-    }
+    @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -30,18 +25,25 @@ class ChatViewController: UIViewController {
         }
     }
     
-    lazy var customAccessoryView: KeyboardInputAccessoryView = {
-        return Bundle.main.loadNibNamed("KeyboardInputAccessoryView", owner: nil)![0] as! KeyboardInputAccessoryView
+    private lazy var keyboardView: KeyboardInputAccessoryView = {
+        return KeyboardInputAccessoryView.view(controller: self)
     }()
+    override var inputAccessoryView: UIView? {
+        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
+    }
+    override var canBecomeFirstResponder: Bool {
+        return keyboardView.canBecomeFirstResponder
+    }
     
     var items = ["NayaPay why are you charging Rs 244.97 exchange rate when dollar rate is Rs 224.74 that is very big difference in the rates and very disappointing 😞 as I liked the nayapay service very much. and this is unbearable to pay extra Rs 20 per dollar when the dollar is already at it's peak rate.. 😔😔", "NayaPay why are you charging Rs 244.97 exchange rate", "when dollar rate is Rs 224.74 that is very big difference in the rates", "when the dollar", "in the rates and very disappointing 😞 as I liked the nayapay service very much"]
-    let messageTextViewMaxHeight: CGFloat = 100
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        textView.inputAccessoryView = customAccessoryView
+    }
+    
+    @IBAction func showkeyboardBtn(_ sender: Any) {
+        self.keyboardView.showKeyboard()
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -83,16 +85,20 @@ extension ChatViewController: UITableViewDelegate {
     }
 }
 
-extension ChatViewController: UITextViewDelegate {
-
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        toolBarView.isHidden = true
+extension ChatViewController: KeyboardInputAccessoryViewProtocol{
+//    func scrollView() -> UIScrollView {
+//        return UIScrollView()
+//    }
+    
+    func send(data type: String) {
+//        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
     }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Message.."
-            textView.textColor = UIColor.lightGray
-        }
-    }
+    
+    
+//    func send(textView: UITextView) {
+//        commentTextView.resignFirstResponder()
+//        textView.resignFirstResponder()
+//        commentView.isHidden = false
+////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
+//    }
 }

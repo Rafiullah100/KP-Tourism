@@ -70,6 +70,7 @@ struct TourDetail {
 enum PostType {
     case post
     case story
+    case edit
 }
 
 enum ProfileSection: CaseIterable {

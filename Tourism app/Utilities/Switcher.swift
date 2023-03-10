@@ -392,11 +392,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoPostVC(delegate: UIViewController, postType: PostType){
+    static func gotoPostVC(delegate: UIViewController, postType: PostType, feed: FeedModel? = nil){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         vc.postType = postType
+        vc.feed = feed
         delegate.present(vc, animated: true, completion: nil)
     }
     

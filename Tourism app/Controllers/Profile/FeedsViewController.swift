@@ -7,6 +7,7 @@
 
 import UIKit
 import ExpandableLabel
+import Toast_Swift
 class FeedsViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!{
@@ -34,7 +35,6 @@ class FeedsViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
-
         pickerView.delegate = self
         pickerView.dataSource = self
         tableView.estimatedRowHeight = 400.0
@@ -68,6 +68,7 @@ class FeedsViewController: UIViewController {
                 DispatchQueue.main.async {
                     self.newsFeed = (feeds as! NewsFeedModel).feeds
                     self.stories = (feeds as! NewsFeedModel).stories
+                    print(self.stories?.count ?? 0)
                     self.numberOfCells = self.newsFeed?.count ?? 0
                     self.states = [Bool](repeating: true, count: self.numberOfCells)
                     self.tableView.reloadData()
@@ -79,27 +80,53 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    private func actionSheet(){
+    private func actionSheet(row: Int){
         let alert = UIAlertController(title: "", message: "choose action", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { action in
-            print("edit tapped")
+            Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed?[row])
         }))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+            guard let postID = self.newsFeed?[row].id else { return }
+            print(postID)
+            self.deletePost(route: .deletePost, method: .post, parameters: ["id": postID], model: SuccessModel.self, row: row)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
         }))
         present(alert, animated: true)
     }
+    
+    func deletePost<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: Int) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let delete):
+                let successDetail = delete as? SuccessModel
+                DispatchQueue.main.async {
+                    if successDetail?.success == true{
+                        self.newsFeed?.remove(at: row)
+                        self.tableView.reloadData()
+                        self.view.makeToast("Post deleted successfully.")
+                    }
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
+        }
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return stories?.count ?? 0
+        return (stories?.count ?? 0) + 1
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
-        cell.stories = stories?[indexPath.row]
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
+        if indexPath.row == 0 {
+            cell.imgView.image = UIImage(named: "placeholder")
+        }
+        else{
+            cell.stories = stories?[indexPath.row - 1]
+        }
         return cell
     }
     
@@ -128,7 +155,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
 //        cell.expandableLabel.collapsed = states[indexPath.row]
         cell.feed = newsFeed?[indexPath.row]
         cell.actionBlock = {
-            self.actionSheet()
+            self.actionSheet(row: indexPath.row)
         }
         return cell
     }

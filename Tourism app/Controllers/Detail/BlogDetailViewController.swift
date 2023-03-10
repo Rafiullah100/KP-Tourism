@@ -57,7 +57,6 @@ class BlogDetailViewController: BaseViewController {
         scrollView.delegate = self
         tableView.estimatedRowHeight = 0
 //        customAccessoryView.delegate = self
-        commentTextView.inputAccessoryView = keyboardView
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
@@ -88,7 +87,6 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.keyboardView.showKeyboard()
         self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
     }
     
@@ -127,6 +125,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
+        self.keyboardView.showKeyboard()
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
@@ -216,8 +215,7 @@ extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
 //    }
     
     func send(data type: String) {
-        commentTextView.resignFirstResponder()
-        textView.resignFirstResponder()
+        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
     }
     
     

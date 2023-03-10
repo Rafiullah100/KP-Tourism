@@ -7,16 +7,19 @@
 
 import UIKit
 import Alamofire
+import SDWebImage
 class PostViewController: UIViewController, UINavigationControllerDelegate {
 
     var postType: PostType?
+    var feed: FeedModel?
     
+    @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
+    @IBOutlet weak var bottomView: UIView!
     
     var imagePicker: UIImagePickerController!
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +27,18 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         switch postType {
         case .post:
             label.text = "Create Post"
+            postButton.setTitle("Post", for: .normal)
+//            bottomView.isHidden = false
         case .story:
             label.text = "Highlight"
+            postButton.setTitle("Create story", for: .normal)
+//            bottomView.isHidden = true
+        case .edit:
+            label.text = "Edit Post"
+            postButton.setTitle("Edit Post", for: .normal)
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post_images?[0].image_url ?? "")))
+            textView.text = feed?.description
+//            bottomView.isHidden = false
         default:
             label.text = "Create Post"
         }
@@ -45,11 +58,32 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
-        guard let text = textView.text else { return }
-        Networking.shared.uploadMultipart(route: .postApi, image: imageView.image ?? UIImage(), parameters: ["description": text]) { result in
+        switch postType {
+        case .post:
+            guard let text = textView.text else { return }
+            createPost(route: .postApi, params: ["description": text])
+        case .edit:
+            guard let text = textView.text else { return }
+            createPost(route: .editPost, params: ["description": text, "id": feed?.id ?? 0])
+        case .story:
+            createPost(route: .createStory, params: [:])
+        default:
+            print("")
+        }
+    }
+    
+    private func createPost(route: Route, params: [String: Any]){
+        Networking.shared.uploadMultipart(route: route, image: imageView.image ?? UIImage(), parameters: params) { result in
             switch result {
             case .success(let success):
+                print(success)
                 if success.success == true{
+                    if self.postType == .post{
+                        self.view.makeToast("Post Creaded.")
+                    }
+                    else if self.postType == .edit{
+                        self.view.makeToast("Post edited.")
+                    }
                     self.dismiss(animated: true)
                 }
             case .failure(let error):
