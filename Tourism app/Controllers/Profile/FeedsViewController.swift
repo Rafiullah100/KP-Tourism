@@ -8,6 +8,7 @@
 import UIKit
 import ExpandableLabel
 import Toast_Swift
+import SVProgressHUD
 class FeedsViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!{
@@ -75,7 +76,7 @@ class FeedsViewController: UIViewController {
                     self.collectionView.reloadData()
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -108,7 +109,7 @@ class FeedsViewController: UIViewController {
                     }
                 }
             case .failure(let error):
-                print("error \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

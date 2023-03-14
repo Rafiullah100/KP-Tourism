@@ -84,3 +84,12 @@ enum Travel {
     case navigation
 }
 
+enum ThemeMode: String {
+    case dark = "dark"
+    case light = "light"
+}
+
+enum TabName: String {
+    case login = "Login"
+    case profile = "Profile"
+}

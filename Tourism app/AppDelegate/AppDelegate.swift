@@ -21,6 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         // Override point for customization after application launch.
         FirebaseApp.configure()
         window = UIWindow(frame: UIScreen.main.bounds)
+        
+//        if UserDefaults.standard.theme == ThemeMode.dark.rawValue {
+//            if #available(iOS 13.0, *){
+//                window?.overrideUserInterfaceStyle = .dark
+//            }
+//        }
+//        else{
+//            if #available(iOS 13.0, *){
+//                window?.overrideUserInterfaceStyle = .light
+//            }
+//        }
+        
         IQKeyboardManager.shared().isEnabled = true
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .normal)

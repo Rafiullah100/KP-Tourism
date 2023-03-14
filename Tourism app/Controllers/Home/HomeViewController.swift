@@ -9,7 +9,7 @@ import UIKit
 import TabbedPageView
 import MaterialComponents.MaterialTabs_TabBarView
 //import GoogleMaps
-
+import SVProgressHUD
 class HomeViewController: BaseViewController {
 
     @IBOutlet weak var searchBgView: UIView!
@@ -99,30 +99,26 @@ class HomeViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let explore):
-                DispatchQueue.main.async {
-                    self.model = explore
-                    if self.cellType == .explore {
-                        self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions ?? [])
-                        self.totalCount = (explore as? ExploreModel)?.count ?? 0
-                        print(self.totalCount)
-                    }
-                    else if self.cellType == .attraction{
-                        self.attractionDistrict.append(contentsOf: (explore as? AttractionModel)?.attractions?.rows ?? [])
-                        self.totalCount = (explore as? AttractionModel)?.attractions?.count ?? 0
-                    }
-                    else if self.cellType == .product{
-                        self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
-                        self.totalCount = (explore as? ProductModel)?.count ?? 0
-                    }
-                    else if self.cellType == .event{
-                        self.event = (explore as? EventsModel)?.events ?? []
-                    }
-                    self.tableView.reloadData()
+                self.model = explore
+                if self.cellType == .explore {
+                    self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions ?? [])
+                    self.totalCount = (explore as? ExploreModel)?.count ?? 0
+                    print(self.totalCount)
                 }
+                else if self.cellType == .attraction{
+                    self.attractionDistrict.append(contentsOf: (explore as? AttractionModel)?.attractions?.rows ?? [])
+                    self.totalCount = (explore as? AttractionModel)?.attractions?.count ?? 0
+                }
+                else if self.cellType == .product{
+                    self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
+                    self.totalCount = (explore as? ProductModel)?.count ?? 0
+                }
+                else if self.cellType == .event{
+                    self.event = (explore as? EventsModel)?.events ?? []
+                }
+                self.tableView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

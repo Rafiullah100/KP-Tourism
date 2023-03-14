@@ -24,9 +24,14 @@ class FeedTableViewCell: UITableViewCell {
     
     var feed: FeedModel? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post_images?[0].image_url ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
+            if feed?.post_images?.count ?? 0 > 0 {
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post_images?[0].image_url ?? "").replacingOccurrences(of: " ", with: "%20")))
+            }
+            else{
+                imgbgView.isHidden = true
+            }
             nameLabel.text = feed?.users?.name
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "profile"))
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"
             expandableLabel.collapsedAttributedLink = NSAttributedString(string: "Read More")

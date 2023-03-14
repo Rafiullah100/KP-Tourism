@@ -408,6 +408,12 @@ class Switcher {
         delegate.present(vc, animated: true, completion: nil)
     }
     
+    static func gotoChatUserSearch(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SearchUserViewController") as! SearchUserViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
 //    static func presentBottomSheet(delegate: UIViewController){
 //        let vc = UIStoryboard(name: Storyboard.sheet.rawValue, bundle: nil).instantiateViewController(withIdentifier: "BottomSheetViewController") as! BottomSheetViewController
 //        let nav = UINavigationController(rootViewController: vc)

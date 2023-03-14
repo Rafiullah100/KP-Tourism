@@ -19,8 +19,11 @@ extension URLSession{
             completion(.failure(AppError.unknownError))
             return
         }
-        SVProgressHUD.show(withStatus: "Please Wait...")
-        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        if showLoader == true {
+            SVProgressHUD.show(withStatus: "Please Wait...")
+            SVProgressHUD.setDefaultMaskType(.clear)
+        }
         let task = dataTask(with: request) { data, response, error in
             SVProgressHUD.dismiss()
 //            let responseString = String(data: data!, encoding: .utf8) ?? "Could not stringify our data"
@@ -28,20 +31,28 @@ extension URLSession{
             guard let data = data else {
                 if let error = error{
                     print(error)
-                    completion(.failure(.unknownError))
+                    DispatchQueue.main.async {
+                        completion(.failure(.serverError))
+                    }
                 }
                 else{
-                    completion(.failure(AppError.unknownError))
+                    DispatchQueue.main.async {
+                        completion(.failure(AppError.serverError))
+                    }
                 }
                 return
             }
             do {
                 let result = try JSONDecoder().decode(model, from: data)
                 print(result)
-                completion(.success(result))
+                DispatchQueue.main.async {
+                    completion(.success(result))
+                }
             } catch let error {
                 print(error)
-                completion(.failure(AppError.errorDecoding))
+                DispatchQueue.main.async {
+                    completion(.failure(AppError.errorDecoding))
+                }
             }
         }
         task.resume()

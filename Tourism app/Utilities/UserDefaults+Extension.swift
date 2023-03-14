@@ -19,6 +19,7 @@ extension UserDefaults {
         case destination
         case information
         case accomodation
+        case theme
     }
     
     var accessToken: String? {
@@ -111,4 +112,20 @@ extension UserDefaults {
         }
     }
 
+    var theme: String? {
+        get {
+            string(forKey: UserDefaultsKeys.theme.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.theme.rawValue)
+        }
+    }
+}
+
+extension UserDefaults {
+    class func clean() {
+        guard let aValidIdentifier = Bundle.main.bundleIdentifier else { return }
+        standard.removePersistentDomain(forName: aValidIdentifier)
+        standard.synchronize()
+    }
 }

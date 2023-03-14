@@ -35,6 +35,15 @@ class Helper{
         let width = (collectionView.bounds.width - (cellsAcross - 1) * space) / cellsAcross
         return CGSize(width: width, height: width)
     }
+    
+    func changeTab(isLoggined: Bool) -> String {
+        if isLoggined == true{
+            return TabName.profile.rawValue
+        }
+        else{
+            return TabName.login.rawValue
+        }
+    }
 
     func getThumbnailImage(forUrl url: URL? = nil) -> UIImage? {
         guard let url = url else { return UIImage() }

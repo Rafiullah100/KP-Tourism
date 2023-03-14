@@ -36,7 +36,8 @@ class ChatListViewController: UIViewController {
         }
         tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = .groupTableViewBackground
+        tabbarView.bottomDividerColor = Helper.shared.lineColor()
+        tabbarView.backgroundColor = Helper.shared.backgroundColor()
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
@@ -47,6 +48,9 @@ class ChatListViewController: UIViewController {
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
 //        tabbarView.tabBarDelegate = self
         tabbarView.minItemWidth = 10
+    }
+    @IBAction func gotoSearchBtnAction(_ sender: Any) {
+        Switcher.gotoChatUserSearch(delegate: self)
     }
 }
 

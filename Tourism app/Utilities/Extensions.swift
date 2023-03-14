@@ -452,6 +452,20 @@ extension UIViewController {
             self.present(activityViewController, animated: true, completion: nil)
         }
     }
+    
+    func showAlert(error: AppError) {
+        let alert = UIAlertController(title: title, message: error.errorDescription,         preferredStyle: UIAlertController.Style.alert)
+
+//        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.default, handler: { _ in
+//             //Cancel Action
+//         }))
+         alert.addAction(UIAlertAction(title: "OK",
+                                       style: UIAlertAction.Style.default,
+                                       handler: {(_: UIAlertAction!) in
+                                         //Sign out action
+         }))
+         self.present(alert, animated: true, completion: nil)
+     }
 }
 
 extension UICollectionView{
@@ -551,5 +565,15 @@ extension String {
     
     fileprivate func fontForPrice() -> UIFont {
         return Constants.MediumFont ?? UIFont()
+    }
+}
+
+extension UIWindow {
+    static var key: UIWindow! {
+        if #available(iOS 13, *) {
+            return UIApplication.shared.windows.first { $0.isKeyWindow }
+        } else {
+            return UIApplication.shared.keyWindow
+        }
     }
 }

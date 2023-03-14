@@ -85,13 +85,14 @@ class BaseViewController: UIViewController {
            appearance.backgroundColor = .clear
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-           navigationController?.navigationBar.frame = CGRect(x: 0, y: 20, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+           navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+           //y = 20
         }else{
             self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.backgroundColor = .clear
-            navigationController?.navigationBar.frame = CGRect(x: 0, y: 20, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+            navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
         }
     }
     
@@ -151,7 +152,7 @@ class BaseViewController: UIViewController {
         titleLabel = UILabel()
         if let titleLabel = titleLabel {
             titleLabel.text = viewControllerTitle
-            titleLabel.font = UIFont(name: "Roboto-Bold", size: 18)
+            titleLabel.font = UIFont(name: "\(Constants.appFontName)-Bold", size: 17)
             titleLabel.textColor = Helper.shared.textColor()
             self.navigationItem.titleView = titleLabel
         }
@@ -164,8 +165,8 @@ class BaseViewController: UIViewController {
         imageView.image = UIImage(named: "Back")
         let label = UILabel(frame: CGRect(x: 35, y: 0, width: 250, height: 30))
         let stringArray = viewControllerTitle?.split(separator: "|")
-        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Medium", size: 18) ?? UIFont()]
-        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()]
+        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Medium", size: 18) ?? UIFont()]
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Light", size: 10) ?? UIFont()]
         let firstString = NSMutableAttributedString(string: String(stringArray?[0] ?? ""), attributes: firstAttributes)
         var secondString = NSAttributedString("")
         if stringArray?.count ?? 0 > 1{
