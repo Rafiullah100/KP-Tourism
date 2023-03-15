@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SDWebImage
+import SVProgressHUD
 class PostViewController: UIViewController, UINavigationControllerDelegate {
 
     var postType: PostType?
@@ -36,7 +37,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         case .edit:
             label.text = "Edit Post"
             postButton.setTitle("Edit Post", for: .normal)
-            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post_images?[0].image_url ?? "")))
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postFiles[0].imageURL ?? "")))
             textView.text = feed?.description
 //            bottomView.isHidden = false
         default:
@@ -61,10 +62,10 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         switch postType {
         case .post:
             guard let text = textView.text else { return }
-            createPost(route: .postApi, params: ["description": text])
+            createPost(route: .postApi, params: ["description": text, "type": "image"])
         case .edit:
             guard let text = textView.text else { return }
-            createPost(route: .editPost, params: ["description": text, "id": feed?.id ?? 0])
+            createPost(route: .editPost, params: ["description": text, "id": feed?.id ?? 0, "type": "image"])
         case .story:
             createPost(route: .createStory, params: [:])
         default:
@@ -78,13 +79,15 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             case .success(let success):
                 print(success)
                 if success.success == true{
-                    if self.postType == .post{
-                        self.view.makeToast("Post Creaded.")
+                    self.dismiss(animated: true) {
+                        if self.postType == .post{
+                            SVProgressHUD.showSuccess(withStatus: "Post created.")
+                        }
+                        else if self.postType == .edit{
+                            SVProgressHUD.showSuccess(withStatus: "Post edited.")
+                        }
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
                     }
-                    else if self.postType == .edit{
-                        self.view.makeToast("Post edited.")
-                    }
-                    self.dismiss(animated: true)
                 }
             case .failure(let error):
                 print(error)

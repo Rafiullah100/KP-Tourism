@@ -304,10 +304,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToChatVC(delegate: UIViewController){
+    static func goToChatVC(delegate: UIViewController, receiverUser: ChatUserRow){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
+        vc.chatUser = receiverUser
         vc.modalPresentationStyle = .fullScreen
-        delegate.navigationController?.pushViewController(vc, animated: true)
+        delegate.present(vc, animated: true)
     }
     
     static func gotoVisitKP(delegate: UIViewController){

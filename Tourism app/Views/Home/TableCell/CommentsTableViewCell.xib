@@ -12,9 +12,6 @@
         <array key="Poppins-Regular.ttf">
             <string>Poppins-Regular</string>
         </array>
-        <array key="Poppins-SemiBold.ttf">
-            <string>Poppins-SemiBold</string>
-        </array>
     </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -41,13 +38,18 @@
                                                     <constraint firstAttribute="height" constant="35" id="Vxh-C4-j8Z"/>
                                                     <constraint firstAttribute="width" constant="35" id="usd-IA-xLc"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="17.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
-                                            <constraint firstItem="4Qa-Ql-djq" firstAttribute="centerX" secondItem="HIG-Tm-ld7" secondAttribute="centerX" id="FjQ-gf-X6F"/>
+                                            <constraint firstItem="4Qa-Ql-djq" firstAttribute="top" secondItem="HIG-Tm-ld7" secondAttribute="top" constant="15.67" id="4Lc-Im-Uw6"/>
                                             <constraint firstAttribute="width" constant="50" id="Qjr-uG-Z4U"/>
-                                            <constraint firstItem="4Qa-Ql-djq" firstAttribute="centerY" secondItem="HIG-Tm-ld7" secondAttribute="centerY" id="p4l-e2-sQe"/>
+                                            <constraint firstAttribute="trailing" secondItem="4Qa-Ql-djq" secondAttribute="trailing" constant="7.3300000000000001" id="b0i-VU-TXv"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2On-Qo-DF3">
@@ -57,20 +59,20 @@
                                                 <rect key="frame" x="0.0" y="10" width="282" height="46"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MLT-8M-pE7">
-                                                        <rect key="frame" x="0.0" y="0.0" width="282" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="282" height="21"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="9tv-Aw-9wP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="282" height="18"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="282" height="21"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ali Khan" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n2O-ia-Mq5">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="141" height="18"/>
-                                                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="12"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="141" height="21"/>
+                                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 months ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oUC-CU-0tz">
-                                                                        <rect key="frame" x="141" y="0.0" width="141" height="18"/>
-                                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                                                        <rect key="frame" x="141" y="0.0" width="141" height="21"/>
+                                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
@@ -86,8 +88,8 @@
                                                         </constraints>
                                                     </view>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Lorem Ipsum is simply dummy text of the printing and typese" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TN4-6a-D1O">
-                                                        <rect key="frame" x="0.0" y="18" width="282" height="28"/>
-                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
+                                                        <rect key="frame" x="0.0" y="21" width="282" height="25"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -125,6 +127,7 @@
             <connections>
                 <outlet property="commentLabel" destination="TN4-6a-D1O" id="5IA-l8-8UD"/>
                 <outlet property="nameLabel" destination="n2O-ia-Mq5" id="0WW-Qb-fHH"/>
+                <outlet property="timeLabel" destination="oUC-CU-0tz" id="xId-Yw-RZp"/>
                 <outlet property="userImageView" destination="4Qa-Ql-djq" id="8U8-Yp-W0r"/>
             </connections>
             <point key="canvasLocation" x="155.72519083969465" y="27.464788732394368"/>

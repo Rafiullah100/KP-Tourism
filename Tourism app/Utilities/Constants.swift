@@ -38,6 +38,7 @@ struct Constants {
     static let MediumFont = UIFont(name: "Poppins-Medium", size: 12.0)
     static let offlineColor = #colorLiteral(red: 0.7640088797, green: 0.7752518058, blue: 0.8078474402, alpha: 1)
     static let appFontName = "Poppins"
+    static let loadFeed = "loadfeed"
 
     static let tab = 3
     

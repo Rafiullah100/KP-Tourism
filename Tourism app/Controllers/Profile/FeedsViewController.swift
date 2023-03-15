@@ -40,11 +40,12 @@ class FeedsViewController: UIViewController {
         pickerView.dataSource = self
         tableView.estimatedRowHeight = 400.0
         tableView.rowHeight = UITableView.automaticDimension
+        loadFeed()
+        NotificationCenter.default.addObserver(self, selector: #selector(loadFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        fetchFeeds(route: .fetchFeeds, method: .post, model: NewsFeedModel.self)
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -57,24 +58,22 @@ class FeedsViewController: UIViewController {
         Switcher.goToProfileVC(delegate: self)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
     
+    @objc func loadFeed(){
+        fetchFeeds(route: .fetchFeeds, method: .post, model: NewsFeedModel.self)
+    }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let feeds):
-                DispatchQueue.main.async {
-                    self.newsFeed = (feeds as! NewsFeedModel).feeds
-                    self.stories = (feeds as! NewsFeedModel).stories
-                    print(self.stories?.count ?? 0)
-                    self.numberOfCells = self.newsFeed?.count ?? 0
-                    self.states = [Bool](repeating: true, count: self.numberOfCells)
-                    self.tableView.reloadData()
-                    self.collectionView.reloadData()
-                }
+                self.newsFeed = (feeds as! NewsFeedModel).feeds
+                self.stories = (feeds as! NewsFeedModel).stories
+                print(self.stories?.count ?? 0)
+                self.numberOfCells = self.newsFeed?.count ?? 0
+                self.states = [Bool](repeating: true, count: self.numberOfCells)
+                self.tableView.reloadData()
+                self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -101,12 +100,10 @@ class FeedsViewController: UIViewController {
             switch result {
             case .success(let delete):
                 let successDetail = delete as? SuccessModel
-                DispatchQueue.main.async {
-                    if successDetail?.success == true{
-                        self.newsFeed?.remove(at: row)
-                        self.tableView.reloadData()
-                        self.view.makeToast("Post deleted successfully.")
-                    }
+                if successDetail?.success == true{
+                    self.newsFeed?.remove(at: row)
+                    self.tableView.reloadData()
+                    SVProgressHUD.showSuccess(withStatus: "Post deleted.")
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

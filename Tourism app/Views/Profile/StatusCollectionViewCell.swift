@@ -34,11 +34,11 @@ class StatusCollectionViewCell: UICollectionViewCell {
     
     var stories: FeedStories? {
         didSet{
-            if stories?.post_images?.count ?? 0 > 0{
-                imgView.sd_setImage(with: URL(string: Route.baseUrl + (stories?.post_images?[0].image_url ?? "").replacingOccurrences(of: " ", with: "%20")))
+            if stories?.postFiles.count ?? 0 > 0{
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (stories?.postFiles[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")))
             }
             
-            label.text = stories?.users?.name
+            label.text = stories?.users.name
         }
     }
     

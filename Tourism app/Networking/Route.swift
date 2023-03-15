@@ -46,7 +46,10 @@ enum Route {
     case deletePost
     case editPost
     case createStory
-
+    case chatUser
+    case conversationUser
+    case onetoOneConversation
+    
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -90,7 +93,7 @@ enum Route {
         case .login:
             return "api/mobile/auth/login"
         case .doComment:
-            return "api/mobile/blogs/do_comment"
+            return "api/mobile/likes_comments/do_comment"
         case .fetchAlerts:
            return "api/mobile/notifications/list"
         case .fetchAccomodation:
@@ -121,6 +124,12 @@ enum Route {
             return "api/mobile/users/edit_post"
         case .createStory:
             return "api/mobile/users/create_story"
+        case .chatUser:
+            return "api/mobile/users/chatusers"
+        case .conversationUser:
+            return "api/mobile/users/conversations"
+        case .onetoOneConversation:
+            return "api/mobile/users/load_conversation"
         }
     }
 }

@@ -85,14 +85,14 @@ class BaseViewController: UIViewController {
            appearance.backgroundColor = .clear
             navigationController?.navigationBar.standardAppearance = appearance
             navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-           navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+           navigationController?.navigationBar.frame = CGRect(x: navigationController?.navigationBar.frame.origin.x ?? 0, y: navigationController?.navigationBar.frame.origin.y ?? 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
            //y = 20
         }else{
             self.navigationController?.navigationBar.isTranslucent = true
             self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
             self.navigationController?.navigationBar.shadowImage = UIImage()
             self.navigationController?.navigationBar.backgroundColor = .clear
-            navigationController?.navigationBar.frame = CGRect(x: 0, y: 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
+            navigationController?.navigationBar.frame = CGRect(x: navigationController?.navigationBar.frame.origin.x ?? 0, y: navigationController?.navigationBar.frame.origin.y ?? 0, width: navigationController?.navigationBar.frame.width ?? 0, height: (navigationController?.navigationBar.frame.height ?? 0) )
         }
     }
     
@@ -173,6 +173,7 @@ class BaseViewController: UIViewController {
             secondString = NSAttributedString(string: String("| \(stringArray?[1] ?? "")"), attributes: secondAttributes)
         }
         firstString.append(secondString)
+
         label.textColor = .white
         label.attributedText = firstString
         let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))

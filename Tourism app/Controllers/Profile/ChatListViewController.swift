@@ -6,14 +6,11 @@
 //
 
 import UIKit
-import MaterialComponents.MaterialTabs_TabBarView
+import SVProgressHUD
 
 class ChatListViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
 
-    @IBOutlet weak var tabbarView: MDCTabBarView!
-    
-    var tabbarItems = [UITabBarItem]()
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -21,34 +18,31 @@ class ChatListViewController: UIViewController {
             tableView.register(UINib(nibName: "ChatListTableViewCell", bundle: nil), forCellReuseIdentifier: ChatListTableViewCell.cellReuseIdentifier())
         }
     }
+    var conversationUsers: [UserConversation]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        configureTabbar()
     }
     
-    private func configureTabbar(){
-        let section = ["Recent", "Unread", "Groups"]
-        for i in 0..<section.count{
-            let tabbarItem = UITabBarItem(title: section[i], image: nil, tag: i)
-            tabbarItems.append(tabbarItem)
-        }
-        tabbarView.items = tabbarItems
-        tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = Helper.shared.lineColor()
-        tabbarView.backgroundColor = Helper.shared.backgroundColor()
-        tabbarView.rippleColor = .clear
-        tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
-        tabbarView.preferredLayoutStyle = .scrollableCentered
-        tabbarView.isScrollEnabled = false
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 15.0), for: .normal)
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
-        tabbarView.setTitleColor(.darkGray, for: .normal)
-        tabbarView.setTitleColor(Constants.appColor, for: .selected)
-//        tabbarView.tabBarDelegate = self
-        tabbarView.minItemWidth = 10
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetch(route: .conversationUser, method: .post, model: LoadedConversationModel.self)
     }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, model: model) { result in
+            switch result {
+            case .success(let users):
+                self.conversationUsers = (users as? LoadedConversationModel)?.userConversations
+                self.tableView.reloadData()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
     @IBAction func gotoSearchBtnAction(_ sender: Any) {
         Switcher.gotoChatUserSearch(delegate: self)
     }
@@ -56,7 +50,7 @@ class ChatListViewController: UIViewController {
 
 extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return conversationUsers?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -67,6 +61,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             cell.statusIndicator.backgroundColor = Constants.offlineColor
         }
+        cell.user = conversationUsers?[indexPath.row].user
         return cell
     }
     
@@ -75,6 +70,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToChatVC(delegate: self)
+        guard let user = conversationUsers?[indexPath.row].user else { return }
+        Switcher.goToChatVC(delegate: self, receiverUser: user)
     }
 }

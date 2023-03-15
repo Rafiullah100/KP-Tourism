@@ -6,12 +6,25 @@
 //
 
 import UIKit
-
+import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
+    
+    
+    var comment: CommentsRows?{
+        didSet{
+            timeLabel.text = "\(comment?.createdAt ?? "")"
+            commentLabel.text = "\(comment?.comment ?? "")"
+            nameLabel.text = "\(comment?.users.name ?? "")"
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+        }
+    }
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

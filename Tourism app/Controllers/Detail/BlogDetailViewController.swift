@@ -72,7 +72,6 @@ class BlogDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        print(currentPage)
         fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
     }
     
@@ -157,7 +156,7 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-        cell.commentLabel.text = allComments[indexPath.row].comment
+        cell.comment = allComments[indexPath.row]
         return cell
     }
     
@@ -215,7 +214,7 @@ extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
 //    }
     
     func send(data type: String) {
-        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
+        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": type], model: SuccessModel.self)
     }
     
     

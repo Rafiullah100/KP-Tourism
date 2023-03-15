@@ -6,10 +6,20 @@
 //
 
 import UIKit
-
+import SDWebImage
 class ChatListTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var statusIndicator: UIView!
+    @IBOutlet weak var userProfileImageView: UIImageView!
+    
+    var user: ChatUserRow? {
+        didSet{
+            userProfileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+            nameLabel.text = user?.name
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

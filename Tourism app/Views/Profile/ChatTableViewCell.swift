@@ -96,7 +96,7 @@ class ChatTableViewCell: UITableViewCell {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = false
-        textView.font = UIFont(name: "Roboto-Regular", size: 14.0)
+        textView.font = UIFont(name: "\(Constants.appFontName)-Regular", size: 14.0)
         textView.textColor = UIColor.white
         textView.backgroundColor = UIColor.clear
         
@@ -135,7 +135,7 @@ class ChatTableViewCell: UITableViewCell {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = false
-        textView.font = UIFont(name: "Roboto-Regular", size: 14.0)
+        textView.font = UIFont(name: "\(Constants.appFontName)-Regular", size: 14.0)
         textView.backgroundColor = UIColor.clear
         self.bgView.addSubview(bottomLabel)
         bottomLabel.edges([.left, .bottom], to: self.bgView, offset: UIEdgeInsets(top: innerSpacing, left: secondaryPadding, bottom: -secondaryPadding, right: 0))

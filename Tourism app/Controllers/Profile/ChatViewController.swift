@@ -6,15 +6,19 @@
 //
 
 import UIKit
+import SDWebImage
+import SVProgressHUD
 class CellIds {
     static let senderCellId = "senderCellId"
     static let receiverCellId = "receiverCellId"
 }
 
 class ChatViewController: UIViewController {
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var toolBarView: UIView!
     @IBOutlet weak var topBarView: UIView!
 
+    @IBOutlet weak var recieverProfileImage: UIImageView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -35,7 +39,9 @@ class ChatViewController: UIViewController {
         return keyboardView.canBecomeFirstResponder
     }
     
-    var items = ["NayaPay why are you charging Rs 244.97 exchange rate when dollar rate is Rs 224.74 that is very big difference in the rates and very disappointing 😞 as I liked the nayapay service very much. and this is unbearable to pay extra Rs 20 per dollar when the dollar is already at it's peak rate.. 😔😔", "NayaPay why are you charging Rs 244.97 exchange rate", "when dollar rate is Rs 224.74 that is very big difference in the rates", "when the dollar", "in the rates and very disappointing 😞 as I liked the nayapay service very much"]
+    var chatUser: ChatUserRow?
+    var conversation: [OnetoOneConversationRow]?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,14 +53,35 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
-        navigationController?.popViewController(animated: true)
+//        navigationController?.popViewController(animated: true)
+        dismiss(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        nameLabel.text = chatUser?.name
+        recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+        fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? ""], model: OnetoOneConversationModel.self)
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let conversation):
+                self.conversation = (conversation as? OnetoOneConversationModel)?.chats.rows ?? []
+                self.tableView.reloadData()
+//                self.chatUserModel?.chatUsers.rows.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
     }
 }
 
 extension ChatViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        return self.conversation?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,14 +91,14 @@ extension ChatViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section % 2 == 0 {
             if let cell = tableView.dequeueReusableCell(withIdentifier: CellIds.receiverCellId, for: indexPath) as? ChatTableViewCell {
-                cell.textView.text = items[indexPath.section]
+                cell.textView.text = conversation?[indexPath.section].content
                 cell.showTopLabel = false
                 return cell
             }
         }
         else {
             if let cell = tableView.dequeueReusableCell(withIdentifier: CellIds.senderCellId, for: indexPath) as? ChatTableViewCell {
-                cell.textView.text = items[indexPath.section]
+                cell.textView.text = conversation?[indexPath.section].content
                 return cell
             }
         }
