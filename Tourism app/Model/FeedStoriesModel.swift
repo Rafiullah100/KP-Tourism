@@ -1,38 +1,37 @@
 //
-//  NewsFeedModel.swift
+//  FeedStoriesModel.swift
 //  Tourism app
 //
-//  Created by MacBook Pro on 3/1/23.
+//  Created by MacBook Pro on 3/16/23.
 //
 
 import Foundation
 
-
-
-//****************************************
-
-////
-struct NewsFeedModel: Codable {
-    let feeds: [FeedModel]
+struct FeedStoriesModel: Codable {
+    let stories: StoriesModel
 }
 
-// MARK: - Feed
-struct FeedModel: Codable {
+// MARK: - Stories
+struct StoriesModel: Codable {
     let count: Int
+    let rows: [StoriesRow]
+}
+
+// MARK: - Row
+struct StoriesRow: Codable {
     let updatedAt, description, type: String
-    let commentsCount, likesCount, id: Int
-    let users: FeedUsers
-    let postFiles: [PostImageModel]
+    let id: Int
+    let users: StoriesUsers
+    let postFiles: [StoriesPostFile]
 
     enum CodingKeys: String, CodingKey {
-        case count
-        case updatedAt, description, type, commentsCount, likesCount, id, users
+        case updatedAt, description, type, id, users
         case postFiles = "post_files"
     }
 }
 
 // MARK: - PostFile
-struct PostImageModel: Codable {
+struct StoriesPostFile: Codable {
     let title, imageURL: String
     let videoURL: String?
 
@@ -44,7 +43,7 @@ struct PostImageModel: Codable {
 }
 
 // MARK: - Users
-struct FeedUsers: Codable {
+struct StoriesUsers: Codable {
     let id: Int
     let name, profileImage, profileImageThumb: String
 
@@ -54,5 +53,3 @@ struct FeedUsers: Codable {
         case profileImageThumb = "profile_image_thumb"
     }
 }
-
-

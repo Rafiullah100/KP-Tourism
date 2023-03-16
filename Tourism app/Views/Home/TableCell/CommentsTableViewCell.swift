@@ -20,7 +20,7 @@ class CommentsTableViewCell: UITableViewCell {
             timeLabel.text = "\(comment?.createdAt ?? "")"
             commentLabel.text = "\(comment?.comment ?? "")"
             nameLabel.text = "\(comment?.users.name ?? "")"
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }
     }
     

@@ -60,7 +60,7 @@ class ChatViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         nameLabel.text = chatUser?.name
-        recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+        recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? ""], model: OnetoOneConversationModel.self)
     }
     
@@ -79,7 +79,6 @@ class ChatViewController: UIViewController {
 }
 
 extension ChatViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return self.conversation?.count ?? 0
     }

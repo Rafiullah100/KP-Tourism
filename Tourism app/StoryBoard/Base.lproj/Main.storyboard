@@ -975,7 +975,7 @@ and more</string>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oAx-f9-X7D">
                                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="150"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="lM4-Qs-nkQ">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user" translatesAutoresizingMaskIntoConstraints="NO" id="lM4-Qs-nkQ">
                                                                         <rect key="frame" x="157" y="40" width="100" height="100"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="100" id="B1F-8J-1Dc"/>
@@ -1098,6 +1098,8 @@ and more</string>
                     </view>
                     <navigationItem key="navigationItem" id="jfC-hl-NoH"/>
                     <connections>
+                        <outlet property="nameLabel" destination="tXn-Ta-OVS" id="dRb-ix-1Po"/>
+                        <outlet property="profileImageView" destination="lM4-Qs-nkQ" id="TkV-jC-qRl"/>
                         <outlet property="switchView" destination="652-lv-uRO" id="QHq-hH-q4a"/>
                         <outlet property="userParentView" destination="y2a-qg-Rup" id="jmj-ef-tgM"/>
                         <outlet property="userView" destination="Hem-zx-WdR" id="ktK-ht-fgb"/>
@@ -2286,6 +2288,7 @@ and more</string>
         <image name="profile" width="21" height="21"/>
         <image name="profile-s" width="20" height="20"/>
         <image name="search" width="17.5" height="17.5"/>
+        <image name="user" width="128" height="128"/>
         <namedColor name="Color">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

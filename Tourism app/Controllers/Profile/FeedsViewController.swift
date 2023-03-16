@@ -25,13 +25,14 @@ class FeedsViewController: UIViewController {
     }
     
     var newsFeed: [FeedModel]?
-    var stories: [FeedStories]?
+    var stories: StoriesModel?
     var states : Array<Bool>!
     let pickerView = UIPickerView()
     var numberOfCells : NSInteger = 0
 
     let setting = ["edit", "delete"]
-    
+    var dispatchGroup: DispatchGroup?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -60,19 +61,35 @@ class FeedsViewController: UIViewController {
     
     
     @objc func loadFeed(){
+        dispatchGroup = DispatchGroup()
+        dispatchGroup?.enter()
+        fetchFeedsStories(route: .feedStories, method: .post, model: FeedStoriesModel.self)
+        dispatchGroup?.enter()
         fetchFeeds(route: .fetchFeeds, method: .post, model: NewsFeedModel.self)
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            self.dispatchGroup?.leave()
             switch result {
             case .success(let feeds):
                 self.newsFeed = (feeds as! NewsFeedModel).feeds
-                self.stories = (feeds as! NewsFeedModel).stories
-                print(self.stories?.count ?? 0)
+//                self.stories = (feeds as! NewsFeedModel).stories
                 self.numberOfCells = self.newsFeed?.count ?? 0
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.tableView.reloadData()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchFeedsStories<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            self.dispatchGroup?.leave()
+            switch result {
+            case .success(let feedStories):
+                self.stories = (feedStories as! FeedStoriesModel).stories
                 self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -123,7 +140,8 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.imgView.image = UIImage(named: "placeholder")
         }
         else{
-            cell.stories = stories?[indexPath.row - 1]
+//            cell.stories = stories?.rows[indexPath.row - 1]
+            cell.stories = stories?.rows[indexPath.row - 1]
         }
         return cell
     }

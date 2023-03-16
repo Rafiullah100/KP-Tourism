@@ -13,6 +13,7 @@ extension UserDefaults {
         case isLoginned
         case userID
         case userEmail
+        case name
         case districtKey
         case area
         case experience
@@ -20,7 +21,10 @@ extension UserDefaults {
         case information
         case accomodation
         case theme
+        case profileImage
     }
+    
+    
     
     var accessToken: String? {
         get {
@@ -55,6 +59,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.userEmail.rawValue)
+        }
+    }
+    
+    var name: String? {
+        get {
+            string(forKey: UserDefaultsKeys.name.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.name.rawValue)
         }
     }
     
@@ -118,6 +131,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.theme.rawValue)
+        }
+    }
+    
+    var profileImage: String? {
+        get {
+            string(forKey: UserDefaultsKeys.profileImage.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.profileImage.rawValue)
         }
     }
 }

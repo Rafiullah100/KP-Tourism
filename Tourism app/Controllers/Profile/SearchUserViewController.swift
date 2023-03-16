@@ -17,7 +17,7 @@ class SearchChatUserTableViewCell: UITableViewCell {
     var user: ChatUserRow?{
         didSet{
             nameLabel.text = user?.name
-            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }
     }
     

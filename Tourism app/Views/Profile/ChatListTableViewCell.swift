@@ -15,7 +15,7 @@ class ChatListTableViewCell: UITableViewCell {
     
     var user: ChatUserRow? {
         didSet{
-            userProfileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+            userProfileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             nameLabel.text = user?.name
         }
     }

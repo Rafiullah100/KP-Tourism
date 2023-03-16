@@ -7,12 +7,14 @@
 
 import UIKit
 
-class ThemeSelectionViewController: BaseViewController {
+class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelegate {
 
     @IBOutlet weak var userParentView: UIView!
     @IBOutlet weak var userView: UIView!
     @IBOutlet weak var switchView: UISwitch!
     
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
     var tabbar: TabbarViewController?
     
     
@@ -39,6 +41,8 @@ class ThemeSelectionViewController: BaseViewController {
         
         if UserDefaults.standard.isLoginned == true{
             userParentView.isHidden = false
+            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
+            nameLabel.text = UserDefaults.standard.name
         }
         else{
             userParentView.isHidden = true
@@ -58,7 +62,6 @@ class ThemeSelectionViewController: BaseViewController {
     
     @IBAction func logoutBtnAction(_ sender: Any) {
         UserDefaults.clean()
-//        var tabbar: TabbarViewController = self.window?.rootViewController as? TabbarViewController
-//        tabbar.selectedIndex = 3
+        Switcher.goToLoginVC(delegate: self)
     }
 }

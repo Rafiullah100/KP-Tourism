@@ -33,7 +33,7 @@ class FeedTableViewCell: UITableViewCell {
                 imgbgView.isHidden = true
             }
             nameLabel.text = feed?.users.name
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users.profileImage ?? "")), placeholderImage: UIImage(named: "profile"))
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             timeLabel.text = "\(feed?.updatedAt ?? "")"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"
@@ -54,8 +54,8 @@ class FeedTableViewCell: UITableViewCell {
 
     override func prepareForReuse() {
         super.prepareForReuse()
-        expandableLabel.collapsed = true
-        expandableLabel.text = nil
+//        expandableLabel.collapsed = true
+//        expandableLabel.text = nil
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

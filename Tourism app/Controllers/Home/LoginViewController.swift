@@ -10,6 +10,7 @@ import FBSDKLoginKit
 import FBSDKCoreKit
 import GoogleSignIn
 import Firebase
+import Toast_Swift
 class LoginViewController: BaseViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -20,12 +21,16 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationItem.hidesBackButton = true
         type = .title
         emailTextField.text = "arsalan@gmail.com"
-        passwordTextField.text = "1234567"
+        passwordTextField.text = "123456"
         viewControllerTitle = "Login"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationItem.hidesBackButton = true
     }
 
     @IBAction func googleSigninBtn(_ sender: Any) {
@@ -87,6 +92,8 @@ class LoginViewController: BaseViewController {
                         UserDefaults.standard.accessToken = self.login?.token
                         UserDefaults.standard.userID = self.login?.userID
                         UserDefaults.standard.userEmail = self.login?.email
+                        UserDefaults.standard.profileImage = self.login?.profileImage
+                        UserDefaults.standard.name = self.login?.name
                         Switcher.goToFeedsVC(delegate: self)
                     }
                     else{
@@ -100,8 +107,12 @@ class LoginViewController: BaseViewController {
     }
     
     private func validateLoginFields(){
-        guard let email = emailTextField.text, let password = passwordTextField.text else { return }
-        guard passwordTextField.text == passwordTextField.text else { return }
+        guard let email = emailTextField.text, let password = passwordTextField.text else {
+            self.view.makeToast("All fields are required.", duration: 3.0, position: .center)
+            return }
+        guard passwordTextField.text == passwordTextField.text else {
+            self.view.makeToast("Password doesn't match.", duration: 3.0, position: .top)
+            return }
         let parameters = ["username": email, "password": password]
         print(parameters)
         loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)

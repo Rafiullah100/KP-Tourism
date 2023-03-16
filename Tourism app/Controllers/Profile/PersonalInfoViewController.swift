@@ -6,17 +6,78 @@
 //
 
 import UIKit
+import SVProgressHUD
+import SDWebImage
+class PersonalInfoViewController: UIViewController, UINavigationControllerDelegate {
 
-class PersonalInfoViewController: UIViewController {
-
+    @IBOutlet weak var bioTextField2: UITextField!
+    @IBOutlet weak var bioTextField1: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var topBarView: UIView!
 
+    var imagePicker: UIImagePickerController!
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
+        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+        emailTextField.text = UserDefaults.standard.userEmail
+        nameTextField.text = UserDefaults.standard.name
     }
 
+    @IBAction func takePicture(_ sender: Any) {
+        imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        imagePicker.modalPresentationStyle = .fullScreen
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    private func updateProfile(route: Route, params: [String: Any]){
+        Networking.shared.uploadMultipart(route: route, image: profileImageView.image ?? UIImage(), parameters: params) { result in
+            switch result {
+            case .success(let success):
+                if success.success == true{
+                    SVProgressHUD.showSuccess(withStatus: success.message)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: success.message)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    @IBAction func updateProfileBtnAction(_ sender: Any) {
+        guard let name = nameTextField.text, let email = emailTextField.text, let bio = bioTextField1.text, !name.isEmpty,!email.isEmpty, !bio.isEmpty else {
+            self.view.makeToast("All fields are required.")
+            return  }
+        updateProfile(route: .updateProfile, params: ["name": name, "email": email, "bio": bio])
+    }
+    
+    
+    
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
+    }
+}
+
+extension PersonalInfoViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            profileImageView.contentMode = .scaleAspectFit
+            profileImageView.image = pickedImage
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }

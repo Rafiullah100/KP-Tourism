@@ -49,6 +49,9 @@ enum Route {
     case chatUser
     case conversationUser
     case onetoOneConversation
+    case changePassword
+    case updateProfile
+    case feedStories
     
     var description: String {
         switch self {
@@ -130,6 +133,12 @@ enum Route {
             return "api/mobile/users/conversations"
         case .onetoOneConversation:
             return "api/mobile/users/load_conversation"
+        case .changePassword:
+            return "api/mobile/users/updatepassword"
+        case .updateProfile:
+            return "api/mobile/users/update"
+        case .feedStories:
+            return "api/mobile/users/stories_feeds"
         }
     }
 }

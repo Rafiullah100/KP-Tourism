@@ -11,6 +11,7 @@ import SVProgressHUD
 class ChatListViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
 
+    @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -24,15 +25,26 @@ class ChatListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
+        tableView.keyboardDismissMode = .onDrag
+        searchField.becomeFirstResponder()
+        searchField.addTarget(self, action: #selector(SearchUserViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetch(route: .conversationUser, method: .post, model: LoadedConversationModel.self)
+        load()
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        load()
+    }
+    
+    private func load(){
+        fetch(route: .conversationUser, method: .post, parameters: ["search": searchField.text ?? ""], model: LoadedConversationModel.self)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, model: model) { result in
             switch result {
             case .success(let users):
                 self.conversationUsers = (users as? LoadedConversationModel)?.userConversations
