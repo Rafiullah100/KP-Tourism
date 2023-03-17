@@ -54,7 +54,13 @@ class ChatViewController: UIViewController {
     
     @IBAction func backBtnAction(_ sender: Any) {
 //        navigationController?.popViewController(animated: true)
+        
         dismiss(animated: true)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        keyboardView.inputTextView.resignFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {

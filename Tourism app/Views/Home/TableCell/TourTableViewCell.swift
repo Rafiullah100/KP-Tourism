@@ -59,6 +59,7 @@ class TourTableViewCell: UITableViewCell {
     }
     
     @IBAction func favoriteBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         actionBlock?()
     }
 }

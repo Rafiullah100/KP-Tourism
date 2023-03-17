@@ -78,11 +78,11 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UserDefaults.standard.userID)
         searchBgView.viewShadow()
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
         textField.delegate = self
+        tableView.keyboardDismissMode = .onDrag
         shadow()
         type = .back1
         cellType = .explore
@@ -202,6 +202,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .arch:
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
             cell.archeology = (model as? ArcheologyModel)?.archeology?[indexPath.row]
+            cell.actionBlock = {
+                let archeologyID = (self.model as? ArcheologyModel)?.archeology?[indexPath.row].id
+                self.like(route: .likeApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
+            }
             return cell
         case .blog:
             let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
@@ -375,31 +379,22 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil) {
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
-                DispatchQueue.main.async {
-                    let successDetail = like as? SuccessModel
-                    if  self.cellType == .explore{
-                        if successDetail?.message == "Liked"{
-                            exploreCell?.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
-                        }
-                        else{
-                            exploreCell?.favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
-                        }
-                    }
-                    else if self.cellType == .tour{
-                        if successDetail?.message == "Liked"{
-                            tourCell?.favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
-                        }
-                        else{
-                            tourCell?.favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
-                        }
-                    }
+                let successDetail = like as? SuccessModel
+                if  self.cellType == .explore{
+                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                }
+                else if self.cellType == .tour{
+                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                }
+                else if self.cellType == .arch{
+                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
             case .failure(let error):
-                print("error \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

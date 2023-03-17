@@ -11,21 +11,23 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
     
-    var image: String? {
+    var post: UserPostRow? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (image ?? "")))
+            if post?.postFiles.count ?? 0 > 0{
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (post?.postFiles[0].imageURL ?? "")))
+            }
         }
     }
     
-    var product: Profileproducts? {
+    var product: UserProductRow? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.preview_image ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")))
         }
     }
-    
-    var blog: ProfileBlogs? {
+//
+    var blog: UserBlogRow? {
         didSet {
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.preview_image ?? "") ))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.previewImage ?? "") ))
         }
     }
     

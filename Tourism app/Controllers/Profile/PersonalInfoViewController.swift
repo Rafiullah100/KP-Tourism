@@ -23,9 +23,16 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
         emailTextField.text = UserDefaults.standard.userEmail
         nameTextField.text = UserDefaults.standard.name
+        
+        guard let image = UserDefaults.standard.profileImage else { return }
+        if image.contains("https://staging-admin.kptourism.com"){
+            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+        }
+        else{
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+        }
     }
 
     @IBAction func takePicture(_ sender: Any) {
@@ -38,17 +45,21 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
     }
     
     private func updateProfile(route: Route, params: [String: Any]){
-        Networking.shared.uploadMultipart(route: route, image: profileImageView.image ?? UIImage(), parameters: params) { result in
+        Networking.shared.updateProfile(route: route, imageParameter: "profile_image", image: profileImageView.image ?? UIImage(), parameters: params) { result in
             switch result {
-            case .success(let success):
-                if success.success == true{
-                    SVProgressHUD.showSuccess(withStatus: success.message)
+            case .success(let profile):
+                if profile.success == true{
+                    print(profile.data.profileImage)
+                    UserDefaults.standard.name = profile.data.name
+                    UserDefaults.standard.userEmail = profile.data.email
+                    UserDefaults.standard.profileImage = profile.data.profileImage
+                    SVProgressHUD.showSuccess(withStatus: profile.message)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: success.message)
+                    SVProgressHUD.showError(withStatus: profile.message)
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -71,7 +82,7 @@ extension PersonalInfoViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImageView.contentMode = .scaleAspectFit
+            profileImageView.contentMode = .scaleToFill
             profileImageView.image = pickedImage
         }
         dismiss(animated: true, completion: nil)

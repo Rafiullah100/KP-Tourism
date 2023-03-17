@@ -94,6 +94,7 @@ class LoginViewController: BaseViewController {
                         UserDefaults.standard.userEmail = self.login?.email
                         UserDefaults.standard.profileImage = self.login?.profileImage
                         UserDefaults.standard.name = self.login?.name
+                        UserDefaults.standard.uuid = self.login?.uuID
                         Switcher.goToFeedsVC(delegate: self)
                     }
                     else{

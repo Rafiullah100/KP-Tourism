@@ -74,23 +74,22 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     private func createPost(route: Route, params: [String: Any]){
-        Networking.shared.uploadMultipart(route: route, image: imageView.image ?? UIImage(), parameters: params) { result in
+        Networking.shared.uploadMultipart(route: route, imageParameter: "images", image: imageView.image ?? UIImage(), parameters: params) { result in
             switch result {
             case .success(let success):
                 print(success)
                 if success.success == true{
-                    self.dismiss(animated: true) {
-                        if self.postType == .post{
-                            SVProgressHUD.showSuccess(withStatus: "Post created.")
-                        }
-                        else if self.postType == .edit{
-                            SVProgressHUD.showSuccess(withStatus: "Post edited.")
-                        }
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+                    if self.postType == .post{
+                        SVProgressHUD.showSuccess(withStatus: "Post created.")
                     }
+                    else if self.postType == .edit{
+                        SVProgressHUD.showSuccess(withStatus: "Post edited.")
+                    }
+                    self.dismiss(animated: true)
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

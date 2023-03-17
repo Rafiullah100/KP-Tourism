@@ -24,7 +24,7 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    var newsFeed: [FeedModel]?
+    var newsFeed: [FeedModel] = [FeedModel]()
     var stories: StoriesModel?
     var states : Array<Bool>!
     let pickerView = UIPickerView()
@@ -33,20 +33,21 @@ class FeedsViewController: UIViewController {
     let setting = ["edit", "delete"]
     var dispatchGroup: DispatchGroup?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    var totalCount = 1
+    var currentPage = 1
+    var limit = 5
+   
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
         pickerView.delegate = self
         pickerView.dataSource = self
         tableView.estimatedRowHeight = 400.0
         tableView.rowHeight = UITableView.automaticDimension
-        loadFeed()
-        NotificationCenter.default.addObserver(self, selector: #selector(loadFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+        loadData()
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -60,22 +61,28 @@ class FeedsViewController: UIViewController {
     }
     
     
-    @objc func loadFeed(){
+    func loadData(){
         dispatchGroup = DispatchGroup()
         dispatchGroup?.enter()
         fetchFeedsStories(route: .feedStories, method: .post, model: FeedStoriesModel.self)
+        self.dispatchGroup?.leave()
         dispatchGroup?.enter()
-        fetchFeeds(route: .fetchFeeds, method: .post, model: NewsFeedModel.self)
+        loadNewsFeed()
+        self.dispatchGroup?.leave()
+    }
+    
+    @objc func loadNewsFeed(){
+        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit], model: NewsFeedModel.self)
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
-            self.dispatchGroup?.leave()
             switch result {
             case .success(let feeds):
-                self.newsFeed = (feeds as! NewsFeedModel).feeds
-//                self.stories = (feeds as! NewsFeedModel).stories
-                self.numberOfCells = self.newsFeed?.count ?? 0
+                self.newsFeed.append(contentsOf: (feeds as? NewsFeedModel)?.feeds ?? [])
+                self.totalCount = (feeds as! NewsFeedModel).count
+                self.numberOfCells = self.totalCount
+                print(self.totalCount)
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.tableView.reloadData()
             case .failure(let error):
@@ -86,7 +93,6 @@ class FeedsViewController: UIViewController {
     
     func fetchFeedsStories<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
-            self.dispatchGroup?.leave()
             switch result {
             case .success(let feedStories):
                 self.stories = (feedStories as! FeedStoriesModel).stories
@@ -100,12 +106,11 @@ class FeedsViewController: UIViewController {
     private func actionSheet(row: Int){
         let alert = UIAlertController(title: "", message: "choose action", preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { action in
-            Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed?[row])
+            Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
         }))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            guard let postID = self.newsFeed?[row].id else { return }
-            print(postID)
-            self.deletePost(route: .deletePost, method: .post, parameters: ["id": postID], model: SuccessModel.self, row: row)
+          
+            self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id], model: SuccessModel.self, row: row)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
         }))
@@ -118,7 +123,7 @@ class FeedsViewController: UIViewController {
             case .success(let delete):
                 let successDetail = delete as? SuccessModel
                 if successDetail?.success == true{
-                    self.newsFeed?.remove(at: row)
+                    self.newsFeed.remove(at: row)
                     self.tableView.reloadData()
                     SVProgressHUD.showSuccess(withStatus: "Post deleted.")
                 }
@@ -161,7 +166,7 @@ extension FeedsViewController: UICollectionViewDelegateFlowLayout{
 
 extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsFeed?.count ?? 0
+        return newsFeed.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -169,11 +174,18 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
 //        cell.expandableLabel.collapsed = states[indexPath.row]
-        cell.feed = newsFeed?[indexPath.row]
+        cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {
             self.actionSheet(row: indexPath.row)
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if newsFeed.count != totalCount && indexPath.row == newsFeed.count - 1  {
+            currentPage = currentPage + 1
+            loadNewsFeed()
+        }
     }
 }
 

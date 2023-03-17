@@ -41,7 +41,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         
         if UserDefaults.standard.isLoginned == true{
             userParentView.isHidden = false
-            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
+//            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
             nameLabel.text = UserDefaults.standard.name
         }
         else{

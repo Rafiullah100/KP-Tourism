@@ -8,8 +8,17 @@
 import UIKit
 import MaterialComponents.MaterialTabs_TabBarView
 import SDWebImage
+import SVProgressHUD
 class ProfileViewController: UIViewController {
 
+    enum ApiType {
+        case profile
+        case status
+        case blog
+        case product
+        case post
+    }
+    
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followerCountLabel: UILabel!
     @IBOutlet weak var postCountLabel: UILabel!
@@ -23,11 +32,14 @@ class ProfileViewController: UIViewController {
     
     @IBOutlet weak var statusCollectionView: UICollectionView!{
         didSet{
-            statusCollectionView.dataSource = self
-            statusCollectionView.delegate = self
+//            statusCollectionView.dataSource = self
+//            statusCollectionView.delegate = self
             statusCollectionView.register(UINib(nibName: "StatusCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier())
         }
     }
+    
+    var dispatchGroup: DispatchGroup?
+
     
     @IBOutlet weak var contentCollectionView: UICollectionView!{
         didSet{
@@ -40,12 +52,11 @@ class ProfileViewController: UIViewController {
     var tabbarItems = [UITabBarItem]()
     var userProfile: ProfileModel?
     var profileSection: ProfileSection!
-//    var post: [PostImageModel]
-    var blogs: [ProfileBlogs]?
-    var products: [Profileproducts]?
+    var post: [UserPostRow]?
+    var blogs: [UserBlogRow]?
+    var products: [UserProductRow]?
     
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         topProfileView.layer.shadowColor = UIColor.black.cgColor
@@ -94,30 +105,45 @@ class ProfileViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard let userId = UserDefaults.standard.userID else { return  }
-        fetchProfile(route: .fetchProfile, method: .post, parameters: ["user_id": userId], model: ProfileModel.self)
+        guard let uuid = UserDefaults.standard.uuid else { return  }
+        dispatchGroup?.enter()
+        fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid], model: ProfileModel.self, apiType: .profile)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid], model: UserBlogModel.self, apiType: .blog)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid], model: UserProductModel.self, apiType: .product)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid], model: UserPostModel.self, apiType: .post)
     }
     
-    func fetchProfile<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
-                DispatchQueue.main.async {
+                if apiType == .profile{
                     self.userProfile = model as? ProfileModel
-                    self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails?.profile_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
-                    self.nameLabel.text = self.userProfile?.userDetails?.name
-                    self.postCountLabel.text = "\(self.userProfile?.userDetails?.postsCount ?? 0)"
-                    self.followerCountLabel.text = "\(self.userProfile?.userDetails?.userFollowers ?? 0)"
-                    self.followingCountLabel.text = "\(self.userProfile?.userDetails?.userFollowings ?? 0)"
-                    self.blogs = self.userProfile?.userDetails?.blogs ?? []
-                    self.products = self.userProfile?.userDetails?.local_products ?? []
-                    print(self.products?.count ?? 0)
-                    print(self.blogs?.count ?? 0)
-                    self.contentCollectionView.reloadData()
-                    self.statusCollectionView.reloadData()
+                    self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    self.nameLabel.text = self.userProfile?.userDetails.name
+                    self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
+                    self.followerCountLabel.text = "\(self.userProfile?.userDetails.userFollowers ?? 0)"
+                    self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"
                 }
+                else if apiType == .blog{
+                    self.blogs = (model as? UserBlogModel)?.blogs.rows
+                    self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                }
+                else if apiType == .product{
+                    self.products = (model as? UserProductModel)?.localProducts.rows
+                }
+                else if apiType == .post{
+                    self.post = (model as? UserPostModel)?.posts.rows
+                }
+                
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -134,7 +160,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return 0
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch collectionView {
         case statusCollectionView:
@@ -149,11 +175,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return UICollectionViewCell()
         }
     }
-    
+
     private func noOfRows() -> Int{
         switch profileSection {
         case .post:
-            return 0
+            return post?.count ?? 0
         case .blog:
             return blogs?.count ?? 0
         case .product:
@@ -162,12 +188,11 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return 0
         }
     }
-    
+
    private func loadCollection(cell:ProfileCollectionViewCell, indexPath: IndexPath) {
         switch profileSection {
         case .post:
-            print("ere4k")
-//            cell.image = self.userProfile?.userDetails?.posts
+            cell.post = post?[indexPath.row]
         case .product:
             cell.product = products?[indexPath.row]
         case .blog:
@@ -198,12 +223,15 @@ extension ProfileViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
         print(item.tag)
         if item.tag == 0{
+//            contentCollectionView.backgroundView = self.blogs?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
             profileSection = .blog
         }
         else if item.tag == 1{
+//            contentCollectionView.backgroundView = self.products?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
             profileSection = .product
         }
         else if item.tag == 2{
+//            contentCollectionView.backgroundView = self.post?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
             profileSection = .post
         }
         contentCollectionView.reloadData()

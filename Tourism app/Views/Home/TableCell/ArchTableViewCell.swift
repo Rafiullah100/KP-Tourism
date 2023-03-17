@@ -9,6 +9,7 @@ import UIKit
 import ImageSlideshow
 class ArchTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var imgBGView: UIView!
     @IBOutlet weak var imgView: UIImageView!
@@ -19,6 +20,9 @@ class ArchTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    var actionBlock: (() -> Void)? = nil
+
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -47,5 +51,9 @@ class ArchTableViewCell: UITableViewCell {
 //                }
 //            })
         }
+    }
+    @IBAction func LikeBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+        actionBlock?()
     }
 }

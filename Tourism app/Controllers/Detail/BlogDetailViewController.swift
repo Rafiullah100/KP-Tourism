@@ -71,6 +71,11 @@ class BlogDetailViewController: BaseViewController {
         reloadComment()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        keyboardView.inputTextView.resignFirstResponder()
+    }
+    
     private func reloadComment(){
         fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
     }
@@ -78,11 +83,6 @@ class BlogDetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         statusBarView.addGradient()
-    }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
