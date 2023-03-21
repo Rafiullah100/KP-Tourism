@@ -30,12 +30,16 @@ class DestProductCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         bgView.layer.borderWidth = 0.5
         bgView.layer.borderColor = UIColor.lightGray.cgColor
-        bgView.layer.cornerRadius = 5.0    }
+        bgView.layer.cornerRadius = 5.0
+    }
 
 }
 

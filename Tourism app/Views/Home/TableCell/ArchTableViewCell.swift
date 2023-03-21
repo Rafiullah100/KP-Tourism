@@ -19,6 +19,15 @@ class ArchTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        bottomView.clipsToBounds = true
+        bottomView.layer.cornerRadius = 10
+        bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+        imgBGView.clipsToBounds = true
+        imgBGView.layer.cornerRadius = 10
+        imgBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        bottomView.viewShadow()
     }
     
     var actionBlock: (() -> Void)? = nil
@@ -38,7 +47,8 @@ class ArchTableViewCell: UITableViewCell {
             districtLabel.text = archeology?.attractions?.description?.stripOutHtml()
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             imageSDWebImageSrc = []
-            bottomView.viewShadow()
+            
+            
 //            imgBGView.roundCorners(corners: [.topRight, .topLeft], radius: 10)
 //            archeology?.attractions.forEach({ attration in
 //                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))
@@ -52,6 +62,9 @@ class ArchTableViewCell: UITableViewCell {
 //            })
         }
     }
+    
+    
+    
     @IBAction func LikeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         actionBlock?()

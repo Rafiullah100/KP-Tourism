@@ -94,20 +94,18 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section % 2 == 0 {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: CellIds.receiverCellId, for: indexPath) as? ChatTableViewCell {
-                cell.textView.text = conversation?[indexPath.section].content
-                cell.showTopLabel = false
-                return cell
-            }
+        if conversation?[indexPath.row].id == UserDefaults.standard.userID{
+            guard let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIds.receiverCellId, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
+            cell.textView.text = conversation?[indexPath.section].content
+            cell.bottomLabel.text = conversation?[indexPath.row].createdAt
+            return cell
         }
-        else {
-            if let cell = tableView.dequeueReusableCell(withIdentifier: CellIds.senderCellId, for: indexPath) as? ChatTableViewCell {
-                cell.textView.text = conversation?[indexPath.section].content
-                return cell
-            }
+        else{
+            guard let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIds.senderCellId, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
+            cell.textView.text = conversation?[indexPath.section].content
+            cell.bottomLabel.text = conversation?[indexPath.row].createdAt
+            return cell
         }
-        return UITableViewCell()
     }
 }
 

@@ -23,6 +23,7 @@ extension UserDefaults {
         case theme
         case profileImage
         case uuid
+        case userType
     }
     
     
@@ -150,6 +151,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.uuid.rawValue)
+        }
+    }
+    
+    var userType: String? {
+        get {
+            string(forKey: UserDefaultsKeys.userType.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.userType.rawValue)
         }
     }
 }

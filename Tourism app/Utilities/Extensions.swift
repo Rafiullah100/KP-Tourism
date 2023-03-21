@@ -540,6 +540,10 @@ extension UICollectionView{
         containerStack.centerXAnchor.constraint(equalTo: containerView.centerXAnchor, constant: 0).isActive = true
         self.backgroundView = containerView
     }
+    
+    func emptyView() {
+        self.backgroundView = nil
+    }
 }
 
 

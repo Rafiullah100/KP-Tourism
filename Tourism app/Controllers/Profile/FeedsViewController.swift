@@ -25,7 +25,7 @@ class FeedsViewController: UIViewController {
     }
     
     var newsFeed: [FeedModel] = [FeedModel]()
-    var stories: StoriesModel?
+    var stories: [StoriesRow]?
     var states : Array<Bool>!
     let pickerView = UIPickerView()
     var numberOfCells : NSInteger = 0
@@ -95,7 +95,7 @@ class FeedsViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let feedStories):
-                self.stories = (feedStories as! FeedStoriesModel).stories
+                self.stories = (feedStories as! FeedStoriesModel).stories.rows
                 self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -146,7 +146,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
         }
         else{
 //            cell.stories = stories?.rows[indexPath.row - 1]
-            cell.stories = stories?.rows[indexPath.row - 1]
+            cell.stories = stories?[indexPath.row - 1]
         }
         return cell
     }

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class ItenrariesViewController: BaseViewController {
     
     @IBOutlet weak var thumbnail: UIImageView!
@@ -51,14 +51,10 @@ class ItenrariesViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let itinraries):
-                DispatchQueue.main.async {
-                    self.ItinraryDetail = itinraries as? ItinraryModel
-                    self.collectionView.reloadData()
-                }
+                self.ItinraryDetail = itinraries as? ItinraryModel
+                self.ItinraryDetail?.itineraries.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.collectionView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

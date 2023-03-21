@@ -27,8 +27,7 @@ enum CellType: CaseIterable{
         if UIDevice.current.userInterfaceIdiom == .phone {
             switch self {
             case .explore, .attraction, .adventure, .south, .investment : return 300
-            case .tour, .product, .arch: return 350
-            case .event, .blog: return 400
+            case .tour, .product, .arch, .blog, .event: return 350
             case .visitKP: return 150.0
             }
         }

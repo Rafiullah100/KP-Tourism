@@ -11,20 +11,26 @@ struct ProfileModel: Codable {
     let userDetails: UserProfileDetails
 }
 
-// MARK: - UserDetails
+// MARK: - UserDetail
+
 struct UserProfileDetails: Codable {
     let name, uuid: String
     let about: String?
+    let userType: String
+    let isSeller: String?
     let profileImage, profileImageThumb: String
     let userFollowers, userFollowings, isFollowed, postsCount: Int
 
     enum CodingKeys: String, CodingKey {
         case name, uuid, about
+        case userType = "user_type"
+        case isSeller = "is_seller"
         case profileImage = "profile_image"
         case profileImageThumb = "profile_image_thumb"
         case userFollowers, userFollowings, isFollowed, postsCount
     }
 }
+
 //
 //struct ProfileModel : Codable {
 //    let userDetails : UserDetails?

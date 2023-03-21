@@ -415,6 +415,18 @@ class Switcher {
         delegate.present(vc, animated: true, completion: nil)
     }
     
+    static func gotoWriteBlogVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "WriteBlogViewController") as! WriteBlogViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
+    static func gotoAddProductVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddProductViewController") as! AddProductViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
 //    static func presentBottomSheet(delegate: UIViewController){
 //        let vc = UIStoryboard(name: Storyboard.sheet.rawValue, bundle: nil).instantiateViewController(withIdentifier: "BottomSheetViewController") as! BottomSheetViewController
 //        let nav = UINavigationController(rootViewController: vc)

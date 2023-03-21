@@ -19,21 +19,19 @@ class InvestmentTableViewCell: UITableViewCell {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (investment?.imageURL ?? "")))
             label.text = investment?.title
-            
-            bottomView.clipsToBounds = true
-            bottomView.layer.cornerRadius = 10
-            bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
-
-            imageBGView.clipsToBounds = true
-            imageBGView.layer.cornerRadius = 10
-            imageBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            bottomView.viewShadow()
         }
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        bottomView.clipsToBounds = true
+        bottomView.layer.cornerRadius = 10
+        bottomView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+
+        imageBGView.clipsToBounds = true
+        imageBGView.layer.cornerRadius = 10
+        imageBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        bottomView.viewShadow()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

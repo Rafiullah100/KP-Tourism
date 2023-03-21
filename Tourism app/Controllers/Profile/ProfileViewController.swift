@@ -13,12 +13,13 @@ class ProfileViewController: UIViewController {
 
     enum ApiType {
         case profile
-        case status
+        case story
         case blog
         case product
         case post
     }
     
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var followingCountLabel: UILabel!
     @IBOutlet weak var followerCountLabel: UILabel!
     @IBOutlet weak var postCountLabel: UILabel!
@@ -30,10 +31,11 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var tabbarView: MDCTabBarView!
     @IBOutlet weak var topProfileView: UIView!
     
+    @IBOutlet weak var writeBlogButton: UIButton!
     @IBOutlet weak var statusCollectionView: UICollectionView!{
         didSet{
-//            statusCollectionView.dataSource = self
-//            statusCollectionView.delegate = self
+            statusCollectionView.dataSource = self
+            statusCollectionView.delegate = self
             statusCollectionView.register(UINib(nibName: "StatusCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier())
         }
     }
@@ -55,16 +57,17 @@ class ProfileViewController: UIViewController {
     var post: [UserPostRow]?
     var blogs: [UserBlogRow]?
     var products: [UserProductRow]?
-    
+    var stories: [StoriesRow]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        topProfileView.layer.shadowColor = UIColor.black.cgColor
-        topProfileView.layer.shadowOpacity = 1
-        topProfileView.layer.shadowOffset = .zero
-        topProfileView.layer.shadowRadius = 10
-        topProfileView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 30.0)
+        topProfileView.clipsToBounds = true
+        topProfileView.layer.cornerRadius = 30
+//        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         configureTabbar()
+        topProfileView.addBottomShadow()
+
+        writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
     }
     
     private func configureTabbar(){
@@ -103,11 +106,22 @@ class ProfileViewController: UIViewController {
         Switcher.goToWishlistVC(delegate: self)
     }
     
+    @IBAction func writeBlogBtnAction(_ sender: Any) {
+        if profileSection == .blog{
+            Switcher.gotoWriteBlogVC(delegate: self)
+        }
+        else if profileSection == .product{
+            Switcher.gotoAddProductVC(delegate: self)
+        }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         guard let uuid = UserDefaults.standard.uuid else { return  }
         dispatchGroup?.enter()
         fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid], model: ProfileModel.self, apiType: .profile)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userStories, method: .post, parameters: ["uuid": uuid], model: FeedStoriesModel.self, apiType: .story)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid], model: UserBlogModel.self, apiType: .blog)
@@ -117,6 +131,7 @@ class ProfileViewController: UIViewController {
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .userPost, method: .post, parameters: ["uuid": uuid], model: UserPostModel.self, apiType: .post)
+        dispatchGroup?.leave()
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
@@ -130,6 +145,11 @@ class ProfileViewController: UIViewController {
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
                     self.followerCountLabel.text = "\(self.userProfile?.userDetails.userFollowers ?? 0)"
                     self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"
+                    UserDefaults.standard.userType = self.userProfile?.userDetails.userType
+                }
+                else if apiType == .story{
+                    self.stories = (model as? FeedStoriesModel)?.stories.rows
+                    self.statusCollectionView.reloadData()
                 }
                 else if apiType == .blog{
                     self.blogs = (model as? UserBlogModel)?.blogs.rows
@@ -153,7 +173,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case statusCollectionView:
-            return 20
+            return stories?.count ?? 0
         case contentCollectionView:
             return noOfRows()
         default:
@@ -166,6 +186,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         case statusCollectionView:
             let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
             cell.cellType = indexPath.row == 0 ? .userSelf : .other
+            if indexPath.row == 0 {
+                cell.imgView.image = UIImage(named: "placeholder")
+            }
+            else{
+                cell.stories = stories?[indexPath.row - 1]
+            }
             return cell
         case contentCollectionView:
             let cell: ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! ProfileCollectionViewCell
@@ -224,14 +250,16 @@ extension ProfileViewController: MDCTabBarViewDelegate{
         print(item.tag)
         if item.tag == 0{
 //            contentCollectionView.backgroundView = self.blogs?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
+            writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
             profileSection = .blog
         }
         else if item.tag == 1{
 //            contentCollectionView.backgroundView = self.products?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
+            writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
         }
         else if item.tag == 2{
-//            contentCollectionView.backgroundView = self.post?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
+//            contentCollectionView.backgroundView = self.post?.count == 0 ? contentCollectionView.setEmptyView() : contentCollectionView.emptyView()
             profileSection = .post
         }
         contentCollectionView.reloadData()

@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 //        }
         
         IQKeyboardManager.shared().isEnabled = true
+        IQKeyboardManager.shared().shouldResignOnTouchOutside = true
 //        IQKeyboardManager.shared().isEnableAutoToolbar = false
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .selected)

@@ -40,21 +40,21 @@ class ChatTableViewCell: UITableViewCell {
         return v
     }()
     
-    var showTopLabel = true {
-        didSet {
-            textviewTopConstraintToBg.isActive = !showTopLabel
-            textviewTopConstraintToTopLabel.isActive = showTopLabel
-            topLabel.isHidden = !showTopLabel
-        }
-    }
+//    var showTopLabel = true {
+//        didSet {
+//            textviewTopConstraintToBg.isActive = !showTopLabel
+//            textviewTopConstraintToTopLabel.isActive = showTopLabel
+//            topLabel.isHidden = !showTopLabel
+//        }
+//    }
     
-    let extraSpacing: CGFloat = 80
+    let extraSpacing: CGFloat = 0
     
-    let innerSpacing: CGFloat = 4
+    let innerSpacing: CGFloat = 2
     
-    let padding: CGFloat = 16
+    let padding: CGFloat = 8
     
-    let secondaryPadding: CGFloat = 2
+    let secondaryPadding: CGFloat = 1
     
     var textviewTopConstraintToBg: NSLayoutConstraint!
     
@@ -87,8 +87,8 @@ class ChatTableViewCell: UITableViewCell {
         let offset = UIEdgeInsets(top: padding, left: padding, bottom: -padding, right: -padding)
         self.contentView.addSubview(bgView)
         bgView.edges([.right, .top, .bottom], to: self.contentView, offset: offset)
-        bgView.layer.cornerRadius = 8
-        bgView.backgroundColor = UIColor(displayP3Red: 0, green: 122/255, blue: 255/255, alpha: 1)
+        bgView.layer.cornerRadius = 10.0
+        bgView.backgroundColor = UIColor(displayP3Red: 0, green: 122/255, blue: 255/255, alpha: 0.9)
         
         self.bgView.addSubview(textView)
         textView.edges([.left, .right, .top], to: self.bgView, offset: .init(top: innerSpacing, left: innerSpacing, bottom: -innerSpacing, right: -innerSpacing))
@@ -114,7 +114,7 @@ class ChatTableViewCell: UITableViewCell {
         let offset = UIEdgeInsets(top: padding, left: padding, bottom: -padding, right: -padding)
         self.contentView.addSubview(bgView)
         bgView.edges([.left, .top, .bottom], to: self.contentView, offset: offset)
-        bgView.layer.cornerRadius = 8
+        bgView.layer.cornerRadius = 10
         bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         
         self.bgView.addSubview(topLabel)

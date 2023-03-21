@@ -55,6 +55,10 @@ enum Route {
     case userBlog
     case userProduct
     case userPost
+    case userStories
+    case addBlog
+    case addProduct
+    case sellerTypeAPI
     
     var description: String {
         switch self {
@@ -148,6 +152,14 @@ enum Route {
             return "api/mobile/users/localproducts"
         case .userPost:
             return "api/mobile/users/posts"
+        case .userStories:
+            return "api/mobile/users/stories"
+        case .addBlog:
+           return "api/mobile/users/create_blog"
+        case .addProduct:
+            return "api/mobile/users/addproduct"
+        case .sellerTypeAPI:
+            return "api/mobile/users/account_switch"
         }
     }
 }

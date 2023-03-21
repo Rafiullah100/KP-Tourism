@@ -33,21 +33,15 @@ class EventTableViewCell: UITableViewCell {
             else{
                 statusView.backgroundColor = Constants.appColor
             }
-            shadow()
         }
-    }
-    
-    
-    func shadow()  {
-        counterView.layer.shadowColor = UIColor.lightGray.cgColor
-        counterView.layer.shadowOffset = CGSize(width: 1, height: 1)
-        counterView.layer.shadowOpacity = 0.4
-        counterView.layer.shadowRadius = 2.0
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        counterView.layer.shadowColor = UIColor.lightGray.cgColor
+        counterView.layer.shadowOffset = CGSize(width: 1, height: 1)
+        counterView.layer.shadowOpacity = 0.4
+        counterView.layer.shadowRadius = 2.0
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
