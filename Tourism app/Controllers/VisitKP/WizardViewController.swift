@@ -19,7 +19,7 @@ class WizardViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .back1
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (visitDetail?.thumbnailImage ?? "")))
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (visitDetail?.previewImage ?? "")))
         titLabel.text = visitDetail?.title
         descriptionLabel.text = visitDetail?.description
     }

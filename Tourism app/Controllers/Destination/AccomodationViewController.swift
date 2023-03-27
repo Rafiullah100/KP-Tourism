@@ -35,12 +35,12 @@ class AccomodationViewController: BaseViewController {
         
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             attractionID = exploreDistrict?.id ?? 0
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
             attractionID = attractionDistrict?.id ?? 0
         }
         else if archeology != nil{

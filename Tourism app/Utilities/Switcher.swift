@@ -269,7 +269,7 @@ class Switcher {
     
     static func showFollower(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProfilePopUpViewController") as! ProfilePopUpViewController
-        vc.modalPresentationStyle = .overCurrentContext
+        vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         delegate.present(vc, animated: true, completion: nil)
     }
@@ -425,6 +425,24 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddProductViewController") as! AddProductViewController
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
+    }
+    
+    static func gotoPdfDownloadVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "DownloadPDFViewController") as! DownloadPDFViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
+    
+    static func gotoEmailVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.password.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EmailViewController") as! EmailViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func gotoForgotPassword(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.password.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ForgotPasswordViewController") as! ForgotPasswordViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
 //    static func presentBottomSheet(delegate: UIViewController){

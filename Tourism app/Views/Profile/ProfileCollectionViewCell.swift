@@ -13,8 +13,8 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     
     var post: UserPostRow? {
         didSet {
-            if post?.postFiles.count ?? 0 > 0{
-                imgView.sd_setImage(with: URL(string: Route.baseUrl + (post?.postFiles[0].imageURL ?? "")))
+            if post?.postFiles?.count ?? 0 > 0{
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (post?.postFiles?[0].imageURL ?? "")))
             }
         }
     }

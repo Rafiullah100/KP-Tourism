@@ -21,7 +21,7 @@ class DestProductCollectionViewCell: UICollectionViewCell {
     
     var product: LocalProduct?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = "\(product?.title ?? "")"
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
             ownerNameLabel.text = "\(product?.users.name ?? "")"

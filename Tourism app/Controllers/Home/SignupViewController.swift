@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class SignupViewController: BaseViewController {
     
     let pickerView = UIPickerView()
@@ -39,15 +39,16 @@ class SignupViewController: BaseViewController {
             switch result {
             case .success(let result):
                 DispatchQueue.main.async {
-                    if (result as! SuccessModel).success == true{
+                    let res = result as! SuccessModel
+                    if res.success == true{
                         Switcher.goToLoginVC(delegate: self)
                     }
                     else{
-                        //show alert
+                        SVProgressHUD.showError(withStatus: res.message)
                     }
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

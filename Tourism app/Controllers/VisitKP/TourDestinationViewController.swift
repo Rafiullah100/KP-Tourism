@@ -18,7 +18,7 @@ class TourAccomodatioCell: UITableViewCell {
     var list: DistrictsListRow? {
         didSet {
             label.text = list?.title
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (list?.thumbnail_image ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (list?.preview_image ?? "")))
             
             bottomView.clipsToBounds = true
             bottomView.layer.cornerRadius = 10

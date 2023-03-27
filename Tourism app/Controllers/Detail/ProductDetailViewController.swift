@@ -30,7 +30,7 @@ class ProductDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
         
-        thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.thumbnailImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         productNameLabel.text = productDetail?.title
         descriptionTextView.text = productDetail?.localProductDescription
         onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))

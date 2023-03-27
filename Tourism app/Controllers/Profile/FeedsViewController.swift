@@ -20,9 +20,12 @@ class FeedsViewController: UIViewController {
     }
     @IBOutlet weak var tableView: UITableView!{
         didSet{
+            tableView.delegate = self
+            tableView.dataSource = self
             tableView.register(UINib(nibName: "FeedTableViewCell", bundle: nil), forCellReuseIdentifier: FeedTableViewCell.cellReuseIdentifier())
         }
     }
+    @IBOutlet weak var profileButton: UIButton!
     
     var newsFeed: [FeedModel] = [FeedModel]()
     var stories: [StoriesRow]?
@@ -36,17 +39,18 @@ class FeedsViewController: UIViewController {
     var totalCount = 1
     var currentPage = 1
     var limit = 5
-   
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         topBarView.addBottomShadow()
         pickerView.delegate = self
         pickerView.dataSource = self
-        tableView.estimatedRowHeight = 400.0
+        tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+        
+        profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
         loadData()
     }
     
@@ -59,7 +63,6 @@ class FeedsViewController: UIViewController {
     @IBAction func profileBtnAction(_ sender: Any) {
         Switcher.goToProfileVC(delegate: self)
     }
-    
     
     func loadData(){
         dispatchGroup = DispatchGroup()
@@ -76,7 +79,7 @@ class FeedsViewController: UIViewController {
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let feeds):
                 self.newsFeed.append(contentsOf: (feeds as? NewsFeedModel)?.feeds ?? [])
@@ -95,7 +98,7 @@ class FeedsViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let feedStories):
-                self.stories = (feedStories as! FeedStoriesModel).stories.rows
+                self.stories = (feedStories as! FeedStoriesModel).stories?.rows
                 self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -170,7 +173,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier()) as! FeedTableViewCell
+        let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier(), for: indexPath) as! FeedTableViewCell
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
 //        cell.expandableLabel.collapsed = states[indexPath.row]

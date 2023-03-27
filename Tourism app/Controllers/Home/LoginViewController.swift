@@ -11,6 +11,7 @@ import FBSDKCoreKit
 import GoogleSignIn
 import Firebase
 import Toast_Swift
+import SVProgressHUD
 class LoginViewController: BaseViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
@@ -29,17 +30,18 @@ class LoginViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.navigationBar.isHidden = true
-        self.navigationController?.navigationItem.hidesBackButton = true
+//        navigationController?.navigationBar.isHidden = true
+//        self.navigationController?.navigationItem.hidesBackButton = true
     }
 
     @IBAction func googleSigninBtn(_ sender: Any) {
         guard let clientID = Constants.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-        GIDSignIn.sharedInstance.signIn(withPresenting: Helper.shared.rootVC()) { result, error in
+         GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             if error == nil{
-                print(result?.user.profile?.email ?? "")
+                let parameters = ["username": result?.user.profile?.email ?? "", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
+                self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
             }
         }
     }
@@ -77,6 +79,9 @@ class LoginViewController: BaseViewController {
         Switcher.goToSignupVC(delegate: self)
     }
     
+    @IBAction func forgotPasswordBtn(_ sender: Any) {
+        Switcher.gotoEmailVC(delegate: self)
+    }
     @IBAction func LoginBtnAction(_ sender: Any) {
         validateLoginFields()
     }
@@ -85,24 +90,23 @@ class LoginViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let login):
-                DispatchQueue.main.async {
-                    self.login = login as? LoginModel
-                    if self.login?.success == true{
-                        UserDefaults.standard.isLoginned = true
-                        UserDefaults.standard.accessToken = self.login?.token
-                        UserDefaults.standard.userID = self.login?.userID
-                        UserDefaults.standard.userEmail = self.login?.email
-                        UserDefaults.standard.profileImage = self.login?.profileImage
-                        UserDefaults.standard.name = self.login?.name
-                        UserDefaults.standard.uuid = self.login?.uuID
-                        Switcher.goToFeedsVC(delegate: self)
-                    }
-                    else{
-                        //show alert
-                    }
+                self.login = login as? LoginModel
+                if self.login?.success == true{
+                    UserDefaults.standard.isLoginned = true
+                    UserDefaults.standard.accessToken = self.login?.token
+                    UserDefaults.standard.userID = self.login?.userID
+                    UserDefaults.standard.userEmail = self.login?.email
+                    UserDefaults.standard.profileImage = self.login?.profileImage
+                    UserDefaults.standard.name = self.login?.name
+                    UserDefaults.standard.uuid = self.login?.uuID
+                    UserDefaults.standard.userBio = self.login?.about
+                    Switcher.goToFeedsVC(delegate: self)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: self.login?.message)
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -115,7 +119,6 @@ class LoginViewController: BaseViewController {
             self.view.makeToast("Password doesn't match.", duration: 3.0, position: .top)
             return }
         let parameters = ["username": email, "password": password]
-        print(parameters)
         loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
     }
     

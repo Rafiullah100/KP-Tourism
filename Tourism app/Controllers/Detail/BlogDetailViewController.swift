@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SVProgressHUD
 class BlogDetailViewController: BaseViewController {
 
     @IBOutlet weak var commentView: UIView!
@@ -29,13 +30,14 @@ class BlogDetailViewController: BaseViewController {
     
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
-    @IBOutlet weak var tableView: UITableView!{
+    @IBOutlet weak var tableView: DynamicHeightTableView!{
         didSet{
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
         }
     }
+  
 
     private lazy var keyboardView: KeyboardInputAccessoryView = {
         return KeyboardInputAccessoryView.view(controller: self)
@@ -50,19 +52,20 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 1
-    var limit = 10
+    var limit = 1000
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        scrollView.keyboardDismissMode = .onDrag
         scrollView.delegate = self
-        tableView.estimatedRowHeight = 0
+        tableView.estimatedRowHeight = UITableView.automaticDimension
 //        customAccessoryView.delegate = self
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = blogDetail?.title
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.thumbnailImage ?? "")))
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
         textView.text = blogDetail?.blogDescription
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
@@ -95,6 +98,7 @@ class BlogDetailViewController: BaseViewController {
             case .success(let result):
                 DispatchQueue.main.async {
                     if (result as? SuccessModel)?.success == true{
+                        self.allComments = []
                         self.reloadComment()
                     }
                 }
@@ -108,17 +112,16 @@ class BlogDetailViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
-                DispatchQueue.main.async {
-                    print((comments as? CommentsModel)?.comments.rows ?? [])
-                    self.totalCount = (comments as? CommentsModel)?.comments.count ?? 1
-                    self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments.rows ?? [])
-                    self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-                    self.tableView.reloadData()
-                    self.tableView.layoutIfNeeded()
-                    self.tableViewHeight.constant = self.tableView.contentSize.height
-                }
+                print((comments as? CommentsModel)?.comments.rows ?? [])
+                self.totalCount = (comments as? CommentsModel)?.comments.count ?? 1
+                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments.rows ?? [])
+                self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
+                self.tableView.reloadData()
+                self.tableView.layoutIfNeeded()
+                self.tableViewHeight.constant = self.tableView.contentSize.height
+                self.tableView.layoutIfNeeded()
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -187,14 +190,14 @@ extension BlogDetailViewController: UITextViewDelegate {
 }
 
 extension BlogDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
 }
 
 //extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{

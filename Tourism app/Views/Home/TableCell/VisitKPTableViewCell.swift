@@ -15,7 +15,7 @@ class VisitKPTableViewCell: UITableViewCell {
     
     var visit: VisitKPRow?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (visit?.thumbnailImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (visit?.previewImage ?? "")))
             label.text = "\(visit?.title ?? "")"
         }
     }

@@ -82,38 +82,3 @@ struct BlogUsers: Codable {
 
 /////////////// fetch comment
 //*************************
-struct CommentsModel: Codable {
-    let comments: Comments
-}
-
-// MARK: - Comments
-struct Comments: Codable {
-    let count: Int
-    let rows: [CommentsRows]
-}
-
-// MARK: - Row
-struct CommentsRows: Codable {
-    let createdAt, updatedAt: String
-    let id, blogID, userID: Int
-    let comment: String
-    let status, isDeleted: Int
-    let users: CommentUsers
-
-    enum CodingKeys: String, CodingKey {
-        case createdAt, updatedAt, id
-        case blogID = "blog_id"
-        case userID = "user_id"
-        case comment, status, isDeleted, users
-    }
-}
-
-// MARK: - Users
-struct CommentUsers: Codable {
-    let profileImage, name: String
-
-    enum CodingKeys: String, CodingKey {
-        case profileImage = "profile_image"
-        case name
-    }
-}

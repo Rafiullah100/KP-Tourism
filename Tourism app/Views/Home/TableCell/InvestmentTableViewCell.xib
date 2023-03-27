@@ -4,8 +4,8 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -36,7 +36,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="318" height="228"/>
                                             </imageView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstItem="b70-jt-OqJ" firstAttribute="top" secondItem="eEb-gX-Nen" secondAttribute="top" id="WhR-RI-apk"/>
                                             <constraint firstItem="b70-jt-OqJ" firstAttribute="leading" secondItem="eEb-gX-Nen" secondAttribute="leading" id="dbb-f4-1ei"/>
@@ -53,13 +53,13 @@
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Investment" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cPm-ey-aTY">
                                                         <rect key="frame" x="0.0" y="0.0" width="298" height="35"/>
                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="17"/>
-                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" name="whiteBlackishColor"/>
                                         <constraints>
                                             <constraint firstItem="Q8G-KJ-5Zs" firstAttribute="top" secondItem="mZL-IB-tcw" secondAttribute="top" constant="5" id="Njp-vf-MKb"/>
                                             <constraint firstAttribute="height" constant="50" id="P9F-eU-2o9"/>
@@ -76,7 +76,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" name="whiteBlackishColor"/>
                         <constraints>
                             <constraint firstItem="PSF-kE-b6w" firstAttribute="top" secondItem="fhT-lR-RvN" secondAttribute="top" id="YCc-Gt-whd"/>
                             <constraint firstAttribute="trailing" secondItem="PSF-kE-b6w" secondAttribute="trailing" id="ef9-3W-QNx"/>
@@ -106,8 +106,8 @@
     </objects>
     <resources>
         <image name="swat" width="1104" height="936"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
+        <namedColor name="whiteBlackishColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
     </resources>
 </document>

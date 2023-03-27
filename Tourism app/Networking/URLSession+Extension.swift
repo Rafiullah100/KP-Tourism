@@ -23,6 +23,7 @@ extension URLSession{
         if showLoader == true {
             SVProgressHUD.show(withStatus: "Please Wait...")
             SVProgressHUD.setDefaultMaskType(.clear)
+            SVProgressHUD.setBackgroundColor(.lightGray)
         }
         let task = dataTask(with: request) { data, response, error in
             SVProgressHUD.dismiss()

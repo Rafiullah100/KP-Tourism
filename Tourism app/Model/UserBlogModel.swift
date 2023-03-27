@@ -8,27 +8,27 @@
 import Foundation
 
 struct UserBlogModel: Codable {
-    let blogs: UserBlogs
+    let blogs: UserBlogs?
 }
 
 // MARK: - Blogs
 struct UserBlogs: Codable {
-    let count: Int
-    let rows: [UserBlogRow]
+    let count: Int?
+    let rows: [UserBlogRow]?
 }
 
 // MARK: - Row
 struct UserBlogRow: Codable {
-    let createdAt: String
-    let id: Int
-    let uuid: String
-    let userID, districtID, attractionID, poiID: Int
-    let title, slug, previewImage, thumbnailImage: String
-    let description: String
-    let isFeatured: Bool
+    let createdAt: String?
+    let id: Int?
+    let uuid: String?
+    let userID, districtID, attractionID, poiID: Int?
+    let title, slug, previewImage, thumbnailImage: String?
+    let description: String?
+    let isFeatured: Bool?
     let approvedBy: String?
-    let viewsCounter: Int
-    let updatedAt: String
+    let viewsCounter: Int?
+    let updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, id, uuid

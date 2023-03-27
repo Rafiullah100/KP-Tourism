@@ -105,7 +105,7 @@ class BaseViewController: UIViewController {
         navigationItem.leftBarButtonItems = []
         addTitleLabel()
         navigationItem.rightBarButtonItems = []
-//        addCrossButton()
+        addCrossButton()
     }
     
     func setupBackBarButtonItemsWithLikeButton() {
@@ -152,7 +152,7 @@ class BaseViewController: UIViewController {
         titleLabel = UILabel()
         if let titleLabel = titleLabel {
             titleLabel.text = viewControllerTitle
-            titleLabel.font = UIFont(name: "\(Constants.appFontName)-Bold", size: 17)
+            titleLabel.font = UIFont(name: "\(Constants.appFontName)-Medium", size: 17)
             titleLabel.textColor = Helper.shared.textColor()
             self.navigationItem.titleView = titleLabel
         }
@@ -221,9 +221,9 @@ class BaseViewController: UIViewController {
     }
     
     func addCrossButton() {
-        let crossButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
+        let crossButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(pop))
         crossButton.image = nil
-//        crossButton.image = UIImage(named: "cross")
+        crossButton.image = UIImage(named: "cross")
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = crossButton
     }
@@ -274,6 +274,10 @@ class BaseViewController: UIViewController {
             navigationController?.tabBarController?.selectedIndex = 0
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    @objc func pop() {
+        navigationController?.popViewController(animated: true)
     }
     
     @objc func backAction() {

@@ -24,6 +24,7 @@ extension UserDefaults {
         case profileImage
         case uuid
         case userType
+        case userBio
     }
     
     
@@ -160,6 +161,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.userType.rawValue)
+        }
+    }
+    
+    var userBio: String? {
+        get {
+            string(forKey: UserDefaultsKeys.userBio.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.userBio.rawValue)
         }
     }
 }

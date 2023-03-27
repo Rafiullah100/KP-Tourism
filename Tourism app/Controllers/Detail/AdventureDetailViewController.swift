@@ -26,7 +26,7 @@ class AdventureDetailViewController: BaseViewController {
         
         titLabel.text = adventureDetail?.locationTitle
         adventureTypeLabel.text = adventureDetail?.title
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (adventureDetail?.thumbnailImage ?? "")))
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (adventureDetail?.previewImage ?? "")))
         textView.text = adventureDetail?.adventureDescription.stripOutHtml()
     }
     

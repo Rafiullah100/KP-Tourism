@@ -38,7 +38,7 @@ class EventDetailViewController: BaseViewController {
         titLabel.text = eventDetail?.title
         eventTypeLabel.text = eventDetail?.locationTitle
         descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.thumbnailImage ?? "")))
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.previewImage ?? "")))
         openDateLabel.text = "\(eventDetail?.startDate ?? "") | \(eventDetail?.isExpired ?? "")"
         if eventDetail?.socialEventUsers?.count != 0 {
             interestGoingLabel.text = "\(eventDetail?.socialEventUsers?[0].userCount ?? 0) Interested"
@@ -59,12 +59,14 @@ class EventDetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         statusBarView.addGradient()
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+        DispatchQueue.global().async {
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
         }
     }
     

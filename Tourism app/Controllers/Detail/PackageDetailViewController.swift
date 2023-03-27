@@ -71,7 +71,7 @@ class PackageDetailViewController: BaseViewController {
         viewControllerTitle = tourDetail?.title
         tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 60.0
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.thumbnail_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
         packageNameLabel.text = tourDetail?.title
         descriptionLabel.text = tourDetail?.description?.stripOutHtml()
         daysLabel.text = tourDetail?.duration_days

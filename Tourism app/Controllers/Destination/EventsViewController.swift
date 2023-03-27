@@ -29,12 +29,12 @@ class EventsViewController: BaseViewController {
         type = .back1
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: EventsModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
             fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: EventsModel.self)
         }
         else if archeology != nil{

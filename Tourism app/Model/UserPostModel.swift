@@ -8,21 +8,21 @@
 import Foundation
 
 struct UserPostModel: Codable {
-    let posts: PostsModel
+    let posts: PostsModel?
 }
 
 // MARK: - Posts
 struct PostsModel: Codable {
-    let count: Int
-    let rows: [UserPostRow]
+    let count: Int?
+    let rows: [UserPostRow]?
 }
 
 // MARK: - Row
 struct UserPostRow: Codable {
-    let updatedAt, description, type: String
-    let id: Int
-    let users: PostOwner
-    let postFiles: [UserPostFile]
+    let updatedAt, description, type: String?
+    let id: Int?
+    let users: PostOwner?
+    let postFiles: [UserPostFile]?
 
     enum CodingKeys: String, CodingKey {
         case updatedAt, description, type, id, users
@@ -32,7 +32,7 @@ struct UserPostRow: Codable {
 
 // MARK: - PostFile
 struct UserPostFile: Codable {
-    let title, imageURL: String
+    let title, imageURL: String?
     let videoURL: String?
 
     enum CodingKeys: String, CodingKey {
@@ -44,8 +44,8 @@ struct UserPostFile: Codable {
 
 // MARK: - Users
 struct PostOwner: Codable {
-    let id: Int
-    let name, profileImage, profileImageThumb: String
+    let id: Int?
+    let name, profileImage, profileImageThumb: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name

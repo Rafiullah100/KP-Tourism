@@ -14,12 +14,12 @@ struct ProfileModel: Codable {
 // MARK: - UserDetail
 
 struct UserProfileDetails: Codable {
-    let name, uuid: String
+    let name, uuid: String?
     let about: String?
-    let userType: String
+    let userType: String?
     let isSeller: String?
-    let profileImage, profileImageThumb: String
-    let userFollowers, userFollowings, isFollowed, postsCount: Int
+    let profileImage, profileImageThumb: String?
+    let userFollowers, userFollowings, isFollowed, postsCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case name, uuid, about

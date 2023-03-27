@@ -25,9 +25,9 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
         topBarView.addBottomShadow()
         emailTextField.text = UserDefaults.standard.userEmail
         nameTextField.text = UserDefaults.standard.name
-        
+        bioTextField1.text = UserDefaults.standard.userBio
         guard let image = UserDefaults.standard.profileImage else { return }
-        if image.contains("https://staging-admin.kptourism.com"){
+        if image.contains(Route.baseUrl){
             profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
         }
         else{
@@ -53,6 +53,7 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
                     UserDefaults.standard.name = profile.data.name
                     UserDefaults.standard.userEmail = profile.data.email
                     UserDefaults.standard.profileImage = profile.data.profileImage
+                    UserDefaults.standard.userBio = profile.data.about
                     SVProgressHUD.showSuccess(withStatus: profile.message)
                 }
                 else{

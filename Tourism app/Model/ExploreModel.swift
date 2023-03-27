@@ -79,21 +79,21 @@ import Foundation
 
 
 struct ExploreModel: Codable {
-    let count: Int
+    let count: Int?
     let attractions: [ExploreDistrict]
 }
 
 // MARK: - WelcomeAttraction
 struct ExploreDistrict: Codable {
-    let id, userID: Int
-    let title, slug: String
+    let id, userID: Int?
+    let title, slug: String?
 //    let geographicalArea: GeographicalArea
-    let thumbnailImage, previewImage, locationTitle, latitude: String
-    let longitude, description: String
-    let isFeatured, isTop: Bool
-    let viewsCounter, status, isDeleted: Int
-    let createdAt, updatedAt: String
-    let districtCategoryID, userLike: Int
+    let thumbnailImage, previewImage, locationTitle, latitude: String?
+    let longitude, description: String?
+    let isFeatured, isTop: Bool?
+    let viewsCounter, status, isDeleted: Int?
+    let createdAt, updatedAt: String?
+    let districtCategoryID, userLike: Int?
     let attractions: [ExploreSubAttration]
 
     enum CodingKeys: String, CodingKey {
@@ -116,18 +116,18 @@ struct ExploreDistrict: Codable {
 
 // MARK: - AttractionAttraction
 struct ExploreSubAttration: Codable {
-    let id: Int
-    let title, slug: String
-    let districtID: Int
-    let isFeatured, isTop, family, adults: Bool
-    let locationTitle: String
+    let id: Int?
+    let title, slug: String?
+    let districtID: Int?
+    let isFeatured, isTop, family, adults: Bool?
+    let locationTitle: String?
     let latitude, longitude: String?
-    let description, displayImage, previewImage: String
-    let authorID: Int
+    let description, displayImage, previewImage: String?
+    let authorID: Int?
     let parentID: Int?
-    let type: String
-    let status, viewsCounter, isDeleted: Int
-    let createdAt, updatedAt: String
+    let type: String?
+    let status, viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, slug

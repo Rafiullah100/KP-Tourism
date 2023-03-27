@@ -59,6 +59,11 @@ enum Route {
     case addBlog
     case addProduct
     case sellerTypeAPI
+    case messageAPI
+    case notificationSwitchApi
+    case forgotPasswordApi
+    case resetPassword
+    case googleLoginApi
     
     var description: String {
         switch self {
@@ -160,6 +165,16 @@ enum Route {
             return "api/mobile/users/addproduct"
         case .sellerTypeAPI:
             return "api/mobile/users/account_switch"
+        case .messageAPI:
+            return "api/mobile/users/do_message"
+        case .notificationSwitchApi:
+           return "api/mobile/users/notification_switch"
+        case .forgotPasswordApi:
+            return "api/mobile/auth/forget_password"
+        case .resetPassword:
+            return "api/mobile/auth/reset_password"
+        case .googleLoginApi:
+            return "api/mobile/auth/google-login"
         }
     }
 }

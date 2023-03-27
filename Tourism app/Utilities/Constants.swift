@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Firebase
+
 struct Constants {
         
     static let tourDetail = TourDetail(area: "", experience: "", destination: "", information: "", accomodation: "")
@@ -67,6 +68,10 @@ struct Constants {
     static let traveleInformation: [String] = ["YOUNG ADULTS", "KIDS", "SENIORS", "DISABLE (WHEELCHAIR)"]
     
     static let traveleAccomodation = [Destination(image: "resthouse", title: "GOVENMENT REST HOUSE"), Destination(image: "camping", title: "CAMPING PODS"), Destination(image: "hotel", title: "PRIVATE HOTELS"), Destination(image: "ptdc", title: "PTDC HOTELS")]
+    
+//    static profileImage(){
+//
+//    }
  }
 
 enum Envoirment {

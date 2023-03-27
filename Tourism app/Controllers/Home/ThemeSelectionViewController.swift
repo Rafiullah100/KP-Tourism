@@ -31,7 +31,6 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         if UserDefaults.standard.theme == ThemeMode.dark.rawValue{
             switchView.isOn = true
         }
@@ -41,7 +40,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         
         if UserDefaults.standard.isLoginned == true{
             userParentView.isHidden = false
-//            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
             nameLabel.text = UserDefaults.standard.name
         }
         else{

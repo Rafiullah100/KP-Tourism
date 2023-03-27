@@ -48,7 +48,6 @@ class ArchTableViewCell: UITableViewCell {
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             imageSDWebImageSrc = []
             
-            
 //            imgBGView.roundCorners(corners: [.topRight, .topLeft], radius: 10)
 //            archeology?.attractions.forEach({ attration in
 //                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))

@@ -17,7 +17,8 @@ enum Storyboard: String {
     case profile = "Profile"
     case visitkp = "VisitKP"
     case sheet = "Sheet"
-    
+    case password = "ForgotPassword"
+
     func instantiate<T>(identifier: T.Type) -> T {
         let storyboard = UIStoryboard(name: rawValue, bundle: nil)
         guard let viewcontroller = storyboard.instantiateViewController(withIdentifier: String(describing: identifier)) as? T else {

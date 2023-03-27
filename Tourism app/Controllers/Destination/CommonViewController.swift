@@ -61,7 +61,7 @@ class CommonViewController: BaseViewController {
             thumbnailTopLabel.text = explore?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
-            descriptionLabel.text = explore?.description.stripOutHtml()
+            descriptionLabel.text = explore?.description?.stripOutHtml()
         }
         else if attraction != nil{
             thumbnailTopLabel.text = attraction?.title

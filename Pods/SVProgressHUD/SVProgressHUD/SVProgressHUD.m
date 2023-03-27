@@ -386,7 +386,7 @@ static const CGFloat SVProgressHUDLabelSpacing = 8.0f;
         self.ringView.alpha = self.backgroundRingView.alpha = 0.0f;
         
 
-        _backgroundColor = [UIColor whiteColor];
+        _backgroundColor = [UIColor lightGrayColor];
         _foregroundColor = [UIColor blackColor];
         _backgroundLayerColor = [UIColor colorWithWhite:0 alpha:0.4];
         

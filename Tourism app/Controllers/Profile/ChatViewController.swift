@@ -53,8 +53,6 @@ class ChatViewController: UIViewController {
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
-//        navigationController?.popViewController(animated: true)
-        
         dismiss(animated: true)
     }
     
@@ -75,8 +73,18 @@ class ChatViewController: UIViewController {
             switch result {
             case .success(let conversation):
                 self.conversation = (conversation as? OnetoOneConversationModel)?.chats.rows ?? []
-                self.tableView.reloadData()
-//                self.chatUserModel?.chatUsers.rows.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                self.conversation?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    func sendMessage<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let message):
+                print(message)
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -121,6 +129,7 @@ extension ChatViewController: KeyboardInputAccessoryViewProtocol{
 //    }
     
     func send(data type: String) {
+        sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": 4, "uuid": "7843e908-caba-429a-9285-8d5702f33f4c"], model: SuccessModel.self)
 //        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
     }
     
@@ -131,4 +140,7 @@ extension ChatViewController: KeyboardInputAccessoryViewProtocol{
 //        commentView.isHidden = false
 ////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
 //    }
+    
+    
+    
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 struct UserProductModel: Codable {
-    let localProducts: UserLocalProducts
+    let localProducts: UserLocalProducts?
 
     enum CodingKeys: String, CodingKey {
         case localProducts = "local_products"
@@ -17,23 +17,23 @@ struct UserProductModel: Codable {
 
 // MARK: - LocalProducts
 struct UserLocalProducts: Codable {
-    let count: Int
-    let rows: [UserProductRow]
+    let count: Int?
+    let rows: [UserProductRow]?
 }
 
 // MARK: - Row
 struct UserProductRow: Codable {
-    let createdAt: String
-    let id: Int
-    let uuid: String
-    let userID, districtID: Int
-    let title, slug: String
-    let price: Int
-    let previewImage, thumbnailImage, description: String
-    let isFeatured: Bool
+    let createdAt: String?
+    let id: Int?
+    let uuid: String?
+    let userID, districtID: Int?
+    let title, slug: String?
+    let price: Int?
+    let previewImage, thumbnailImage, description: String?
+    let isFeatured: Bool?
     let approvedBy: String?
-    let viewsCounter: Int
-    let updatedAt: String
+    let viewsCounter: Int?
+    let updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, id, uuid

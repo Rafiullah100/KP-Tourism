@@ -50,7 +50,8 @@ class ProfileViewController: UIViewController {
             contentCollectionView.register(UINib(nibName: "ProfileCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier())
         }
     }
-
+    @IBOutlet weak var bioLabel: UILabel!
+    
     var tabbarItems = [UITabBarItem]()
     var userProfile: ProfileModel?
     var profileSection: ProfileSection!
@@ -62,10 +63,11 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topProfileView.clipsToBounds = true
+        topProfileView.layer.masksToBounds = true
         topProfileView.layer.cornerRadius = 30
-//        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         configureTabbar()
-        topProfileView.addBottomShadow()
+//        topProfileView.addBottomShadow()
 
         writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
     }
@@ -141,6 +143,7 @@ class ProfileViewController: UIViewController {
                 if apiType == .profile{
                     self.userProfile = model as? ProfileModel
                     self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.text = self.userProfile?.userDetails.name
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
                     self.followerCountLabel.text = "\(self.userProfile?.userDetails.userFollowers ?? 0)"
@@ -148,18 +151,18 @@ class ProfileViewController: UIViewController {
                     UserDefaults.standard.userType = self.userProfile?.userDetails.userType
                 }
                 else if apiType == .story{
-                    self.stories = (model as? FeedStoriesModel)?.stories.rows
+                    self.stories = (model as? FeedStoriesModel)?.stories?.rows
                     self.statusCollectionView.reloadData()
                 }
                 else if apiType == .blog{
-                    self.blogs = (model as? UserBlogModel)?.blogs.rows
+                    self.blogs = (model as? UserBlogModel)?.blogs?.rows
                     self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
                 }
                 else if apiType == .product{
-                    self.products = (model as? UserProductModel)?.localProducts.rows
+                    self.products = (model as? UserProductModel)?.localProducts?.rows
                 }
                 else if apiType == .post{
-                    self.post = (model as? UserPostModel)?.posts.rows
+                    self.post = (model as? UserPostModel)?.posts?.rows
                 }
                 
             case .failure(let error):

@@ -55,6 +55,8 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     }
     
     @IBAction func dismissBtn(_ sender: Any) {
+//        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+
         self.dismiss(animated: true)
     }
     

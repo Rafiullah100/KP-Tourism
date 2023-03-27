@@ -21,7 +21,7 @@ class AccomodationTableViewCell: UITableViewCell {
     
     var accomodationDetail: Accomodation?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.thumbnailImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.previewImage ?? "")))
             titleLabel.text = accomodationDetail?.title
             locationLabel.text = accomodationDetail?.locationTitle
         }

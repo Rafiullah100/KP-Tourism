@@ -32,7 +32,7 @@ class ExploreTableViewCell: UITableViewCell {
             slideArray = []
             slideArray.append(district?.previewImage ?? "")
             self.district?.attractions.forEach({ attration in
-                self.slideArray.append(attration.previewImage)
+                self.slideArray.append(attration.previewImage ?? "")
             })
             imageSDWebImageSrc = []
             DispatchQueue.main.async {

@@ -30,12 +30,14 @@ class ExploreMapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
+        DispatchQueue.global().async {
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
         }
     }
     
@@ -54,9 +56,8 @@ class ExploreMapViewController: UIViewController {
 extension ExploreMapViewController: MGLMapViewDelegate{
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
         exploreDistrict?.forEach({ district in
-            print(district.latitude, district.longitude)
-            guard let lat = Double(district.latitude), let lon = Double(district.longitude)  else { return }
-            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: district.title, subtitle: district.locationTitle, image: UIImage(named: "dummy") ?? UIImage())
+            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
+            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: district.title ?? "", subtitle: district.locationTitle ?? "", image: UIImage(named: "dummy") ?? UIImage())
             //            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             mapView.addAnnotation(point)
         })

@@ -11,6 +11,7 @@ import SVProgressHUD
 class ChatListViewController: UIViewController {
     @IBOutlet weak var topBarView: UIView!
 
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var searchField: UITextField!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -20,7 +21,6 @@ class ChatListViewController: UIViewController {
         }
     }
     var conversationUsers: [UserConversation]?
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +32,7 @@ class ChatListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
         load()
     }
     
@@ -73,7 +74,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             cell.statusIndicator.backgroundColor = Constants.offlineColor
         }
-        cell.user = conversationUsers?[indexPath.row].user
+        //cell.user = conversationUsers?[indexPath.row].user
         return cell
     }
     
@@ -83,6 +84,6 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let user = conversationUsers?[indexPath.row].user else { return }
-        Switcher.goToChatVC(delegate: self, receiverUser: user)
+        //Switcher.goToChatVC(delegate: self, receiverUser: user)
     }
 }

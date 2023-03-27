@@ -78,6 +78,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         searchBgView.viewShadow()
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()

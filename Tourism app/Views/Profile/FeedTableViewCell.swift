@@ -25,8 +25,9 @@ class FeedTableViewCell: UITableViewCell {
     
     var feed: FeedModel? {
         didSet {
-            print(Route.baseUrl + (feed?.postFiles[0].imageURL ?? ""))
+//            imgView.image = UIImage(named: "placeholder")
             if feed?.postFiles.count ?? 0 > 0 {
+                imgbgView.isHidden = false
                 imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postFiles[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
             }
             else{

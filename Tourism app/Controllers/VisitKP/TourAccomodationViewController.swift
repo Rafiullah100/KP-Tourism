@@ -22,7 +22,7 @@ class TravelAccomodation: UITableViewCell {
     
     var accomodation: Accomodation?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodation?.thumbnailImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodation?.previewImage ?? "")))
             label.text = accomodation?.title
             
             bottomView.clipsToBounds = true
