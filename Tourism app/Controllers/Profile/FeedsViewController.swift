@@ -135,6 +135,23 @@ class FeedsViewController: UIViewController {
             }
         }
     }
+    
+    func share<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let success):
+                let successDetail = success as? SuccessModel
+                if successDetail?.success == true{
+                    SVProgressHUD.showSuccess(withStatus: successDetail?.message)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: successDetail?.message)
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -148,7 +165,6 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.imgView.image = UIImage(named: "placeholder")
         }
         else{
-//            cell.stories = stories?.rows[indexPath.row - 1]
             cell.stories = stories?[indexPath.row - 1]
         }
         return cell
@@ -180,6 +196,9 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {
             self.actionSheet(row: indexPath.row)
+        }
+        cell.shareActionBlock = {
+            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].id], model: SuccessModel.self)
         }
         return cell
     }

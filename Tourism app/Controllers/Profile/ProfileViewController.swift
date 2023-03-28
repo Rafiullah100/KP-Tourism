@@ -41,7 +41,9 @@ class ProfileViewController: UIViewController {
     }
     
     var dispatchGroup: DispatchGroup?
-
+    var totalCount = 1
+    var currentPage = 1
+    var limit = 5
     
     @IBOutlet weak var contentCollectionView: UICollectionView!{
         didSet{
@@ -55,7 +57,7 @@ class ProfileViewController: UIViewController {
     var tabbarItems = [UITabBarItem]()
     var userProfile: ProfileModel?
     var profileSection: ProfileSection!
-    var post: [UserPostRow]?
+    var post: [UserPostRow] = [UserPostRow]()
     var blogs: [UserBlogRow]?
     var products: [UserProductRow]?
     var stories: [StoriesRow]?
@@ -68,17 +70,15 @@ class ProfileViewController: UIViewController {
         topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         configureTabbar()
 //        topProfileView.addBottomShadow()
-
-        writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
     }
     
     private func configureTabbar(){
-        let section = ["Blogs", "Products", "Post"]
+        let section = ["Post", "Products", "Blogs"]
         for i in 0..<section.count{
             let tabbarItem = UITabBarItem(title: section[i], image: nil, tag: i)
             tabbarItems.append(tabbarItem)
         }
-        profileSection = .blog
+        profileSection = .post
         tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
         tabbarView.bottomDividerColor = .clear
@@ -132,8 +132,13 @@ class ProfileViewController: UIViewController {
         fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid], model: UserProductModel.self, apiType: .product)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
-        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid], model: UserPostModel.self, apiType: .post)
+        postApiCall()
         dispatchGroup?.leave()
+    }
+    
+    private func postApiCall(){
+        guard let uuid = UserDefaults.standard.uuid else { return  }
+        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid, "limit": 5, "page": currentPage], model: UserPostModel.self, apiType: .post)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
@@ -154,17 +159,20 @@ class ProfileViewController: UIViewController {
                     self.stories = (model as? FeedStoriesModel)?.stories?.rows
                     self.statusCollectionView.reloadData()
                 }
+                else if apiType == .post{
+                    self.post = (model as? UserPostModel)?.posts?.rows ?? []
+                    self.totalCount = (model as? UserPostModel)?.posts?.count ?? 0
+                    print(self.totalCount)
+                    self.post.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                }
+                else if apiType == .product{
+                    self.products = (model as? UserProductModel)?.localProducts?.rows
+                    self.products?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                }
                 else if apiType == .blog{
                     self.blogs = (model as? UserBlogModel)?.blogs?.rows
                     self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
                 }
-                else if apiType == .product{
-                    self.products = (model as? UserProductModel)?.localProducts?.rows
-                }
-                else if apiType == .post{
-                    self.post = (model as? UserPostModel)?.posts?.rows
-                }
-                
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -208,7 +216,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     private func noOfRows() -> Int{
         switch profileSection {
         case .post:
-            return post?.count ?? 0
+            return post.count
         case .blog:
             return blogs?.count ?? 0
         case .product:
@@ -221,13 +229,22 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
    private func loadCollection(cell:ProfileCollectionViewCell, indexPath: IndexPath) {
         switch profileSection {
         case .post:
-            cell.post = post?[indexPath.row]
+            cell.post = post[indexPath.row]
         case .product:
             cell.product = products?[indexPath.row]
         case .blog:
             cell.blog = blogs?[indexPath.row]
         default:
             break
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(indexPath.row, post.count - 1)
+        if post.count != totalCount && indexPath.row == post.count - 1  && indexPath.row % 2 == 0 && profileSection == .post{
+            currentPage = currentPage + 1
+            print("current page \(currentPage)")
+            postApiCall()
         }
     }
 }
@@ -238,7 +255,7 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout{
         case statusCollectionView:
             return CGSize(width: 80, height: 110)
         case contentCollectionView:
-            let cellsAcross: CGFloat = 3
+            let cellsAcross: CGFloat = 2
             let spaceBetweenCells: CGFloat = 2
             let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
             return CGSize(width: width, height: width)
@@ -252,18 +269,21 @@ extension ProfileViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
         print(item.tag)
         if item.tag == 0{
-//            contentCollectionView.backgroundView = self.blogs?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
-            writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
-            profileSection = .blog
+            writeBlogButton.isHidden = true
+            profileSection = .post
+            self.post.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
         }
         else if item.tag == 1{
-//            contentCollectionView.backgroundView = self.products?.count == 0 ? contentCollectionView.setEmptyView() : UIView()
+            writeBlogButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
+            self.products?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
         }
         else if item.tag == 2{
-//            contentCollectionView.backgroundView = self.post?.count == 0 ? contentCollectionView.setEmptyView() : contentCollectionView.emptyView()
-            profileSection = .post
+            writeBlogButton.isHidden = false
+            writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
+            profileSection = .blog
+            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
         }
         contentCollectionView.reloadData()
     }

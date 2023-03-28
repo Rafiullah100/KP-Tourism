@@ -22,7 +22,8 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var expandableLabel: ExpandableLabel!
     
     var actionBlock: (() -> Void)? = nil
-    
+    var shareActionBlock: (() -> Void)? = nil
+
     var feed: FeedModel? {
         didSet {
 //            imgView.image = UIImage(named: "placeholder")
@@ -65,6 +66,9 @@ class FeedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func shareBTnAction(_ sender: Any) {
+        shareActionBlock?()
+    }
     @IBAction func threeDotBtnAction(_ sender: Any) {
         actionBlock?()
     }

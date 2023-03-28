@@ -64,7 +64,9 @@ enum Route {
     case forgotPasswordApi
     case resetPassword
     case googleLoginApi
-    
+    case following
+    case shareApi
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -175,6 +177,10 @@ enum Route {
             return "api/mobile/auth/reset_password"
         case .googleLoginApi:
             return "api/mobile/auth/google-login"
+        case .following:
+            return "api/mobile/users/followings"
+        case .shareApi:
+           return "api/mobile/users/share_post"
         }
     }
 }

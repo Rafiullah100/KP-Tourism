@@ -20,7 +20,7 @@ class ChatListViewController: UIViewController {
             tableView.register(UINib(nibName: "ChatListTableViewCell", bundle: nil), forCellReuseIdentifier: ChatListTableViewCell.cellReuseIdentifier())
         }
     }
-    var conversationUsers: [UserConversation]?
+    var conversationUsers: [LoadedConversation]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -74,7 +74,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             cell.statusIndicator.backgroundColor = Constants.offlineColor
         }
-        //cell.user = conversationUsers?[indexPath.row].user
+        cell.user = conversationUsers?[indexPath.row].user
         return cell
     }
     
@@ -83,7 +83,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let user = conversationUsers?[indexPath.row].user else { return }
-        //Switcher.goToChatVC(delegate: self, receiverUser: user)
+        guard let conversation = self.conversationUsers?[indexPath.row] else { return }
+        Switcher.goToChatVC(delegate: self, receiverUser1: conversation)
     }
 }

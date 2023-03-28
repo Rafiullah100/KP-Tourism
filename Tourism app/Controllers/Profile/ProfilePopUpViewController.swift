@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SVProgressHUD
 
 class ProfilePopUpViewController: UIViewController {
 
@@ -13,13 +14,29 @@ class ProfilePopUpViewController: UIViewController {
         didSet{
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.register(UINib(nibName: "FollowerTableViewCell", bundle: nil), forCellReuseIdentifier: FollowerTableViewCell.cellReuseIdentifier())
+            tableView.register(UINib(nibName: "FollowerTableViewCell", bundle: nil), forCellReuseIdentifier: FollowingTableViewCell.cellReuseIdentifier())
         }
     }
+    
+    var following: [FollowingRow]?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        fetchFollowing(route: .following, method: .post, model: FollowingModel.self)
+    }
+    
+    func fetchFollowing<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            print(result)
+            switch result {
+            case .success(let followings):
+                self.following = (followings as! FollowingModel).chatUsers?.rows
+                self.following?.count != 0 ? self.tableView.reloadData() : self.tableView.setEmptyView()
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
     }
     
     @IBAction func dismissBtn(_ sender: Any) {
@@ -29,11 +46,12 @@ class ProfilePopUpViewController: UIViewController {
 
 extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return following?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: FollowerTableViewCell = tableView.dequeueReusableCell(withIdentifier: FollowerTableViewCell.cellReuseIdentifier()) as! FollowerTableViewCell
+        let cell: FollowingTableViewCell = tableView.dequeueReusableCell(withIdentifier: FollowingTableViewCell.cellReuseIdentifier()) as! FollowingTableViewCell
+        cell.user = following?[indexPath.row]
         return cell
     }
     

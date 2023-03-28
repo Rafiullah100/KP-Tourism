@@ -41,7 +41,7 @@ class ChatViewController: UIViewController {
     
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
-    
+    var chatUser1: LoadedConversation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,9 +63,17 @@ class ChatViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        nameLabel.text = chatUser?.name
-        recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-        fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? ""], model: OnetoOneConversationModel.self)
+        if chatUser != nil {
+            nameLabel.text = chatUser?.name
+            recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? ""], model: OnetoOneConversationModel.self)
+        }
+        else{
+            nameLabel.text = chatUser1?.user?.name
+            recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser1?.user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser1?.user?.uuid ?? ""], model: OnetoOneConversationModel.self)
+        }
+        
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -84,7 +92,8 @@ class ChatViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let message):
-                print(message)
+                let success = message as? SuccessModel
+                SVProgressHUD.showSuccess(withStatus: success?.message)
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -102,7 +111,7 @@ extension ChatViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if conversation?[indexPath.row].id == UserDefaults.standard.userID{
+        if conversation?[indexPath.row].sender.id == UserDefaults.standard.userID{
             guard let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIds.receiverCellId, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
             cell.textView.text = conversation?[indexPath.section].content
             cell.bottomLabel.text = conversation?[indexPath.row].createdAt
@@ -129,7 +138,12 @@ extension ChatViewController: KeyboardInputAccessoryViewProtocol{
 //    }
     
     func send(data type: String) {
-        sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": 4, "uuid": "7843e908-caba-429a-9285-8d5702f33f4c"], model: SuccessModel.self)
+        if chatUser != nil{
+            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser?.id ?? "", "uuid": chatUser?.uuid ?? ""], model: SuccessModel.self)
+        }
+        else{
+            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], model: SuccessModel.self)
+        }
 //        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
     }
     
