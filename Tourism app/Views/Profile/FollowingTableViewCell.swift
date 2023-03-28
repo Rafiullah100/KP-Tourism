@@ -13,10 +13,13 @@ class FollowingTableViewCell: UITableViewCell {
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var aboutLabel: UILabel!
     
+    var unfollowAction: (() -> Void)? = nil
+
+    
     var user: FollowingRow? {
         didSet{
             nameLabel.text = user?.followingUser?.name
-            nameLabel.text = user?.followingUser?.about
+            aboutLabel.text = user?.followingUser?.about
         }
     }
     
@@ -32,5 +35,6 @@ class FollowingTableViewCell: UITableViewCell {
     }
     
     @IBAction func followingBtnAction(_ sender: Any) {
+        unfollowAction?()
     }
 }

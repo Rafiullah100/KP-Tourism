@@ -69,7 +69,7 @@ class LoginViewController: BaseViewController {
             if error == nil{
                 guard let json = result as? NSDictionary else { return }
                 if let email = json["email"] as? String {
-                    print("\(email)")
+                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": ""], model: LoginModel.self)
                 }
             }
         }
@@ -92,6 +92,7 @@ class LoginViewController: BaseViewController {
             case .success(let login):
                 self.login = login as? LoginModel
                 if self.login?.success == true{
+                    print(self.login)
                     UserDefaults.standard.isLoginned = true
                     UserDefaults.standard.accessToken = self.login?.token
                     UserDefaults.standard.userID = self.login?.userID

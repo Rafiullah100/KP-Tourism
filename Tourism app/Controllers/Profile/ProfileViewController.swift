@@ -11,7 +11,7 @@ import SDWebImage
 import SVProgressHUD
 class ProfileViewController: UIViewController {
 
-    enum ApiType {
+   private enum ApiType {
         case profile
         case story
         case blog
@@ -41,9 +41,12 @@ class ProfileViewController: UIViewController {
     }
     
     var dispatchGroup: DispatchGroup?
-    var totalCount = 1
-    var currentPage = 1
+    var postTotalCount = 1
+    var postCurrentPage = 1
     var limit = 5
+    
+    var storyTotalCount = 1
+    var storyCurrentPage = 1
     
     @IBOutlet weak var contentCollectionView: UICollectionView!{
         didSet{
@@ -60,7 +63,7 @@ class ProfileViewController: UIViewController {
     var post: [UserPostRow] = [UserPostRow]()
     var blogs: [UserBlogRow]?
     var products: [UserProductRow]?
-    var stories: [StoriesRow]?
+    var stories: [StoriesRow]   = [StoriesRow]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,6 +100,9 @@ class ProfileViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    @IBAction func followingBtnAction(_ sender: Any) {
+        Switcher.showFollower(delegate: self)
+    }
     
     @IBAction func followerBtnAction(_ sender: Any) {
         Switcher.showFollower(delegate: self)
@@ -123,7 +129,7 @@ class ProfileViewController: UIViewController {
         fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid], model: ProfileModel.self, apiType: .profile)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
-        fetch(route: .userStories, method: .post, parameters: ["uuid": uuid], model: FeedStoriesModel.self, apiType: .story)
+        storyApiCall()
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid], model: UserBlogModel.self, apiType: .blog)
@@ -136,12 +142,17 @@ class ProfileViewController: UIViewController {
         dispatchGroup?.leave()
     }
     
-    private func postApiCall(){
+    private func storyApiCall(){
         guard let uuid = UserDefaults.standard.uuid else { return  }
-        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid, "limit": 5, "page": currentPage], model: UserPostModel.self, apiType: .post)
+        fetch(route: .userStories, method: .post, parameters: ["uuid": uuid, "limit": limit, "page": storyCurrentPage], model: FeedStoriesModel.self, apiType: .story)
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
+    private func postApiCall(){
+        guard let uuid = UserDefaults.standard.uuid else { return  }
+        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid, "limit": limit, "page": postCurrentPage], model: UserPostModel.self, apiType: .post)
+    }
+    
+   private func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
@@ -156,13 +167,14 @@ class ProfileViewController: UIViewController {
                     UserDefaults.standard.userType = self.userProfile?.userDetails.userType
                 }
                 else if apiType == .story{
-                    self.stories = (model as? FeedStoriesModel)?.stories?.rows
+                    self.stories.append(contentsOf: (model as? FeedStoriesModel)?.stories?.rows ?? [])
+                    self.storyTotalCount = (model as? FeedStoriesModel)?.stories?.count ?? 0
                     self.statusCollectionView.reloadData()
+                    self.statusView.isHidden = self.storyTotalCount == 0 ? true : false
                 }
                 else if apiType == .post{
-                    self.post = (model as? UserPostModel)?.posts?.rows ?? []
-                    self.totalCount = (model as? UserPostModel)?.posts?.count ?? 0
-                    print(self.totalCount)
+                    self.post.append(contentsOf: (model as? UserPostModel)?.posts?.rows ?? [])
+                    self.postTotalCount = (model as? UserPostModel)?.posts?.count ?? 0
                     self.post.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
                 }
                 else if apiType == .product{
@@ -184,7 +196,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case statusCollectionView:
-            return stories?.count ?? 0
+            return stories.count + 1
         case contentCollectionView:
             return noOfRows()
         default:
@@ -201,7 +213,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 cell.imgView.image = UIImage(named: "placeholder")
             }
             else{
-                cell.stories = stories?[indexPath.row - 1]
+                cell.stories = stories[indexPath.row - 1]
             }
             return cell
         case contentCollectionView:
@@ -240,11 +252,22 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(indexPath.row, post.count - 1)
-        if post.count != totalCount && indexPath.row == post.count - 1  && indexPath.row % 2 == 0 && profileSection == .post{
-            currentPage = currentPage + 1
-            print("current page \(currentPage)")
-            postApiCall()
+        if collectionView == statusCollectionView{
+            print(indexPath.row, stories.count)
+            if stories.count != postTotalCount && indexPath.row == stories.count {
+                storyCurrentPage = storyCurrentPage + 1
+                print("current page \(postCurrentPage)")
+                storyApiCall()
+            }
+        }
+        else{
+            if profileSection == .post{
+                if post.count != postTotalCount && indexPath.row == post.count - 1{
+                    postCurrentPage = postCurrentPage + 1
+                    print("current page \(postCurrentPage)")
+                    postApiCall()
+                }
+            }
         }
     }
 }
@@ -255,6 +278,7 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout{
         case statusCollectionView:
             return CGSize(width: 80, height: 110)
         case contentCollectionView:
+//            Helper.shared.cellSize(collectionView: contentCollectionView, space: 2, cellsAcross: 2)
             let cellsAcross: CGFloat = 2
             let spaceBetweenCells: CGFloat = 2
             let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross

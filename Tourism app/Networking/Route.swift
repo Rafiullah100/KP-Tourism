@@ -66,6 +66,8 @@ enum Route {
     case googleLoginApi
     case following
     case shareApi
+    case facebookLoginApi
+    case doFollow
 
     var description: String {
         switch self {
@@ -181,6 +183,10 @@ enum Route {
             return "api/mobile/users/followings"
         case .shareApi:
            return "api/mobile/users/share_post"
+        case .facebookLoginApi:
+            return "api/mobile/auth/facebook-login"
+        case .doFollow:
+            return "api/mobile/users/do_follow"
         }
     }
 }

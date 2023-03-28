@@ -43,21 +43,21 @@ import Foundation
 
 
 struct ChatUserModel: Codable {
-    let chatUsers: ChatUsers
+    let chatUsers: ChatUsers?
 }
 
 // MARK: - ChatUsers
 struct ChatUsers: Codable {
-    let count: Int
-    let rows: [ChatUserRow]
+    let count: Int?
+    let rows: [ChatUserRow]?
 }
 
 // MARK: - Row
 struct ChatUserRow: Codable {
-    let id: Int
-    let name: String
-    let profileImage: String
-    let uuid: String
+    let id: Int?
+    let name: String?
+    let profileImage: String?
+    let uuid: String?
 
     enum CodingKeys: String, CodingKey {
         case id, name

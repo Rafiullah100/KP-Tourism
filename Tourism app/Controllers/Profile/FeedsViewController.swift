@@ -112,7 +112,7 @@ class FeedsViewController: UIViewController {
             Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
         }))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-          
+            print(self.newsFeed[row].id)
             self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id], model: SuccessModel.self, row: row)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
@@ -128,7 +128,10 @@ class FeedsViewController: UIViewController {
                 if successDetail?.success == true{
                     self.newsFeed.remove(at: row)
                     self.tableView.reloadData()
-                    SVProgressHUD.showSuccess(withStatus: "Post deleted.")
+                    SVProgressHUD.showSuccess(withStatus: successDetail?.message)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: successDetail?.message)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -192,6 +195,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier(), for: indexPath) as! FeedTableViewCell
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
+        print(newsFeed[indexPath.row].id)
 //        cell.expandableLabel.collapsed = states[indexPath.row]
         cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {

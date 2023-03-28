@@ -56,11 +56,11 @@ class SearchUserViewController: UIViewController {
 
 extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.chatUserModel?.chatUsers.rows.count ?? 0
+        return self.chatUserModel?.chatUsers?.rows?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: SearchChatUserTableViewCell = tableView.dequeueReusableCell(withIdentifier: SearchChatUserTableViewCell.identifier) as! SearchChatUserTableViewCell
-        cell.user = chatUserModel?.chatUsers.rows[indexPath.row]
+        cell.user = chatUserModel?.chatUsers?.rows?[indexPath.row]
         return cell
     }
     
@@ -71,6 +71,6 @@ extension SearchUserViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        print(chatUserModel?.chatUsers.rows[indexPath.row])
 //        guard let user = chatUserModel?.chatUsers.rows[indexPath.row] else { return }
-        Switcher.goToChatVC(delegate: self, receiverUser: (chatUserModel?.chatUsers.rows[indexPath.row])!)
+        Switcher.goToChatVC(delegate: self, receiverUser: (chatUserModel?.chatUsers?.rows?[indexPath.row])!)
     }
 }

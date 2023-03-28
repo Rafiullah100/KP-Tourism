@@ -8,8 +8,8 @@
 import Foundation
 
 struct SuccessModel: Codable {
-    let success: Bool
-    let message: String
+    let success: Bool?
+    let message: String?
 }
 
 //struct LoginModel: Codable {

@@ -40,8 +40,12 @@ class SellerViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let change):
-                if (change as! SuccessModel).success == true{
-                    print(change as! SuccessModel)
+                let res = change as? SuccessModel
+                if res?.success == true{
+                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: res?.message)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

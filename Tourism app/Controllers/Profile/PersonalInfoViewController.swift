@@ -49,11 +49,10 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
             switch result {
             case .success(let profile):
                 if profile.success == true{
-                    print(profile.data.profileImage)
-                    UserDefaults.standard.name = profile.data.name
-                    UserDefaults.standard.userEmail = profile.data.email
-                    UserDefaults.standard.profileImage = profile.data.profileImage
-                    UserDefaults.standard.userBio = profile.data.about
+                    UserDefaults.standard.name = profile.data?.name
+                    UserDefaults.standard.userEmail = profile.data?.email
+                    UserDefaults.standard.profileImage = profile.data?.profileImage
+                    UserDefaults.standard.userBio = profile.data?.about
                     SVProgressHUD.showSuccess(withStatus: profile.message)
                 }
                 else{
