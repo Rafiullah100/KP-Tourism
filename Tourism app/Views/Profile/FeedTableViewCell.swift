@@ -27,15 +27,15 @@ class FeedTableViewCell: UITableViewCell {
     var feed: FeedModel? {
         didSet {
 //            imgView.image = UIImage(named: "placeholder")
-            if feed?.postFiles.count ?? 0 > 0 {
+            if feed?.post?.postFiles?.count ?? 0 > 0 {
                 imgbgView.isHidden = false
-                imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postFiles[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.postFiles?[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
             }
             else{
                 imgbgView.isHidden = true
             }
-            nameLabel.text = feed?.users.name
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.users.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            nameLabel.text = feed?.post?.users?.name
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             timeLabel.text = "\(feed?.updatedAt ?? "")"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"
@@ -44,8 +44,8 @@ class FeedTableViewCell: UITableViewCell {
             expandableLabel.shouldCollapse = true
             expandableLabel.textReplacementType = .word
             expandableLabel.numberOfLines = 3
-            expandableLabel.text = feed?.description
-            if UserDefaults.standard.userID ?? 0 == feed?.users.id ?? 0 {
+            expandableLabel.text = feed?.post?.description
+            if UserDefaults.standard.userID ?? 0 == feed?.post?.users?.id ?? 0 {
                 threeDotButton.isHidden = false
             }
             else{

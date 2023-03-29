@@ -23,6 +23,11 @@
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="virtual" translatesAutoresizingMaskIntoConstraints="NO" id="YTN-U6-nbx">
                                 <rect key="frame" x="2" y="2" width="114" height="114"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -42,6 +47,9 @@
                 <constraint firstAttribute="bottom" secondItem="aGE-mp-Kg3" secondAttribute="bottom" constant="1" id="RrK-5C-42P"/>
                 <constraint firstItem="aGE-mp-Kg3" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="qye-Tj-Iuf"/>
             </constraints>
+            <connections>
+                <outlet property="imgView" destination="YTN-U6-nbx" id="fU0-7b-QXu"/>
+            </connections>
             <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
         </collectionViewCell>
     </objects>

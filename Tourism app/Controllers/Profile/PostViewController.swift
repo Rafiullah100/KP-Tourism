@@ -29,17 +29,14 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         case .post:
             label.text = "Create Post"
             postButton.setTitle("Post", for: .normal)
-//            bottomView.isHidden = false
         case .story:
             label.text = "Highlight"
             postButton.setTitle("Create story", for: .normal)
-//            bottomView.isHidden = true
         case .edit:
             label.text = "Edit Post"
             postButton.setTitle("Edit Post", for: .normal)
-            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.postFiles[0].imageURL ?? "")))
-            textView.text = feed?.description
-//            bottomView.isHidden = false
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.postFiles?[0].imageURL ?? "")))
+            textView.text = feed?.post?.description
         default:
             label.text = "Create Post"
         }

@@ -93,3 +93,16 @@ enum TabName: String {
     case login = "Login"
     case profile = "Profile"
 }
+
+enum wishlistSection: String, CaseIterable {
+    case post = "post"
+    case attraction = "attraction"
+    case district = "district"
+//        case poi = "poi"
+//        case event = "social_event"
+//        case blog = "blog"
+//        case book = "book_stay"
+//        case package = "tour_package"
+//        case itinerary = "itinerary"
+//        case product = "local_product"
+}

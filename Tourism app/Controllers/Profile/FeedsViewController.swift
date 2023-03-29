@@ -36,7 +36,7 @@ class FeedsViewController: UIViewController {
     let setting = ["edit", "delete"]
     var dispatchGroup: DispatchGroup?
 
-    var totalCount = 1
+    var totalCount = 0
     var currentPage = 1
     var limit = 5
     
@@ -83,9 +83,9 @@ class FeedsViewController: UIViewController {
             switch result {
             case .success(let feeds):
                 self.newsFeed.append(contentsOf: (feeds as? NewsFeedModel)?.feeds ?? [])
-                self.totalCount = (feeds as! NewsFeedModel).count
+                self.totalCount = (feeds as! NewsFeedModel).count ?? 0
                 self.numberOfCells = self.totalCount
-                print(self.totalCount)
+                print(self.newsFeed)
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.tableView.reloadData()
             case .failure(let error):
@@ -139,6 +139,22 @@ class FeedsViewController: UIViewController {
         }
     }
     
+//    private func sharePost(route: Route, params: [String: Any], image: UIImage){
+//        Networking.shared.uploadMultipart(route: route, imageParameter: "image", image: image, parameters: params) { result in
+//            switch result {
+//            case .success(let success):
+//                if success.success == true{
+//                    SVProgressHUD.showSuccess(withStatus: success.message)
+//                }
+//                else{
+//                    SVProgressHUD.showError(withStatus: success.message)
+//                }
+//            case .failure(let error):
+//                SVProgressHUD.showError(withStatus: error.localizedDescription)
+//            }
+//        }
+//    }
+
     func share<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
@@ -195,7 +211,6 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier(), for: indexPath) as! FeedTableViewCell
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
-        print(newsFeed[indexPath.row].id)
 //        cell.expandableLabel.collapsed = states[indexPath.row]
         cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {
@@ -208,6 +223,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(newsFeed.count, totalCount)
         if newsFeed.count != totalCount && indexPath.row == newsFeed.count - 1  {
             currentPage = currentPage + 1
             loadNewsFeed()

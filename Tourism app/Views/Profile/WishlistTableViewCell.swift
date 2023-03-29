@@ -15,6 +15,28 @@ class WishlistTableViewCell: UITableViewCell {
             collectionView.register(UINib(nibName: "WishlistCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: WishlistCollectionViewCell.cellReuseIdentifier())
         }
     }
+    @IBOutlet weak var label: UILabel!
+    
+    var postWishlist: [PostWishlistModel]?{
+        didSet{
+            label.text = "Post"
+            collectionView.reloadData()
+        }
+    }
+    
+    var attractionWishlist: [AttractionWishlistModel]?{
+        didSet{
+            label.text = "Attraction"
+            collectionView.reloadData()
+        }
+    }
+    
+    var districtWishlist: [DistrictWishlistModel]?{
+        didSet{
+            label.text = "District"
+            collectionView.reloadData()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -31,11 +53,29 @@ class WishlistTableViewCell: UITableViewCell {
 
 extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        if !(postWishlist?.isEmpty ?? true){
+            return postWishlist?.count ?? 0
+        }
+        else if !(attractionWishlist?.isEmpty ?? true){
+            return attractionWishlist?.count ?? 0
+        }
+        else if !(districtWishlist?.isEmpty ?? true){
+            return districtWishlist?.count ?? 0
+        }
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: WishlistCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: WishlistCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! WishlistCollectionViewCell
+        if !(postWishlist?.isEmpty ?? true){
+            cell.postWishlist = postWishlist?[indexPath.row]
+        }
+        else if !(attractionWishlist?.isEmpty ?? true){
+            cell.attractionWishlist = attractionWishlist?[indexPath.row]
+        }
+        else if !(districtWishlist?.isEmpty ?? true){
+            cell.districtWishlist = districtWishlist?[indexPath.row]
+        }
         return cell
     }
 }
