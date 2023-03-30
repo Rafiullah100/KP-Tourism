@@ -64,7 +64,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             createPost(route: .postApi, params: ["description": text, "type": "image"])
         case .edit:
             guard let text = textView.text else { return }
-            createPost(route: .editPost, params: ["description": text, "id": feed?.id ?? 0, "type": "image"])
+            createPost(route: .editPost, params: ["description": text, "id": feed?.postID ?? 0, "type": "image"])
         case .story:
             createPost(route: .createStory, params: [:])
         default:

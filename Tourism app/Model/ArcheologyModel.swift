@@ -40,15 +40,16 @@ import Foundation
 
 struct ArcheologyModel : Codable {
     let archeology : [Archeology]?
-
+    let count: Int?
     enum CodingKeys: String, CodingKey {
-
+        case count
         case archeology = "archeology"
     }
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         archeology = try values.decodeIfPresent([Archeology].self, forKey: .archeology)
+        count = try values.decodeIfPresent(Int.self, forKey: .count)
     }
 }
 
@@ -90,6 +91,8 @@ struct ArcheologyAttractions : Codable {
     let title : String?
     let slug : String?
     let description : String?
+    let isWished: Int?
+    let userLike: Int?
     let districts : ArcheologyDistricts?
 
     enum CodingKeys: String, CodingKey {
@@ -99,6 +102,8 @@ struct ArcheologyAttractions : Codable {
         case slug = "slug"
         case description = "description"
         case districts = "districts"
+        case userLike = "userLike"
+        case isWished = "isWished"
     }
 
     init(from decoder: Decoder) throws {
@@ -108,6 +113,8 @@ struct ArcheologyAttractions : Codable {
         slug = try values.decodeIfPresent(String.self, forKey: .slug)
         description = try values.decodeIfPresent(String.self, forKey: .description)
         districts = try values.decodeIfPresent(ArcheologyDistricts.self, forKey: .districts)
+        userLike = try values.decodeIfPresent(Int.self, forKey: .userLike)
+        isWished = try values.decodeIfPresent(Int.self, forKey: .isWished)
     }
 
 }

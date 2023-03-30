@@ -11,6 +11,7 @@ import Foundation
 
 // MARK: - Welcome
 struct BlogsModel: Codable {
+    let count: Int?
     let blog: [Blog]
 }
 

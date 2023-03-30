@@ -95,7 +95,7 @@ struct ExploreDistrict: Codable {
     let createdAt, updatedAt: String?
     let districtCategoryID, userLike: Int?
     let attractions: [ExploreSubAttration]
-
+    let isWished: Int?
     enum CodingKeys: String, CodingKey {
         case id
         case userID = "user_id"
@@ -110,7 +110,7 @@ struct ExploreDistrict: Codable {
         case viewsCounter = "views_counter"
         case status, isDeleted, createdAt, updatedAt
         case districtCategoryID = "district_category_id"
-        case userLike, attractions
+        case userLike, attractions, isWished
     }
 }
 

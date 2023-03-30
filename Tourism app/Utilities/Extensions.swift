@@ -304,7 +304,7 @@ public extension UITableView {
         self.setContentOffset(contentOffset, animated: false)
     }
     
-    func setEmptyView() {
+    func setEmptyView(_ message: String? = nil) {
         let image = UIImage(named: "")
         let emptyImageView = UIImageView(image: image)
         emptyImageView.contentMode = .scaleAspectFit
@@ -317,10 +317,10 @@ public extension UITableView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = Helper.shared.textColor()
-        titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
+        titleLabel.font = UIFont(name: "Poppins-regular", size: 16)
         messageLabel.textColor = Helper.shared.textColor()
-        messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
-        titleLabel.text = "No Data!"
+        messageLabel.font = UIFont(name: "Poppins-regular", size: 14)
+        titleLabel.text = message ?? "No Data!"
         messageLabel.text = ""
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center
@@ -469,7 +469,7 @@ extension UIViewController {
 }
 
 extension UICollectionView{
-    func setEmptyView() {
+    func setEmptyView(_ message: String? = nil) {
         self.backgroundView = nil
         let image = UIImage(named: "")
         let emptyImageView = UIImageView(image: image)
@@ -483,10 +483,10 @@ extension UICollectionView{
         let messageLabel = UILabel()
         
         titleLabel.textColor = Helper.shared.textColor()
-        titleLabel.font = UIFont(name: "Poppins-Medium", size: 18)
+        titleLabel.font = UIFont(name: "Poppins-regular", size: 16)
         messageLabel.textColor = Helper.shared.textColor()
-        messageLabel.font = UIFont(name: "Poppins-Light", size: 16)
-        titleLabel.text = "No Data!"
+        messageLabel.font = UIFont(name: "Poppins-regular", size: 14)
+        titleLabel.text = message ?? "No Data!"
         messageLabel.text = ""
         messageLabel.numberOfLines = 0
         messageLabel.textAlignment = .center

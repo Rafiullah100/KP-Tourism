@@ -25,7 +25,8 @@ class ProfilePopUpViewController: UIViewController {
     
     var following: [FollowingRow]?
     private var apiType: ApiType?
-    
+    var profileType: ProfileType?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         apiType = .profile
@@ -44,7 +45,6 @@ class ProfilePopUpViewController: UIViewController {
                     let res = model as! SuccessModel
                     SVProgressHUD.showSuccess(withStatus: res.message)
                 }
-                
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -64,6 +64,12 @@ extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: FollowingTableViewCell = tableView.dequeueReusableCell(withIdentifier: FollowingTableViewCell.cellReuseIdentifier()) as! FollowingTableViewCell
         cell.user = following?[indexPath.row]
+        if profileType == .otherUser{
+            cell.followingButton.isHidden = true
+        }
+        else{
+            cell.followingButton.isHidden = true
+        }
         cell.unfollowAction = {
             self.apiType = .unFollow
             self.fetch(route: .doFollow, method: .post, parameters: ["uuid": self.following?[indexPath.row].followingUser?.uuid ?? ""], model: SuccessModel.self)

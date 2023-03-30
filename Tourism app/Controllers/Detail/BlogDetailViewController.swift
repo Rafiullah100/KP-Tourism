@@ -56,10 +56,8 @@ class BlogDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        scrollView.keyboardDismissMode = .onDrag
         scrollView.delegate = self
         tableView.estimatedRowHeight = UITableView.automaticDimension
-//        customAccessoryView.delegate = self
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
@@ -70,7 +68,7 @@ class BlogDetailViewController: BaseViewController {
         blogTitleLabel.text = blogDetail?.title
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
-        favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+        favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         reloadComment()
     }
     
@@ -140,10 +138,7 @@ class BlogDetailViewController: BaseViewController {
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                DispatchQueue.main.async {
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
-
-                }
+                self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             case .failure(let error):
                 print("error \(error)")
             }

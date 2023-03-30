@@ -28,10 +28,11 @@ class FeedsViewController: UIViewController {
     @IBOutlet weak var profileButton: UIButton!
     
     var newsFeed: [FeedModel] = [FeedModel]()
-    var stories: [StoriesRow]?
+//    var stories: [StoriesRow]?
     var states : Array<Bool>!
     let pickerView = UIPickerView()
     var numberOfCells : NSInteger = 0
+    var stories: [StoriesRow]   = [StoriesRow]()
 
     let setting = ["edit", "delete"]
     var dispatchGroup: DispatchGroup?
@@ -39,6 +40,9 @@ class FeedsViewController: UIViewController {
     var totalCount = 0
     var currentPage = 1
     var limit = 5
+    
+    var storyTotalCount = 1
+    var storyCurrentPage = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,13 +65,14 @@ class FeedsViewController: UIViewController {
         Switcher.goToChatListVC(delegate: self)
     }
     @IBAction func profileBtnAction(_ sender: Any) {
-        Switcher.goToProfileVC(delegate: self)
+        guard let uuid = UserDefaults.standard.uuid else { return }
+        Switcher.goToProfileVC(delegate: self, profileType: .user, uuid: uuid)
     }
     
     func loadData(){
         dispatchGroup = DispatchGroup()
         dispatchGroup?.enter()
-        fetchFeedsStories(route: .feedStories, method: .post, model: FeedStoriesModel.self)
+        storyApiCall()
         self.dispatchGroup?.leave()
         dispatchGroup?.enter()
         loadNewsFeed()
@@ -76,6 +81,10 @@ class FeedsViewController: UIViewController {
     
     @objc func loadNewsFeed(){
         fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit], model: NewsFeedModel.self)
+    }
+    
+    @objc func storyApiCall(){
+        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": limit], model: FeedStoriesModel.self)
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -98,7 +107,9 @@ class FeedsViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let feedStories):
-                self.stories = (feedStories as! FeedStoriesModel).stories?.rows
+                let model = feedStories as? FeedStoriesModel
+                self.stories.append(contentsOf: model?.stories?.rows ?? [])
+                self.storyTotalCount = model?.stories?.count ?? 0
                 self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -112,8 +123,7 @@ class FeedsViewController: UIViewController {
             Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
         }))
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            print(self.newsFeed[row].id)
-            self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id], model: SuccessModel.self, row: row)
+            self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id ?? 0], model: SuccessModel.self, row: row)
         }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
         }))
@@ -138,22 +148,6 @@ class FeedsViewController: UIViewController {
             }
         }
     }
-    
-//    private func sharePost(route: Route, params: [String: Any], image: UIImage){
-//        Networking.shared.uploadMultipart(route: route, imageParameter: "image", image: image, parameters: params) { result in
-//            switch result {
-//            case .success(let success):
-//                if success.success == true{
-//                    SVProgressHUD.showSuccess(withStatus: success.message)
-//                }
-//                else{
-//                    SVProgressHUD.showError(withStatus: success.message)
-//                }
-//            case .failure(let error):
-//                SVProgressHUD.showError(withStatus: error.localizedDescription)
-//            }
-//        }
-//    }
 
     func share<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
@@ -171,11 +165,35 @@ class FeedsViewController: UIViewController {
             }
         }
     }
+    
+    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let wish):
+                let successDetail = wish as? SuccessModel
+                feedCell.saveButton.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let wish):
+                let successDetail = wish as? SuccessModel
+                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "Arrow---Top-red") : UIImage(named: "Arrow---Top"), for: .normal)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return (stories?.count ?? 0) + 1
+        return stories.count + 1
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
@@ -184,7 +202,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
             cell.imgView.image = UIImage(named: "placeholder")
         }
         else{
-            cell.stories = stories?[indexPath.row - 1]
+            cell.stories = stories[indexPath.row - 1]
         }
         return cell
     }
@@ -192,6 +210,14 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             Switcher.gotoPostVC(delegate: self, postType: .story)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(storyTotalCount, indexPath.row, stories.count)
+        if stories.count != storyTotalCount && indexPath.row == stories.count {
+            storyCurrentPage = storyCurrentPage + 1
+            storyApiCall()
         }
     }
 }
@@ -211,13 +237,19 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier(), for: indexPath) as! FeedTableViewCell
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
-//        cell.expandableLabel.collapsed = states[indexPath.row]
         cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {
             self.actionSheet(row: indexPath.row)
         }
         cell.shareActionBlock = {
-            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].id], model: SuccessModel.self)
+            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].id ?? 0], model: SuccessModel.self)
+        }
+        
+        cell.likeActionBlock = {
+            self.like(route: .likeApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
+        }
+        cell.saveActionBlock = {
+            self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
         }
         return cell
     }

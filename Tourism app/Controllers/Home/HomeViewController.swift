@@ -74,8 +74,11 @@ class HomeViewController: BaseViewController {
     var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
     var localProducts: [LocalProduct] = [LocalProduct]()
     var event: [EventListModel] = [EventListModel]()
+    var archeology: [Archeology] = [Archeology]()
+    var tourPackage: [TourPackage] = [TourPackage]()
+//    var event: [EventListModel] = [EventListModel]()
+    var blogs: [Blog] = [Blog]()
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(UserDefaults.standard.uuid ?? "")
@@ -90,6 +93,7 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
+        textField.addTarget(self, action: #selector(SearchUserViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,6 +121,19 @@ class HomeViewController: BaseViewController {
                 }
                 else if self.cellType == .event{
                     self.event = (explore as? EventsModel)?.events ?? []
+                    self.totalCount = (explore as? EventsModel)?.count ?? 0
+                }
+                else if self.cellType == .arch{
+                    self.archeology.append(contentsOf: (explore as? ArcheologyModel)?.archeology ?? [])
+                    self.totalCount = (explore as? ArcheologyModel)?.count ?? 0
+                }
+                else if self.cellType == .tour{
+                    self.tourPackage.append(contentsOf: (explore as? TourModel)?.tour ?? [])
+                    self.totalCount = (explore as? TourModel)?.count ?? 0
+                }
+                else if self.cellType == .blog{
+                    self.blogs.append(contentsOf: (explore as? BlogsModel)?.blog ?? [])
+                    self.totalCount = (explore as? BlogsModel)?.count ?? 0
                 }
                 self.tableView.reloadData()
             case .failure(let error):
@@ -129,6 +146,18 @@ class HomeViewController: BaseViewController {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
         vc.exploreDistrict = exploreDistrict
         add(vc, in: mapContainerView)
+    }
+    
+    @objc func textFieldDidChange(_ textField: UITextField) {
+        exploreDistrict = []
+        localProducts = []
+        event = []
+        archeology = []
+        tourPackage = []
+        event = []
+        blogs = []
+        currentPage = 1
+        serverCall(cell: cellType ?? .explore)
     }
 }
 
@@ -147,13 +176,13 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .south:
             return (model as? ExploreModel)?.attractions.count ?? 0
         case .tour:
-            return (model as? TourModel)?.tour.count ?? 0
+            return tourPackage.count
         case .event:
-            return (model as? EventsModel)?.events.count ?? 0
+            return event.count
         case .arch:
-            return (model as? ArcheologyModel)?.archeology?.count ?? 0
+            return archeology.count
         case .blog:
-            return (model as? BlogsModel)?.blog.count ?? 0
+            return blogs.count
         case .product:
             return localProducts.count
         case .visitKP:
@@ -169,7 +198,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
             cell.district = exploreDistrict[indexPath.row]
             cell.actionBlock = {
-                self.like(route: .likeApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id, "section": "district"], model: SuccessModel.self, exploreCell: cell)
+                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id ?? 0, "section": "district"], model: SuccessModel.self, exploreCell: cell)
             }
             return cell
         case .investment:
@@ -190,27 +219,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .tour:
             let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
-            cell.tour = (model as? TourModel)?.tour[indexPath.row]
+            cell.tour = tourPackage[indexPath.row]
             cell.actionBlock = {
-                let packageID = (self.model as? TourModel)?.tour[indexPath.row].id
-                self.like(route: .likeApi, method: .post, parameters: ["section_id": packageID ?? 0, "section": "tour_package"], model: SuccessModel.self, tourCell: cell)
+                let packageID = self.tourPackage[indexPath.row].id
+                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": packageID ?? 0, "section": "tour_package"], model: SuccessModel.self, tourCell: cell)
             }
             return cell
         case .event:
             let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
-            cell.event = (model as? EventsModel)?.events[indexPath.row]
+            cell.event = event[indexPath.row]
             return cell
         case .arch:
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
-            cell.archeology = (model as? ArcheologyModel)?.archeology?[indexPath.row]
+            cell.archeology = archeology[indexPath.row]
             cell.actionBlock = {
-                let archeologyID = (self.model as? ArcheologyModel)?.archeology?[indexPath.row].id
-                self.like(route: .likeApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
+                let archeologyID = self.archeology[indexPath.row].id
+                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
             }
             return cell
         case .blog:
             let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
-            cell.blog = (model as? BlogsModel)?.blog[indexPath.row]
+            cell.blog = blogs[indexPath.row]
             return cell
         case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
@@ -234,11 +263,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .explore:
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[indexPath.row])
         case .event:
-            Switcher.gotoEventDetail(delegate: self, event: (model as! EventsModel).events[indexPath.row])
+            Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row])
         case .tour:
-            Switcher.gotoPackageDetail(delegate: self, tourDetail: (model as! TourModel).tour[indexPath.row])
+            Switcher.gotoPackageDetail(delegate: self, tourDetail: tourPackage[indexPath.row])
         case .blog:
-            Switcher.gotoBlogDetail(delegate: self, blogDetail: (model as! BlogsModel).blog[indexPath.row])
+            Switcher.gotoBlogDetail(delegate: self, blogDetail: blogs[indexPath.row])
         case .product:
             Switcher.gotoProductDetail(delegate: self, product: localProducts[indexPath.row])
         case .adventure:
@@ -260,7 +289,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             }
             Switcher.gotoPDFViewer(delegate: self, url: urlString)
         case .arch:
-            Switcher.goToDestination(delegate: self, type: .district, archeologyDistrict: (model as? ArcheologyModel)?.archeology?[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .district, archeologyDistrict: archeology[indexPath.row])
         default:
             break
         }
@@ -286,36 +315,25 @@ extension HomeViewController: MDCTabBarViewDelegate{
         attractionDistrict = []
         exploreDistrict = []
         localProducts = []
+        archeology = []
+        tourPackage = []
+        event = []
+        blogs = []
         currentPage = 1
         if tag == 0 {
             mapButton.isHidden = false
             cellType = .explore
             serverCall(cell: .explore)
         }
-        //        else if title == tabbarItems[1].title{
-        //            mapButton.isHidden = false
-        //            cellType = .attraction
-        //            fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
-        //        }
-        //        else if title == tabbarItems[2].title{
-        //            mapButton.isHidden = true
-        //            cellType = .adventure
-        //            fetch(route: .fetchAdventure, method: .get, model: AdventureModel.self)
-        //        }
-        //        else if title == tabbarItems[3].title{
-        //            mapButton.isHidden = false
-        //            cellType = .south
-        //            fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "southern"], model: ExploreModel.self)
-        //        }
         else if tag == 1{
             mapButton.isHidden = true
             cellType = .investment
-            fetch(route: .fetchInvestment, method: .post, model: InvestmentModel.self)
+            serverCall(cell: .investment)
         }
         else if tag == 2{
             mapButton.isHidden = true
             cellType = .tour
-            fetch(route: .fetchTourPackage, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: TourModel.self)
+            serverCall(cell: .tour)
         }
         else if tag == 3{
             mapButton.isHidden = true
@@ -325,22 +343,22 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if tag == 4{
             mapButton.isHidden = true
             cellType = .arch
-            fetch(route: .fetchArcheology, method: .post, parameters: ["limit": 30, "page": 1], model: ArcheologyModel.self)
+            serverCall(cell: .arch)
         }
         else if tag == 5{
             mapButton.isHidden = true
             cellType = .event
-            fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
+            serverCall(cell: .event)
         }
         else if tag == 6{
             mapButton.isHidden = true
             cellType = .blog
-            fetch(route: .fetchBlogs, method: .post, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: BlogsModel.self)
+            serverCall(cell: .blog)
         }
         else if tag == 7{
             mapButton.isHidden = true
             cellType = .product
-            fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? ""], model: ProductModel.self)
+            serverCall(cell: .product)
         }
         else if tag == 8{
             mapButton.isHidden = true
@@ -352,6 +370,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cellType == .explore{
+            print(exploreDistrict.count, totalCount, indexPath.row)
             if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
                 currentPage = currentPage + 1
                 serverCall(cell: .explore)
@@ -360,13 +379,36 @@ extension HomeViewController: MDCTabBarViewDelegate{
         else if cellType == .attraction{
             if attractionDistrict.count != totalCount && indexPath.row == attractionDistrict.count - 1  {
                 currentPage = currentPage + 1
-                fetch(route: .attractionbyDistrict, method: .post, parameters: ["type": "attraction", "limit": limit, "page": currentPage], model: AttractionModel.self)
             }
         }
         else if cellType == .product{
             if localProducts.count != totalCount && indexPath.row == localProducts.count - 1  {
                 currentPage = currentPage + 1
-                fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage], model: ProductModel.self)
+                serverCall(cell: .product)
+            }
+        }
+        else if cellType == .arch{
+            if archeology.count != totalCount && indexPath.row == archeology.count - 1  {
+                currentPage = currentPage + 1
+                serverCall(cell: .arch)
+            }
+        }
+        else if cellType == .tour{
+            if tourPackage.count != totalCount && indexPath.row == tourPackage.count - 1  {
+                currentPage = currentPage + 1
+                serverCall(cell: .tour)
+            }
+        }
+//        else if cellType == .event{
+//            if event.count != totalCount && indexPath.row == event.count - 1  {
+//                currentPage = currentPage + 1
+//                serverCall(cell: .tour)
+//            }
+//        }
+        else if cellType == .blog{
+            if blogs.count != totalCount && indexPath.row == blogs.count - 1  {
+                currentPage = currentPage + 1
+                serverCall(cell: .blog)
             }
         }
     }
@@ -375,24 +417,36 @@ extension HomeViewController: MDCTabBarViewDelegate{
         switch cell {
         case .explore:
             fetch(route: .fetchExpolreDistrict, method: .post, parameters: ["geoType": "northern,southern", "search": textField.text ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage], model: ExploreModel.self)
+        case .investment:
+            fetch(route: .fetchInvestment, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? ""], model: InvestmentModel.self)
+        case .tour:
+            fetch(route: .fetchTourPackage, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: TourModel.self)
+        case .arch:
+            fetch(route: .fetchArcheology, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? ""], model: ArcheologyModel.self)
+        case .event:
+            fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
+        case .blog:
+            fetch(route: .fetchBlogs, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: BlogsModel.self)
+        case .product:
+            fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: ProductModel.self)
         default: break
             //ejnre
         }
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil) {
+    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 if  self.cellType == .explore{
-                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
                 else if self.cellType == .tour{
-                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
                 else if self.cellType == .arch{
-                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Liked" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -403,16 +457,16 @@ extension HomeViewController: MDCTabBarViewDelegate{
 
 
 extension HomeViewController: UITextFieldDelegate{
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        switch cellType {
-        case .explore:
-            currentPage = 1
-            exploreDistrict = []
-            serverCall(cell: .explore)
-            textField.resignFirstResponder()
-        default:
-            break
-        }
-        return true
-    }
+//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+//        switch cellType {
+//        case .explore:
+//            currentPage = 1
+//            exploreDistrict = []
+//            serverCall(cell: .explore)
+//            textField.resignFirstResponder()
+//        default:
+//            break
+//        }
+//        return true
+//    }
 }

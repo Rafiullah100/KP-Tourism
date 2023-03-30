@@ -68,12 +68,6 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ChatListTableViewCell = tableView.dequeueReusableCell(withIdentifier: ChatListTableViewCell.cellReuseIdentifier()) as! ChatListTableViewCell
-        if indexPath.row == 0{
-            cell.statusIndicator.backgroundColor = Constants.onlineColor
-        }
-        else{
-            cell.statusIndicator.backgroundColor = Constants.offlineColor
-        }
         cell.user = conversationUsers?[indexPath.row].user
         return cell
     }

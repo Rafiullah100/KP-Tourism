@@ -22,7 +22,7 @@ class ExploreTableViewCell: UITableViewCell {
     
     var district: ExploreDistrict? {
         didSet{
-            if district?.userLike == 0 {
+            if district?.isWished == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             else{

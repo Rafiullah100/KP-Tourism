@@ -9,9 +9,9 @@ import Foundation
 
 struct TourModel : Codable {
     let tour : [TourPackage]
-
+    let count: Int?
     enum CodingKeys: String, CodingKey {
-
+        case count
         case tour = "tour"
     }
 }
@@ -60,6 +60,7 @@ struct TourPackage : Codable {
     let likes : [TourPackageLikes]?
     let activities : [TourActivities]?
     let userLike: Int?
+    let isWished: Int?
     enum CodingKeys: String, CodingKey {
         
         case id = "id"
@@ -103,6 +104,7 @@ struct TourPackage : Codable {
         case startDate = "startDate"
         case endDate = "endDate"
         case userLike
+        case isWished
     }
 }
 

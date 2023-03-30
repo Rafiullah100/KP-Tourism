@@ -78,8 +78,8 @@ class PackageDetailViewController: BaseViewController {
         
         eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
         amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
-        favoriteIcon.image = tourDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart")
-        likeLabel.text = "0 Liked"
+        favoriteIcon.image = tourDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
+        likeLabel.text = "\(tourDetail?.likes?.count ?? 0) Liked"
         durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
         viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
         counterLabel.text = "\(tourDetail?.number_of_people ?? 0)"
@@ -110,7 +110,7 @@ class PackageDetailViewController: BaseViewController {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
-                    self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart")
+                    self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked")
                 }
             case .failure(let error):
                 print("error \(error)")

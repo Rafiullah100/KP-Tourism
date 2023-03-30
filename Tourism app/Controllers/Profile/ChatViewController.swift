@@ -81,7 +81,7 @@ class ChatViewController: UIViewController {
             switch result {
             case .success(let conversation):
                 self.conversation = (conversation as? OnetoOneConversationModel)?.chats.rows ?? []
-                self.conversation?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                self.conversation?.count == 0 ? self.tableView.setEmptyView("No previous conversation exist!") : self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

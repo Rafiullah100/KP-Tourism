@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SVProgressHUD
 class GalleryViewController: BaseViewController {
 
     @IBOutlet weak var imageView: UIImageView!
@@ -35,31 +36,27 @@ class GalleryViewController: BaseViewController {
     var gallery: GalleryModel?
     var mediaType: MediaType?
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let gallery):
-                DispatchQueue.main.async {
-                    self.gallery = gallery as? GalleryModel
-                    self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?.display_image ?? "")))
-                    print(self.gallery?.virtual_tours?.count ?? 0)
-                    self.imageCollectionView.reloadData()
-                    self.videoCollectionView.reloadData()
-                    self.virtualCollectionView.reloadData()
-                }
+                self.gallery = gallery as? GalleryModel
+                self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?.display_image ?? "")))
+                self.imageCollectionView.reloadData()
+                self.videoCollectionView.reloadData()
+                self.virtualCollectionView.reloadData()
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

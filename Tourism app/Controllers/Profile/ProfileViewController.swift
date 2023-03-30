@@ -48,6 +48,11 @@ class ProfileViewController: UIViewController {
     var storyTotalCount = 1
     var storyCurrentPage = 1
     
+    @IBOutlet weak var editPhotoButton: UIButton!
+    @IBOutlet weak var settingButton: UIButton!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var addButton: UIView!
+    
     @IBOutlet weak var contentCollectionView: UICollectionView!{
         didSet{
             contentCollectionView.dataSource = self
@@ -64,6 +69,10 @@ class ProfileViewController: UIViewController {
     var blogs: [UserBlogRow]?
     var products: [UserProductRow]?
     var stories: [StoriesRow]   = [StoriesRow]()
+    
+    var profileType: ProfileType?
+    var uuid: String?
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,8 +80,42 @@ class ProfileViewController: UIViewController {
         topProfileView.layer.masksToBounds = true
         topProfileView.layer.cornerRadius = 30
         topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        navigationController?.navigationBar.isHidden = true
+        addButton.isHidden = true
         configureTabbar()
 //        topProfileView.addBottomShadow()
+        print(uuid ?? "")
+//        guard let uuid = UserDefaults.standard.uuid else { return  }
+        dispatchGroup?.enter()
+        fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? ""], model: ProfileModel.self, apiType: .profile)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        storyApiCall()
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid ?? ""], model: UserBlogModel.self, apiType: .blog)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid ?? ""], model: UserProductModel.self, apiType: .product)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        postApiCall()
+        dispatchGroup?.leave()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if profileType == .otherUser{
+            settingButton.setImage(UIImage(named: "arrow-back"), for: .normal)
+            favoriteButton.isHidden = true
+            editPhotoButton.isHidden = true
+        }
+        else{
+            settingButton.setImage(UIImage(named: "setting-btn-icon"), for: .normal)
+            favoriteButton.isHidden = false
+            editPhotoButton.isHidden = false
+        }
+        
     }
     
     private func configureTabbar(){
@@ -83,6 +126,9 @@ class ProfileViewController: UIViewController {
         }
         profileSection = .post
         tabbarView.items = tabbarItems
+        tabbarView.backgroundColor = Helper.shared.backgroundColor()
+        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
+        tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.selectedItem = tabbarView.items[0]
         tabbarView.bottomDividerColor = .clear
         tabbarView.rippleColor = .clear
@@ -92,8 +138,8 @@ class ProfileViewController: UIViewController {
         tabbarView.tabBarDelegate = self
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
-        tabbarView.setTitleColor(.lightGray, for: .normal)
-        tabbarView.setTitleColor(.black, for: .selected)
+//        tabbarView.setTitleColor(.lightGray, for: .normal)
+//        tabbarView.setTitleColor(.black, for: .selected)
         tabbarView.minItemWidth = 100.0
     }
     
@@ -101,14 +147,21 @@ class ProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
     }
     @IBAction func followingBtnAction(_ sender: Any) {
-        Switcher.showFollower(delegate: self)
+        guard let profileType = profileType else { return }
+        Switcher.showFollower(delegate: self, profileType: profileType)
     }
     
     @IBAction func followerBtnAction(_ sender: Any) {
-        Switcher.showFollower(delegate: self)
+        guard let profileType = profileType else { return }
+        Switcher.showFollower(delegate: self, profileType: profileType)
     }
     @IBAction func settingBtnAction(_ sender: Any) {
-        Switcher.goToSettingVC(delegate: self)
+        if profileType == .otherUser{
+            navigationController?.popViewController(animated: true)
+        }
+        else{
+            Switcher.goToSettingVC(delegate: self)
+        }
     }
     @IBAction func favoriteBtnAction(_ sender: Any) {
         Switcher.goToWishlistVC(delegate: self)
@@ -124,32 +177,15 @@ class ProfileViewController: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        guard let uuid = UserDefaults.standard.uuid else { return  }
-        dispatchGroup?.enter()
-        fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid], model: ProfileModel.self, apiType: .profile)
-        dispatchGroup?.leave()
-        dispatchGroup?.enter()
-        storyApiCall()
-        dispatchGroup?.leave()
-        dispatchGroup?.enter()
-        fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid], model: UserBlogModel.self, apiType: .blog)
-        dispatchGroup?.leave()
-        dispatchGroup?.enter()
-        fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid], model: UserProductModel.self, apiType: .product)
-        dispatchGroup?.leave()
-        dispatchGroup?.enter()
-        postApiCall()
-        dispatchGroup?.leave()
+      
     }
     
     private func storyApiCall(){
-        guard let uuid = UserDefaults.standard.uuid else { return  }
-        fetch(route: .userStories, method: .post, parameters: ["uuid": uuid, "limit": limit, "page": storyCurrentPage], model: FeedStoriesModel.self, apiType: .story)
+        fetch(route: .userStories, method: .post, parameters: ["uuid": uuid ?? "", "limit": limit, "page": storyCurrentPage], model: FeedStoriesModel.self, apiType: .story)
     }
     
     private func postApiCall(){
-        guard let uuid = UserDefaults.standard.uuid else { return  }
-        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid, "limit": limit, "page": postCurrentPage], model: UserPostModel.self, apiType: .post)
+        fetch(route: .userPost, method: .post, parameters: ["uuid": uuid ?? "", "limit": limit, "page": postCurrentPage], model: UserPostModel.self, apiType: .post)
     }
     
    private func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
@@ -175,15 +211,15 @@ class ProfileViewController: UIViewController {
                 else if apiType == .post{
                     self.post.append(contentsOf: (model as? UserPostModel)?.posts?.rows ?? [])
                     self.postTotalCount = (model as? UserPostModel)?.posts?.count ?? 0
-                    self.post.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                    self.contentCollectionView.reloadData()
                 }
                 else if apiType == .product{
                     self.products = (model as? UserProductModel)?.localProducts?.rows
-                    self.products?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                    self.contentCollectionView.reloadData()
                 }
                 else if apiType == .blog{
                     self.blogs = (model as? UserBlogModel)?.blogs?.rows
-                    self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+                    self.contentCollectionView.reloadData()
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -239,12 +275,16 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     }
 
    private func loadCollection(cell:ProfileCollectionViewCell, indexPath: IndexPath) {
+       contentCollectionView.backgroundView = nil
         switch profileSection {
         case .post:
+            post.count == 0 ? contentCollectionView.setEmptyView() : nil
             cell.post = post[indexPath.row]
         case .product:
+            products?.count == 0 ? contentCollectionView.setEmptyView() : nil
             cell.product = products?[indexPath.row]
         case .blog:
+            blogs?.count == 0 ? contentCollectionView.setEmptyView() : nil
             cell.blog = blogs?[indexPath.row]
         default:
             break
@@ -253,8 +293,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == statusCollectionView{
-            print(indexPath.row, stories.count)
-            if stories.count != postTotalCount && indexPath.row == stories.count {
+            print(storyTotalCount, indexPath.row, stories.count)
+            if stories.count != storyTotalCount && indexPath.row == stories.count {
                 storyCurrentPage = storyCurrentPage + 1
                 print("current page \(postCurrentPage)")
                 storyApiCall()
@@ -278,7 +318,6 @@ extension ProfileViewController: UICollectionViewDelegateFlowLayout{
         case statusCollectionView:
             return CGSize(width: 80, height: 110)
         case contentCollectionView:
-//            Helper.shared.cellSize(collectionView: contentCollectionView, space: 2, cellsAcross: 2)
             let cellsAcross: CGFloat = 2
             let spaceBetweenCells: CGFloat = 2
             let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
@@ -293,21 +332,21 @@ extension ProfileViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
         print(item.tag)
         if item.tag == 0{
-            writeBlogButton.isHidden = true
+            addButton.isHidden = true
             profileSection = .post
-            self.post.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+            self.post.count == 0 ? self.contentCollectionView.setEmptyView("No Post found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 1{
-            writeBlogButton.isHidden = false
+            addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
-            self.products?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No product found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 2{
-            writeBlogButton.isHidden = false
+            addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
             profileSection = .blog
-            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView() : self.contentCollectionView.reloadData()
+            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView("No blog found!") : self.contentCollectionView.reloadData()
         }
         contentCollectionView.reloadData()
     }

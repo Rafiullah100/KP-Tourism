@@ -49,9 +49,7 @@ class EventDetailViewController: BaseViewController {
         else{
             statusView.backgroundColor = Constants.appColor
         }
-        
-//        setGradientBackground()
-        favoriteBtn.setImage(eventDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+        favoriteBtn.setImage(eventDetail?.userLike == 1 ? UIImage(named: "like-red") : UIImage(named: "liked"), for: .normal)
         view.bringSubviewToFront(statusView)
     }
     
@@ -104,7 +102,7 @@ class EventDetailViewController: BaseViewController {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
                 }
             case .failure(let error):
                 print("error \(error)")

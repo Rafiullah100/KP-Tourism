@@ -94,6 +94,11 @@ enum TabName: String {
     case profile = "Profile"
 }
 
+enum ProfileType: String {
+    case user
+    case otherUser
+}
+
 enum wishlistSection: String, CaseIterable {
     case post = "post"
     case attraction = "attraction"
@@ -102,7 +107,7 @@ enum wishlistSection: String, CaseIterable {
 //        case event = "social_event"
 //        case blog = "blog"
 //        case book = "book_stay"
-//        case package = "tour_package"
+        case package = "tour_package"
 //        case itinerary = "itinerary"
 //        case product = "local_product"
 }

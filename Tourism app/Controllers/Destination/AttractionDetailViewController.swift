@@ -64,7 +64,7 @@ class AttractionDetailViewController: BaseViewController {
             SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             case .success(let response):
                 guard let self = self else { return }
                 let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)

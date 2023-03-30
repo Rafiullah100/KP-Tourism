@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class WeatherAlertViewController: UIViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -113,23 +113,19 @@ class WeatherAlertViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
-                DispatchQueue.main.async {
-                    switch self.cellType {
-                    case .AlertTableViewCell:
-                        self.warnings = (model as? AlertModel)?.warnings
-                        self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
-                    case .WeatherTableViewCell:
-                        self.weatherDetail = model as? WeatherModel
-                        self.tableView.reloadData()
-                        self.updateUI()
-                    case .none:
-                        print("none")
-                    }
+                switch self.cellType {
+                case .AlertTableViewCell:
+                    self.warnings = (model as? AlertModel)?.warnings
+                    self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                case .WeatherTableViewCell:
+                    self.weatherDetail = model as? WeatherModel
+                    self.tableView.reloadData()
+                    self.updateUI()
+                case .none:
+                    print("none")
                 }
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -138,15 +134,13 @@ class WeatherAlertViewController: UIViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
-                DispatchQueue.main.async {
-                    self.districtList = (model as! DistrictListModel).districts?.rows
-                    self.pickerView.reloadAllComponents()
-                    UserDefaults.standard.districtKey = self.districtList?[0].mapbox_location_key
-                    self.dropDownLabel.text = self.districtList?[0].title
-                    self.serverCall(type: .WeatherTableViewCell)
-                }
+                self.districtList = (model as! DistrictListModel).districts?.rows
+                self.pickerView.reloadAllComponents()
+                UserDefaults.standard.districtKey = self.districtList?[0].mapbox_location_key
+                self.dropDownLabel.text = self.districtList?[0].title
+                self.serverCall(type: .WeatherTableViewCell)
             case .failure(let error):
-                print("Erorr \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

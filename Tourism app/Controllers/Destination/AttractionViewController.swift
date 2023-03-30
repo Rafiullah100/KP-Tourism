@@ -69,11 +69,9 @@ class AttractionViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let attractions):
-                DispatchQueue.main.async {
-                    self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions?.rows ?? [])
-                    self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
-                    self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
-                }
+                self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions?.rows ?? [])
+                self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
+                self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
             case .failure(let error):
                 if error == .noInternet {
                     self.collectionView.noInternet()

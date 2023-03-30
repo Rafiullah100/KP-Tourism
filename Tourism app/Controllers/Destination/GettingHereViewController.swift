@@ -122,7 +122,7 @@ class GettingHereViewController: BaseViewController {
             SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                SVProgressHUD.showError(withStatus: error.localizedDescription, maskType: .none)
             case .success(let response):
                 guard let self = self else { return }
                 // Pass the first generated route to the the NavigationViewController

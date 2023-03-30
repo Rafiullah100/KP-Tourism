@@ -71,12 +71,14 @@ struct ProductLike: Codable {
 
 // MARK: - Users
 struct ProductUsers: Codable {
+    let uuid: String
     let id: Int
     let name: String
     let mobileNo: String?
     let profileImage: String
 
     enum CodingKeys: String, CodingKey {
+        case uuid
         case id, name
         case mobileNo = "mobile_no"
         case profileImage = "profile_image"

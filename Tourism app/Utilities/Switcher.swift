@@ -257,20 +257,24 @@ class Switcher {
     
     static func goToChatListVC(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatListViewController") as! ChatListViewController
-        vc.modalPresentationStyle = .fullScreen
-        delegate.navigationController?.pushViewController(vc, animated: false)
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true)
+//        delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
-    static func goToProfileVC(delegate: UIViewController){
+    static func goToProfileVC(delegate: UIViewController, profileType:ProfileType, uuid: String){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProfileViewController") as! ProfileViewController
+        vc.profileType = profileType
+        vc.uuid = uuid
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func showFollower(delegate: UIViewController){
+    static func showFollower(delegate: UIViewController, profileType: ProfileType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProfilePopUpViewController") as! ProfilePopUpViewController
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
+        vc.profileType = profileType
         delegate.present(vc, animated: true, completion: nil)
     }
     

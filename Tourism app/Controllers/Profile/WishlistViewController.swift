@@ -22,7 +22,8 @@ class WishlistViewController: UIViewController {
     var postWishlist: [PostWishlistModel]?
     var attractionWishlist: [AttractionWishlistModel]?
     var districtWishlist: [DistrictWishlistModel]?
-    
+    var packageWishlist: [PackageWishlistModel]?
+
     var type: wishlistSection?
     var wishlistTypeArray: [wishlistSection]?
     
@@ -39,6 +40,9 @@ class WishlistViewController: UIViewController {
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.district.rawValue], model: DistrictSectionModel.self, type: .district)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.package.rawValue], model: PackageSectionModel.self, type: .package)
         dispatchGroup?.leave()
     }
     
@@ -60,6 +64,11 @@ class WishlistViewController: UIViewController {
                     let wishlist = model as? DistrictSectionModel
                     self.districtWishlist = wishlist?.wishlist
                     self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+                }
+                else if type == .package{
+                    let wishlist = model as? PackageSectionModel
+                    self.packageWishlist = wishlist?.wishlist
+                    self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -87,6 +96,9 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
         }
         else if indexPath.row == 2{
             cell.districtWishlist = districtWishlist
+        }
+        else{
+            cell.packageWishlist = packageWishlist
         }
         return cell
     }

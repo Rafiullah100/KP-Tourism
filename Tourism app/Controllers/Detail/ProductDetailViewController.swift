@@ -29,24 +29,25 @@ class ProductDetailViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
-        
         thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         productNameLabel.text = productDetail?.title
         descriptionTextView.text = productDetail?.localProductDescription
         onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         uploadTimeLabel.text = productDetail?.createdAt
         locationLabel.text = productDetail?.districts.title
-        favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+        favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         statusBarView.addGradient()
+        navigationController?.navigationBar.isHidden = false
     }
     
     @IBAction func socialButton(_ sender: Any) {
+        guard let uuid = productDetail?.users.uuid else { return  }
+        Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
     }
-    
 
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
@@ -61,7 +62,7 @@ class ProductDetailViewController: BaseViewController {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "fav") : UIImage(named: "white-heart"), for: .normal)
+                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
 
                 }
             case .failure(let error):

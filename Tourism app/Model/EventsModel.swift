@@ -8,6 +8,7 @@
 import Foundation
 
 struct EventsModel: Codable {
+    let count: Int
     let events: [EventListModel]
 }
 

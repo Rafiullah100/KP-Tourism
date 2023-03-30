@@ -38,6 +38,13 @@ class WishlistTableViewCell: UITableViewCell {
         }
     }
     
+    var packageWishlist: [PackageWishlistModel]?{
+        didSet{
+            label.text = "Tour Package"
+            collectionView.reloadData()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -62,6 +69,9 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         else if !(districtWishlist?.isEmpty ?? true){
             return districtWishlist?.count ?? 0
         }
+        else if !(packageWishlist?.isEmpty ?? true){
+            return packageWishlist?.count ?? 0
+        }
         return 0
     }
     
@@ -75,6 +85,9 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         }
         else if !(districtWishlist?.isEmpty ?? true){
             cell.districtWishlist = districtWishlist?[indexPath.row]
+        }
+        else if !(packageWishlist?.isEmpty ?? true){
+            cell.packageWishlist = packageWishlist?[indexPath.row]
         }
         return cell
     }

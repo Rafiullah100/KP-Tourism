@@ -21,11 +21,19 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var threeDotButton: UIButton!
     @IBOutlet weak var expandableLabel: ExpandableLabel!
     
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var likeButton: UIButton!
     var actionBlock: (() -> Void)? = nil
     var shareActionBlock: (() -> Void)? = nil
+    var saveActionBlock: (() -> Void)? = nil
+    var likeActionBlock: (() -> Void)? = nil
 
     var feed: FeedModel? {
         didSet {
+            
+            likeButton.setImage(feed?.isLiked == 1 ? UIImage(named: "Arrow---Top-red") : UIImage(named: "Arrow---Top"), for: .normal)
+            saveButton.setImage(feed?.isWished == 1 ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
+            
 //            imgView.image = UIImage(named: "placeholder")
             if feed?.post?.postFiles?.count ?? 0 > 0 {
                 imgbgView.isHidden = false
@@ -71,6 +79,12 @@ class FeedTableViewCell: UITableViewCell {
     }
     @IBAction func threeDotBtnAction(_ sender: Any) {
         actionBlock?()
+    }
+    @IBAction func saveBtnAction(_ sender: Any) {
+        saveActionBlock?()
+    }
+    @IBAction func likeBtnAAction(_ sender: Any) {
+        likeActionBlock?()
     }
 }
 
