@@ -57,12 +57,14 @@ class BlogDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
+        scrollView.keyboardDismissMode = .onDrag
         tableView.estimatedRowHeight = UITableView.automaticDimension
         commentTextView.text = "Message.."
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = blogDetail?.title
+        viewControllerTitle = "blogs"
+//        viewControllerTitle = blogDetail?.title
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
         textView.text = blogDetail?.blogDescription
         blogTitleLabel.text = blogDetail?.title

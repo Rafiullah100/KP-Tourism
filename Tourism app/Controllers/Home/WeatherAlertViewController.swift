@@ -116,10 +116,10 @@ class WeatherAlertViewController: UIViewController {
                 switch self.cellType {
                 case .AlertTableViewCell:
                     self.warnings = (model as? AlertModel)?.warnings
-                    self.warnings?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    self.warnings?.count == 0 ? self.tableView.setEmptyView("No Warning!") : self.tableView.reloadData()
                 case .WeatherTableViewCell:
                     self.weatherDetail = model as? WeatherModel
-                    self.tableView.reloadData()
+                    self.weatherDetail?.dailyForecasts?.count == 0 ? self.tableView.setEmptyView("No daily forecast available.") : self.tableView.reloadData()
                     self.updateUI()
                 case .none:
                     print("none")

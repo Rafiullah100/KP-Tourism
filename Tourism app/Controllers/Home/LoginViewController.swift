@@ -92,7 +92,6 @@ class LoginViewController: BaseViewController {
             case .success(let login):
                 self.login = login as? LoginModel
                 if self.login?.success == true{
-                    print(self.login)
                     UserDefaults.standard.isLoginned = true
                     UserDefaults.standard.accessToken = self.login?.token
                     UserDefaults.standard.userID = self.login?.userID

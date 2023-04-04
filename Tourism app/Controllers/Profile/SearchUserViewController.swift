@@ -45,7 +45,13 @@ class SearchUserViewController: UIViewController {
             switch result {
             case .success(let users):
                 self.chatUserModel = users as? ChatUserModel
-                self.tableView.reloadData()
+                if self.chatUserModel?.chatUsers?.rows?.count == 0{
+                    self.tableView.setEmptyView("No search found!")
+                }
+                else{
+                    self.tableView.backgroundView = nil
+                    self.tableView.reloadData()
+                }
 //                self.chatUserModel?.chatUsers.rows.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

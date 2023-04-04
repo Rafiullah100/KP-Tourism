@@ -124,7 +124,7 @@ enum Route {
         case .fetchVisitKp:
             return "api/mobile/visitkp/list"
         case .weatherApi:
-            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/\(UserDefaults.standard.districtKey ?? 1771429)?apikey=Nx8fVetx3yB9xfvSAql3kICyQFTU1hHK"
+            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/\(UserDefaults.standard.districtKey ?? 1771429)?apikey=\(Constants.weatherApiKey)"
         case .likeApi:
             return "api/mobile/likes_comments/do_like"
         case .districtCategoriesApi:

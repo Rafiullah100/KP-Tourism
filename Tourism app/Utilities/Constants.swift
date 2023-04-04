@@ -21,7 +21,7 @@ struct Constants {
     
     static var googleMapApiKey = "AIzaSyBC2Xdb2ato7ULwuGnDjPLXLAvqUZx_1VM"
     
-    static var weatherApiKey = "Nx8fVetx3yB9xfvSAql3kICyQFTU1hHK"
+    static var weatherApiKey = "y1voBGYtcqv87nEiJfQHGKVCzXQmOHiG"
     
     static var clientID = FirebaseApp.app()?.options.clientID
     

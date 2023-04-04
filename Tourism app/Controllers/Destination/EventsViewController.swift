@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class EventsViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -48,16 +48,10 @@ class EventsViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let events):
-                DispatchQueue.main.async {
-                    self.eventDetail = events as? EventsModel
-                    self.eventDetail?.events.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
-
-                    self.tableView.reloadData()
-                }
+                self.eventDetail = events as? EventsModel
+                self.eventDetail?.events.count == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

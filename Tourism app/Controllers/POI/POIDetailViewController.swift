@@ -29,8 +29,7 @@ class POIDetailViewController: BaseViewController {
     @IBOutlet weak var categoryLabel: UILabel!
     @IBOutlet weak var placeLabel: UILabel!
     
-    var poiDetail: POISubCatoryModel?
-    
+    var poiDetail: POIRow?
     
     override func viewDidLoad() {
         super.viewDidLoad()

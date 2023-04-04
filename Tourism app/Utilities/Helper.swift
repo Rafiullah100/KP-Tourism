@@ -110,7 +110,14 @@ class Helper{
         return color
     }
     
-    
+    public func makepdfArray(question: String, image: String, title: String, _ inserIndex: Int){
+        let item = VisitPdf(question: question, title: title, image: image)
+        var array = UserDefaults.standard.pdfArray
+        array?.append(item)
+//        if let data: VisitPdf = try? PropertyListEncoder().encode(array) {
+//            UserDefaults.standard.pdfArray = try? PropertyListEncoder().encode(data)
+//        }
+    }
     
 //    public func gradient(view: UIView){
 //        let gradientLayer = CAGradientLayer()

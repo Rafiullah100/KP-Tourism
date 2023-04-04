@@ -25,6 +25,7 @@ extension UserDefaults {
         case uuid
         case userType
         case userBio
+        case pdfArray
     }
     
     
@@ -170,6 +171,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.userBio.rawValue)
+        }
+    }
+    
+    var pdfArray: [VisitPdf]? {
+        get {
+            array(forKey: UserDefaultsKeys.pdfArray.rawValue) as? [VisitPdf]
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.pdfArray.rawValue)
         }
     }
 }

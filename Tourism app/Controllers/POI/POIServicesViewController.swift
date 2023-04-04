@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SVProgressHUD
 class POIServicesViewController: BaseViewController {
 
     @IBOutlet weak var nameLabel: UILabel!
@@ -50,12 +51,10 @@ class POIServicesViewController: BaseViewController {
             case .success(let poiSubCategory):
                 DispatchQueue.main.async {
                     self.POISubCatories = poiSubCategory
-                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView("No Record Found!") : self.tableView.reloadData()
                 }
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

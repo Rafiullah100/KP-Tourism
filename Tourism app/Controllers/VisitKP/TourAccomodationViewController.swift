@@ -106,9 +106,10 @@ extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        Switcher.gotoTourpdfVC(delegate: self)
         isSelected = true
-        UserDefaults.standard.accomodation = Constants.traveleAccomodation[indexPath.row].title
+        if let encoded = try? JSONEncoder().encode( accomodationDetail?.accomodations[indexPath.row]) {
+            UserDefaults.standard.set(encoded, forKey: "accomodation")
+        }
     }
 }
 

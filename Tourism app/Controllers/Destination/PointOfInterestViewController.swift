@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SVProgressHUD
 class PointOfInterestViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -50,14 +51,10 @@ class PointOfInterestViewController: BaseViewController {
         URLSession.shared.request(route: .fetchPoiCategories, method: .post, model: PoiCategoriesModel.self) { result in
             switch result {
             case .success(let poiCategory):
-                DispatchQueue.main.async {
-                    self.category = poiCategory
-                    self.category?.poicategories.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
-                }
+                self.category = poiCategory
+                self.category?.poicategories.count == 0 ? self.collectionView.setEmptyView("No POI Found!") : self.collectionView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.collectionView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

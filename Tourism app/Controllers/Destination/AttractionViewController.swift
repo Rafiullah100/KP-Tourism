@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class AttractionViewController: BaseViewController {
     
     @IBOutlet weak var mapContainerView: UIView!
@@ -71,11 +71,9 @@ class AttractionViewController: BaseViewController {
             case .success(let attractions):
                 self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions?.rows ?? [])
                 self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
-                self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView() : self.collectionView.reloadData()
+                self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.collectionView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: "\(error.localizedDescription)")
             }
         }
     }

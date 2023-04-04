@@ -82,10 +82,12 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        Switcher.gotoVisitExpVC(delegate: self)
         geoTypeId = Constants.visitkpArray[indexPath.row].geoTypeID
         isSelected = true
-        UserDefaults.standard.area = Constants.visitkpArray[indexPath.row].title
+        
+        if let encoded = try? JSONEncoder().encode(Constants.visitkpArray[indexPath.row]) {
+            UserDefaults.standard.set(encoded, forKey: "area")
+        }
     }
 }
 

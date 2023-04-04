@@ -153,7 +153,7 @@ class GettingHereViewController: BaseViewController {
                     self.show(self.travelVC, sender: self)
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

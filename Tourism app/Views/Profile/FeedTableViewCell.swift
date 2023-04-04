@@ -35,15 +35,15 @@ class FeedTableViewCell: UITableViewCell {
             saveButton.setImage(feed?.isWished == 1 ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
             
 //            imgView.image = UIImage(named: "placeholder")
-            if feed?.post?.postFiles?.count ?? 0 > 0 {
+            if feed?.post?.post_files?.count ?? 0 > 0 {
                 imgbgView.isHidden = false
-                imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.postFiles?[0].imageURL ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
+                imgView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.post_files?[0].image_url ?? "").replacingOccurrences(of: " ", with: "%20")), placeholderImage: UIImage(named: "placeholder"))
             }
             else{
                 imgbgView.isHidden = true
             }
             nameLabel.text = feed?.post?.users?.name
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             timeLabel.text = "\(feed?.updatedAt ?? "")"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"

@@ -8,21 +8,21 @@
 import Foundation
 
 struct InvestmentModel: Codable {
-    let investments: Investments
+    let investments: Investments?
 }
 
 // MARK: - Investments
 struct Investments: Codable {
-    let count: Int
-    let rows: [InvestmentRow]
+    let count: Int?
+    let rows: [InvestmentRow]?
 }
 
 // MARK: - Row
 struct InvestmentRow: Codable {
-    let id: Int
-    let title, slug, fileURL, imageURL: String
-    let sort, viewsCounter: Int
-    let updatedAt: String
+    let id: Int?
+    let title, slug, fileURL, imageURL: String?
+    let sort, viewsCounter: Int?
+    let updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, slug

@@ -36,7 +36,7 @@ class POIMapViewController: BaseViewController {
         mapViewContainer.addSubview(mapView)
         
         POISubCatories?.pois.rows.forEach({ point in
-            guard let lat = Double(point.latitude), let lon = Double(point.longitude)  else { return }
+            guard let lat = Double(point.latitude ?? ""), let lon = Double(point.longitude ?? "")  else { return }
             let point = MGLPointAnnotation()
             point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             mapView.addAnnotation(point)

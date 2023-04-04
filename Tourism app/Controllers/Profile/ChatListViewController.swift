@@ -49,7 +49,7 @@ class ChatListViewController: UIViewController {
             switch result {
             case .success(let users):
                 self.conversationUsers = (users as? LoadedConversationModel)?.userConversations
-                self.tableView.reloadData()
+                self.conversationUsers?.count == 0 ? self.tableView.setEmptyView("No Record found!") : self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

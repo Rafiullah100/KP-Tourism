@@ -78,10 +78,10 @@ class HomeViewController: BaseViewController {
     var tourPackage: [TourPackage] = [TourPackage]()
 //    var event: [EventListModel] = [EventListModel]()
     var blogs: [Blog] = [Blog]()
+    var investment: [InvestmentRow] = [InvestmentRow]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UserDefaults.standard.uuid ?? "")
         searchBgView.viewShadow()
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
@@ -93,7 +93,7 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
-        textField.addTarget(self, action: #selector(SearchUserViewController.textFieldDidChange(_:)), for: .editingChanged)
+        textField.addTarget(self, action: #selector(HomeViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,35 +107,44 @@ class HomeViewController: BaseViewController {
             case .success(let explore):
                 self.model = explore
                 if self.cellType == .explore {
-                    self.exploreDistrict.append(contentsOf: (explore as? ExploreModel)?.attractions ?? [])
-                    self.totalCount = (explore as? ExploreModel)?.count ?? 0
-                    print(self.totalCount)
+                    self.exploreDistrict.append(contentsOf: (self.model as? ExploreModel)?.attractions ?? [])
+                    self.totalCount = (self.model as? ExploreModel)?.count ?? 0
                 }
                 else if self.cellType == .attraction{
-                    self.attractionDistrict.append(contentsOf: (explore as? AttractionModel)?.attractions?.rows ?? [])
-                    self.totalCount = (explore as? AttractionModel)?.attractions?.count ?? 0
+                    self.attractionDistrict.append(contentsOf: (self.model as? AttractionModel)?.attractions?.rows ?? [])
+                    self.totalCount = (self.model as? AttractionModel)?.attractions?.count ?? 0
                 }
                 else if self.cellType == .product{
-                    self.localProducts.append(contentsOf: (explore as? ProductModel)?.localProducts ?? [])
-                    self.totalCount = (explore as? ProductModel)?.count ?? 0
+                    self.localProducts.append(contentsOf: (self.model as? ProductModel)?.localProducts ?? [])
+                    self.totalCount = (self.model as? ProductModel)?.count ?? 0
                 }
                 else if self.cellType == .event{
-                    self.event = (explore as? EventsModel)?.events ?? []
-                    self.totalCount = (explore as? EventsModel)?.count ?? 0
+                    self.event = (self.model as? EventsModel)?.events ?? []
+                    self.totalCount = (self.model as? EventsModel)?.count ?? 0
                 }
                 else if self.cellType == .arch{
-                    self.archeology.append(contentsOf: (explore as? ArcheologyModel)?.archeology ?? [])
-                    self.totalCount = (explore as? ArcheologyModel)?.count ?? 0
+                    self.archeology.append(contentsOf: (self.model as? ArcheologyModel)?.archeology ?? [])
+                    self.totalCount = (self.model as? ArcheologyModel)?.count ?? 0
                 }
                 else if self.cellType == .tour{
-                    self.tourPackage.append(contentsOf: (explore as? TourModel)?.tour ?? [])
-                    self.totalCount = (explore as? TourModel)?.count ?? 0
+                    self.tourPackage.append(contentsOf: (self.model as? TourModel)?.tour ?? [])
+                    self.totalCount = (self.model as? TourModel)?.count ?? 0
                 }
                 else if self.cellType == .blog{
-                    self.blogs.append(contentsOf: (explore as? BlogsModel)?.blog ?? [])
-                    self.totalCount = (explore as? BlogsModel)?.count ?? 0
+                    self.blogs.append(contentsOf: (self.model as? BlogsModel)?.blog ?? [])
+                    self.totalCount = (self.model as? BlogsModel)?.count ?? 0
                 }
-                self.tableView.reloadData()
+                else if self.cellType == .investment{
+                    self.investment.append(contentsOf: (self.model as? InvestmentModel)?.investments?.rows ?? [])
+                    self.totalCount = (self.model as? InvestmentModel)?.investments?.count ?? 0
+                }
+                if self.totalCount == 0{
+                    self.tableView.setEmptyView("No Record found!")
+                }
+                else{
+                    self.tableView.reloadData()
+                    self.tableView.backgroundView = nil
+                }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -149,15 +158,19 @@ class HomeViewController: BaseViewController {
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
+        emptyArray()
+        currentPage = 1
+        serverCall(cell: cellType ?? .explore)
+    }
+    
+    func emptyArray() {
         exploreDistrict = []
         localProducts = []
-        event = []
         archeology = []
         tourPackage = []
         event = []
         blogs = []
-        currentPage = 1
-        serverCall(cell: cellType ?? .explore)
+        investment = []
     }
 }
 
@@ -168,7 +181,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             siteLabel.text = "\(exploreDistrict.count) Explore Sites"
             return exploreDistrict.count
         case .investment:
-            return (model as? InvestmentModel)?.investments.rows.count ?? 0
+            return investment.count
         case .attraction:
             return attractionDistrict.count
         case .adventure:
@@ -203,7 +216,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .investment:
             let cell: InvestmentTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! InvestmentTableViewCell
-            cell.investment = (model as? InvestmentModel)?.investments.rows[indexPath.row]
+            cell.investment = investment[indexPath.row]
             return cell
         case .attraction:
             let cell: AttractionTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! AttractionTableViewCell
@@ -261,6 +274,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cellType {
         case .explore:
+            print(exploreDistrict)
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[indexPath.row])
         case .event:
             Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row])
@@ -284,7 +298,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
                 Switcher.goToWizardVC(delegate: self, visitDetail: (model as! VisitKPModel).attractions.rows[indexPath.row])
             }
         case .investment:
-            guard let urlString = (model as? InvestmentModel)?.investments.rows[indexPath.row].fileURL else {
+            guard let urlString = investment[indexPath.row].fileURL else {
                 return
             }
             Switcher.gotoPDFViewer(delegate: self, url: urlString)
@@ -307,18 +321,13 @@ extension HomeViewController: MDCTabBarViewDelegate{
             galleryContainer.isHidden = true
             tableViewContainer.isHidden = false
         }
+        textField.text = ""
         addChild(tag: item.tag)
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     private func addChild(tag: Int){
-        attractionDistrict = []
-        exploreDistrict = []
-        localProducts = []
-        archeology = []
-        tourPackage = []
-        event = []
-        blogs = []
+        emptyArray()
         currentPage = 1
         if tag == 0 {
             mapButton.isHidden = false
@@ -370,7 +379,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if cellType == .explore{
-            print(exploreDistrict.count, totalCount, indexPath.row)
             if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
                 currentPage = currentPage + 1
                 serverCall(cell: .explore)
@@ -388,6 +396,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
             }
         }
         else if cellType == .arch{
+            print(archeology.count, indexPath.row)
             if archeology.count != totalCount && indexPath.row == archeology.count - 1  {
                 currentPage = currentPage + 1
                 serverCall(cell: .arch)
@@ -409,6 +418,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
             if blogs.count != totalCount && indexPath.row == blogs.count - 1  {
                 currentPage = currentPage + 1
                 serverCall(cell: .blog)
+            }
+        }
+        else if cellType == .investment{
+            if investment.count != totalCount && indexPath.row == investment.count - 1  {
+                currentPage = currentPage + 1
+                serverCall(cell: .investment)
             }
         }
     }

@@ -24,7 +24,7 @@ class POIServiceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    var poiSubCategory: POISubCatoryModel?{
+    var poiSubCategory: POIRow?{
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiSubCategory?.displayImage ?? "")))
             titleLabel.text = poiSubCategory?.title

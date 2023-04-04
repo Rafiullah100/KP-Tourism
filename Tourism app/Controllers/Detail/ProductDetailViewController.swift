@@ -28,7 +28,8 @@ class ProductDetailViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
+        viewControllerTitle = "Local Products"
+//        viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
         thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         productNameLabel.text = productDetail?.title
         descriptionTextView.text = productDetail?.localProductDescription
@@ -36,6 +37,7 @@ class ProductDetailViewController: BaseViewController {
         uploadTimeLabel.text = productDetail?.createdAt
         locationLabel.text = productDetail?.districts.title
         favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+        ownerNameLabel.text = "\(productDetail?.users.name ?? "")"
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -40,7 +40,8 @@ class FeedsViewController: UIViewController {
     var totalCount = 0
     var currentPage = 1
     var limit = 5
-    
+    var storyLimit = 20
+
     var storyTotalCount = 1
     var storyCurrentPage = 1
     
@@ -80,11 +81,11 @@ class FeedsViewController: UIViewController {
     }
     
     @objc func loadNewsFeed(){
-        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit], model: NewsFeedModel.self)
+        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
     }
     
     @objc func storyApiCall(){
-        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": limit], model: FeedStoriesModel.self)
+        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit], model: FeedStoriesModel.self)
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -214,7 +215,6 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(storyTotalCount, indexPath.row, stories.count)
         if stories.count != storyTotalCount && indexPath.row == stories.count {
             storyCurrentPage = storyCurrentPage + 1
             storyApiCall()
@@ -242,7 +242,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
             self.actionSheet(row: indexPath.row)
         }
         cell.shareActionBlock = {
-            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].id ?? 0], model: SuccessModel.self)
+            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0], model: SuccessModel.self)
         }
         
         cell.likeActionBlock = {
@@ -255,7 +255,6 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(newsFeed.count, totalCount)
         if newsFeed.count != totalCount && indexPath.row == newsFeed.count - 1  {
             currentPage = currentPage + 1
             loadNewsFeed()

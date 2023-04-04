@@ -18,7 +18,6 @@ class ArchTableViewCell: UITableViewCell {
     @IBOutlet weak var archeologyLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
         
         bottomView.clipsToBounds = true
         bottomView.layer.cornerRadius = 10
@@ -54,18 +53,6 @@ class ArchTableViewCell: UITableViewCell {
             else{
                 favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
             }
-            
-//            imgBGView.roundCorners(corners: [.topRight, .topLeft], radius: 10)
-//            archeology?.attractions.forEach({ attration in
-//                let imageUrl = SDWebImageSource(urlString: Route.baseUrl + (attration.imageURL ?? ""), placeholder: UIImage(named: "placeholder"))
-//                if let sdURL = imageUrl{
-//                    imageSDWebImageSrc.append(sdURL)
-//                    slideShow.slideshowInterval = 2.0
-//                    slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-//                    slideShow.isUserInteractionEnabled = false
-//                    slideShow.setImageInputs(imageSDWebImageSrc)
-//                }
-//            })
         }
     }
     

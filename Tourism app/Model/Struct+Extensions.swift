@@ -18,12 +18,12 @@ struct Coordinates {
     let long: Double
 }
 
-struct Destination {
+struct Destination: Codable {
     let image: String
     let title: String
 }
 
-struct VisitArea {
+struct VisitArea: Codable {
     let image: String
     let background: String
     let title: String
@@ -110,4 +110,10 @@ enum wishlistSection: String, CaseIterable {
         case package = "tour_package"
 //        case itinerary = "itinerary"
 //        case product = "local_product"
+}
+
+struct VisitPdf: Codable {
+    let question: String?
+    let title: String?
+    let image: String?
 }

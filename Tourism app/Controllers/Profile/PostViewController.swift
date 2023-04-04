@@ -35,7 +35,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         case .edit:
             label.text = "Edit Post"
             postButton.setTitle("Edit Post", for: .normal)
-            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.postFiles?[0].imageURL ?? "")))
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.post_files?[0].image_url ?? "")))
             textView.text = feed?.post?.description
         default:
             label.text = "Create Post"
@@ -64,7 +64,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             createPost(route: .postApi, params: ["description": text, "type": "image"])
         case .edit:
             guard let text = textView.text else { return }
-            createPost(route: .editPost, params: ["description": text, "id": feed?.postID ?? 0, "type": "image"])
+            createPost(route: .editPost, params: ["description": text, "id": feed?.post_id ?? 0, "type": "image"])
         case .story:
             createPost(route: .createStory, params: [:])
         default:

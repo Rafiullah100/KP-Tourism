@@ -108,7 +108,11 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
 //        Switcher.gotoTourInformationVC(delegate: self)
         districtID = districtList?[indexPath.row].id
         isSelected = true
-        UserDefaults.standard.destination = districtList?[indexPath.row].title
+
+        if let encoded = try? JSONEncoder().encode(districtList?[indexPath.row]) {
+            UserDefaults.standard.set(encoded, forKey: "destination")
+        }
+        
     }
 }
 

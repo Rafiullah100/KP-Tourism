@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class LocalProductsViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -48,14 +48,11 @@ class LocalProductsViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let product):
-                DispatchQueue.main.async {
-                    self.productDetail = product as? ProductModel
-                    self.collecttionView.reloadData()
-                }
+                self.productDetail = product as? ProductModel
+                self.collecttionView.reloadData()
+                self.productDetail?.localProducts.count == 0 ? self.collecttionView.setEmptyView("No Products Found!") : self.collecttionView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.collecttionView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

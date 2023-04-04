@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class AccomodationViewController: BaseViewController {
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
@@ -59,12 +59,10 @@ class AccomodationViewController: BaseViewController {
             case .success(let accomodation):
                 DispatchQueue.main.async {
                     self.accomodationDetail = accomodation as? AccomodationModel
-                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView("No Accomodation found!") : self.tableView.reloadData()
                 }
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
