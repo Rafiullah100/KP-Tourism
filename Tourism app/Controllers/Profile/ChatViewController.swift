@@ -8,6 +8,8 @@
 import UIKit
 import SDWebImage
 import SVProgressHUD
+import SocketIO
+import IQKeyboardManager
 class CellIds {
     static let senderCellId = "senderCellId"
     static let receiverCellId = "receiverCellId"
@@ -29,15 +31,15 @@ class ChatViewController: UIViewController {
         }
     }
     
-    private lazy var keyboardView: KeyboardInputAccessoryView = {
-        return KeyboardInputAccessoryView.view(controller: self)
-    }()
-    override var inputAccessoryView: UIView? {
-        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
-    }
-    override var canBecomeFirstResponder: Bool {
-        return keyboardView.canBecomeFirstResponder
-    }
+//    private lazy var keyboardView: KeyboardInputAccessoryView = {
+//        return KeyboardInputAccessoryView.view(controller: self)
+//    }()
+//    override var inputAccessoryView: UIView? {
+//        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
+//    }
+//    override var canBecomeFirstResponder: Bool {
+//        return keyboardView.canBecomeFirstResponder
+//    }
     
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
@@ -45,11 +47,14 @@ class ChatViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        IQKeyboardManager.shared().isEnableAutoToolbar = false
+//        textView.inputAccessoryView = UIView()
+
         topBarView.addBottomShadow()
     }
     
     @IBAction func showkeyboardBtn(_ sender: Any) {
-        self.keyboardView.showKeyboard()
+//        self.keyboardView.showKeyboard()
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -58,7 +63,7 @@ class ChatViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        keyboardView.inputTextView.resignFirstResponder()
+//        keyboardView.inputTextView.resignFirstResponder()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,7 +147,8 @@ extension ChatViewController: KeyboardInputAccessoryViewProtocol{
             sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser?.id ?? "", "uuid": chatUser?.uuid ?? ""], model: SuccessModel.self)
         }
         else{
-            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], model: SuccessModel.self)
+            SocketHelper.shared.sendMessage(message: "message", withNickname: "name")
+//            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], model: SuccessModel.self)
         }
 //        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
     }

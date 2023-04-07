@@ -28,8 +28,8 @@ class CommentsTableViewCell: UITableViewCell {
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
             commentLabel.text = "\(comment?.comment ?? "")"
-            nameLabel.text = "\(comment?.users.name ?? "")"
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            nameLabel.text = "\(comment?.users?.name ?? "")"
+            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             
             self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
             self.tableView.reloadData()
@@ -61,12 +61,12 @@ class CommentsTableViewCell: UITableViewCell {
 
 extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return comment?.replies.count ?? 0
+        return comment?.replies?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentReplyTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())  as! CommentReplyTableViewCell
-        cell.commentReply = comment?.replies[indexPath.row]
+        cell.commentReply = comment?.replies?[indexPath.row]
         return cell
     }
     

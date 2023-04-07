@@ -56,6 +56,24 @@ class DownloadPDFViewController: UIViewController {
        let activityViewController = UIActivityViewController(activityItems: [pdfData] , applicationActivities: nil)
        activityViewController.popoverPresentationController?.sourceView = self.view
        self.present(activityViewController, animated: true, completion: nil)
+        
+        
+        
+//        let priorBounds: CGRect = self.tableView.bounds
+//           let fittedSize: CGSize = self.tableView.sizeThatFits(CGSize(width: priorBounds.size.width, height: self.tableView.contentSize.height))
+//           self.tableView.bounds = CGRect(x: 0, y: 0, width: fittedSize.width, height: fittedSize.height)
+//           self.tableView.reloadData()
+//           let pdfPageBounds: CGRect = CGRect(x: 0, y: 0, width: fittedSize.width, height: (fittedSize.height))
+//           let pdfData: NSMutableData = NSMutableData()
+//           UIGraphicsBeginPDFContextToData(pdfData, pdfPageBounds, nil)
+//           UIGraphicsBeginPDFPageWithInfo(pdfPageBounds, nil)
+//           self.tableView.layer.render(in: UIGraphicsGetCurrentContext()!)
+//           UIGraphicsEndPDFContext()
+//
+//        let activityViewController = UIActivityViewController(activityItems: [pdfData] , applicationActivities: nil)
+//        activityViewController.popoverPresentationController?.sourceView = self.view
+//        self.present(activityViewController, animated: true, completion: nil)
+         
     }
 }
 

@@ -39,27 +39,28 @@ class BlogDetailViewController: BaseViewController {
     }
   
 
-    private lazy var keyboardView: KeyboardInputAccessoryView = {
-        return KeyboardInputAccessoryView.view(controller: self)
-    }()
-    override var inputAccessoryView: UIView? {
-        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
-    }
-    override var canBecomeFirstResponder: Bool {
-        return keyboardView.canBecomeFirstResponder
-    }
+//    private lazy var keyboardView: KeyboardInputAccessoryView = {
+//        return KeyboardInputAccessoryView.view(controller: self)
+//    }()
+//    override var inputAccessoryView: UIView? {
+//        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
+//    }
+//    override var canBecomeFirstResponder: Bool {
+//        return keyboardView.canBecomeFirstResponder
+//    }
     
     
     var currentPage = 1
     var totalCount = 1
-    var limit = 1000
+    var limit = 5
+    var commentText = "Write a comment"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
         tableView.estimatedRowHeight = UITableView.automaticDimension
-        commentTextView.text = "Message.."
+        commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
@@ -76,7 +77,7 @@ class BlogDetailViewController: BaseViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        keyboardView.inputTextView.resignFirstResponder()
+//        keyboardView.inputTextView.resignFirstResponder()
     }
     
     private func reloadComment(){
@@ -96,14 +97,12 @@ class BlogDetailViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let result):
-                DispatchQueue.main.async {
-                    if (result as? SuccessModel)?.success == true{
-                        self.allComments = []
-                        self.reloadComment()
-                    }
+                if (result as? SuccessModel)?.success == true{
+                    self.allComments = []
+                    self.reloadComment()
                 }
             case .failure(let error):
-                print(error)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -112,9 +111,9 @@ class BlogDetailViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
-                print((comments as? CommentsModel)?.comments.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments.rows ?? [])
+                print((comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
+                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
                 self.tableView.reloadData()
                 self.tableView.layoutIfNeeded()
@@ -127,7 +126,9 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
-        self.keyboardView.showKeyboard()
+//        self.keyboardView.showKeyboard()
+        guard let text = textView.text, !text.isEmpty else { return }
+        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text], model: SuccessModel.self)
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
@@ -165,36 +166,36 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-extension BlogDetailViewController: UITextViewDelegate {
-    
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if !(UserDefaults.standard.isLoginned ?? false) {
-            commentTextView.resignFirstResponder()
-            Switcher.presentLoginVC(delegate: self)
-            return
-        }
-        else{
-            commentView.isHidden = true
-        }
-    }
-    
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if commentTextView.text.isEmpty {
-            commentTextView.text = "Message.."
-            commentTextView.textColor = UIColor.lightGray
-        }
-    }
-}
-
-extension BlogDetailViewController: UIScrollViewDelegate{
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            if allComments.count != totalCount{
-//                currentPage = currentPage + 1
-//                reloadComment()
-//            }
+//extension BlogDetailViewController: UITextViewDelegate {
+//
+//    func textViewDidBeginEditing(_ textView: UITextView) {
+//        if !(UserDefaults.standard.isLoginned ?? false) {
+//            commentTextView.resignFirstResponder()
+//            Switcher.presentLoginVC(delegate: self)
+//            return
+//        }
+//        else{
+//            commentView.isHidden = true
 //        }
 //    }
+//
+//    func textViewDidEndEditing(_ textView: UITextView) {
+//        if commentTextView.text.isEmpty {
+//            commentTextView.text = "Message.."
+//            commentTextView.textColor = UIColor.lightGray
+//        }
+//    }
+//}
+
+extension BlogDetailViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
+        }
+    }
 }
 
 //extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
@@ -214,7 +215,7 @@ extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
 //    }
     
     func send(data type: String) {
-        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": type], model: SuccessModel.self)
+//        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": type], model: SuccessModel.self)
     }
     
     
@@ -224,4 +225,20 @@ extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
 //        commentView.isHidden = false
 ////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
 //    }
+}
+
+extension BlogDetailViewController: UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if commentTextView.textColor == UIColor.lightGray {
+            commentTextView.text = ""
+            commentTextView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if commentTextView.text == "" {
+            commentTextView.text = commentText
+            commentTextView.textColor = UIColor.lightGray
+        }
+    }
 }

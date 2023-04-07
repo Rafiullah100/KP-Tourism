@@ -68,7 +68,7 @@ extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource
             cell.followingButton.isHidden = true
         }
         else{
-            cell.followingButton.isHidden = true
+            cell.followingButton.isHidden = false
         }
         cell.unfollowAction = {
             self.apiType = .unFollow

@@ -1676,7 +1676,7 @@ ed do eiusmod tempor </string>
                                                                                                                 <rect key="frame" x="0.0" y="5" width="322" height="45"/>
                                                                                                                 <subviews>
                                                                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YDo-x4-TP6">
-                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="322" height="45"/>
+                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="282" height="45"/>
                                                                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                                                         <color key="textColor" systemColor="labelColor"/>
                                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1688,9 +1688,12 @@ ed do eiusmod tempor </string>
                                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                                     </textView>
                                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGm-gb-v9p">
-                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="322" height="45"/>
+                                                                                                                        <rect key="frame" x="282" y="0.0" width="40" height="45"/>
+                                                                                                                        <constraints>
+                                                                                                                            <constraint firstAttribute="width" constant="40" id="Gt6-yR-eB9"/>
+                                                                                                                        </constraints>
                                                                                                                         <state key="normal" title="Button"/>
-                                                                                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                                                                                        <buttonConfiguration key="configuration" style="plain" image="send-button"/>
                                                                                                                         <connections>
                                                                                                                             <action selector="loginTocomment:" destination="I4v-kS-obN" eventType="touchUpInside" id="skS-nJ-SPD"/>
                                                                                                                         </connections>
@@ -1700,10 +1703,9 @@ ed do eiusmod tempor </string>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstItem="sGm-gb-v9p" firstAttribute="top" secondItem="PCa-1V-Sbx" secondAttribute="top" id="4FT-6j-1ee"/>
                                                                                                                     <constraint firstAttribute="bottom" secondItem="sGm-gb-v9p" secondAttribute="bottom" id="Ced-n8-uIo"/>
-                                                                                                                    <constraint firstItem="sGm-gb-v9p" firstAttribute="leading" secondItem="PCa-1V-Sbx" secondAttribute="leading" id="Ng2-Xz-o1J"/>
                                                                                                                     <constraint firstItem="YDo-x4-TP6" firstAttribute="leading" secondItem="PCa-1V-Sbx" secondAttribute="leading" id="WKu-bO-gCh"/>
-                                                                                                                    <constraint firstAttribute="trailing" secondItem="YDo-x4-TP6" secondAttribute="trailing" id="WP7-2g-Daj"/>
                                                                                                                     <constraint firstAttribute="trailing" secondItem="sGm-gb-v9p" secondAttribute="trailing" id="anU-ya-fbi"/>
+                                                                                                                    <constraint firstItem="sGm-gb-v9p" firstAttribute="leading" secondItem="YDo-x4-TP6" secondAttribute="trailing" id="cQf-cc-snh"/>
                                                                                                                     <constraint firstItem="YDo-x4-TP6" firstAttribute="top" secondItem="PCa-1V-Sbx" secondAttribute="top" id="kNJ-HP-z43"/>
                                                                                                                     <constraint firstAttribute="bottom" secondItem="YDo-x4-TP6" secondAttribute="bottom" id="wi4-Vv-6fT"/>
                                                                                                                 </constraints>
@@ -3030,6 +3032,7 @@ saaj. Lorem ipsum dolor sit amet, consectetur adipiscing e
         <image name="pic" width="87" height="87"/>
         <image name="profile" width="21" height="21"/>
         <image name="rating-acc" width="22" height="22"/>
+        <image name="send-button" width="25" height="25"/>
         <image name="star" width="8.3333330154418945" height="8.3333330154418945"/>
         <image name="white-heart" width="15" height="14"/>
         <namedColor name="cellBGColor">

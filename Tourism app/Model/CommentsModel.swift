@@ -46,23 +46,23 @@ import Foundation
 ////////jkkjo
 
 struct CommentsModel: Codable {
-    let comments: Comments
+    let comments: Comments?
 }
 
 // MARK: - Comments
 struct Comments: Codable {
-    let count: Int
-    let rows: [CommentsRows]
+    let count: Int?
+    let rows: [CommentsRows]?
 }
 
 // MARK: - Row
 struct CommentsRows: Codable {
-    let createdAt, updatedAt: String
-    let id, blogID, userID: Int
-    let comment: String
-    let status, isDeleted: Int
-    let users: CommentUsers
-    let replies: [CommentsReply]
+    let createdAt, updatedAt: String?
+    let id, blogID, userID: Int?
+    let comment: String?
+    let status, isDeleted: Int?
+    let users: CommentUsers?
+    let replies: [CommentsReply]?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -74,11 +74,11 @@ struct CommentsRows: Codable {
 
 // MARK: - Reply
 struct CommentsReply: Codable {
-    let createdAt, updatedAt: String
-    let id, commentID, userID: Int
-    let reply: String
-    let status, isDeleted: Int
-    let users: CommentUsers
+    let createdAt, updatedAt: String?
+    let id, commentID, userID: Int?
+    let reply: String?
+    let status, isDeleted: Int?
+    let users: CommentUsers?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -90,8 +90,8 @@ struct CommentsReply: Codable {
 
 // MARK: - Users
 struct CommentUsers: Codable {
-    let id: Int
-    let uuid, name, profileImage, profileImageThumb: String
+    let id: Int?
+    let uuid, name, profileImage, profileImageThumb: String?
 
     enum CodingKeys: String, CodingKey {
         case id, uuid, name

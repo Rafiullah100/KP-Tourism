@@ -246,7 +246,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
             cell.archeology = archeology[indexPath.row]
             cell.actionBlock = {
-                let archeologyID = self.archeology[indexPath.row].id
+                let archeologyID = self.archeology[indexPath.row].attractions?.id
                 self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
             }
             return cell

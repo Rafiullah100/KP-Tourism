@@ -7,37 +7,6 @@
 
 import Foundation
 
-//struct ArcheologyModel: Codable {
-//    let archeology: [Archeology]
-//}
-//
-//// MARK: - Archeology
-//struct Archeology: Codable {
-//    let id: Int
-//    let imageURL: String?
-//    let virtualURL: String
-//    let attractions: ArcheologyAttractions
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id
-//        case imageURL = "image_url"
-//        case virtualURL = "virtual_url"
-//        case attractions
-//    }
-//}
-//
-//// MARK: - Attractions
-//struct ArcheologyAttractions: Codable {
-//    let id: Int
-//    let title, slug: String
-//    let districts: ArcheologyDistricts
-//}
-//
-//// MARK: - Districts
-//struct ArcheologyDistricts: Codable {
-//    let title: String
-//}
-
 struct ArcheologyModel : Codable {
     let archeology : [Archeology]?
     let count: Int?

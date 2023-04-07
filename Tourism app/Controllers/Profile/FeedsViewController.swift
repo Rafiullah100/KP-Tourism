@@ -111,7 +111,7 @@ class FeedsViewController: UIViewController {
                 let model = feedStories as? FeedStoriesModel
                 self.stories.append(contentsOf: model?.stories?.rows ?? [])
                 self.storyTotalCount = model?.stories?.count ?? 0
-                self.collectionView.reloadData()
+                self.storyTotalCount == 0 ? self.collectionView.setEmptyView("No story found!") : self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

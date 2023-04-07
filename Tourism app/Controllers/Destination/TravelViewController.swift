@@ -44,6 +44,11 @@ class TravelViewController: UIViewController {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.gettingArray?.count == 0 ? self.collectionView.setEmptyView("No detail found!") : self.collectionView.reloadData()
+    }
+    
     @IBAction func nextBtn(_ sender: Any) {
         if currentPage < (gettingArray?.count ?? 0) - 1{
             currentPage = currentPage + 1
