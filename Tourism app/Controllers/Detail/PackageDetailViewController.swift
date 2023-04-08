@@ -122,6 +122,7 @@ class PackageDetailViewController: BaseViewController {
     @IBAction func shareBtnAction(_ sender: Any) {
 //        self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
         // Create a PDF file context
+         UIGraphicsBeginPDFContextToFile(filePath, .zero, nil)
          
          // Set the scroll view's frame
          let scrollViewFrame = CGRect(x: 0, y: 0, width: 612, height: 792) // A4 paper size
