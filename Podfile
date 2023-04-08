@@ -32,5 +32,6 @@ pod 'Alamofire', '~> 5.0.0-rc.2'
 pod 'ReadMoreTextView'
 pod "ExpandableLabel"
 pod 'Socket.IO-Client-Swift', '~> 15.2.0'
+pod 'MessageKit', '~> 3.3.0'
 
 end

@@ -312,7 +312,7 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
         vc.chatUser = receiverUser
         vc.chatUser1 = receiverUser1
-        vc.modalPresentationStyle = .fullScreen
+        vc.modalPresentationStyle = .popover
         delegate.present(vc, animated: true)
     }
     

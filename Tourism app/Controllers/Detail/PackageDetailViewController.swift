@@ -33,6 +33,7 @@ class PackageDetailCell: UITableViewCell{
 class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
 
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var daysLabel: UILabel!
@@ -119,7 +120,39 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+//        self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+        // Create a PDF file context
+         
+         // Set the scroll view's frame
+         let scrollViewFrame = CGRect(x: 0, y: 0, width: 612, height: 792) // A4 paper size
+         
+         // Set the scroll view's content size
+        scrollView.contentSize = CGSize(width: 612, height: self..contentSize.height)
+         
+         // Calculate the number of PDF pages based on the scroll view's content size
+         let numberOfPages = Int(ceil(scrollView.contentSize.height / scrollViewFrame.size.height))
+         
+         // Create a PDF page for each scroll view page
+         for i in 0..<numberOfPages {
+             // Create a PDF page context
+             UIGraphicsPDFContext.beginPage(withInfo: .zero)
+             
+             // Set the scroll view's frame to fit the current PDF page
+             scrollViewFrame.origin.y = -scrollViewFrame.size.height * CGFloat(i)
+             scrollView.frame = scrollViewFrame
+             
+             // Set the scroll view's content offset to zero to include hidden content
+             scrollView.contentOffset = .zero
+             
+             // Draw the scroll view's content into the PDF page
+             scrollView.drawHierarchy(in: scrollView.bounds, afterScreenUpdates: true)
+             
+             // End the PDF page context
+             UIGraphicsPDFContext.endPage()
+         }
+         
+         // Close the PDF file context
+         UIGraphicsEndPDFContext()
     }
 }
 
