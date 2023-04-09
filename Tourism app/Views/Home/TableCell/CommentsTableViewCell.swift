@@ -16,6 +16,11 @@ class CommentsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var textView: UITextView!{
+        didSet{
+            textView.delegate = self
+        }
+    }
     @IBOutlet weak var tableView: DynamicHeightTableView!{
         didSet{
             tableView.delegate = self
@@ -23,6 +28,8 @@ class CommentsTableViewCell: UITableViewCell {
             tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
+    
+    var actionBlock: ((String) -> Void)? = nil
  
     var comment: CommentsRows?{
         didSet{
@@ -30,7 +37,6 @@ class CommentsTableViewCell: UITableViewCell {
             commentLabel.text = "\(comment?.comment ?? "")"
             nameLabel.text = "\(comment?.users?.name ?? "")"
             userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-            
             self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
             self.tableView.reloadData()
             self.tableView.layoutIfNeeded()
@@ -44,11 +50,18 @@ class CommentsTableViewCell: UITableViewCell {
 //        return tableView.contentSize
 //    }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        
+        tableViewHeight.constant = self.tableView.contentSize.height
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-//        tableView.estimatedRowHeight = 50
-        tableView.rowHeight = UITableView.automaticDimension
-        
+        textView.text = "Reply"
+        textView.textColor = UIColor.lightGray
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -57,6 +70,10 @@ class CommentsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func replyButtonAction(_ sender: Any) {
+        guard let text = textView.text, !text.isEmpty else { return }
+        actionBlock?(text)
+    }
 }
 
 extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
@@ -72,6 +89,27 @@ extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        tableViewHeight.constant = tableView.contentSize.height
+    }
+}
+
+extension CommentsTableViewCell: UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray {
+            textView.text = ""
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            textView.text = "Reply"
+            textView.textColor = UIColor.lightGray
+        }
     }
 }
 

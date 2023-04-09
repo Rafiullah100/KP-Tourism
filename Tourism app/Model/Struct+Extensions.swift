@@ -117,3 +117,12 @@ struct VisitPdf: Codable {
     let title: String?
     let image: String?
 }
+
+struct CommentModel: Codable {
+    let comment: String?
+    let name: String?
+    let image: String?
+    let time: String
+    let commentId: Int?
+    
+}

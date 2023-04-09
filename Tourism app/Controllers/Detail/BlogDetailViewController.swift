@@ -52,14 +52,16 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 1
-    var limit = 5
+    var limit = 100
     var commentText = "Write a comment"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
-        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44.0
+        self.tableViewHeight.constant = self.tableView.contentSize.height
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
@@ -147,9 +149,27 @@ class BlogDetailViewController: BaseViewController {
             }
         }
     }
+    
+    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let result):
+                if (result as? SuccessModel)?.success == true{
+                    self.fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": self.blogDetail?.id ?? 0, "section": "blog", "page": self.currentPage, "limit": self.limit], model: CommentsModel.self)
+
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
 }
 
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allComments.count
@@ -158,6 +178,11 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         cell.comment = allComments[indexPath.row]
+        cell.actionBlock = { text in
+            cell.textView.text = ""
+            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], model: SuccessModel.self, row: indexPath)
+            self.allComments = []
+        }
         return cell
     }
     
@@ -188,14 +213,14 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
 //}
 
 extension BlogDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
 }
 
 //extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
