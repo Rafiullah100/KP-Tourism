@@ -257,6 +257,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
             cell.product = localProducts[indexPath.row]
+            cell.actionBlock = {
+                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.localProducts[indexPath.row].id, "section": "local_product"], model: SuccessModel.self, productCell: cell)
+            }
             return cell
         case .visitKP:
             let cell: VisitKPTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! VisitKPTableViewCell
@@ -346,6 +349,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
         else if tag == 3{
             mapButton.isHidden = true
+            cellType = nil
             self.add(galleryVC, in: galleryContainer)
             fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
         }
@@ -449,7 +453,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         }
     }
     
-    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil) {
+    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil, productCell: ProductTableViewCell? = nil) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
@@ -462,6 +466,9 @@ extension HomeViewController: MDCTabBarViewDelegate{
                 }
                 else if self.cellType == .arch{
                     archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                }
+                else if self.cellType == .product{
+                    productCell?.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

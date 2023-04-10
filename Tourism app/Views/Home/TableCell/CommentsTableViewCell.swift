@@ -52,7 +52,6 @@ class CommentsTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        
         tableViewHeight.constant = self.tableView.contentSize.height
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension

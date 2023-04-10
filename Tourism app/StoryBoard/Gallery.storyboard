@@ -540,15 +540,15 @@
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <state key="normal" image="unfavorite"/>
                                                             </button>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Swat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-Nh-QFO">
-                                                                <rect key="frame" x="8" y="271" width="36" height="19"/>
-                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-Nh-QFO">
+                                                                <rect key="frame" x="8" y="271" width="36.5" height="19"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                         <constraints>
+                                                            <constraint firstAttribute="bottom" secondItem="wDF-Nh-QFO" secondAttribute="bottom" constant="10" id="A5q-x3-yKr"/>
                                                             <constraint firstAttribute="bottom" secondItem="Eux-XW-1q7" secondAttribute="bottom" id="GH9-L6-7Ce"/>
                                                             <constraint firstAttribute="trailing" secondItem="lhR-tz-t3K" secondAttribute="trailing" constant="12" id="Qai-wX-YoS"/>
                                                             <constraint firstAttribute="height" constant="300" id="XHL-Jl-XZh"/>
@@ -556,6 +556,7 @@
                                                             <constraint firstItem="lhR-tz-t3K" firstAttribute="top" secondItem="Iiz-ww-iGa" secondAttribute="top" constant="12" id="fDv-Xr-ydg"/>
                                                             <constraint firstItem="Eux-XW-1q7" firstAttribute="leading" secondItem="Iiz-ww-iGa" secondAttribute="leading" id="meL-zC-ARf"/>
                                                             <constraint firstItem="Eux-XW-1q7" firstAttribute="top" secondItem="Iiz-ww-iGa" secondAttribute="top" id="rMV-3D-a6c"/>
+                                                            <constraint firstItem="wDF-Nh-QFO" firstAttribute="leading" secondItem="Iiz-ww-iGa" secondAttribute="leading" constant="8" id="rQh-ew-bNk"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
@@ -833,6 +834,7 @@
                     <connections>
                         <outlet property="imageCollectionView" destination="x18-zE-XjE" id="Fzp-mm-Avg"/>
                         <outlet property="imageView" destination="Eux-XW-1q7" id="MZe-YU-jbh"/>
+                        <outlet property="nameLabel" destination="wDF-Nh-QFO" id="fiG-ND-RKy"/>
                         <outlet property="videoCollectionView" destination="KHg-Xz-Abl" id="ra0-8S-O33"/>
                         <outlet property="virtualCollectionView" destination="PS8-e9-TA7" id="S8u-xy-Ot9"/>
                     </connections>

@@ -35,6 +35,7 @@ struct LocalProduct: Codable {
     let likes: [ProductLike]
     let createdAt: String?
     let userLike: Int?
+    let isWished: Int?
 
     enum CodingKeys: String, CodingKey {
         case id, uuid
@@ -49,7 +50,7 @@ struct LocalProduct: Codable {
         case viewsCounter = "views_counter"
         case districts, users, comments, likes
         case createdAt = "createdAt"
-        case userLike
+        case userLike, isWished
     }
 }
 

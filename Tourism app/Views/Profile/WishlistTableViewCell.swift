@@ -45,6 +45,13 @@ class WishlistTableViewCell: UITableViewCell {
         }
     }
     
+    var productWishlist: [ProductWishlistModel]?{
+        didSet{
+            label.text = "Local Product"
+            collectionView.reloadData()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -72,6 +79,9 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         else if !(packageWishlist?.isEmpty ?? true){
             return packageWishlist?.count ?? 0
         }
+        else if !(productWishlist?.isEmpty ?? true){
+            return productWishlist?.count ?? 0
+        }
         return 0
     }
     
@@ -88,6 +98,9 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         }
         else if !(packageWishlist?.isEmpty ?? true){
             cell.packageWishlist = packageWishlist?[indexPath.row]
+        }
+        else if !(productWishlist?.isEmpty ?? true){
+            cell.productWishlist = productWishlist?[indexPath.row]
         }
         return cell
     }

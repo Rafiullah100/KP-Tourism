@@ -257,9 +257,9 @@ class Switcher {
     
     static func goToChatListVC(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatListViewController") as! ChatListViewController
-        vc.modalPresentationStyle = .automatic
-        delegate.present(vc, animated: true)
-//        delegate.navigationController?.pushViewController(vc, animated: false)
+        vc.modalPresentationStyle = .fullScreen
+//        delegate.present(vc, animated: true)
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
     static func goToProfileVC(delegate: UIViewController, profileType:ProfileType, uuid: String){
@@ -312,8 +312,11 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatViewController") as! ChatViewController
         vc.chatUser = receiverUser
         vc.chatUser1 = receiverUser1
-        vc.modalPresentationStyle = .popover
-        delegate.present(vc, animated: true)
+//        vc.modalPresentationStyle = .popover
+//        delegate.present(vc, animated: true)
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+
     }
     
     static func gotoVisitKP(delegate: UIViewController){

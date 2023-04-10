@@ -64,6 +64,7 @@ import Foundation
 
 
 struct LoadedConversationModel: Codable {
+    let count: Int?
     let userConversations: [LoadedConversation]?
 }
 

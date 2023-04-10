@@ -13,6 +13,7 @@ class ProductTableViewCell: UITableViewCell {
         // Initialization code
     }
 
+    @IBOutlet weak var favouriteButton: UIButton!
     @IBOutlet weak var uploadedTimeLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var ownerNameLAbel: UILabel!
@@ -21,10 +22,16 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var ownerImageView: UIImageView!
-    
+    var actionBlock: (() -> Void)? = nil
     
     var product: LocalProduct?{
         didSet{
+            if product?.isWished == 0 {
+                favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+            }
+            else{
+                favouriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+            }
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = "\(product?.title ?? "")"
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
@@ -34,12 +41,14 @@ class ProductTableViewCell: UITableViewCell {
         }
     }
     
-    
-    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
+    @IBAction func favoriteBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+        actionBlock?()
+    }
 }

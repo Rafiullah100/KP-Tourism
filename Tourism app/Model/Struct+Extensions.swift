@@ -109,7 +109,7 @@ enum wishlistSection: String, CaseIterable {
 //        case book = "book_stay"
         case package = "tour_package"
 //        case itinerary = "itinerary"
-//        case product = "local_product"
+        case product = "local_product"
 }
 
 struct VisitPdf: Codable {

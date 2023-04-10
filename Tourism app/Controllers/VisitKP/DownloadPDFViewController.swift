@@ -57,7 +57,6 @@ class DownloadPDFViewController: UIViewController {
        activityViewController.popoverPresentationController?.sourceView = self.view
        self.present(activityViewController, animated: true, completion: nil)
         
-        
 //        let priorBounds: CGRect = self.tableView.bounds
 //           let fittedSize: CGSize = self.tableView.sizeThatFits(CGSize(width: priorBounds.size.width, height: self.tableView.contentSize.height))
 //           self.tableView.bounds = CGRect(x: 0, y: 0, width: fittedSize.width, height: fittedSize.height)

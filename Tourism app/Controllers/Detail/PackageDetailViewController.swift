@@ -121,8 +121,8 @@ class PackageDetailViewController: BaseViewController {
     
     @IBAction func shareBtnAction(_ sender: Any) {
         self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
-     
     }
+    
 }
 
 extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSource{

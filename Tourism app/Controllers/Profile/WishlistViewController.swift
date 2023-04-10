@@ -23,6 +23,7 @@ class WishlistViewController: UIViewController {
     var attractionWishlist: [AttractionWishlistModel]?
     var districtWishlist: [DistrictWishlistModel]?
     var packageWishlist: [PackageWishlistModel]?
+    var productWishlist: [ProductWishlistModel]?
 
     var type: wishlistSection?
     var wishlistTypeArray: [wishlistSection]?
@@ -44,6 +45,9 @@ class WishlistViewController: UIViewController {
         dispatchGroup?.enter()
         fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.package.rawValue], model: PackageSectionModel.self, type: .package)
         dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.product.rawValue], model: ProductSectionModel.self, type: .product)
+        dispatchGroup?.leave()
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, type: wishlistSection) {
@@ -52,7 +56,7 @@ class WishlistViewController: UIViewController {
             case .success(let model):
                 if type == .post {
                     let wishlist = model as? PostSectionModel
-                    self.postWishlist = wishlist?.wishlist
+                    self.postWishlist = []
                     self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 else if type == .attraction{
@@ -69,6 +73,11 @@ class WishlistViewController: UIViewController {
                     let wishlist = model as? PackageSectionModel
                     self.packageWishlist = wishlist?.wishlist
                     self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
+                }
+                else if type == .product{
+                    let wishlist = model as? ProductSectionModel
+                    self.productWishlist = wishlist?.wishlist
+                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -97,8 +106,11 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
         else if indexPath.row == 2{
             cell.districtWishlist = districtWishlist
         }
-        else{
+        else if indexPath.row == 3{
             cell.packageWishlist = packageWishlist
+        }
+        else{
+            cell.productWishlist = productWishlist
         }
         return cell
     }

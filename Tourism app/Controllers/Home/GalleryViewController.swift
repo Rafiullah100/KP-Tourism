@@ -10,6 +10,7 @@ import SDWebImage
 import SVProgressHUD
 class GalleryViewController: BaseViewController {
 
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imageCollectionView: UICollectionView!{
         didSet{
@@ -51,6 +52,7 @@ class GalleryViewController: BaseViewController {
             switch result {
             case .success(let gallery):
                 self.gallery = gallery as? GalleryModel
+                self.nameLabel.text = self.gallery?.attraction?.title
                 self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?.display_image ?? "")))
                 self.imageCollectionView.reloadData()
                 self.videoCollectionView.reloadData()

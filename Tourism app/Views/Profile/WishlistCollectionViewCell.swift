@@ -35,6 +35,12 @@ class WishlistCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var productWishlist: ProductWishlistModel?{
+        didSet{
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (productWishlist?.localProduct.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         print(self.tag)

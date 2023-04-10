@@ -38,41 +38,24 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var messages = [MessageType]()
     
     @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var toolBarView: UIView!
     @IBOutlet weak var topBarView: UIView!
-
     @IBOutlet weak var recieverProfileImage: UIImageView!
-    @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var tableView: UITableView!{
-        didSet{
-//            tableView.delegate = self
-//            tableView.dataSource = self
-//            tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: CellIds.receiverCellId)
-//            tableView.register(ChatTableViewCell.self, forCellReuseIdentifier: CellIds.senderCellId)
-        }
-    }
+
     
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?
-    
 
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
-        
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
     }
-    
-    @IBAction func showkeyboardBtn(_ sender: Any) {
-    }
-    
+
     @IBAction func backBtnAction(_ sender: Any) {
         dismiss(animated: true)
     }
@@ -134,7 +117,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             avatarView.set(avatar: avatar)
         }
         else{
-            print(Route.baseUrl + (self.conversation?[3].sender.profileImage ?? ""))
             if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].sender.profileImage ?? "")) {
                 avatarView.sd_setImage(with: imageUrl, completed: nil)
             }
@@ -161,7 +143,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": chatUser?.id ?? "", "uuid": chatUser?.uuid ?? ""], text: text, model: SuccessModel.self)
         }
         else{
-//            SocketHelper.shared.sendMessage(message: "message", withNickname: "name")
             sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], text: text, model: SuccessModel.self)
         }
     }
