@@ -93,7 +93,7 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
-        textField.addTarget(self, action: #selector(HomeViewController.textFieldDidChange(_:)), for: .editingChanged)
+//        textField.addTarget(self, action: #selector(HomeViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -142,9 +142,9 @@ class HomeViewController: BaseViewController {
                     self.tableView.setEmptyView("No Record found!")
                 }
                 else{
-                    self.tableView.reloadData()
                     self.tableView.backgroundView = nil
                 }
+                self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -157,11 +157,11 @@ class HomeViewController: BaseViewController {
         add(vc, in: mapContainerView)
     }
     
-    @objc func textFieldDidChange(_ textField: UITextField) {
-        emptyArray()
-        currentPage = 1
-        serverCall(cell: cellType ?? .explore)
-    }
+//    @objc func textFieldDidChange(_ textField: UITextField) {
+//        emptyArray()
+//        currentPage = 1
+//        serverCall(cell: cellType ?? .explore)
+//    }
     
     func emptyArray() {
         exploreDistrict = []
@@ -479,16 +479,20 @@ extension HomeViewController: MDCTabBarViewDelegate{
 
 
 extension HomeViewController: UITextFieldDelegate{
-//    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        switch cellType {
-//        case .explore:
-//            currentPage = 1
-//            exploreDistrict = []
-//            serverCall(cell: .explore)
-//            textField.resignFirstResponder()
-//        default:
-//            break
-//        }
-//        return true
-//    }
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        emptyArray()
+        currentPage = 1
+        serverCall(cell: cellType ?? .explore)
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    func textFieldShouldClear(_ textField: UITextField) -> Bool {
+        textField.text = ""
+        emptyArray()
+        currentPage = 1
+        serverCall(cell: cellType ?? .explore)
+        textField.resignFirstResponder()
+        return true
+    }
 }

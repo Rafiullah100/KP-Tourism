@@ -27,12 +27,7 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
         nameTextField.text = UserDefaults.standard.name
         bioTextField1.text = UserDefaults.standard.userBio
         guard let image = UserDefaults.standard.profileImage else { return }
-        if image.contains(Route.baseUrl){
-            profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
-        }
-        else{
-            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
-        }
+        self.profileImageView?.sd_setImage(with: URL(string: image), placeholderImage: UIImage(named: ""))
     }
 
     @IBAction func takePicture(_ sender: Any) {

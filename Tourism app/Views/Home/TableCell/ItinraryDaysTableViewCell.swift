@@ -20,11 +20,12 @@ class ItinraryDaysTableViewCell: UITableViewCell {
     var activity: ItinraryActivity? {
         didSet {
             dayLabel.text = "DAY \(activity?.day ?? 1)"
+            dateLabel.text = activity?.departureDate
             fromPlaceLabel.text = "\(activity?.fromPlace ?? "")"
             toPlaceLabel.text = "\(activity?.toPlace ?? "")"
             fromPlaceDescLabel.text = "\(activity?.departureTime ?? "") START JOURNEY FROM \(activity?.fromPlace ?? "")"
             toPlaceDescLabel.text = "00 REACH \(activity?.toPlace ?? "")"
-            descriptionLabel.text = "\(activity?.description.stripOutHtml() ?? "")"
+            descriptionLabel.text = "\(activity?.fromPlace ?? "") to \(activity?.toPlace ?? "")"
         }
     }
     

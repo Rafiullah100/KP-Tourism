@@ -22,7 +22,7 @@ class ItenrariesCollectionViewCell: UICollectionViewCell {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (itinrary?.previewImage ?? "")))
             nameLabel.text = itinrary?.title
-            descriptionLabel.text = itinrary?.description
+            descriptionLabel.text = itinrary?.description?.stripOutHtml()
             dateLabel.text = itinrary?.activities[0].departureDate
             locationLabel.text = itinrary?.activities[0].fromPlace
             daysLabel.text = "\(itinrary?.activities.count ?? 0) days"

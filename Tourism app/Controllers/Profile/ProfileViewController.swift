@@ -141,6 +141,7 @@ class ProfileViewController: UIViewController {
 //        tabbarView.setTitleColor(.lightGray, for: .normal)
 //        tabbarView.setTitleColor(.black, for: .selected)
         tabbarView.minItemWidth = 100.0
+        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
     
     override func viewDidLayoutSubviews() {
@@ -194,7 +195,14 @@ class ProfileViewController: UIViewController {
             case .success(let model):
                 if apiType == .profile{
                     self.userProfile = model as? ProfileModel
-                    self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    if self.profileType == .otherUser {
+                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    }
+                    else{
+                        self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+                    }
+//                    self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+//                    self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.text = self.userProfile?.userDetails.name
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"

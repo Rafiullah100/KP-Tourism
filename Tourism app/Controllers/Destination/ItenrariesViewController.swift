@@ -52,7 +52,7 @@ class ItenrariesViewController: BaseViewController {
             switch result {
             case .success(let itinraries):
                 self.ItinraryDetail = itinraries as? ItinraryModel
-                self.ItinraryDetail?.itineraries.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
+                self.ItinraryDetail?.itineraries?.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -62,17 +62,17 @@ class ItenrariesViewController: BaseViewController {
 
 extension ItenrariesViewController: UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return ItinraryDetail?.itineraries.rows.count ?? 0
+        return ItinraryDetail?.itineraries?.rows.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: ItenrariesCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ItenrariesCollectionViewCell.cellIdentifier, for: indexPath) as! ItenrariesCollectionViewCell
-        cell.itinrary = ItinraryDetail?.itineraries.rows[indexPath.row]
+        cell.itinrary = ItinraryDetail?.itineraries?.rows[indexPath.row]
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let ItinraryDetail = ItinraryDetail?.itineraries.rows[indexPath.row] else { return }
+        guard let ItinraryDetail = ItinraryDetail?.itineraries?.rows[indexPath.row] else { return }
         Switcher.goToItinraryDetail(delegate: self, itinraryDetail: ItinraryDetail)
     }
 }

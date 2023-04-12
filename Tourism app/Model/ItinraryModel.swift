@@ -8,26 +8,26 @@
 import Foundation
 
 struct ItinraryModel: Codable {
-    let itineraries: Itineraries
+    let itineraries: Itineraries?
 }
 
 struct Itineraries: Codable {
-    let count: Int
+    let count: Int?
     let rows: [ItinraryRow]
 }
 
 struct ItinraryRow: Codable {
-    let displayDate: String
-    let id: Int
-    let uuid: String
-    let userID, fromDistrictID, toDistrictID: Int
-    let title, slug, thumbnailImage, previewImage: String
-    let family, adults, wheelchair: Bool
-    let transportType, transport, description, status: String
-    let isFeatured: Bool
-    let approvedBy, viewsCounter, isDeleted: Int
-    let createdAt, updatedAt: String
-    let userLike, isWished: Int
+    let displayDate: String?
+    let id: Int?
+    let uuid: String?
+    let userID, fromDistrictID, toDistrictID: Int?
+    let title, slug, thumbnailImage, previewImage: String?
+    let family, adults, wheelchair: Bool?
+    let transportType, transport, description, status: String?
+    let isFeatured: Bool?
+    let approvedBy, viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
+    let userLike, isWished: Int?
     let fromDistricts: ItinraryDistricts
     let activities: [ItinraryActivity]
     let toDistricts: ItinraryDistricts
@@ -58,12 +58,12 @@ struct ItinraryRow: Codable {
 // MARK: - Activity
 
 struct ItinraryActivity: Codable {
-    let departureDate, departureTime: String
-    let id, itineraryID, day: Int
-    let fromPlace, toPlace, activityDepartureDate, activityDepartureTime: String
-    let stayIn, description: String
-    let isDeleted: Int
-    let createdAt, updatedAt: String
+    let departureDate, departureTime: String?
+    let id, itineraryID, day: Int?
+    let fromPlace, toPlace, activityDepartureDate, activityDepartureTime: String?
+    let stayIn, description: String?
+    let isDeleted: Int?
+    let createdAt, updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case departureDate, departureTime, id
@@ -82,6 +82,6 @@ struct ItinraryActivity: Codable {
 // MARK: - Districts
 
 struct ItinraryDistricts: Codable {
-    let id: Int
-    let title, slug: String
+    let id: Int?
+    let title, slug: String?
 }

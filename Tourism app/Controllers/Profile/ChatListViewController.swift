@@ -26,7 +26,6 @@ class ChatListViewController: UIViewController {
     var currentPage = 1
     var totalCount = 0
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
@@ -92,7 +91,6 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(conversationUsers.count, totalCount, indexPath.row)
         if conversationUsers.count != totalCount && indexPath.row == conversationUsers.count - 1  {
             currentPage = currentPage + 1
             load()

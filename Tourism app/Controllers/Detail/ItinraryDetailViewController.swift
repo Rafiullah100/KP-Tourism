@@ -28,7 +28,9 @@ class ItinraryDetailViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         placeLabel.text = "\(itinraryDetail?.fromDistricts.title ?? "") - \(itinraryDetail?.toDistricts.title ?? "")"
-        textView.text = itinraryDetail?.description
+        textView.text = itinraryDetail?.description?.stripOutHtml()
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
     }
     
     override func viewWillAppear(_ animated: Bool) {

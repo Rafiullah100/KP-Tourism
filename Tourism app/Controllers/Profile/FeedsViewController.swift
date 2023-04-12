@@ -26,6 +26,7 @@ class FeedsViewController: UIViewController {
         }
     }
     @IBOutlet weak var profileButton: UIButton!
+    @IBOutlet weak var profileImageView: UIImageView!
     
     var newsFeed: [FeedModel] = [FeedModel]()
 //    var stories: [StoriesRow]?
@@ -54,8 +55,13 @@ class FeedsViewController: UIViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
-        
-        profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+//        if ((UserDefaults.standard.profileImage?.contains("https")) != nil) {
+//            profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+//        }
+//        else{
+        self.profileButton.imageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+//        }
+        self.profileImageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
         loadData()
     }
     
@@ -97,6 +103,7 @@ class FeedsViewController: UIViewController {
                 self.numberOfCells = self.totalCount
                 print(self.newsFeed)
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
+                self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.reloadData()
                 self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

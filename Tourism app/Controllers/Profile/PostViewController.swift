@@ -14,6 +14,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     var postType: PostType?
     var feed: FeedModel?
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var imageView: UIImageView!
@@ -40,6 +41,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         default:
             label.text = "Create Post"
         }
+        self.profileImageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
     }
     
     @IBAction func galleryImageBtnAction(_ sender: Any) {
