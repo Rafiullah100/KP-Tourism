@@ -83,9 +83,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         addButton.isHidden = true
         configureTabbar()
-//        topProfileView.addBottomShadow()
         print(uuid ?? "")
-//        guard let uuid = UserDefaults.standard.uuid else { return  }
         dispatchGroup?.enter()
         fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? ""], model: ProfileModel.self, apiType: .profile)
         dispatchGroup?.leave()
@@ -141,7 +139,6 @@ class ProfileViewController: UIViewController {
 //        tabbarView.setTitleColor(.lightGray, for: .normal)
 //        tabbarView.setTitleColor(.black, for: .selected)
         tabbarView.minItemWidth = 100.0
-        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
     
     override func viewDidLayoutSubviews() {
@@ -195,14 +192,12 @@ class ProfileViewController: UIViewController {
             case .success(let model):
                 if apiType == .profile{
                     self.userProfile = model as? ProfileModel
-                    if self.profileType == .otherUser {
-                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-                    }
-                    else{
+                    if let image: String = self.userProfile?.userDetails.profileImage, image.contains("https"){
                         self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
                     }
-//                    self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
-//                    self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+                    else{
+                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    }
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.text = self.userProfile?.userDetails.name
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
@@ -304,7 +299,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             print(storyTotalCount, indexPath.row, stories.count)
             if stories.count != storyTotalCount && indexPath.row == stories.count {
                 storyCurrentPage = storyCurrentPage + 1
-                print("current page \(postCurrentPage)")
                 storyApiCall()
             }
         }
@@ -312,7 +306,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             if profileSection == .post{
                 if post.count != postTotalCount && indexPath.row == post.count - 1{
                     postCurrentPage = postCurrentPage + 1
-                    print("current page \(postCurrentPage)")
                     postApiCall()
                 }
             }

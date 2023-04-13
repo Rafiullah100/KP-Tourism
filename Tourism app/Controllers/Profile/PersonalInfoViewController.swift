@@ -26,8 +26,10 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
         emailTextField.text = UserDefaults.standard.userEmail
         nameTextField.text = UserDefaults.standard.name
         bioTextField1.text = UserDefaults.standard.userBio
-        guard let image = UserDefaults.standard.profileImage else { return }
-        self.profileImageView?.sd_setImage(with: URL(string: image), placeholderImage: UIImage(named: ""))
+        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+            return }
+        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
 
     @IBAction func takePicture(_ sender: Any) {

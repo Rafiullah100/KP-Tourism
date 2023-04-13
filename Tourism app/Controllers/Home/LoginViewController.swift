@@ -48,7 +48,7 @@ class LoginViewController: BaseViewController {
     
     @IBAction func fbLoginBtnAction(_ sender: Any) {
         let fbLoginManager : LoginManager = LoginManager()
-        fbLoginManager.logIn(permissions: ["email"], from: self) { (result, error) -> Void in
+        fbLoginManager.logIn(permissions: ["public_profile", "email"], from: self) { (result, error) -> Void in
             if (error == nil){
                 let fbloginresult : LoginManagerLoginResult = result!
                 if (result?.isCancelled)!{
@@ -64,12 +64,12 @@ class LoginViewController: BaseViewController {
     
     func getFBUserData(){
         guard let token = AccessToken.current?.tokenString else { return }
-        let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields": "email"], tokenString: token, version: nil, httpMethod: .get)
+        let request = FBSDKLoginKit.GraphRequest(graphPath: "me", parameters: ["fields": "email, picture"], tokenString: token, version: nil, httpMethod: .get)
         request.start{ (connection, result, error) in
             if error == nil{
                 guard let json = result as? NSDictionary else { return }
-                if let email = json["email"] as? String {
-                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": ""], model: LoginModel.self)
+                if let email = json["email"] as? String, let picture = json["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
+                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": url], model: LoginModel.self)
                 }
             }
         }

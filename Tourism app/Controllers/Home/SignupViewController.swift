@@ -12,6 +12,7 @@ class SignupViewController: BaseViewController {
     let pickerView = UIPickerView()
     let userType = ["Tourist", "Seller"]
     
+    @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var confirmTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var lastNameTextField: UITextField!
@@ -54,9 +55,9 @@ class SignupViewController: BaseViewController {
     }
     
     private func validateSignupFields(){
-        guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, let lastName = lastNameTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text else { return }
+        guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, let lastName = lastNameTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text, let phone = phoneTextField.text else { return }
         guard passwordTextField.text == confirmTextField.text else { return }
-        let parameters = ["username": email, "name": firstName + " " + lastName, "password": password, "confirm_password": confirmPassword, "mobile_no": "123", "user_type": "user"]
+        let parameters = ["username": email, "name": firstName + " " + lastName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
         print(parameters)
         registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
     }

@@ -1761,16 +1761,16 @@ and more</string>
                                 <rect key="frame" x="0.0" y="48" width="414" height="814"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pQf-qs-eyv">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="712"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="767"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="fKf-YE-n3Q">
-                                                <rect key="frame" x="10" y="22" width="394" height="670"/>
+                                                <rect key="frame" x="10" y="22" width="394" height="725"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5ee-6K-9RO">
-                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="320"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="394" height="375"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="fp8-h5-2HL">
-                                                                <rect key="frame" x="0.0" y="0.0" width="394" height="320"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="394" height="375"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CuX-Y9-4a6">
                                                                         <rect key="frame" x="0.0" y="0.0" width="394" height="53.5"/>
@@ -1799,16 +1799,43 @@ and more</string>
                                                                             <constraint firstItem="4z2-bY-mrH" firstAttribute="top" secondItem="CuX-Y9-4a6" secondAttribute="top" id="vmW-O0-flo"/>
                                                                         </constraints>
                                                                     </view>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKf-8Y-Y4Z">
+                                                                        <rect key="frame" x="0.0" y="53.5" width="394" height="53.5"/>
+                                                                        <subviews>
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone #" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9GP-kz-8ob">
+                                                                                <rect key="frame" x="10" y="0.0" width="384" height="53"/>
+                                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                                                                <textInputTraits key="textInputTraits"/>
+                                                                            </textField>
+                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vmj-xM-hR6">
+                                                                                <rect key="frame" x="0.0" y="53" width="394" height="0.5"/>
+                                                                                <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <constraints>
+                                                                                    <constraint firstAttribute="height" constant="0.5" id="bVx-Xv-JZt"/>
+                                                                                </constraints>
+                                                                            </view>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="trailing" secondItem="9GP-kz-8ob" secondAttribute="trailing" id="6Nh-Wz-d9D"/>
+                                                                            <constraint firstItem="9GP-kz-8ob" firstAttribute="leading" secondItem="TKf-8Y-Y4Z" secondAttribute="leading" constant="10" id="ANA-hF-AXY"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="Vmj-xM-hR6" secondAttribute="bottom" id="TQg-3P-Wbr"/>
+                                                                            <constraint firstItem="Vmj-xM-hR6" firstAttribute="top" secondItem="9GP-kz-8ob" secondAttribute="bottom" id="WnA-ym-xiY"/>
+                                                                            <constraint firstItem="9GP-kz-8ob" firstAttribute="top" secondItem="TKf-8Y-Y4Z" secondAttribute="top" id="bzu-Ta-no0"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="Vmj-xM-hR6" secondAttribute="trailing" id="mho-va-8kq"/>
+                                                                            <constraint firstItem="Vmj-xM-hR6" firstAttribute="leading" secondItem="TKf-8Y-Y4Z" secondAttribute="leading" id="pgk-Yo-6KJ"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdz-lk-0xU">
-                                                                        <rect key="frame" x="0.0" y="53.5" width="394" height="53"/>
+                                                                        <rect key="frame" x="0.0" y="107" width="394" height="53.5"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z6h-XE-aWe">
-                                                                                <rect key="frame" x="10" y="0.0" width="384" height="52.5"/>
+                                                                                <rect key="frame" x="10" y="0.0" width="384" height="53"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits"/>
                                                                             </textField>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TWQ-6E-lE7">
-                                                                                <rect key="frame" x="0.0" y="52.5" width="394" height="0.5"/>
+                                                                                <rect key="frame" x="0.0" y="53" width="394" height="0.5"/>
                                                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="0.5" id="3cN-P3-poD"/>
@@ -1827,15 +1854,15 @@ and more</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xKn-TU-4cp">
-                                                                        <rect key="frame" x="0.0" y="106.5" width="394" height="53.5"/>
+                                                                        <rect key="frame" x="0.0" y="160.5" width="394" height="54"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Last Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Nxv-UU-Pjs">
-                                                                                <rect key="frame" x="10" y="0.0" width="384" height="53"/>
+                                                                                <rect key="frame" x="10" y="0.0" width="384" height="53.5"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits"/>
                                                                             </textField>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cs7-dd-c8q">
-                                                                                <rect key="frame" x="0.0" y="53" width="394" height="0.5"/>
+                                                                                <rect key="frame" x="0.0" y="53.5" width="394" height="0.5"/>
                                                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="0.5" id="K8p-r9-Rnm"/>
@@ -1854,7 +1881,7 @@ and more</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AwV-L9-lSO">
-                                                                        <rect key="frame" x="0.0" y="160" width="394" height="53.5"/>
+                                                                        <rect key="frame" x="0.0" y="214.5" width="394" height="53.5"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RvF-L3-EKu">
                                                                                 <rect key="frame" x="10" y="0.0" width="384" height="53"/>
@@ -1881,15 +1908,15 @@ and more</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sUA-2c-Yj9">
-                                                                        <rect key="frame" x="0.0" y="213.5" width="394" height="53"/>
+                                                                        <rect key="frame" x="0.0" y="268" width="394" height="53.5"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LXG-fq-r6M">
-                                                                                <rect key="frame" x="10" y="0.0" width="384" height="52.5"/>
+                                                                                <rect key="frame" x="10" y="0.0" width="384" height="53"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                                                             </textField>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YYo-cj-bv6">
-                                                                                <rect key="frame" x="0.0" y="52.5" width="394" height="0.5"/>
+                                                                                <rect key="frame" x="0.0" y="53" width="394" height="0.5"/>
                                                                                 <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="0.5" id="Rqk-97-z8p"/>
@@ -1908,7 +1935,7 @@ and more</string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gnL-gb-6ga">
-                                                                        <rect key="frame" x="0.0" y="266.5" width="394" height="53.5"/>
+                                                                        <rect key="frame" x="0.0" y="321.5" width="394" height="53.5"/>
                                                                         <subviews>
                                                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Please select one option to continue" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mRP-pb-2Yo">
                                                                                 <rect key="frame" x="10" y="0.0" width="384" height="53"/>
@@ -1940,7 +1967,7 @@ and more</string>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="fp8-h5-2HL" secondAttribute="bottom" id="Pic-YO-ZsF"/>
-                                                            <constraint firstAttribute="height" constant="320" id="Rr5-kK-xS8"/>
+                                                            <constraint firstAttribute="height" constant="375" id="Rr5-kK-xS8"/>
                                                             <constraint firstAttribute="trailing" secondItem="fp8-h5-2HL" secondAttribute="trailing" id="WT3-Vv-4zZ"/>
                                                             <constraint firstItem="fp8-h5-2HL" firstAttribute="top" secondItem="5ee-6K-9RO" secondAttribute="top" id="YWX-JC-bTw"/>
                                                             <constraint firstItem="fp8-h5-2HL" firstAttribute="leading" secondItem="5ee-6K-9RO" secondAttribute="leading" id="h83-6s-ryO"/>
@@ -1958,7 +1985,7 @@ and more</string>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Fa-VL-TtZ">
-                                                        <rect key="frame" x="0.0" y="360" width="394" height="160"/>
+                                                        <rect key="frame" x="0.0" y="415" width="394" height="160"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="jhS-jp-jcu">
                                                                 <rect key="frame" x="10" y="0.0" width="374" height="160"/>
@@ -2099,7 +2126,7 @@ and more</string>
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jgy-NU-6TW">
-                                                        <rect key="frame" x="0.0" y="560" width="394" height="110"/>
+                                                        <rect key="frame" x="0.0" y="615" width="394" height="110"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="EJU-MX-N2w">
                                                                 <rect key="frame" x="10" y="0.0" width="374" height="110"/>
@@ -2277,7 +2304,7 @@ and more</string>
                             <constraint firstItem="NV9-y7-b4l" firstAttribute="trailing" secondItem="gUr-AC-sk1" secondAttribute="trailing" id="IYt-gL-gfO"/>
                             <constraint firstItem="bEM-eR-tL3" firstAttribute="leading" secondItem="ErU-HA-aFP" secondAttribute="leading" id="LLz-pw-EvX"/>
                             <constraint firstItem="NV9-y7-b4l" firstAttribute="bottom" secondItem="gUr-AC-sk1" secondAttribute="bottom" id="WQJ-RF-TBn"/>
-                            <constraint firstItem="pQf-qs-eyv" firstAttribute="height" secondItem="ErU-HA-aFP" secondAttribute="height" multiplier="0.142857" priority="250" constant="477" id="Wj2-98-aHh"/>
+                            <constraint firstItem="pQf-qs-eyv" firstAttribute="height" secondItem="ErU-HA-aFP" secondAttribute="height" multiplier="0.142857" priority="250" constant="530" id="Wj2-98-aHh"/>
                             <constraint firstAttribute="trailing" secondItem="bEM-eR-tL3" secondAttribute="trailing" id="dhm-x6-dpf"/>
                             <constraint firstItem="gUr-AC-sk1" firstAttribute="leading" secondItem="NV9-y7-b4l" secondAttribute="leading" id="qug-Pn-6iA"/>
                         </constraints>
@@ -2289,6 +2316,7 @@ and more</string>
                         <outlet property="firstNameTextFeild" destination="z6h-XE-aWe" id="jup-OI-ESD"/>
                         <outlet property="lastNameTextField" destination="Nxv-UU-Pjs" id="IJ1-zy-J9g"/>
                         <outlet property="passwordTextField" destination="RvF-L3-EKu" id="95W-dh-JLU"/>
+                        <outlet property="phoneTextField" destination="9GP-kz-8ob" id="rFQ-dG-G0m"/>
                         <outlet property="userTypeTextField" destination="mRP-pb-2Yo" id="Sbl-g1-09d"/>
                     </connections>
                 </viewController>

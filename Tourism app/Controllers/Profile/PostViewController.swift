@@ -41,7 +41,11 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
         default:
             label.text = "Create Post"
         }
-        self.profileImageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
+
+        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+            return }
+        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
     
     @IBAction func galleryImageBtnAction(_ sender: Any) {

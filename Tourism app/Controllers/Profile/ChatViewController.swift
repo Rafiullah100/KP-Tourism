@@ -48,6 +48,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.isHidden = false
+
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
@@ -55,9 +57,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationItem.title = "Backkk"
+        self.navigationController?.navigationBar.isHidden = true
+    }
 
     @IBAction func backBtnAction(_ sender: Any) {
-        dismiss(animated: true)
+        navigationController?.popViewController(animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

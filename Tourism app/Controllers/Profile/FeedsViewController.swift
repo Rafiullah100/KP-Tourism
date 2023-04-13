@@ -55,14 +55,11 @@ class FeedsViewController: UIViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
-//        if ((UserDefaults.standard.profileImage?.contains("https")) != nil) {
-//            profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
-//        }
-//        else{
-        self.profileButton.imageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
-//        }
-        self.profileImageView?.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
         loadData()
+        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
+            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+            return }
+        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -104,7 +101,6 @@ class FeedsViewController: UIViewController {
                 print(self.newsFeed)
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.reloadData()
-                self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
