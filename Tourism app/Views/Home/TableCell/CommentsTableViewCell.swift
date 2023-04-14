@@ -30,7 +30,8 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     var actionBlock: ((String) -> Void)? = nil
- 
+    var inputText = "Reply"
+    
     var comment: CommentsRows?{
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
@@ -59,7 +60,7 @@ class CommentsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        textView.text = "Reply"
+        textView.text = inputText
         textView.textColor = UIColor.lightGray
     }
 
@@ -70,7 +71,7 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     @IBAction func replyButtonAction(_ sender: Any) {
-        guard let text = textView.text, !text.isEmpty else { return }
+        guard let text = textView.text, !text.isEmpty, text != inputText else { return }
         actionBlock?(text)
     }
 }
@@ -106,7 +107,7 @@ extension CommentsTableViewCell: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text == "" {
-            textView.text = "Reply"
+            textView.text = inputText
             textView.textColor = UIColor.lightGray
         }
     }

@@ -37,18 +37,6 @@ class BlogDetailViewController: BaseViewController {
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
         }
     }
-  
-
-//    private lazy var keyboardView: KeyboardInputAccessoryView = {
-//        return KeyboardInputAccessoryView.view(controller: self)
-//    }()
-//    override var inputAccessoryView: UIView? {
-//        return keyboardView.canBecomeFirstResponder ? keyboardView : nil
-//    }
-//    override var canBecomeFirstResponder: Bool {
-//        return keyboardView.canBecomeFirstResponder
-//    }
-    
     
     var currentPage = 1
     var totalCount = 1
@@ -67,7 +55,6 @@ class BlogDetailViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "blogs"
-//        viewControllerTitle = blogDetail?.title
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
         textView.text = blogDetail?.blogDescription
         blogTitleLabel.text = blogDetail?.title
@@ -76,12 +63,7 @@ class BlogDetailViewController: BaseViewController {
         favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         reloadComment()
     }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-//        keyboardView.inputTextView.resignFirstResponder()
-    }
-    
+
     private func reloadComment(){
         fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
     }
@@ -128,7 +110,6 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
-//        self.keyboardView.showKeyboard()
         guard let text = textView.text, !text.isEmpty else { return }
         doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text], model: SuccessModel.self)
     }
@@ -145,7 +126,7 @@ class BlogDetailViewController: BaseViewController {
                 let successDetail = like as? SuccessModel
                 self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             case .failure(let error):
-                print("error \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -155,8 +136,8 @@ class BlogDetailViewController: BaseViewController {
             switch result {
             case .success(let result):
                 if (result as? SuccessModel)?.success == true{
-                    self.fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": self.blogDetail?.id ?? 0, "section": "blog", "page": self.currentPage, "limit": self.limit], model: CommentsModel.self)
-
+                    self.reloadComment()
+                    self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -189,67 +170,6 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-}
-
-//extension BlogDetailViewController: UITextViewDelegate {
-//
-//    func textViewDidBeginEditing(_ textView: UITextView) {
-//        if !(UserDefaults.standard.isLoginned ?? false) {
-//            commentTextView.resignFirstResponder()
-//            Switcher.presentLoginVC(delegate: self)
-//            return
-//        }
-//        else{
-//            commentView.isHidden = true
-//        }
-//    }
-//
-//    func textViewDidEndEditing(_ textView: UITextView) {
-//        if commentTextView.text.isEmpty {
-//            commentTextView.text = "Message.."
-//            commentTextView.textColor = UIColor.lightGray
-//        }
-//    }
-//}
-
-extension BlogDetailViewController: UIScrollViewDelegate{
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            if allComments.count != totalCount{
-//                currentPage = currentPage + 1
-//                reloadComment()
-//            }
-//        }
-//    }
-}
-
-//extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
-//    func scrollView() -> UIScrollView {
-//        return UIScrollView()
-//    }
-//
-//    func send(data type: String) {
-//        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": textView.text ?? ""], model: SuccessModel.self)
-//    }
-//
-//}
-
-extension BlogDetailViewController: KeyboardInputAccessoryViewProtocol{
-//    func scrollView() -> UIScrollView {
-//        return UIScrollView()
-//    }
-    
-    func send(data type: String) {
-//        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": type], model: SuccessModel.self)
-    }
-    
-    
-//    func send(textView: UITextView) {
-//        commentTextView.resignFirstResponder()
-//        textView.resignFirstResponder()
-//        commentView.isHidden = false
-////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
-//    }
 }
 
 extension BlogDetailViewController: UITextViewDelegate{

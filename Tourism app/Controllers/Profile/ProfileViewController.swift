@@ -124,7 +124,7 @@ class ProfileViewController: UIViewController {
         }
         profileSection = .post
         tabbarView.items = tabbarItems
-        tabbarView.backgroundColor = Helper.shared.backgroundColor()
+        tabbarView.backgroundColor = .clear
         tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.selectedItem = tabbarView.items[0]
@@ -136,8 +136,6 @@ class ProfileViewController: UIViewController {
         tabbarView.tabBarDelegate = self
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
-//        tabbarView.setTitleColor(.lightGray, for: .normal)
-//        tabbarView.setTitleColor(.black, for: .selected)
         tabbarView.minItemWidth = 100.0
     }
     
@@ -296,7 +294,6 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == statusCollectionView{
-            print(storyTotalCount, indexPath.row, stories.count)
             if stories.count != storyTotalCount && indexPath.row == stories.count {
                 storyCurrentPage = storyCurrentPage + 1
                 storyApiCall()

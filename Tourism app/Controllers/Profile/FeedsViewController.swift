@@ -56,10 +56,11 @@ class FeedsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         loadData()
-        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
+        guard let url = UserDefaults.standard.profileImage, url.contains("https") else {
             profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
             return }
-        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
+        profileImageView.sd_setImage(with: URL(string: url))
+        profileButton.sd_setBackgroundImage(with: URL(string: url), for: .normal)
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -84,7 +85,7 @@ class FeedsViewController: UIViewController {
     }
     
     @objc func loadNewsFeed(){
-        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
+        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit], model: NewsFeedModel.self)
     }
     
     @objc func storyApiCall(){

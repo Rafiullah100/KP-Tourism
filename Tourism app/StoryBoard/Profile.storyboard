@@ -81,6 +81,11 @@
                                                         <rect key="frame" x="38" y="0.0" width="30" height="30"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" backgroundImage="user"/>
+                                                        <userDefinedRuntimeAttributes>
+                                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                <real key="value" value="15"/>
+                                                            </userDefinedRuntimeAttribute>
+                                                        </userDefinedRuntimeAttributes>
                                                         <connections>
                                                             <action selector="profileBtnAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="S5F-ae-EaO"/>
                                                         </connections>
@@ -446,6 +451,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cvC-61-p98">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="59"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eSO-Q2-n2q">
                                 <rect key="frame" x="0.0" y="59" width="393" height="759"/>
                                 <subviews>
@@ -750,7 +759,7 @@
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Hk8-5E-vV1">
                                                         <rect key="frame" x="10" y="0.0" width="383" height="100"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="1" minimumInteritemSpacing="1" id="JNc-bq-yVC">
                                                             <size key="itemSize" width="128" height="77"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -785,7 +794,6 @@
                                                         <rect key="frame" x="30" y="0.0" width="333" height="40"/>
                                                     </view>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="9Sq-fW-wQj"/>
                                                     <constraint firstAttribute="bottom" secondItem="lvh-KA-XCo" secondAttribute="bottom" id="B9O-Dd-rwm"/>
@@ -799,7 +807,7 @@
                                                 <subviews>
                                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="llj-XR-YQh">
                                                         <rect key="frame" x="10" y="10" width="373" height="329"/>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="2" minimumInteritemSpacing="2" id="DiA-XD-M2C">
                                                             <size key="itemSize" width="128" height="128"/>
                                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -818,7 +826,6 @@
                                                         </cells>
                                                     </collectionView>
                                                 </subviews>
-                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="trailing" secondItem="llj-XR-YQh" secondAttribute="trailing" constant="10" id="00h-2W-AXH"/>
                                                     <constraint firstAttribute="bottom" secondItem="llj-XR-YQh" secondAttribute="bottom" id="091-f4-Gv7"/>
@@ -845,7 +852,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="7Mh-GF-clj" secondAttribute="trailing" id="4xL-oB-P2b"/>
                                             <constraint firstAttribute="width" constant="50" id="Mas-zX-ZeB"/>
@@ -856,7 +862,6 @@
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="sah-St-Zb3" secondAttribute="bottom" constant="20" id="EJA-Qo-d1D"/>
                                     <constraint firstAttribute="trailing" secondItem="sah-St-Zb3" secondAttribute="trailing" constant="20" id="c7i-CL-DQ5"/>
@@ -868,12 +873,16 @@
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="z74-O2-5VA"/>
-                        <color key="backgroundColor" name="backgroundColor"/>
+                        <color key="backgroundColor" name="lineColor"/>
                         <constraints>
+                            <constraint firstItem="eSO-Q2-n2q" firstAttribute="top" secondItem="cvC-61-p98" secondAttribute="bottom" id="4rw-XF-9NN"/>
                             <constraint firstItem="eSO-Q2-n2q" firstAttribute="top" secondItem="z74-O2-5VA" secondAttribute="top" id="5jq-Mp-hDq"/>
                             <constraint firstItem="eSO-Q2-n2q" firstAttribute="leading" secondItem="z74-O2-5VA" secondAttribute="leading" id="LE9-O6-bge"/>
                             <constraint firstItem="z74-O2-5VA" firstAttribute="trailing" secondItem="eSO-Q2-n2q" secondAttribute="trailing" id="ihl-b9-RhW"/>
                             <constraint firstItem="eSO-Q2-n2q" firstAttribute="bottom" secondItem="z74-O2-5VA" secondAttribute="bottom" id="ltJ-FG-H0h"/>
+                            <constraint firstItem="cvC-61-p98" firstAttribute="leading" secondItem="z74-O2-5VA" secondAttribute="leading" id="qxW-V8-Qyx"/>
+                            <constraint firstItem="cvC-61-p98" firstAttribute="trailing" secondItem="z74-O2-5VA" secondAttribute="trailing" id="sPa-ZI-xhW"/>
+                            <constraint firstItem="cvC-61-p98" firstAttribute="top" secondItem="CdC-VV-SRz" secondAttribute="top" id="utZ-kC-8Yz"/>
                         </constraints>
                     </view>
                     <connections>
@@ -4178,14 +4187,14 @@
         <namedColor name="Color">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="backgroundColor">
-            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="bar-color">
             <color red="0.92400002479553223" green="0.92299997806549072" blue="0.94300001859664917" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <namedColor name="gray-whitish">
             <color red="0.32549019607843138" green="0.32549019607843138" blue="0.33725490196078434" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="lineColor">
+            <color red="0.92549019607843142" green="0.92549019607843142" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="tabbar-tint">
             <color red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

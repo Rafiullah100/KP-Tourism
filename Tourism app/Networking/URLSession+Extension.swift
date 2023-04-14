@@ -27,8 +27,6 @@ extension URLSession{
         }
         let task = dataTask(with: request) { data, response, error in
             SVProgressHUD.dismiss()
-//            let responseString = String(data: data!, encoding: .utf8) ?? "Could not stringify our data"
-//            print("The response is:\n\(responseString)")
             guard let data = data else {
                 if let error = error{
                     print(error)
