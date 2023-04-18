@@ -56,7 +56,7 @@ class WishlistViewController: UIViewController {
             case .success(let model):
                 if type == .post {
                     let wishlist = model as? PostSectionModel
-                    self.postWishlist = []
+                    self.postWishlist = wishlist?.wishlist
                     self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 else if type == .attraction{

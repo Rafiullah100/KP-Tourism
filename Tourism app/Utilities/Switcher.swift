@@ -249,6 +249,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
+    static func goToOTPVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "OTPViewController") as! OTPViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     static func goToFeedsVC(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "FeedsViewController") as! FeedsViewController
         vc.modalPresentationStyle = .fullScreen

@@ -42,7 +42,7 @@ class SignupViewController: BaseViewController {
                 DispatchQueue.main.async {
                     let res = result as! SuccessModel
                     if res.success == true{
-                        Switcher.goToLoginVC(delegate: self)
+                        Switcher.goToOTPVC(delegate: self)
                     }
                     else{
                         SVProgressHUD.showError(withStatus: res.message)

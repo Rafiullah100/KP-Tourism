@@ -76,11 +76,6 @@ class CommonViewController: BaseViewController {
             descriptionLabel.text = archeology?.attractions?.description?.stripOutHtml()
         }
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-    }
 }
 
 extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSource{

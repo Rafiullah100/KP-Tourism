@@ -212,7 +212,7 @@ class ProfileViewController: UIViewController {
                 else if apiType == .post{
                     self.post.append(contentsOf: (model as? UserPostModel)?.posts?.rows ?? [])
                     self.postTotalCount = (model as? UserPostModel)?.posts?.count ?? 0
-                    self.contentCollectionView.reloadData()
+                    self.postTotalCount == 0 ? self.contentCollectionView.setEmptyView("No Post found!") : self.contentCollectionView.reloadData()
                 }
                 else if apiType == .product{
                     self.products = (model as? UserProductModel)?.localProducts?.rows
@@ -335,7 +335,12 @@ extension ProfileViewController: MDCTabBarViewDelegate{
             self.post.count == 0 ? self.contentCollectionView.setEmptyView("No Post found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 1{
-            addButton.isHidden = false
+            if UserDefaults.standard.userType == "seller" {
+                addButton.isHidden = false
+            }
+            else{
+                addButton.isHidden = true
+            }
             writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
             self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No product found!") : self.contentCollectionView.reloadData()

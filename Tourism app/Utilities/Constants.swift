@@ -27,7 +27,10 @@ struct Constants {
     
     static var kpkCoordinates = Coordinates(lat: 34.9526, long: 72.3311)
     
-    static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"
+        static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGdrazJyMDkwZDd2M21xcXU5b25waW9jIn0.iOMmUGeAHWNOKKrDU5S2pg"
+    
+//    static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"
+    
     static var mapboxPublicKey = "pk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGR6cWN2YmUxNDBhM29waDRyM3B6ZHE3In0.Dz1OdPdSp56h072TorpygA"
 
     

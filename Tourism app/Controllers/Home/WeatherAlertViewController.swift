@@ -25,11 +25,7 @@ class WeatherAlertViewController: UIViewController {
         case AlertTableViewCell
     }
     
-    //  return "/forecasts/v1/daily/5day/258970?apikey=YxA9P1FHvaurvZAk0kAc7d7utlJWGR97 HTTP/1.1"
-
-    
     let pickerView = UIPickerView()
-
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -44,8 +40,7 @@ class WeatherAlertViewController: UIViewController {
     var warnings: [Warning]?
     var weatherDetail: WeatherModel?
     var districtList: [DistrictsListRow]?
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -54,9 +49,6 @@ class WeatherAlertViewController: UIViewController {
         textField.isHidden = true
         textField.inputView = pickerView
         cellType = .WeatherTableViewCell
-//        serverCall(type: .WeatherTableViewCell)
-  
-//        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
         fetchDistrictKeys(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
     }
     
@@ -119,7 +111,7 @@ class WeatherAlertViewController: UIViewController {
                     self.warnings?.count == 0 ? self.tableView.setEmptyView("No Warning!") : self.tableView.reloadData()
                 case .WeatherTableViewCell:
                     self.weatherDetail = model as? WeatherModel
-                    self.weatherDetail?.dailyForecasts?.count == 0 ? self.tableView.setEmptyView("No daily forecast available.") : self.tableView.reloadData()
+                    self.weatherDetail?.dailyForecasts?.count == nil ? self.tableView.setEmptyView("No daily forecast available.") : self.tableView.reloadData()
                     self.updateUI()
                 case .none:
                     print("none")

@@ -79,11 +79,11 @@ extension ExploreMapViewController: MGLMapViewDelegate{
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
         
         SVProgressHUD.show(withStatus: "Please wait...")
-        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+        Directions(credentials: Credentials(accessToken: Constants.mapboxSecretKey)).calculate(routeOptions) { [weak self] (session, result) in
             SVProgressHUD.dismiss()
             switch result {
             case .failure(let error):
-                print(error.localizedDescription)
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             case .success(let response):
                 guard let self = self else { return }
                 let viewController = NavigationViewController(for: IndexedRouteResponse(routeResponse: response, routeIndex: 0))
