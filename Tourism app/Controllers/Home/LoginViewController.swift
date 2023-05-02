@@ -23,8 +23,8 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .title
-        emailTextField.text = "arsalan@gmail.com"
-        passwordTextField.text = "123456"
+//        emailTextField.text = "arsalan@gmail.com"
+//        passwordTextField.text = "123456"
         viewControllerTitle = "Login"
     }
     
@@ -82,6 +82,7 @@ class LoginViewController: BaseViewController {
     @IBAction func forgotPasswordBtn(_ sender: Any) {
         Switcher.gotoEmailVC(delegate: self)
     }
+    
     @IBAction func LoginBtnAction(_ sender: Any) {
         validateLoginFields()
     }

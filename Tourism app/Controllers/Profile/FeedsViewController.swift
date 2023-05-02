@@ -85,7 +85,7 @@ class FeedsViewController: UIViewController {
     }
     
     @objc func loadNewsFeed(){
-        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit], model: NewsFeedModel.self)
+        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
     }
     
     @objc func storyApiCall(){
@@ -204,7 +204,10 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
         if indexPath.row == 0 {
-            cell.imgView.image = UIImage(named: "placeholder")
+//            cell.imgView.image = UIImage(named: "placeholder")
+            print(Route.baseUrl + (UserDefaults.standard.profileImage ?? ""))
+            cell.imgView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "placeholder"))
+
         }
         else{
             cell.stories = stories[indexPath.row - 1]

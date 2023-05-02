@@ -42,6 +42,7 @@ class SignupViewController: BaseViewController {
                 DispatchQueue.main.async {
                     let res = result as! SuccessModel
                     if res.success == true{
+                        UserDefaults.standard.otpEmail = self.emailTextField.text
                         Switcher.goToOTPVC(delegate: self)
                     }
                     else{
@@ -58,7 +59,6 @@ class SignupViewController: BaseViewController {
         guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, let lastName = lastNameTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text, let phone = phoneTextField.text else { return }
         guard passwordTextField.text == confirmTextField.text else { return }
         let parameters = ["username": email, "name": firstName + " " + lastName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
-        print(parameters)
         registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
     }
     

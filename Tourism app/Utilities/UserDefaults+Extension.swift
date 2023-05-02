@@ -26,10 +26,10 @@ extension UserDefaults {
         case userType
         case userBio
         case pdfArray
+        case otpEmail
+        case isSeller
     }
-    
-    
-    
+        
     var accessToken: String? {
         get {
             value(forKey: UserDefaultsKeys.accessToken.rawValue) as? String
@@ -165,6 +165,15 @@ extension UserDefaults {
         }
     }
     
+    var isSeller: String? {
+        get {
+            string(forKey: UserDefaultsKeys.isSeller.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.isSeller.rawValue)
+        }
+    }
+    
     var userBio: String? {
         get {
             string(forKey: UserDefaultsKeys.userBio.rawValue)
@@ -180,6 +189,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.pdfArray.rawValue)
+        }
+    }
+    
+    var otpEmail: String? {
+        get {
+            string(forKey: UserDefaultsKeys.otpEmail.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.otpEmail.rawValue)
         }
     }
 }

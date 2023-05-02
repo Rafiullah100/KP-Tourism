@@ -197,11 +197,12 @@ class ProfileViewController: UIViewController {
                         self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
                     }
                     self.bioLabel.text = self.userProfile?.userDetails.about
-                    self.nameLabel.text = self.userProfile?.userDetails.name
+                    self.nameLabel.text = self.userProfile?.userDetails.name?.capitalized
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
                     self.followerCountLabel.text = "\(self.userProfile?.userDetails.userFollowers ?? 0)"
                     self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"
                     UserDefaults.standard.userType = self.userProfile?.userDetails.userType
+                    UserDefaults.standard.isSeller = self.userProfile?.userDetails.isSeller
                 }
                 else if apiType == .story{
                     self.stories.append(contentsOf: (model as? FeedStoriesModel)?.stories?.rows ?? [])
@@ -335,7 +336,7 @@ extension ProfileViewController: MDCTabBarViewDelegate{
             self.post.count == 0 ? self.contentCollectionView.setEmptyView("No Post found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 1{
-            if UserDefaults.standard.userType == "seller" {
+            if UserDefaults.standard.userType == "seller", UserDefaults.standard.isSeller == "approved" {
                 addButton.isHidden = false
             }
             else{

@@ -39,7 +39,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         }
         if UserDefaults.standard.isLoginned == true{
             userParentView.isHidden = false
-            nameLabel.text = UserDefaults.standard.name
+            nameLabel.text = UserDefaults.standard.name?.capitalized
             guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
                 profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
                 return }

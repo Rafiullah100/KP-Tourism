@@ -19,12 +19,11 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
 
     var imagePicker: UIImagePickerController!
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
         emailTextField.text = UserDefaults.standard.userEmail
-        nameTextField.text = UserDefaults.standard.name
+        nameTextField.text = UserDefaults.standard.name?.capitalized
         bioTextField1.text = UserDefaults.standard.userBio
         guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
             profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))

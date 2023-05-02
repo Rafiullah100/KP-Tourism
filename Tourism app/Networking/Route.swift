@@ -71,7 +71,9 @@ enum Route {
     case wishlist
     case doWishApi
     case commentReply
-    
+    case verifyOtp
+    case resendOtp
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -196,6 +198,10 @@ enum Route {
             return "api/mobile/users/do_wish"
         case .commentReply:
             return "api/mobile/likes_comments/do_comment_reply"
+        case .verifyOtp:
+            return "api/mobile/auth/verify_user"
+        case .resendOtp:
+            return "api/mobile/auth/resend_otp"
         }
     }
 }

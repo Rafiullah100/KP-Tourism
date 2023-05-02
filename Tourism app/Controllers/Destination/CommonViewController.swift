@@ -59,12 +59,14 @@ class CommonViewController: BaseViewController {
         }
         if explore != nil{
             thumbnailTopLabel.text = explore?.title
+            thumbnailBottomLabel.text = explore?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
             descriptionLabel.text = explore?.description?.stripOutHtml()
         }
         else if attraction != nil{
             thumbnailTopLabel.text = attraction?.title
+            thumbnailBottomLabel.text = attraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(attraction?.title ?? "")"
             descriptionLabel.text = attraction?.description.stripOutHtml()

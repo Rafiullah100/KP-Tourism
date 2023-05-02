@@ -710,10 +710,10 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="414" height="612"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sLp-Ut-wu0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="415.5"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="414" height="505.5"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="92H-JA-Phz">
-                                                                <rect key="frame" x="20" y="10" width="374" height="405.5"/>
+                                                                <rect key="frame" x="20" y="10" width="374" height="495.5"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Haq Medical Store | Point of Interest" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VCB-AI-ZOi">
                                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="18.5"/>
@@ -854,19 +854,45 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gpi-UA-3Xr">
-                                                                        <rect key="frame" x="0.0" y="98.5" width="374" height="117"/>
+                                                                        <rect key="frame" x="0.0" y="98.5" width="374" height="207"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="1P8-kb-vgc">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="117"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="374" height="207"/>
                                                                                 <subviews>
-                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdv-YA-SHA">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="25.5"/>
-                                                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
-                                                                                        <nil key="textColor"/>
-                                                                                        <nil key="highlightedColor"/>
-                                                                                    </label>
+                                                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RgW-TS-ROJ">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="128"/>
+                                                                                        <subviews>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zdv-YA-SHA">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="324" height="128"/>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="18"/>
+                                                                                                <nil key="textColor"/>
+                                                                                                <nil key="highlightedColor"/>
+                                                                                            </label>
+                                                                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JBl-A1-uO2">
+                                                                                                <rect key="frame" x="324" y="0.0" width="50" height="128"/>
+                                                                                                <subviews>
+                                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Unc-z4-bNW">
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="128"/>
+                                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <state key="normal" image="direction-green"/>
+                                                                                                        <connections>
+                                                                                                            <action selector="directionBtnAction:" destination="7ye-so-aYh" eventType="touchUpInside" id="aW1-Qd-e7z"/>
+                                                                                                        </connections>
+                                                                                                    </button>
+                                                                                                </subviews>
+                                                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstItem="Unc-z4-bNW" firstAttribute="leading" secondItem="JBl-A1-uO2" secondAttribute="leading" id="6Gw-te-vM5"/>
+                                                                                                    <constraint firstAttribute="bottom" secondItem="Unc-z4-bNW" secondAttribute="bottom" id="WWO-5P-Whq"/>
+                                                                                                    <constraint firstAttribute="width" constant="50" id="bhD-8R-Cxs"/>
+                                                                                                    <constraint firstItem="Unc-z4-bNW" firstAttribute="top" secondItem="JBl-A1-uO2" secondAttribute="top" id="eiP-88-zOm"/>
+                                                                                                    <constraint firstAttribute="trailing" secondItem="Unc-z4-bNW" secondAttribute="trailing" id="hoy-iT-Eze"/>
+                                                                                                </constraints>
+                                                                                            </view>
+                                                                                        </subviews>
+                                                                                    </stackView>
                                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TCG-LO-msk">
-                                                                                        <rect key="frame" x="0.0" y="25.5" width="374" height="91.5"/>
+                                                                                        <rect key="frame" x="0.0" y="128" width="374" height="79"/>
                                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                         <constraints>
                                                                                             <constraint firstAttribute="height" priority="250" id="2uG-XX-YFa"/>
@@ -888,7 +914,7 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="svy-qs-I5e">
-                                                                        <rect key="frame" x="0.0" y="225.5" width="374" height="180"/>
+                                                                        <rect key="frame" x="0.0" y="315.5" width="374" height="180"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="chS-TT-7TV">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="175"/>
@@ -1035,7 +1061,8 @@
     </scenes>
     <resources>
         <image name="Path 94" width="1242" height="735"/>
-        <image name="grid-green" width="43" height="40"/>
+        <image name="direction-green" width="48" height="48"/>
+        <image name="grid-green" width="55" height="51"/>
         <image name="grid-white" width="43" height="40"/>
         <image name="map-green" width="43" height="40"/>
         <image name="map-white" width="43" height="40"/>

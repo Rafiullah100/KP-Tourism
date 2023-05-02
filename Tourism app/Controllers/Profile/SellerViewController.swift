@@ -17,7 +17,7 @@ class SellerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        if UserDefaults.standard.userType == "seller"{
+        if UserDefaults.standard.userType == "seller", UserDefaults.standard.isSeller == "approved"{
             switchView.setOn(true, animated: true)
         }
         else{

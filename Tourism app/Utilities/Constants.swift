@@ -51,7 +51,7 @@ struct Constants {
     static let section =  [Sections(title: "Home", image: "explore", selectedImage: "explore-s"),
 //              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
 //              Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-              Sections(title: "Investment", image: "investment", selectedImage: "investment-s"),
+              Sections(title: "Investment in KP", image: "investment", selectedImage: "investment-s"),
               Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
