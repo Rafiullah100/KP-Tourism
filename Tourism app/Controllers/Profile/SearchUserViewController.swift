@@ -25,12 +25,13 @@ class SearchChatUserTableViewCell: UITableViewCell {
 
 class SearchUserViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
-
+    @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var searchTF: UITextField!
     var chatUserModel: ChatUserModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        topBarView.addBottomShadow()
         tableView.keyboardDismissMode = .onDrag
         searchTF.becomeFirstResponder()
         searchTF.addTarget(self, action: #selector(SearchUserViewController.textFieldDidChange(_:)), for: .editingChanged)
@@ -57,6 +58,9 @@ class SearchUserViewController: UIViewController {
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
+    }
+    @IBAction func backBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
     }
 }
 

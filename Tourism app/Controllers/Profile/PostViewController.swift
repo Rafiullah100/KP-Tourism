@@ -90,8 +90,8 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
                     else if self.postType == .edit{
                         SVProgressHUD.showSuccess(withStatus: "Post edited.")
                     }
-                    self.dismiss(animated: true)
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+                    self.dismiss(animated: true)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

@@ -27,6 +27,7 @@ class FeedTableViewCell: UITableViewCell {
     var shareActionBlock: (() -> Void)? = nil
     var saveActionBlock: (() -> Void)? = nil
     var likeActionBlock: (() -> Void)? = nil
+    var commentActionBlock: (() -> Void)? = nil
 
     var feed: FeedModel? {
         didSet {
@@ -85,6 +86,10 @@ class FeedTableViewCell: UITableViewCell {
     }
     @IBAction func likeBtnAAction(_ sender: Any) {
         likeActionBlock?()
+    }
+    
+    @IBAction func commentBtnAction(_ sender: Any) {
+        commentActionBlock?()
     }
 }
 

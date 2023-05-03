@@ -41,7 +41,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var recieverProfileImage: UIImageView!
 
-    
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?

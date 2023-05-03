@@ -265,7 +265,7 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatListViewController") as! ChatListViewController
         vc.modalPresentationStyle = .fullScreen
 //        delegate.present(vc, animated: true)
-        delegate.navigationController?.pushViewController(vc, animated: true)
+        delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
     static func goToProfileVC(delegate: UIViewController, profileType:ProfileType, uuid: String){
@@ -426,7 +426,8 @@ class Switcher {
     static func gotoChatUserSearch(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SearchUserViewController") as! SearchUserViewController
         vc.modalPresentationStyle = .automatic
-        delegate.present(vc, animated: true, completion: nil)
+//        delegate.present(vc, animated: true, completion: nil)
+        delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
     static func gotoWriteBlogVC(delegate: UIViewController){
@@ -457,6 +458,12 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.password.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ForgotPasswordViewController") as! ForgotPasswordViewController
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func gotoPostCommentVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PostCommentViewController") as! PostCommentViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
     }
     
 //    static func presentBottomSheet(delegate: UIViewController){

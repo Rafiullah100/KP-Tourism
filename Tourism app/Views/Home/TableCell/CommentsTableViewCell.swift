@@ -9,13 +9,12 @@ import UIKit
 import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
-    
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var textView: UITextView!{
         didSet{
             textView.delegate = self
@@ -46,11 +45,6 @@ class CommentsTableViewCell: UITableViewCell {
         }
     }
     
-//    override var intrinsicContentSize: CGSize{
-//        self.layoutIfNeeded()
-//        return tableView.contentSize
-//    }
-    
     override func prepareForReuse() {
         super.prepareForReuse()
         tableViewHeight.constant = self.tableView.contentSize.height
@@ -64,12 +58,6 @@ class CommentsTableViewCell: UITableViewCell {
         textView.textColor = UIColor.lightGray
     }
 
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-    
     @IBAction func replyButtonAction(_ sender: Any) {
         guard let text = textView.text, !text.isEmpty, text != inputText else { return }
         actionBlock?(text)
@@ -113,7 +101,6 @@ extension CommentsTableViewCell: UITextViewDelegate{
     }
 }
 
-//
 class DynamicHeightTableView: UITableView {
     override var intrinsicContentSize: CGSize {
         self.layoutIfNeeded()
@@ -131,15 +118,3 @@ class DynamicHeightTableView: UITableView {
         self.invalidateIntrinsicContentSize()
     }
 }
-
-//final class DynamicHeightTableView: UITableView {
-//    override var contentSize:CGSize {
-//        didSet {
-//            invalidateIntrinsicContentSize()
-//        }
-//    }
-//    override var intrinsicContentSize: CGSize {
-//        layoutIfNeeded()
-//        return CGSize(width: UIView.noIntrinsicMetric, height: contentSize.height)
-//    }
-//}

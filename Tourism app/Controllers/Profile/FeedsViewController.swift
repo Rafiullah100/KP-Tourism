@@ -99,7 +99,6 @@ class FeedsViewController: UIViewController {
                 self.newsFeed.append(contentsOf: (feeds as? NewsFeedModel)?.feeds ?? [])
                 self.totalCount = (feeds as! NewsFeedModel).count ?? 0
                 self.numberOfCells = self.totalCount
-                print(self.newsFeed)
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.reloadData()
             case .failure(let error):
@@ -160,7 +159,7 @@ class FeedsViewController: UIViewController {
             case .success(let success):
                 let successDetail = success as? SuccessModel
                 if successDetail?.success == true{
-                    SVProgressHUD.showSuccess(withStatus: successDetail?.message)
+                    SVProgressHUD.showSuccess(withStatus: "Post shared successfully.")
                 }
                 else{
                     SVProgressHUD.showError(withStatus: successDetail?.message)
@@ -257,6 +256,9 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         cell.saveActionBlock = {
             self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
+        }
+        cell.commentActionBlock = {
+            Switcher.gotoPostCommentVC(delegate: self)
         }
         return cell
     }
