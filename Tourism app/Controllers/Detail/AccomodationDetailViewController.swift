@@ -45,7 +45,7 @@ class AccomodationDetailViewController: BaseViewController {
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.previewImage ?? "")))
         nameLabel.text = "\(accomodationDetail?.title ?? "")"
         locationLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
-        textView.text = "\(accomodationDetail?.description ?? "")"
+        textView.text = "\(accomodationDetail?.description ?? "")".stripOutHtml()
         familyLabel.text = accomodationDetail?.family == true ? "Family" : "Adult"
         addressLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
 //        ratingLabel.text = "\(accomodationDetail?.locationTitle ?? "")"

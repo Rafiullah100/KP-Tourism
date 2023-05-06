@@ -56,9 +56,9 @@ class SignupViewController: BaseViewController {
     }
     
     private func validateSignupFields(){
-        guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, let lastName = lastNameTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text, let phone = phoneTextField.text else { return }
+        guard let email = emailTextField.text, !email.isEmpty, let firstName = firstNameTextFeild.text, !firstName.isEmpty, let password = passwordTextField.text, !password.isEmpty, let confirmPassword = confirmTextField.text, !confirmPassword.isEmpty, let phone = phoneTextField.text, !phone.isEmpty else { return }
         guard passwordTextField.text == confirmTextField.text else { return }
-        let parameters = ["username": email, "name": firstName + " " + lastName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
+        let parameters = ["username": email, "name": firstName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
         registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
     }
     

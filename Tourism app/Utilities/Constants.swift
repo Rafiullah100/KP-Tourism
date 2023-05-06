@@ -46,7 +46,7 @@ struct Constants {
 
     static let tab = 3
     
-    static let desintationArray = [Destination(image: "dest-0", title: "What to See"), Destination(image: "dest-1", title: "Getting Here"), Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
+    static let desintationArray = [Destination(image: "dest-0", title: "What to See"), /*Destination(image: "dest-1", title: "Getting Here"),*/ Destination(image: "dest-2", title: "Point of Interest"), Destination(image: "dest-3", title: "Accomodation"), Destination(image: "dest-4", title: "Events"), Destination(image: "dest-5", title: "Gallery"), Destination(image: "dest-6", title: "Itinrary"), Destination(image: "dest-7", title:"Local Products")]
     
     static let section =  [Sections(title: "Home", image: "explore", selectedImage: "explore-s"),
 //              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),

@@ -26,9 +26,14 @@ class WeatherTableViewCell: UITableViewCell {
             maxTempLabel.text = "Maximum Temperature will be \(dailyForecast?.temperature?.maximum?.value ?? 0) F"
             nightImageView.image = UIImage(named: "\(dailyForecast?.night?.icon ?? 1)")
             nightWeatherLabel.text = dailyForecast?.night?.iconPhrase
-            
             let stringArray = dailyForecast?.date?.split(separator: "T")
-            dateLabel.text = "\(stringArray?[0] ?? "")"
+            let inputFormatter = DateFormatter()
+            inputFormatter.dateFormat = "yyyy-MM-dd"
+            let showDate = inputFormatter.date(from: String(stringArray?[0] ?? "")) ?? Date()
+            inputFormatter.dateFormat = "MMM d, yyyy"
+            let resultString = inputFormatter.string(from: showDate)
+            print(resultString)
+            dateLabel.text = resultString
         }
     }
     

@@ -36,6 +36,7 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     @IBAction func likeBtnActio(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         actionBlock?()
     }
 }

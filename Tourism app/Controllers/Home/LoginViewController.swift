@@ -22,10 +22,11 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        type = .title
+        type = .title1
 //        emailTextField.text = "arsalan@gmail.com"
 //        passwordTextField.text = "123456"
         viewControllerTitle = "Login"
+        navigationItem.hidesBackButton = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -81,6 +82,7 @@ class LoginViewController: BaseViewController {
     
     @IBAction func forgotPasswordBtn(_ sender: Any) {
         Switcher.gotoEmailVC(delegate: self)
+//        Switcher.goToOTPVC(delegate: self)
     }
     
     @IBAction func LoginBtnAction(_ sender: Any) {

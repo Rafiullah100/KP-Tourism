@@ -31,6 +31,10 @@ class OTPViewController: BaseViewController {
         }
     }
     
+    var timer: Timer?
+    var countDown = 60
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .title
@@ -40,6 +44,23 @@ class OTPViewController: BaseViewController {
         secondTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
         thirdTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
         forthTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
+        resendButton.isUserInteractionEnabled = false
+        countDonwTimer()
+    }
+    
+    func countDonwTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(action), userInfo: nil, repeats: true)
+    }
+    
+    @objc func action () {
+        countDown = countDown - 1
+        resendButton.setTitle("\(countDown)", for: .normal)
+        if countDown == 1{
+            countDown = 60
+            timer?.invalidate()
+            resendButton.setTitle("Resend", for: .normal)
+            resendButton.isUserInteractionEnabled = true
+        }
     }
     
     @objc func textFieldDidChange(_ textField: UITextField) {
@@ -68,6 +89,7 @@ class OTPViewController: BaseViewController {
             switch result {
             case .success(let otp):
                 SVProgressHUD.showSuccess(withStatus: otp.message)
+                self.countDonwTimer()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

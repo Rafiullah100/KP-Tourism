@@ -11,6 +11,7 @@ import SwiftUI
 enum ViewControllerType {
     case home
     case title
+    case title1
     case back1
     case back2
     case backWithTitle
@@ -64,6 +65,8 @@ class BaseViewController: UIViewController {
             setupHomeBarButtonItems()
         case .title:
             setupTitleBarButtonItems()
+        case .title1:
+            setupTitleBarButtonItems1()
         case .back1:
             setupBackBarButtonItemsWithFilterButton()
         case .back2:
@@ -106,6 +109,12 @@ class BaseViewController: UIViewController {
         addTitleLabel()
         navigationItem.rightBarButtonItems = []
         addCrossButton()
+    }
+    
+    func setupTitleBarButtonItems1() {
+        navigationItem.leftBarButtonItems = []
+        addTitleLabel()
+        navigationItem.rightBarButtonItems = []
     }
     
     func setupBackBarButtonItemsWithLikeButton() {
@@ -223,7 +232,7 @@ class BaseViewController: UIViewController {
     func addCrossButton() {
         let crossButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(pop))
         crossButton.image = nil
-        crossButton.image = UIImage(named: "cross")
+        crossButton.image = UIImage(named: "arrow-back")
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = crossButton
     }

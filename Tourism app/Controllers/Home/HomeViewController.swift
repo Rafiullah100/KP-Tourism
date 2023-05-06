@@ -93,7 +93,6 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
-//        textField.addTarget(self, action: #selector(HomeViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -156,12 +155,6 @@ class HomeViewController: BaseViewController {
         vc.exploreDistrict = exploreDistrict
         add(vc, in: mapContainerView)
     }
-    
-//    @objc func textFieldDidChange(_ textField: UITextField) {
-//        emptyArray()
-//        currentPage = 1
-//        serverCall(cell: cellType ?? .explore)
-//    }
     
     func emptyArray() {
         exploreDistrict = []

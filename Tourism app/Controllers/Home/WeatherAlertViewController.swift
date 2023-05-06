@@ -128,8 +128,12 @@ class WeatherAlertViewController: UIViewController {
             case .success(let model):
                 self.districtList = (model as! DistrictListModel).districts?.rows
                 self.pickerView.reloadAllComponents()
-                UserDefaults.standard.districtKey = self.districtList?[0].mapbox_location_key
-                self.dropDownLabel.text = self.districtList?[0].title
+                self.districtList?.forEach({ district in
+                    if district.title == "Peshawar" {
+                        UserDefaults.standard.districtKey = district.mapbox_location_key
+                        self.dropDownLabel.text = district.title
+                    }
+                })
                 self.serverCall(type: .WeatherTableViewCell)
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

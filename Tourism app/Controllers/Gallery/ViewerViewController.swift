@@ -44,6 +44,7 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
     }
     
     override func viewWillLayoutSubviews() {

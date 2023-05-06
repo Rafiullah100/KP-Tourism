@@ -45,13 +45,12 @@ class AttractionMapViewController: UIViewController {
         let url = URL(string: "mapbox://styles/mapbox/streets-v12")
         let mapView = MGLMapView(frame: view.bounds, styleURL: url)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: Double(attractionsArray?[0].latitude ?? "") ?? Constants.kpkCoordinates.lat, longitude: Double(attractionsArray?[0].longitude ?? "") ?? Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
         mapView.styleURL = MGLStyle.streetsStyleURL
         mapView.tintColor = .darkGray
         view.addSubview(mapView)
         mapView.delegate = self
     }
-
 }
 
 extension AttractionMapViewController: MGLMapViewDelegate{
@@ -78,8 +77,6 @@ extension AttractionMapViewController: MGLMapViewDelegate{
         let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), name: "")
         let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
         
-        // Request a route using MapboxDirections.swift
-
         SVProgressHUD.show(withStatus: "Please wait...")
         Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
             SVProgressHUD.dismiss()

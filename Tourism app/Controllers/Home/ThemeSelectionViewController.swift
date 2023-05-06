@@ -16,12 +16,13 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
     var tabbar: TabbarViewController?
+    @IBOutlet weak var topLineView: UIView!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        type = .title
-        viewControllerTitle = "Preferences"
+        type = .title1
+        viewControllerTitle = "Settings"
         
         userView.clipsToBounds = true
         userView.layer.cornerRadius = 30
@@ -39,6 +40,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         }
         if UserDefaults.standard.isLoginned == true{
             userParentView.isHidden = false
+            topLineView.isHidden = true
             nameLabel.text = UserDefaults.standard.name?.capitalized
             guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
                 profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
@@ -46,6 +48,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
             profileImageView.sd_setImage(with: URL(string: profileImage))
         }
         else{
+            topLineView.isHidden = false
             userParentView.isHidden = true
         }
     }

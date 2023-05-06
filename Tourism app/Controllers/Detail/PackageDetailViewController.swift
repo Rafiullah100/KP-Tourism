@@ -83,7 +83,7 @@ class PackageDetailViewController: BaseViewController {
         likeLabel.text = "\(tourDetail?.likes?.count ?? 0) Liked"
         durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
         viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
-        counterLabel.text = "\(tourDetail?.number_of_people ?? 0)"
+        counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
         districtNameLabel.text = tourDetail?.to_districts?.title
         registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
 //        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."

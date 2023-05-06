@@ -96,19 +96,19 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case 0:
             guard let locationCategory = locationCategory else { return }
             Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+//        case 1:
+//            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 1:
-            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
-        case 2:
             Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
-        case 3:
+        case 2:
             Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
-        case 4:
+        case 3:
             Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
-        case 5:
+        case 4:
             Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image, archeology: archeology)
-        case 6:
+        case 5:
             Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
-        case 7:
+        case 6:
             Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         default:
             break
