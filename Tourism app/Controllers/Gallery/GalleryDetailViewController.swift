@@ -153,7 +153,7 @@ extension GalleryDetailViewController: ASCollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch mediaType {
         case .image:
-            Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!, position: indexPath, type: .gallery)
+            Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!, position: indexPath.row, type: .gallery)
         case .video:
             playVideo(url: galleryDetail?.videos?.rows?[indexPath.row].video_url ?? "")
         case .virtual:

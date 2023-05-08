@@ -119,8 +119,8 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
 extension CommonViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellsAcross: CGFloat = 4
-        let spaceBetweenCells: CGFloat = 2
+        let cellsAcross: CGFloat = 3
+        let spaceBetweenCells: CGFloat = 5
         let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
         print(width)
         return CGSize(width: width, height: width - 30)

@@ -109,7 +109,7 @@ extension POIDetailViewController: UICollectionViewDelegate, UICollectionViewDat
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        Switcher.gotoViewerVC(delegate: self, position: indexPath, poiGallery: poiDetail?.poiGalleries, type: .poi)
+        Switcher.gotoViewerVC(delegate: self, position: indexPath.row, poiGallery: poiDetail?.poiGalleries, type: .poi)
     }
 }
 

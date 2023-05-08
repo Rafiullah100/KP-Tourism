@@ -71,6 +71,7 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return Constants.visitkpArray.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: AreaTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! AreaTableViewCell
         cell.area = Constants.visitkpArray[indexPath.row]
@@ -78,13 +79,12 @@ extension VisitKPViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200.0
+        return 230.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         geoTypeId = Constants.visitkpArray[indexPath.row].geoTypeID
         isSelected = true
-        
         if let encoded = try? JSONEncoder().encode(Constants.visitkpArray[indexPath.row]) {
             UserDefaults.standard.set(encoded, forKey: "area")
         }

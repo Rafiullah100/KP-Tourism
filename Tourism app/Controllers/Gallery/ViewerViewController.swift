@@ -14,9 +14,9 @@ class ViewerCell: UICollectionViewCell, UIScrollViewDelegate {
     
     var value: Int?{
         didSet{
-           scrollView.minimumZoomScale = 1.0
-           scrollView.maximumZoomScale = 5.0
-           scrollView.delegate = self
+//           scrollView.minimumZoomScale = 1.0
+//           scrollView.maximumZoomScale = 5.0
+//           scrollView.delegate = self
         }
     }
     
@@ -38,7 +38,7 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
     
     var galleryDetail: GalleryModel?
     var poiGallery: [PoiGallery]?
-    var position: IndexPath?
+    var position: Int?
     
     var galleryType: galleryType?
 
@@ -46,13 +46,18 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
 
     }
-    
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.left], animated: false)
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.centeredVertically, .centeredHorizontally], animated: true)
         collectionView.reloadData()
     }
-
+    
+//    override func viewWillLayoutSubviews() {
+//        super.viewWillLayoutSubviews()
+//        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.centeredVertically, .centeredHorizontally], animated: true)
+//        collectionView.reloadData()
+//    }
 }
 
 extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -89,3 +94,5 @@ extension ViewerViewController: UICollectionViewDelegateFlowLayout{
         return CGSize(width: collectionView.frame.size.width, height: collectionView.frame.size.height)
     }
 }
+
+

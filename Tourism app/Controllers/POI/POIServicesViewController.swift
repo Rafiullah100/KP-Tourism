@@ -21,7 +21,8 @@ class POIServicesViewController: BaseViewController {
     var attractionDistrict: AttractionsDistrict?
     var poiCategoriId: Int?
     var districtId: Int?
-    
+    var poiName: String?
+
     var POISubCatories: POISubCatoriesModel?
     
     
@@ -62,7 +63,9 @@ class POIServicesViewController: BaseViewController {
         guard let POISubCatories = POISubCatories else { return  }
         Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POISubCatories)
     }
+    
     func updateUI() {
+        nameLabel.text = (poiName ?? "") + " | Point Of Interest"
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))

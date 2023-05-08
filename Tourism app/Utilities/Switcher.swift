@@ -43,12 +43,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int, poiName: String){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploredistrict
         vc.attractionDistrict = attractionDistrict
         vc.poiCategoriId = poiCategoryId
+        vc.poiName  = poiName
         print(poiCategoryId)
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
@@ -371,7 +372,7 @@ class Switcher {
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true)
     }
-    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel? = nil, position: IndexPath, poiGallery: [PoiGallery]? = nil, type: galleryType){
+    static func gotoViewerVC(delegate: UIViewController, galleryDetail: GalleryModel? = nil, position: Int, poiGallery: [PoiGallery]? = nil, type: galleryType){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewerViewController") as! ViewerViewController
         vc.galleryDetail = galleryDetail
         vc.position = position

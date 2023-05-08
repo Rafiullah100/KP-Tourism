@@ -80,16 +80,16 @@ extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if exploreDistrict != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
+            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title  else { return }
+            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
         }
         else if attractionsDistrict != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
+            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
+            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
         }
         else if archeology != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId)
+            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
+            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
         }
     }
 }

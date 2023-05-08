@@ -86,17 +86,17 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let conversation):
-                self.conversation = (conversation as? OnetoOneConversationModel)?.chats.rows ?? []
+                self.conversation = (conversation as? OnetoOneConversationModel)?.chats?.rows ?? []
                 self.conversation?.forEach({ item in
-                    if item.sender.id == UserDefaults.standard.userID {
-                        self.currentUser = Sender(senderId: "self", displayName: item.sender.name)
+                    if item.sender?.id == UserDefaults.standard.userID {
+                        self.currentUser = Sender(senderId: "self", displayName: item.sender?.name ?? "")
                         guard let currentUser = self.currentUser else { return }
-                        self.messages.append(Message(sender: currentUser, messageId: "\(item.id)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content)))
+                        self.messages.append(Message(sender: currentUser, messageId: "\(item.id ?? 0)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content ?? "")))
                     }
                     else{
-                        self.otherUser = Sender(senderId: "other", displayName: item.sender.name)
+                        self.otherUser = Sender(senderId: "other", displayName: item.sender?.name ?? "")
                         guard let otherUser = self.otherUser else { return }
-                        self.messages.append(Message(sender: otherUser, messageId: "\(item.id)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content)))
+                        self.messages.append(Message(sender: otherUser, messageId: "\(item.id ?? 0)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content ?? "")))
                     }
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
@@ -124,9 +124,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             avatarView.set(avatar: avatar)
         }
         else{
-            if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].sender.profileImage ?? "")) {
-                avatarView.sd_setImage(with: imageUrl, completed: nil)
-            }
+//            if self.conversation?.count ?? 0 > 0{
+//                if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].sender?.profileImage ?? "")) {
+//                    avatarView.sd_setImage(with: imageUrl, completed: nil)
+//                }
+//            }
         }
     }
     

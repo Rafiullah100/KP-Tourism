@@ -201,13 +201,20 @@
                                                                         <rect key="frame" x="0.0" y="644" width="393" height="50"/>
                                                                         <subviews>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g2K-LK-rTU">
-                                                                                <rect key="frame" x="121.66666666666669" y="2.6666666666666288" width="150" height="45"/>
+                                                                                <rect key="frame" x="126.66666666666669" y="5" width="140" height="40"/>
+                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="45" id="VbM-wo-iQN"/>
-                                                                                    <constraint firstAttribute="width" constant="150" id="ucO-PW-pzW"/>
+                                                                                    <constraint firstAttribute="height" constant="40" id="VbM-wo-iQN"/>
+                                                                                    <constraint firstAttribute="width" constant="140" id="ucO-PW-pzW"/>
                                                                                 </constraints>
+                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                <state key="normal" image="tour-forward"/>
+                                                                                <state key="normal" title="Next"/>
+                                                                                <userDefinedRuntimeAttributes>
+                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                        <real key="value" value="5"/>
+                                                                                    </userDefinedRuntimeAttribute>
+                                                                                </userDefinedRuntimeAttributes>
                                                                                 <connections>
                                                                                     <action selector="forwardBtnAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="HbW-PN-gmW"/>
                                                                                 </connections>
@@ -440,24 +447,66 @@
                                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="x00-ra-K8W">
                                                                                 <rect key="frame" x="20" y="5" width="353" height="40"/>
                                                                                 <subviews>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dz-2l-Prx">
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHC-0d-tyz">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="151.66666666666666" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-backward"/>
-                                                                                        <connections>
-                                                                                            <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="HOb-DZ-uHD"/>
-                                                                                            <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="ocf-wr-h6f"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSP-1M-vYP">
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2dz-2l-Prx">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="acM-5H-YLy"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Back"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="HOb-DZ-uHD"/>
+                                                                                                    <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="ocf-wr-h6f"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="bottom" secondItem="2dz-2l-Prx" secondAttribute="bottom" id="HyO-6K-oVS"/>
+                                                                                            <constraint firstItem="2dz-2l-Prx" firstAttribute="top" secondItem="uHC-0d-tyz" secondAttribute="top" id="dCu-DY-0XM"/>
+                                                                                            <constraint firstItem="2dz-2l-Prx" firstAttribute="leading" secondItem="uHC-0d-tyz" secondAttribute="leading" id="dez-X4-8F5"/>
+                                                                                        </constraints>
+                                                                                    </view>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tse-kc-iTr">
                                                                                         <rect key="frame" x="201.66666666666663" y="0.0" width="151.33333333333337" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-forward"/>
-                                                                                        <connections>
-                                                                                            <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="78k-wg-4gR"/>
-                                                                                            <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="PoP-hJ-HJ1"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSP-1M-vYP">
+                                                                                                <rect key="frame" x="21.333333333333343" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="FGB-Kl-gVm"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Next"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="78k-wg-4gR"/>
+                                                                                                    <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="PoP-hJ-HJ1"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="trailing" secondItem="YSP-1M-vYP" secondAttribute="trailing" id="4VN-JU-Ym5"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="YSP-1M-vYP" secondAttribute="bottom" id="8xb-lb-dpa"/>
+                                                                                            <constraint firstItem="YSP-1M-vYP" firstAttribute="top" secondItem="tse-kc-iTr" secondAttribute="top" id="Xrv-sS-pVK"/>
+                                                                                        </constraints>
+                                                                                    </view>
                                                                                 </subviews>
                                                                             </stackView>
                                                                         </subviews>
@@ -668,38 +717,82 @@
                                                                             <constraint firstAttribute="trailing" secondItem="f1a-lx-ZQq" secondAttribute="trailing" constant="15" id="cld-D8-Lv6"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6DG-mI-tdc">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="blg-Tw-ON7">
                                                                         <rect key="frame" x="0.0" y="644" width="393" height="50"/>
                                                                         <subviews>
-                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="YYx-yC-WNR">
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="7D0-so-jon">
                                                                                 <rect key="frame" x="20" y="5" width="353" height="40"/>
                                                                                 <subviews>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o9z-Wd-0Au">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-backward"/>
-                                                                                        <connections>
-                                                                                            <action selector="backBtnAction:" destination="dG4-q4-wf9" eventType="touchUpInside" id="1Zn-vh-Myz"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j8l-yQ-3bb">
-                                                                                        <rect key="frame" x="196.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-forward"/>
-                                                                                        <connections>
-                                                                                            <action selector="forwardBtnAction:" destination="dG4-q4-wf9" eventType="touchUpInside" id="fxm-J5-eYZ"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RqW-B0-Fwk">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="151.66666666666666" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fFA-y7-o0b">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="bvW-di-feE"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Back"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="FMw-Ay-Ozs"/>
+                                                                                                    <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="JUn-Gg-Xk0"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstAttribute="bottom" secondItem="fFA-y7-o0b" secondAttribute="bottom" id="9Dc-38-wxA"/>
+                                                                                            <constraint firstItem="fFA-y7-o0b" firstAttribute="top" secondItem="RqW-B0-Fwk" secondAttribute="top" id="C3s-3D-dvk"/>
+                                                                                            <constraint firstItem="fFA-y7-o0b" firstAttribute="leading" secondItem="RqW-B0-Fwk" secondAttribute="leading" id="IeL-r3-T4z"/>
+                                                                                        </constraints>
+                                                                                    </view>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jX8-RR-HcM">
+                                                                                        <rect key="frame" x="201.66666666666663" y="0.0" width="151.33333333333337" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Zb-pb-tpo">
+                                                                                                <rect key="frame" x="21.333333333333343" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="eMt-mt-2RZ"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Next"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="Rv3-MO-UHs"/>
+                                                                                                    <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="YaG-Wq-EJo"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstItem="6Zb-pb-tpo" firstAttribute="top" secondItem="jX8-RR-HcM" secondAttribute="top" id="2ry-lC-I8b"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="6Zb-pb-tpo" secondAttribute="bottom" id="BMP-oB-oYT"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="6Zb-pb-tpo" secondAttribute="trailing" id="FdT-NM-Mli"/>
+                                                                                        </constraints>
+                                                                                    </view>
                                                                                 </subviews>
                                                                             </stackView>
                                                                         </subviews>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="trailing" secondItem="YYx-yC-WNR" secondAttribute="trailing" constant="20" id="0hw-GC-4jg"/>
-                                                                            <constraint firstAttribute="height" constant="50" id="KK4-zb-FSt"/>
-                                                                            <constraint firstAttribute="bottom" secondItem="YYx-yC-WNR" secondAttribute="bottom" constant="5" id="OMX-ce-ydl"/>
-                                                                            <constraint firstItem="YYx-yC-WNR" firstAttribute="leading" secondItem="6DG-mI-tdc" secondAttribute="leading" constant="20" id="nGF-n6-rbP"/>
-                                                                            <constraint firstItem="YYx-yC-WNR" firstAttribute="top" secondItem="6DG-mI-tdc" secondAttribute="top" constant="5" id="raQ-EW-udA"/>
+                                                                            <constraint firstItem="7D0-so-jon" firstAttribute="top" secondItem="blg-Tw-ON7" secondAttribute="top" constant="5" id="DKM-Sy-EFU"/>
+                                                                            <constraint firstItem="7D0-so-jon" firstAttribute="leading" secondItem="blg-Tw-ON7" secondAttribute="leading" constant="20" id="FI4-yU-M9y"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="7D0-so-jon" secondAttribute="trailing" constant="20" id="LmM-B0-l5J"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="tIS-L6-CqZ"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="7D0-so-jon" secondAttribute="bottom" constant="5" id="xqz-YR-WnN"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
@@ -744,7 +837,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="forwardButton" destination="j8l-yQ-3bb" id="oWl-TO-AaD"/>
                         <outlet property="tableView" destination="f1a-lx-ZQq" id="5Z7-qB-meC"/>
                     </connections>
                 </viewController>
@@ -920,38 +1012,82 @@
                                                                             <constraint firstItem="Hm0-1n-joo" firstAttribute="leading" secondItem="ZjA-A1-sAZ" secondAttribute="leading" constant="15" id="qQo-uW-UiH"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="taJ-a8-F0I">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1RG-dg-1I9">
                                                                         <rect key="frame" x="0.0" y="658" width="393" height="50"/>
                                                                         <subviews>
-                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="t2c-p3-8gI">
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="xrd-QY-Myk">
                                                                                 <rect key="frame" x="20" y="5" width="353" height="40"/>
                                                                                 <subviews>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tBV-ES-gIV">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="156.66666666666666" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-backward"/>
-                                                                                        <connections>
-                                                                                            <action selector="backBtnAction:" destination="giu-9b-A4m" eventType="touchUpInside" id="GSu-1d-Say"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MGC-Se-Xvu">
-                                                                                        <rect key="frame" x="196.66666666666663" y="0.0" width="156.33333333333337" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-forward"/>
-                                                                                        <connections>
-                                                                                            <action selector="forwardBtnAction:" destination="giu-9b-A4m" eventType="touchUpInside" id="Ucf-UQ-CPe"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ek3-Qg-Tse">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="151.66666666666666" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0XN-rO-y8y">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="ZZt-Ha-olm"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Back"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="8Bt-uQ-tqv"/>
+                                                                                                    <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="Oc7-oc-igU"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstItem="0XN-rO-y8y" firstAttribute="top" secondItem="Ek3-Qg-Tse" secondAttribute="top" id="1Uy-ik-FtY"/>
+                                                                                            <constraint firstItem="0XN-rO-y8y" firstAttribute="leading" secondItem="Ek3-Qg-Tse" secondAttribute="leading" id="cK5-nj-Zuo"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="0XN-rO-y8y" secondAttribute="bottom" id="g0b-cz-3Qs"/>
+                                                                                        </constraints>
+                                                                                    </view>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bl3-qc-PSl">
+                                                                                        <rect key="frame" x="201.66666666666663" y="0.0" width="151.33333333333337" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IpJ-xC-5ja">
+                                                                                                <rect key="frame" x="21.333333333333343" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="5zI-vB-rYR"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Next"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="rkO-4v-yp6"/>
+                                                                                                    <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="skK-JI-JfS"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstItem="IpJ-xC-5ja" firstAttribute="top" secondItem="Bl3-qc-PSl" secondAttribute="top" id="3fC-Gf-6hQ"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="IpJ-xC-5ja" secondAttribute="bottom" id="Gbh-XL-rye"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="IpJ-xC-5ja" secondAttribute="trailing" id="Tk7-4Z-0L7"/>
+                                                                                        </constraints>
+                                                                                    </view>
                                                                                 </subviews>
                                                                             </stackView>
                                                                         </subviews>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
-                                                                            <constraint firstItem="t2c-p3-8gI" firstAttribute="leading" secondItem="taJ-a8-F0I" secondAttribute="leading" constant="20" id="1id-Ot-USt"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="t2c-p3-8gI" secondAttribute="trailing" constant="20" id="Qux-oG-nbX"/>
-                                                                            <constraint firstAttribute="height" constant="50" id="ba3-tA-xZb"/>
-                                                                            <constraint firstAttribute="bottom" secondItem="t2c-p3-8gI" secondAttribute="bottom" constant="5" id="vbg-9S-sW8"/>
-                                                                            <constraint firstItem="t2c-p3-8gI" firstAttribute="top" secondItem="taJ-a8-F0I" secondAttribute="top" constant="5" id="x0x-Wb-SV8"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="1eq-ux-JZc"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="xrd-QY-Myk" secondAttribute="trailing" constant="20" id="2Jo-Ud-7Yh"/>
+                                                                            <constraint firstItem="xrd-QY-Myk" firstAttribute="top" secondItem="1RG-dg-1I9" secondAttribute="top" constant="5" id="EKi-hM-3UC"/>
+                                                                            <constraint firstItem="xrd-QY-Myk" firstAttribute="leading" secondItem="1RG-dg-1I9" secondAttribute="leading" constant="20" id="Y0d-i2-ADK"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="xrd-QY-Myk" secondAttribute="bottom" constant="5" id="qXq-Bl-D3V"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
@@ -996,7 +1132,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="forwardButton" destination="MGC-Se-Xvu" id="IzZ-Ec-AB6"/>
                         <outlet property="tableView" destination="Hm0-1n-joo" id="UQ7-3t-z6z"/>
                         <outlet property="tableViewHeight" destination="frf-Dg-yD8" id="b7w-hc-Eye"/>
                     </connections>
@@ -1156,13 +1291,15 @@
                                         </subviews>
                                     </stackView>
                                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dk0-7A-2jL">
-                                        <rect key="frame" x="126" y="699" width="141" height="40"/>
+                                        <rect key="frame" x="131.66666666666666" y="699" width="129.99999999999997" height="40"/>
+                                        <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="hNa-UH-MBc"/>
-                                            <constraint firstAttribute="width" constant="141" id="t7j-6e-kt3"/>
+                                            <constraint firstAttribute="width" constant="130" id="t7j-6e-kt3"/>
                                         </constraints>
+                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal" image="tour-backward"/>
+                                        <state key="normal" title="Back"/>
                                         <connections>
                                             <action selector="backBtnAction:" destination="iSW-rM-AbD" eventType="touchUpInside" id="RZH-Rc-1W9"/>
                                         </connections>
@@ -1495,38 +1632,82 @@
                                                                             <constraint firstAttribute="trailing" secondItem="RUI-hQ-igW" secondAttribute="trailing" constant="10" id="wSm-OV-2FD"/>
                                                                         </constraints>
                                                                     </view>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zii-DD-8gi">
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ROQ-9L-QyR">
                                                                         <rect key="frame" x="0.0" y="644" width="393" height="50"/>
                                                                         <subviews>
-                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="dhi-D3-EXU">
-                                                                                <rect key="frame" x="0.0" y="5" width="393" height="40"/>
+                                                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="quI-1V-XYN">
+                                                                                <rect key="frame" x="20" y="5" width="353" height="40"/>
                                                                                 <subviews>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gjC-Wq-bET">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="171.66666666666666" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-backward"/>
-                                                                                        <connections>
-                                                                                            <action selector="backBtnAction:" destination="BSd-sd-VA4" eventType="touchUpInside" id="nLe-0B-T3V"/>
-                                                                                        </connections>
-                                                                                    </button>
-                                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K4t-Lj-mc1">
-                                                                                        <rect key="frame" x="221.66666666666663" y="0.0" width="171.33333333333337" height="40"/>
-                                                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                                        <state key="normal" image="tour-forward"/>
-                                                                                        <connections>
-                                                                                            <action selector="moveForwardBtn:" destination="BSd-sd-VA4" eventType="touchUpInside" id="ACE-qE-fBF"/>
-                                                                                        </connections>
-                                                                                    </button>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="udX-Np-6ih">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="151.66666666666666" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Nf-l6-QSJ">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="tlS-vq-XoE"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Back"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="backBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="9iy-cn-FR5"/>
+                                                                                                    <action selector="backBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="A2Y-nK-GNk"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstItem="4Nf-l6-QSJ" firstAttribute="leading" secondItem="udX-Np-6ih" secondAttribute="leading" id="Aiz-h7-KFP"/>
+                                                                                            <constraint firstItem="4Nf-l6-QSJ" firstAttribute="top" secondItem="udX-Np-6ih" secondAttribute="top" id="mNo-HH-d0e"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="4Nf-l6-QSJ" secondAttribute="bottom" id="pAJ-8a-VyR"/>
+                                                                                        </constraints>
+                                                                                    </view>
+                                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bk-7e-Lst">
+                                                                                        <rect key="frame" x="201.66666666666663" y="0.0" width="151.33333333333337" height="40"/>
+                                                                                        <subviews>
+                                                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aVs-ZG-s1y">
+                                                                                                <rect key="frame" x="21.333333333333343" y="0.0" width="130" height="40"/>
+                                                                                                <color key="backgroundColor" red="0.93534982200000005" green="0.6132115722" blue="0.22728630899999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                                                                <constraints>
+                                                                                                    <constraint firstAttribute="width" constant="130" id="Off-Cd-ZyK"/>
+                                                                                                </constraints>
+                                                                                                <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="18"/>
+                                                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                <state key="normal" title="Next"/>
+                                                                                                <userDefinedRuntimeAttributes>
+                                                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                                                        <real key="value" value="5"/>
+                                                                                                    </userDefinedRuntimeAttribute>
+                                                                                                </userDefinedRuntimeAttributes>
+                                                                                                <connections>
+                                                                                                    <action selector="forwardBtnAction:" destination="3eK-kn-H91" eventType="touchUpInside" id="8Qn-dI-pff"/>
+                                                                                                    <action selector="forwardBtnAction:" destination="Rpc-HP-FCG" eventType="touchUpInside" id="cme-PO-rqT"/>
+                                                                                                </connections>
+                                                                                            </button>
+                                                                                        </subviews>
+                                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                        <constraints>
+                                                                                            <constraint firstItem="aVs-ZG-s1y" firstAttribute="top" secondItem="3Bk-7e-Lst" secondAttribute="top" id="7uf-ga-7h6"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="aVs-ZG-s1y" secondAttribute="bottom" id="Yxv-P3-WSi"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="aVs-ZG-s1y" secondAttribute="trailing" id="yqS-LS-r7W"/>
+                                                                                        </constraints>
+                                                                                    </view>
                                                                                 </subviews>
                                                                             </stackView>
                                                                         </subviews>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="50" id="0MY-FD-9f2"/>
-                                                                            <constraint firstItem="dhi-D3-EXU" firstAttribute="leading" secondItem="zii-DD-8gi" secondAttribute="leading" id="7lH-CW-4FL"/>
-                                                                            <constraint firstAttribute="bottom" secondItem="dhi-D3-EXU" secondAttribute="bottom" constant="5" id="Ud5-AH-uSi"/>
-                                                                            <constraint firstItem="dhi-D3-EXU" firstAttribute="top" secondItem="zii-DD-8gi" secondAttribute="top" constant="5" id="ZXi-0O-Ksc"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="dhi-D3-EXU" secondAttribute="trailing" id="oaj-Ds-Xrk"/>
+                                                                            <constraint firstItem="quI-1V-XYN" firstAttribute="top" secondItem="ROQ-9L-QyR" secondAttribute="top" constant="5" id="8Tj-pv-fsX"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="quI-1V-XYN" secondAttribute="trailing" constant="20" id="ALc-Q1-xdz"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="quI-1V-XYN" secondAttribute="bottom" constant="5" id="h17-qN-hBj"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="jNI-Pa-wJe"/>
+                                                                            <constraint firstItem="quI-1V-XYN" firstAttribute="leading" secondItem="ROQ-9L-QyR" secondAttribute="leading" constant="20" id="rz8-kr-zT2"/>
                                                                         </constraints>
                                                                     </view>
                                                                 </subviews>
@@ -1571,7 +1752,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="forwardButton" destination="K4t-Lj-mc1" id="z8d-MQ-hk5"/>
                         <outlet property="tableView" destination="RUI-hQ-igW" id="JaK-mQ-ybY"/>
                     </connections>
                 </viewController>
@@ -1714,10 +1894,8 @@
         <image name="resthouse" width="240" height="209"/>
         <image name="tour-acc-bg" width="719" height="627"/>
         <image name="tour-accomodation" width="337" height="38"/>
-        <image name="tour-backward" width="141" height="50"/>
         <image name="tour-destination" width="933" height="684"/>
         <image name="tour-experience" width="337" height="38"/>
-        <image name="tour-forward" width="139" height="50"/>
         <image name="tour-planner-destination" width="337" height="38"/>
         <image name="tour-planner1" width="337" height="38"/>
         <image name="travel-information" width="337" height="38"/>

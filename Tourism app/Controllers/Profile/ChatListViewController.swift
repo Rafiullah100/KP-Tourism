@@ -37,6 +37,9 @@ class ChatListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         profileButton.imageView?.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
+        currentPage = 1
+        totalCount = 0
+        conversationUsers = []
         load()
     }
     
@@ -91,6 +94,7 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(conversationUsers.count, totalCount, indexPath.row)
         if conversationUsers.count != totalCount && indexPath.row == conversationUsers.count - 1  {
             currentPage = currentPage + 1
             load()

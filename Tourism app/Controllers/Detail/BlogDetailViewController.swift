@@ -56,8 +56,8 @@ class BlogDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "blogs"
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
-        textView.text = blogDetail?.blogDescription
-        blogTitleLabel.text = blogDetail?.title
+        textView.text = blogDetail?.blogDescription.stripOutHtml()
+        blogTitleLabel.text = blogDetail?.title.stripOutHtml()
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
         favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
