@@ -16,7 +16,7 @@ class ChatListTableViewCell: UITableViewCell {
     var user: LoadedConversationUser? {
         didSet{
             userProfileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-            nameLabel.text = user?.name
+            nameLabel.text = user?.name?.capitalized
         }
     }
     

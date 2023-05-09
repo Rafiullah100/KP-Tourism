@@ -7,6 +7,7 @@
 
 import UIKit
 import MessageUI
+import SVProgressHUD
 class TourPdfViewController: BaseViewController {
     
     @IBOutlet weak var contentView: UIView!
@@ -24,16 +25,24 @@ class TourPdfViewController: BaseViewController {
         let destination = UserDefaults.standard.destination
         let information = UserDefaults.standard.information
         let accomodation = UserDefaults.standard.accomodation
-        fetch(route: .visitpdf, method: .post, parameters: ["name": "", "email": "", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf"], model: PDFModel.self)
+        fetch(route: .visitpdf, method: .post, parameters: ["name": UserDefaults.standard.name ?? "No name", "email": UserDefaults.standard.userEmail ?? "No Email", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf", "accomudation": accomodation ?? ""], model: PDFModel.self)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
-            case .success(let pdf):
-                print("will d")
+            case .success(let model):
+                let pdfModel = model as? PDFModel
+                if pdfModel?.success == true{
+                    guard let url = URL(string: pdfModel?.file ?? "") else { return }
+                    if #available(iOS 10.0, *) {
+                        UIApplication.shared.open(url , options: [:], completionHandler: nil)
+                    } else {
+                        UIApplication.shared.openURL(url)
+                    }
+                }
             case .failure(let error):
-                print("ekrmf")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

@@ -52,6 +52,7 @@ class GettingHereViewController: BaseViewController {
         travel = .textual
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GettingHereModel.self)
         }

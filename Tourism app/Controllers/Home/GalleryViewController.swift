@@ -19,6 +19,7 @@ class GalleryViewController: BaseViewController {
             imageCollectionView.register(UINib(nibName: "ImageCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ImageCollectionViewCell.cellIdentifier)
         }
     }
+    
     @IBOutlet weak var videoCollectionView: UICollectionView!{
         didSet{
             videoCollectionView.dataSource = self

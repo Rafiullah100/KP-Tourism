@@ -61,6 +61,25 @@ struct Constants {
               Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
    ]
     
+    static let gallerySection =  [Sections(title: "Images", image: "", selectedImage: ""),
+              Sections(title: "Videos", image: "", selectedImage: ""),
+              Sections(title: "Virtual Tours", image: "", selectedImage: ""),
+   ]
+    
+    static let accomodationSection =  [Sections(title: "Private Hotels", image: "", selectedImage: ""),
+              Sections(title: "Camping Pods", image: "", selectedImage: ""),
+              Sections(title: "Government Rest Houses", image: "", selectedImage: ""),
+              Sections(title: "PTDC Hotels", image: "", selectedImage: ""),
+                                       Sections(title: "Others", image: "", selectedImage: ""),
+
+
+   ]
+    
+    static let profileSection =  [Sections(title: "Post", image: "", selectedImage: ""),
+              Sections(title: "Products", image: "", selectedImage: ""),
+              Sections(title: "Blogs", image: "", selectedImage: "")
+   ]
+    
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]
     
     static var visitkpArray = [VisitArea(image: "north", background: "north-bg", title: "NORTH", geoTypeID: "Northern"), VisitArea(image: "midland", background: "midland-bg", title: "MIDLAND", geoTypeID: "Mid-Land"), VisitArea(image: "merged", background: "merged-bg", title: "MERGED", geoTypeID: "Merged"), VisitArea(image: "south-map", background: "south-bg", title: "SOUTH", geoTypeID: "Southern")]

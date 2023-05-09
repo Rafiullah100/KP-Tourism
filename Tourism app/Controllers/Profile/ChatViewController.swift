@@ -70,12 +70,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if chatUser != nil {
-            nameLabel.text = chatUser?.name
+            nameLabel.text = chatUser?.name?.capitalized
             recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
         }
         else{
-            nameLabel.text = chatUser1?.user?.name
+            nameLabel.text = chatUser1?.user?.name?.capitalized
             recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser1?.user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser1?.user?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
         }

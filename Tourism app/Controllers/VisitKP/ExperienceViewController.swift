@@ -104,13 +104,8 @@ extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         experienceId = districtCategries?[indexPath.row].id
         isSelected = true
-
         guard let district = districtCategries?[indexPath.row] else { return }
-//        UserDefaults.standard.set(district, forKey: "experience")
         UserDefaults.standard.experience = district.title
-//        if let encoded = try? JSONEncoder().encode(district) {
-//            UserDefaults.standard.set(encoded, forKey: "experience")
-//        }
     }
 }
 

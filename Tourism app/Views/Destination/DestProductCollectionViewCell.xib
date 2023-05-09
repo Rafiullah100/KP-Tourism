@@ -10,6 +10,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Poppins-Medium.ttf">
+            <string>Poppins-Medium</string>
+        </array>
         <array key="Poppins-Regular.ttf">
             <string>Poppins-Regular</string>
         </array>
@@ -30,29 +33,29 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iwb-nz-8nw">
                         <rect key="frame" x="2" y="2" width="296" height="296"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="fHg-L1-SRI">
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="fHg-L1-SRI">
                                 <rect key="frame" x="0.0" y="0.0" width="296" height="296"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mnE-Pw-Nna">
-                                        <rect key="frame" x="0.0" y="0.0" width="296" height="246"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="296" height="241"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 22" translatesAutoresizingMaskIntoConstraints="NO" id="ZPb-CE-Wml">
-                                                <rect key="frame" x="2" y="2" width="292" height="241.5"/>
+                                                <rect key="frame" x="2" y="2" width="292" height="236.5"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L0N-Zf-f6v">
-                                                <rect key="frame" x="206" y="229" width="90" height="25"/>
+                                                <rect key="frame" x="201" y="224" width="90" height="25"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="BP0-94-0SY">
-                                                        <rect key="frame" x="0.0" y="5" width="78" height="15"/>
+                                                        <rect key="frame" x="0.0" y="5" width="85" height="15"/>
                                                         <subviews>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kumrat" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-06-TOE">
-                                                                <rect key="frame" x="0.0" y="0.0" width="59" height="15"/>
-                                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="7"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Kumrat" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aRM-06-TOE">
+                                                                <rect key="frame" x="0.0" y="0.0" width="66" height="15"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="8"/>
                                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UaH-9l-Aaa">
-                                                                <rect key="frame" x="62" y="0.0" width="16" height="15"/>
+                                                                <rect key="frame" x="69" y="0.0" width="16" height="15"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="green-circle" translatesAutoresizingMaskIntoConstraints="NO" id="DIr-J3-Y0k">
                                                                         <rect key="frame" x="0.0" y="0.0" width="16" height="15"/>
@@ -82,7 +85,7 @@
                                                 <constraints>
                                                     <constraint firstItem="BP0-94-0SY" firstAttribute="top" secondItem="L0N-Zf-f6v" secondAttribute="top" constant="5" id="Lj3-Ip-qgv"/>
                                                     <constraint firstItem="BP0-94-0SY" firstAttribute="leading" secondItem="L0N-Zf-f6v" secondAttribute="leading" id="P8g-ui-zXI"/>
-                                                    <constraint firstAttribute="trailing" secondItem="BP0-94-0SY" secondAttribute="trailing" constant="12" id="ZWh-x3-DOd"/>
+                                                    <constraint firstAttribute="trailing" secondItem="BP0-94-0SY" secondAttribute="trailing" constant="5" id="ZWh-x3-DOd"/>
                                                     <constraint firstAttribute="bottom" secondItem="BP0-94-0SY" secondAttribute="bottom" constant="5" id="mm0-jh-DMW"/>
                                                     <constraint firstAttribute="height" constant="25" id="skK-Ry-K41"/>
                                                     <constraint firstAttribute="width" constant="90" id="wP0-4O-Kud"/>
@@ -117,7 +120,7 @@
                                             <constraint firstItem="ZPb-CE-Wml" firstAttribute="top" secondItem="mnE-Pw-Nna" secondAttribute="top" constant="2" id="GDw-ym-Dlz"/>
                                             <constraint firstAttribute="trailing" secondItem="ZPb-CE-Wml" secondAttribute="trailing" constant="2" id="IpJ-mV-t6A"/>
                                             <constraint firstItem="L0N-Zf-f6v" firstAttribute="top" secondItem="ZPb-CE-Wml" secondAttribute="bottom" constant="-14.5" id="LE9-6B-eXy"/>
-                                            <constraint firstAttribute="trailing" secondItem="L0N-Zf-f6v" secondAttribute="trailing" id="Mxo-bD-GoS"/>
+                                            <constraint firstAttribute="trailing" secondItem="L0N-Zf-f6v" secondAttribute="trailing" constant="5" id="Mxo-bD-GoS"/>
                                             <constraint firstAttribute="bottom" secondItem="L0N-Zf-f6v" secondAttribute="bottom" constant="-8" id="gNf-gD-f3g"/>
                                             <constraint firstItem="ZPb-CE-Wml" firstAttribute="leading" secondItem="mnE-Pw-Nna" secondAttribute="leading" constant="2" id="ldS-qM-utJ"/>
                                         </constraints>
@@ -201,7 +204,6 @@
                                     <constraint firstItem="nbb-os-tiG" firstAttribute="leading" secondItem="fHg-L1-SRI" secondAttribute="leading" id="77r-eC-Hbh"/>
                                     <constraint firstItem="mnE-Pw-Nna" firstAttribute="top" secondItem="fHg-L1-SRI" secondAttribute="top" id="9rJ-ZF-3Kz"/>
                                     <constraint firstAttribute="trailing" secondItem="nbb-os-tiG" secondAttribute="trailing" id="OJi-cO-snR"/>
-                                    <constraint firstItem="nbb-os-tiG" firstAttribute="top" secondItem="mnE-Pw-Nna" secondAttribute="bottom" id="Rnb-ny-bZU"/>
                                     <constraint firstItem="mnE-Pw-Nna" firstAttribute="leading" secondItem="fHg-L1-SRI" secondAttribute="leading" id="n6b-8t-rOT"/>
                                 </constraints>
                             </stackView>

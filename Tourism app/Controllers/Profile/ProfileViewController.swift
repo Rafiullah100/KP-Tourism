@@ -117,31 +117,38 @@ class ProfileViewController: UIViewController {
     }
     
     private func configureTabbar(){
-        let section = ["Post", "Products", "Blogs"]
-        for i in 0..<section.count{
-            let tabbarItem = UITabBarItem(title: section[i], image: nil, tag: i)
+        for item in Constants.profileSection {
+            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
             tabbarItems.append(tabbarItem)
         }
         profileSection = .post
-        tabbarView.items = tabbarItems
         tabbarView.backgroundColor = .clear
-        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
-        tabbarView.setTitleColor(Constants.appColor, for: .selected)
+        tabbarView.items = tabbarItems
         tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = .clear
+        tabbarView.bottomDividerColor = UIColor.lightGray
         tabbarView.rippleColor = .clear
         tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
         tabbarView.preferredLayoutStyle = .scrollableCentered
         tabbarView.isScrollEnabled = false
-        tabbarView.tabBarDelegate = self
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .normal)
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15.0), for: .selected)
-        tabbarView.minItemWidth = 100.0
+        tabbarView.setTitleFont(Constants.lightFont, for: .normal)
+        tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
+        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
+        tabbarView.setTitleColor(Constants.appColor, for: .selected)
+        tabbarView.bounces = false
+        tabbarView.showsVerticalScrollIndicator = false
+        tabbarView.alwaysBounceVertical = false
+        tabbarView.bouncesZoom = false
+        tabbarView.shouldIgnoreScrollingAdjustment = false
+        tabbarView.scrollsToTop = false
+        tabbarView.minItemWidth = 100
+        tabbarView.delegate = self
+        tabbarView.contentInsetAdjustmentBehavior = .never
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
     @IBAction func followingBtnAction(_ sender: Any) {
         guard let profileType = profileType else { return }
         Switcher.showFollower(delegate: self, profileType: profileType)

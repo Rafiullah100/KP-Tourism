@@ -35,6 +35,7 @@ class AttractionDetailViewController: BaseViewController {
 
     func updateUI() {
         thumbnailTopLabel.text = attractionDistrict?.title
+        thumbnailBottomLabel.text = attractionDistrict?.locationTitle
         thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
         nameLabel.text = attractionDistrict?.title
         textView.text = attractionDistrict?.description.stripOutHtml()

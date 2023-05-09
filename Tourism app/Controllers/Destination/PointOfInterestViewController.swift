@@ -35,14 +35,17 @@ class PointOfInterestViewController: BaseViewController {
     func updateUI() {        
         if exploreDistrict != nil{
             thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
         }
         else if attractionsDistrict != nil{
             thumbnailTopLabel.text = attractionsDistrict?.title
+            thumbnailBottomLabel.text = attractionsDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionsDistrict?.previewImage ?? "")))
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnailBottomLabel.text = attractionsDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
         }
     }

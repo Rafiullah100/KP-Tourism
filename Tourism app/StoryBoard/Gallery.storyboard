@@ -11,6 +11,9 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Poppins-Bold.ttf">
+            <string>Poppins-Bold</string>
+        </array>
         <array key="Poppins-Medium.ttf">
             <string>Poppins-Medium</string>
         </array>
@@ -128,257 +131,6 @@
             </objects>
             <point key="canvasLocation" x="108.69565217391305" y="46.875"/>
         </scene>
-        <!--Image View Controller-->
-        <scene sceneID="5oD-tQ-9ck">
-            <objects>
-                <viewController storyboardIdentifier="ImageViewController" id="TpG-Ep-EQF" customClass="ImageViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="aFx-TP-3ou"/>
-                        <viewControllerLayoutGuide type="bottom" id="XrJ-Xo-i84"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="yhG-CW-Ppw">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="jmN-jH-zaJ" customClass="ASCollectionView" customModule="Tourism_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewLayout key="collectionViewLayout" id="N9F-Ev-Vdq" customClass="ASCollectionViewLayout" customModule="Tourism_app" customModuleProvider="target"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="IWA-XK-PZy" customClass="GridCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="11" width="156" height="67"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TZ2-8Z-Sza">
-                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gallery-image" translatesAutoresizingMaskIntoConstraints="NO" id="fAs-mH-kfh">
-                                                    <rect key="frame" x="10" y="10" width="15" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="15" id="1qV-WH-yHG"/>
-                                                        <constraint firstAttribute="height" constant="15" id="r7b-5K-mfl"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="TZ2-8Z-Sza" secondAttribute="trailing" id="D2K-M2-34P"/>
-                                            <constraint firstAttribute="bottom" secondItem="TZ2-8Z-Sza" secondAttribute="bottom" id="IT0-ya-KF1"/>
-                                            <constraint firstItem="fAs-mH-kfh" firstAttribute="leading" secondItem="IWA-XK-PZy" secondAttribute="leading" constant="10" id="MsS-CA-RNw"/>
-                                            <constraint firstItem="TZ2-8Z-Sza" firstAttribute="top" secondItem="IWA-XK-PZy" secondAttribute="top" id="RB8-cf-uxs"/>
-                                            <constraint firstItem="fAs-mH-kfh" firstAttribute="top" secondItem="IWA-XK-PZy" secondAttribute="top" constant="10" id="irM-GI-NGH"/>
-                                            <constraint firstItem="TZ2-8Z-Sza" firstAttribute="leading" secondItem="IWA-XK-PZy" secondAttribute="leading" id="oSt-ep-LYi"/>
-                                        </constraints>
-                                        <size key="customSize" width="156" height="67"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="TZ2-8Z-Sza" id="8pT-Or-63d"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="parallaxCell" id="Ox7-Z2-YlW" customClass="ParallaxCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="166" y="0.0" width="224" height="89"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="224" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gallery-image" translatesAutoresizingMaskIntoConstraints="NO" id="a0t-b0-87Z">
-                                                    <rect key="frame" x="10" y="10" width="15" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="15" id="2sI-n2-Nbo"/>
-                                                        <constraint firstAttribute="width" constant="15" id="BNS-Js-Z0w"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="a0t-b0-87Z" firstAttribute="top" secondItem="Ox7-Z2-YlW" secondAttribute="top" constant="10" id="hwg-pD-MWH"/>
-                                            <constraint firstItem="a0t-b0-87Z" firstAttribute="leading" secondItem="Ox7-Z2-YlW" secondAttribute="leading" constant="10" id="qCJ-CT-cZv"/>
-                                        </constraints>
-                                        <size key="customSize" width="224" height="89"/>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="rDd-H5-oLz"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="jmN-jH-zaJ" firstAttribute="top" secondItem="rDd-H5-oLz" secondAttribute="top" id="0Fm-lk-Y03"/>
-                            <constraint firstItem="jmN-jH-zaJ" firstAttribute="bottom" secondItem="rDd-H5-oLz" secondAttribute="bottom" id="Q2j-5N-Puj"/>
-                            <constraint firstItem="jmN-jH-zaJ" firstAttribute="trailing" secondItem="rDd-H5-oLz" secondAttribute="trailing" id="pwm-Bz-ToF"/>
-                            <constraint firstItem="jmN-jH-zaJ" firstAttribute="leading" secondItem="rDd-H5-oLz" secondAttribute="leading" id="zuf-Mf-VWp"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="jmN-jH-zaJ" id="aHD-lv-fvO"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dzc-sc-nez" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="840.57971014492762" y="46.875"/>
-        </scene>
-        <!--Video View Controller-->
-        <scene sceneID="7uG-Fz-bHr">
-            <objects>
-                <viewController storyboardIdentifier="VideoViewController" id="3gl-le-YYD" customClass="VideoViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6Yn-Z0-c82"/>
-                        <viewControllerLayoutGuide type="bottom" id="bUt-i4-JYb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="JMI-QH-ovb">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="z0N-rr-Ona" customClass="ASCollectionView" customModule="Tourism_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewLayout key="collectionViewLayout" id="SOv-ul-RNr" customClass="ASCollectionViewLayout" customModule="Tourism_app" customModuleProvider="target"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="1D9-DW-CDI" customClass="GridCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="11" width="156" height="67"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OrE-Cb-aM4">
-                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                                </imageView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video-icon" translatesAutoresizingMaskIntoConstraints="NO" id="M3E-mj-C3n">
-                                                    <rect key="frame" x="10" y="10" width="15" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="15" id="lK5-XX-Nin"/>
-                                                        <constraint firstAttribute="height" constant="15" id="z1g-BS-RmD"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="OrE-Cb-aM4" firstAttribute="leading" secondItem="1D9-DW-CDI" secondAttribute="leading" id="AU0-Sr-7EZ"/>
-                                            <constraint firstAttribute="bottom" secondItem="OrE-Cb-aM4" secondAttribute="bottom" id="HOK-aM-VJ7"/>
-                                            <constraint firstItem="M3E-mj-C3n" firstAttribute="top" secondItem="1D9-DW-CDI" secondAttribute="top" constant="10" id="m8r-4k-nDU"/>
-                                            <constraint firstItem="OrE-Cb-aM4" firstAttribute="top" secondItem="1D9-DW-CDI" secondAttribute="top" id="po4-Xf-F9e"/>
-                                            <constraint firstItem="M3E-mj-C3n" firstAttribute="leading" secondItem="1D9-DW-CDI" secondAttribute="leading" constant="10" id="qST-qB-y7b"/>
-                                            <constraint firstAttribute="trailing" secondItem="OrE-Cb-aM4" secondAttribute="trailing" id="sED-eP-XsB"/>
-                                        </constraints>
-                                        <size key="customSize" width="156" height="67"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="OrE-Cb-aM4" id="UoL-Ql-L6P"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="parallaxCell" id="Nw2-lx-z4k" customClass="ParallaxCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="166" y="0.0" width="224" height="89"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="224" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video-icon" translatesAutoresizingMaskIntoConstraints="NO" id="MpW-nk-vcC">
-                                                    <rect key="frame" x="10" y="10" width="15" height="15"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="15" id="Flu-YW-DBC"/>
-                                                        <constraint firstAttribute="height" constant="15" id="xXv-w8-XTA"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="MpW-nk-vcC" firstAttribute="leading" secondItem="Nw2-lx-z4k" secondAttribute="leading" constant="10" id="5QM-EQ-j3h"/>
-                                            <constraint firstItem="MpW-nk-vcC" firstAttribute="top" secondItem="Nw2-lx-z4k" secondAttribute="top" constant="10" id="7gk-2i-0rw"/>
-                                        </constraints>
-                                        <size key="customSize" width="224" height="89"/>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="l8A-hA-9ut"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="z0N-rr-Ona" firstAttribute="top" secondItem="l8A-hA-9ut" secondAttribute="top" id="Ncn-hy-dum"/>
-                            <constraint firstItem="z0N-rr-Ona" firstAttribute="bottom" secondItem="l8A-hA-9ut" secondAttribute="bottom" id="OGO-KJ-g84"/>
-                            <constraint firstItem="z0N-rr-Ona" firstAttribute="trailing" secondItem="l8A-hA-9ut" secondAttribute="trailing" id="Pg1-r4-zE5"/>
-                            <constraint firstItem="z0N-rr-Ona" firstAttribute="leading" secondItem="l8A-hA-9ut" secondAttribute="leading" id="X60-9z-7Bd"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="z0N-rr-Ona" id="5PJ-Jp-xxE"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BI7-Q3-DoI" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1471.0144927536232" y="46.875"/>
-        </scene>
-        <!--Virtual Tour View Controller-->
-        <scene sceneID="wfA-IL-zmA">
-            <objects>
-                <viewController storyboardIdentifier="VirtualTourViewController" id="AYG-Ba-13O" customClass="VirtualTourViewController" customModule="Tourism_app" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="0N5-5d-cTk"/>
-                        <viewControllerLayoutGuide type="bottom" id="F1S-LL-Ql3"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="CEO-7q-zZe">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="9Mg-GP-0O9" customClass="ASCollectionView" customModule="Tourism_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="48" width="414" height="814"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewLayout key="collectionViewLayout" id="jJK-1j-7Qr" customClass="ASCollectionViewLayout" customModule="Tourism_app" customModuleProvider="target"/>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="DWX-fN-Adv" customClass="GridCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="11" width="156" height="67"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1D7-gt-kPt">
-                                                    <rect key="frame" x="0.0" y="0.0" width="156" height="67"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="1D7-gt-kPt" secondAttribute="bottom" id="MJh-w4-6fg"/>
-                                            <constraint firstItem="1D7-gt-kPt" firstAttribute="top" secondItem="DWX-fN-Adv" secondAttribute="top" id="PoS-kp-gfr"/>
-                                            <constraint firstItem="1D7-gt-kPt" firstAttribute="leading" secondItem="DWX-fN-Adv" secondAttribute="leading" id="fVQ-kZ-dX0"/>
-                                            <constraint firstAttribute="trailing" secondItem="1D7-gt-kPt" secondAttribute="trailing" id="qsT-E0-HLd"/>
-                                        </constraints>
-                                        <size key="customSize" width="156" height="67"/>
-                                        <connections>
-                                            <outlet property="imageView" destination="1D7-gt-kPt" id="dBZ-tP-QLe"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="parallaxCell" id="pIz-iu-3f5" customClass="ParallaxCell" customModule="Tourism_app" customModuleProvider="target">
-                                        <rect key="frame" x="166" y="0.0" width="224" height="89"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="224" height="89"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </view>
-                                        <size key="customSize" width="224" height="89"/>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="qJN-Qa-V4K"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="9Mg-GP-0O9" firstAttribute="trailing" secondItem="qJN-Qa-V4K" secondAttribute="trailing" id="5xh-vD-Lg4"/>
-                            <constraint firstItem="9Mg-GP-0O9" firstAttribute="top" secondItem="qJN-Qa-V4K" secondAttribute="top" id="Vbv-L5-yKA"/>
-                            <constraint firstItem="9Mg-GP-0O9" firstAttribute="leading" secondItem="qJN-Qa-V4K" secondAttribute="leading" id="Xwi-gF-yXM"/>
-                            <constraint firstItem="9Mg-GP-0O9" firstAttribute="bottom" secondItem="qJN-Qa-V4K" secondAttribute="bottom" id="qjA-zi-AY8"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <outlet property="collectionView" destination="9Mg-GP-0O9" id="DAU-bV-7G0"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="a2h-ZV-8SI" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2101" y="47"/>
-        </scene>
         <!--Viewer View Controller-->
         <scene sceneID="dgK-ng-4g1">
             <objects>
@@ -450,7 +202,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ek1-19-kFp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2826.0869565217395" y="46.875"/>
+            <point key="canvasLocation" x="823" y="47"/>
         </scene>
         <!--Gallery View Controller-->
         <scene sceneID="E58-Wo-5dw">
@@ -516,8 +268,8 @@
                                                                 <state key="normal" image="unfavorite"/>
                                                             </button>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Swat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wDF-Nh-QFO">
-                                                                <rect key="frame" x="8" y="271" width="36.5" height="19"/>
-                                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="16"/>
+                                                                <rect key="frame" x="8" y="264.5" width="46.5" height="25.5"/>
+                                                                <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="18"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
@@ -826,7 +578,6 @@
         <image name="swat" width="1104" height="936"/>
         <image name="thumbnail" width="1176" height="1053"/>
         <image name="unfavorite" width="22" height="21"/>
-        <image name="video-icon" width="14" height="14"/>
         <namedColor name="whiteBlackishColor">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

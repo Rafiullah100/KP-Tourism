@@ -16,11 +16,10 @@ class SearchChatUserTableViewCell: UITableViewCell {
     
     var user: ChatUserRow?{
         didSet{
-            nameLabel.text = user?.name
+            nameLabel.text = user?.name?.capitalized
             profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }
     }
-    
 }
 
 class SearchUserViewController: UIViewController {
@@ -53,7 +52,6 @@ class SearchUserViewController: UIViewController {
                     self.tableView.backgroundView = nil
                     self.tableView.reloadData()
                 }
-//                self.chatUserModel?.chatUsers.rows.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

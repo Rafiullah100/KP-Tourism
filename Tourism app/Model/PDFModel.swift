@@ -8,7 +8,7 @@
 import Foundation
 
 struct PDFModel: Codable {
-    let success: String?
+    let success: Bool?
     let message: String?
     let file: String?
 }

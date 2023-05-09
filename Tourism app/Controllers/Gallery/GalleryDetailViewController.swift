@@ -30,7 +30,8 @@ class GalleryDetailViewController: BaseViewController {
     var mediaType: MediaType?
     var player = AVPlayer()
     var playerViewController = AVPlayerViewController()
-    
+    var tabbarItems = [UITabBarItem]()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -76,11 +77,12 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     private func configureTab(){
-        tabbarView.items = [
-          UITabBarItem(title: "Images", image: UIImage(named: ""), tag: 0),
-          UITabBarItem(title: "Videos", image: UIImage(named: ""), tag: 1),
-          UITabBarItem(title: "Virtual Tours", image: UIImage(named: ""), tag: 2),
-        ]
+        for item in Constants.gallerySection {
+            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            tabbarItems.append(tabbarItem)
+        }
+        tabbarView.items = tabbarItems
+
         switch mediaType {
         case .image:
             tabbarView.selectedItem = tabbarView.items[0]
@@ -92,17 +94,27 @@ class GalleryDetailViewController: BaseViewController {
             break
         }
 //        tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
-        tabbarView.preferredLayoutStyle = .fixed
-        tabbarView.isScrollEnabled = false
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 12.0), for: .normal)
-        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 12.0), for: .selected)
-        tabbarView.setTitleColor(.darkGray, for: .normal)
+        tabbarView.selectedItem = tabbarView.items[0]
+        tabbarView.bottomDividerColor = Helper.shared.lineColor()
         tabbarView.backgroundColor = Helper.shared.backgroundColor()
+        tabbarView.rippleColor = .clear
+        tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
+        tabbarView.preferredLayoutStyle = .scrollableCentered
+        tabbarView.isScrollEnabled = true
+        tabbarView.setTitleFont(Constants.lightFont, for: .normal)
+        tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
         tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
         tabbarView.setTitleColor(Constants.appColor, for: .selected)
         tabbarView.tabBarDelegate = self
+        tabbarView.bounces = false
+        tabbarView.showsVerticalScrollIndicator = false
+        tabbarView.alwaysBounceVertical = false
+        tabbarView.bouncesZoom = false
+        tabbarView.shouldIgnoreScrollingAdjustment = false
+        tabbarView.scrollsToTop = false
         tabbarView.minItemWidth = 10
+        tabbarView.delegate = self
+        tabbarView.contentInsetAdjustmentBehavior = .never
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -132,20 +144,6 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
             mediaType = .image
         }
         collectionView.reloadData()
-    }
-    
-    private func addChild(tag: Int){
-        
-//        self.remove(from: containerView)
-//        if tag == 0 {
-//            self.add(imageVC, in: containerView)
-//        }
-//        else if tag == 1{
-//            self.add(videoVC, in: containerView)
-//        }
-//        else if tag == 2{
-//            self.add(tourVC, in: containerView)
-//        }
     }
 }
 

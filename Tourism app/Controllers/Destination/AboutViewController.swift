@@ -33,7 +33,7 @@ class AboutViewController: BaseViewController {
         }
         else if attractionDistrict != nil{
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
-            thumbnailTopLabel.text = "\(exploreDistrict?.title ?? "")"
+            thumbnailTopLabel.text = "\(attractionDistrict?.title ?? "")"
             thumbnailBottomLabel.text = "\(attractionDistrict?.locationTitle ?? "")"
             welcomeLabel.text = "Welcome to \(attractionDistrict?.title ?? "")"
             textView.text = "\(attractionDistrict?.description.stripOutHtml() ?? "")"

@@ -48,18 +48,21 @@ class AttractionViewController: BaseViewController {
         if exploreDistrict != nil {
             sectionLabel.text = "Attractions"
             thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
         else if attractionDistrict != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
         else if archeology != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = archeology?.attractions?.title
+//            thumbnailBottomLabel.text = archeology?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
