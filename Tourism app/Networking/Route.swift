@@ -73,6 +73,7 @@ enum Route {
     case commentReply
     case verifyOtp
     case resendOtp
+    case visitpdf
 
     var description: String {
         switch self {
@@ -202,6 +203,8 @@ enum Route {
             return "api/mobile/auth/verify_user"
         case .resendOtp:
             return "api/mobile/auth/resend_otp"
+        case .visitpdf:
+            return "api/mobile/visitkp/save"
         }
     }
 }

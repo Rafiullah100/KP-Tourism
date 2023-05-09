@@ -45,6 +45,9 @@ class InformationViewController: BaseViewController {
     }
     @IBAction func moveForwardBtn(_ sender: Any) {
         if isSelected == true{
+            guard let selectedIndices = tableView.indexPathsForSelectedRows else { return }
+            let selectedInformation = selectedIndices.map { Constants.traveleInformation[$0.item] }
+            UserDefaults.standard.information = selectedInformation.map({$0}).joined(separator: ",")
             Switcher.gotoTourAccomodationVC(delegate: self, districtID: districtID ?? 0)
         }
     }
@@ -68,6 +71,5 @@ extension InformationViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        Switcher.gotoTourAccomodationVC(delegate: self)
         isSelected = true
-        UserDefaults.standard.information = Constants.traveleInformation[indexPath.row]
     }
 }

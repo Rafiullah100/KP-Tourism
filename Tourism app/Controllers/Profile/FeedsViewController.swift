@@ -54,7 +54,7 @@ class FeedsViewController: UIViewController {
         pickerView.dataSource = self
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
-        NotificationCenter.default.addObserver(self, selector: #selector(loadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         loadData()
         guard let url = UserDefaults.standard.profileImage, url.contains("https") else {
             profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
@@ -84,7 +84,14 @@ class FeedsViewController: UIViewController {
         self.dispatchGroup?.leave()
     }
     
-    @objc func loadNewsFeed(){
+    func loadNewsFeed(){
+        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
+    }
+    
+    @objc func reloadNewsFeed(){
+        newsFeed = []
+        totalCount = 0
+        currentPage = 1
         fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
     }
     

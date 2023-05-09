@@ -106,11 +106,12 @@ extension ExperienceViewController: UICollectionViewDelegate, UICollectionViewDa
         isSelected = true
 
         guard let district = districtCategries?[indexPath.row] else { return }
-        if let encoded = try? JSONEncoder().encode(district) {
-            UserDefaults.standard.set(encoded, forKey: "experience")
-        }
+//        UserDefaults.standard.set(district, forKey: "experience")
+        UserDefaults.standard.experience = district.title
+//        if let encoded = try? JSONEncoder().encode(district) {
+//            UserDefaults.standard.set(encoded, forKey: "experience")
+//        }
     }
-    
 }
 
 extension ExperienceViewController: UICollectionViewDelegateFlowLayout{

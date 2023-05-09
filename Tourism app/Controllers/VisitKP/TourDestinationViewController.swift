@@ -101,17 +101,18 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230.0
+        return 250.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 //        Switcher.gotoTourInformationVC(delegate: self)
         districtID = districtList?[indexPath.row].id
         isSelected = true
+        UserDefaults.standard.destination = districtList?[indexPath.row].title
 
-        if let encoded = try? JSONEncoder().encode(districtList?[indexPath.row]) {
-            UserDefaults.standard.set(encoded, forKey: "destination")
-        }
+//        if let encoded = try? JSONEncoder().encode(districtList?[indexPath.row]) {
+//            UserDefaults.standard.set(encoded, forKey: "destination")
+//        }
         
     }
 }

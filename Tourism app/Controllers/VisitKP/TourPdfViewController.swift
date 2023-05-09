@@ -18,32 +18,33 @@ class TourPdfViewController: BaseViewController {
     }
     
     @IBAction func pdfBtnAction(_ sender: Any) {
-        Switcher.gotoPdfDownloadVC(delegate: self)
-//        let pdfData = NSMutableData()
-//        UIGraphicsBeginPDFContextToData(pdfData, contentView.bounds, nil)
-//        UIGraphicsBeginPDFPage()
-//        guard let pdfContext = UIGraphicsGetCurrentContext() else { return }
-//       contentView.layer.render(in: pdfContext)
-//        UIGraphicsEndPDFContext()
-//       let activityViewController = UIActivityViewController(activityItems: [pdfData] , applicationActivities: nil)
-//       activityViewController.popoverPresentationController?.sourceView = self.view
-//       self.present(activityViewController, animated: true, completion: nil)
+//        Switcher.gotoPdfDownloadVC(delegate: self)
+        let area = UserDefaults.standard.area
+        let experience = UserDefaults.standard.experience
+        let destination = UserDefaults.standard.destination
+        let information = UserDefaults.standard.information
+        let accomodation = UserDefaults.standard.accomodation
+        fetch(route: .visitpdf, method: .post, parameters: ["name": "", "email": "", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf"], model: PDFModel.self)
+    }
+    
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let pdf):
+                print("will d")
+            case .failure(let error):
+                print("ekrmf")
+            }
+        }
     }
     
     @IBAction func emailBtnAction(_ sender: Any) {
-//        guard MFMailComposeViewController.canSendMail() else {
-//            return
-//        }
-//        let composer = MFMailComposeViewController()
-//        composer.mailComposeDelegate = self
-//        composer.setToRecipients(["rafiullah@codeforpakistan.org"])
-//        composer.setSubject("Your Tour Plan")
-//        present(composer, animated: true)
-        
         let items = "\(UserDefaults.standard.area ?? "") \n \(UserDefaults.standard.experience ?? "") \n  \(UserDefaults.standard.destination ?? "") \n  \(UserDefaults.standard.information ?? "") \n \(UserDefaults.standard.accomodation ?? "")"
+        print(items)
         let ac = UIActivityViewController(activityItems: [items], applicationActivities: nil)
         present(ac, animated: true)
     }
+    
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }

@@ -102,14 +102,15 @@ extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSo
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 230.0
+        return 250.0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         isSelected = true
-        if let encoded = try? JSONEncoder().encode( accomodationDetail?.accomodations[indexPath.row]) {
-            UserDefaults.standard.set(encoded, forKey: "accomodation")
-        }
+        UserDefaults.standard.accomodation = accomodationDetail?.accomodations[indexPath.row].title
+//        if let encoded = try? JSONEncoder().encode( accomodationDetail?.accomodations[indexPath.row]) {
+//            UserDefaults.standard.set(encoded, forKey: "accomodation")
+//        }
     }
 }
 
