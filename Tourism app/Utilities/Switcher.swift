@@ -277,11 +277,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func showFollower(delegate: UIViewController, profileType: ProfileType){
+    static func showFollower(delegate: UIViewController, profileType: ProfileType, connectionType: ConnectionType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProfilePopUpViewController") as! ProfilePopUpViewController
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         vc.profileType = profileType
+        vc.connectionType = connectionType
         delegate.present(vc, animated: true, completion: nil)
     }
     

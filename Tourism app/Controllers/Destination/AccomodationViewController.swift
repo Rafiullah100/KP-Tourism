@@ -30,11 +30,18 @@ class AccomodationViewController: BaseViewController {
     var archeology: Archeology?
     var tabbarItems = [UITabBarItem]()
 
+    var hotelTypes = ["camping_pods", "government_rest_houses", "ptdc_hotels", "private_hotels", "other"]
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
 //        updateUI()
         configureTab()
+        reloadAccomodation(type: hotelTypes[0])
+    }
+    
+    private func reloadAccomodation(type: String){
         var attractionID = 0
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
@@ -54,13 +61,14 @@ class AccomodationViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             attractionID = archeology?.id ?? 0
         }
-        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": attractionID], model: AccomodationModel.self)
-
+        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": attractionID, "bookStayType": type], model: AccomodationModel.self)
     }
     
     private func configureTab(){
+        var tag = -1
         for item in Constants.accomodationSection {
-            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            tag = tag + 1
+            let tabbarItem = UITabBarItem(title: item.title, image:  UIImage(named: item.image), tag: tag)
             tabbarItems.append(tabbarItem)
         }
         tabbar.items = tabbarItems
@@ -75,7 +83,7 @@ class AccomodationViewController: BaseViewController {
         tabbar.setTitleFont(Constants.MediumFont, for: .selected)
         tabbar.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
         tabbar.setTitleColor(Constants.appColor, for: .selected)
-//        tabbar.tabBarDelegate = self
+        tabbar.tabBarDelegate = self
         tabbar.bounces = false
         tabbar.showsVerticalScrollIndicator = false
         tabbar.alwaysBounceVertical = false
@@ -93,7 +101,13 @@ class AccomodationViewController: BaseViewController {
             case .success(let accomodation):
                 DispatchQueue.main.async {
                     self.accomodationDetail = accomodation as? AccomodationModel
-                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView("No Accomodation found!") : self.tableView.reloadData()
+                    if self.accomodationDetail?.accomodations.count == 0{
+                        self.tableView.setEmptyView("No Accomodation found!")
+                    }
+                    else{
+                        self.tableView.setEmptyView("")
+                    }
+                    self.tableView.reloadData()
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -121,6 +135,13 @@ extension AccomodationViewController: UITableViewDataSource{
 
 extension AccomodationViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 150.0
+            return 280.0
+    }
+}
+
+extension AccomodationViewController: MDCTabBarViewDelegate{
+    func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
+        print(item.tag)
+        reloadAccomodation(type: hotelTypes[item.tag])
     }
 }

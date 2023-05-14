@@ -113,12 +113,13 @@ class ProfileViewController: UIViewController {
             favoriteButton.isHidden = false
             editPhotoButton.isHidden = false
         }
-        
     }
     
     private func configureTabbar(){
+        var tag = 0
         for item in Constants.profileSection {
-            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), tag: tag)
+            tag = tag + 1
             tabbarItems.append(tabbarItem)
         }
         profileSection = .post
@@ -141,7 +142,7 @@ class ProfileViewController: UIViewController {
         tabbarView.shouldIgnoreScrollingAdjustment = false
         tabbarView.scrollsToTop = false
         tabbarView.minItemWidth = 100
-        tabbarView.delegate = self
+        tabbarView.tabBarDelegate = self
         tabbarView.contentInsetAdjustmentBehavior = .never
     }
     
@@ -151,12 +152,12 @@ class ProfileViewController: UIViewController {
     
     @IBAction func followingBtnAction(_ sender: Any) {
         guard let profileType = profileType else { return }
-        Switcher.showFollower(delegate: self, profileType: profileType)
+        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .following)
     }
     
     @IBAction func followerBtnAction(_ sender: Any) {
         guard let profileType = profileType else { return }
-        Switcher.showFollower(delegate: self, profileType: profileType)
+        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .follower)
     }
     @IBAction func settingBtnAction(_ sender: Any) {
         if profileType == .otherUser{

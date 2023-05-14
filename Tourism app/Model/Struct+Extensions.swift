@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum ConnectionType {
+    case follower
+    case following
+}
+
 struct Sections {
     let title: String!
     let image: String!

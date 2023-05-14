@@ -49,8 +49,8 @@ class AccomodationDetailViewController: BaseViewController {
         familyLabel.text = accomodationDetail?.family == true ? "Family" : "Adult"
         addressLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
 //        ratingLabel.text = "\(accomodationDetail?.locationTitle ?? "")"
-        priceLabel.text = "\(accomodationDetail?.priceFrom ?? 0) PER NIGHT"
-        bedLabel.text = "\(accomodationDetail?.noRoom ?? 0) Bed"
+        priceLabel.text = "RS. \(accomodationDetail?.priceFrom ?? 0) PER NIGHT"
+        bedLabel.text = "\(accomodationDetail?.noRoom ?? 0) Rooms"
         parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
     }
     

@@ -65,6 +65,7 @@ enum Route {
     case resetPassword
     case googleLoginApi
     case following
+    case follower
     case shareApi
     case facebookLoginApi
     case doFollow
@@ -205,6 +206,8 @@ enum Route {
             return "api/mobile/auth/resend_otp"
         case .visitpdf:
             return "api/mobile/visitkp/save"
+        case .follower:
+            return "api/mobile/users/followers"
         }
     }
 }

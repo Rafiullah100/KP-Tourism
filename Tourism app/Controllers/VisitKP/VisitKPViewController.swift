@@ -29,7 +29,6 @@ class AreaTableViewCell: UITableViewCell {
             imgBGView.clipsToBounds = true
             imgBGView.layer.cornerRadius = 10
             imgBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-            
             bottomView.viewShadow()
         }
     }
