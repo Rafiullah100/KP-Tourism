@@ -75,6 +75,7 @@ enum Route {
     case verifyOtp
     case resendOtp
     case visitpdf
+    case suggestedUser
 
     var description: String {
         switch self {
@@ -208,6 +209,8 @@ enum Route {
             return "api/mobile/visitkp/save"
         case .follower:
             return "api/mobile/users/followers"
+        case .suggestedUser:
+            return "api/mobile/users/suggested_users"
         }
     }
 }

@@ -179,6 +179,12 @@ class ProfileViewController: UIViewController {
             Switcher.gotoAddProductVC(delegate: self)
         }
     }
+    
+    
+    @IBAction func suggestedUserBtn(_ sender: Any) {
+        Switcher.showSuggestedUser(delegate: self)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
       

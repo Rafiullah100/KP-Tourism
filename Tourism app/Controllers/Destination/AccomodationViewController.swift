@@ -31,7 +31,9 @@ class AccomodationViewController: BaseViewController {
     var tabbarItems = [UITabBarItem]()
 
     var hotelTypes = ["camping_pods", "government_rest_houses", "ptdc_hotels", "private_hotels", "other"]
-    
+    var totalCount = 0
+    var currentPage = 1
+    var limit = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,6 +103,7 @@ class AccomodationViewController: BaseViewController {
             case .success(let accomodation):
                 DispatchQueue.main.async {
                     self.accomodationDetail = accomodation as? AccomodationModel
+                    
                     if self.accomodationDetail?.accomodations.count == 0{
                         self.tableView.setEmptyView("No Accomodation found!")
                     }

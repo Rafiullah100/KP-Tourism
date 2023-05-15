@@ -473,6 +473,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
 
 extension HomeViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
         emptyArray()
         currentPage = 1
         serverCall(cell: cellType ?? .explore)

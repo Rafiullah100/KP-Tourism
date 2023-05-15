@@ -40,7 +40,6 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        print(parameters)
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):

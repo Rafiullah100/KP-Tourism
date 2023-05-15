@@ -286,6 +286,12 @@ class Switcher {
         delegate.present(vc, animated: true, completion: nil)
     }
     
+    static func showSuggestedUser(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SuggestedUserViewController") as! SuggestedUserViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true)
+    }
+    
     static func goToWishlistVC(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "WishlistViewController") as! WishlistViewController
         vc.modalPresentationStyle = .fullScreen
