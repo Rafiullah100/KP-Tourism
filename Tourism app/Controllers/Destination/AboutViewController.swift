@@ -41,7 +41,7 @@ class AboutViewController: BaseViewController {
         else if archeology != nil{
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             thumbnailTopLabel.text = "\(archeology?.attractions?.title ?? "")"
-            thumbnailBottomLabel.text = "\(attractionDistrict?.locationTitle ?? "")"
+            thumbnailBottomLabel.text = "\(archeology?.attractions?.locationTitle ?? "")"
             welcomeLabel.text = "Welcome to \(archeology?.attractions?.title ?? "")"
             textView.text = "\(archeology?.attractions?.description?.stripOutHtml() ?? "")"
         }

@@ -30,7 +30,7 @@ class AccomodationViewController: BaseViewController {
     var archeology: Archeology?
     var tabbarItems = [UITabBarItem]()
 
-    var hotelTypes = ["camping_pods", "government_rest_houses", "ptdc_hotels", "private_hotels", "other"]
+    var hotelTypes = ["camping_pods", "government_rest_houses", "private_hotels"]
     var totalCount = 0
     var currentPage = 1
     var limit = 5
@@ -59,7 +59,7 @@ class AccomodationViewController: BaseViewController {
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
-//            thumbnailBottomLabel.text = archeology?.locationTitle
+            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             attractionID = archeology?.id ?? 0
         }
@@ -95,6 +95,14 @@ class AccomodationViewController: BaseViewController {
         tabbar.minItemWidth = 10
         tabbar.delegate = self
         tabbar.contentInsetAdjustmentBehavior = .never
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tabbar {
+            if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
+                scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+            }
+        }
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

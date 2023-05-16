@@ -41,7 +41,7 @@ class LocalProductsViewController: BaseViewController {
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
-//            thumbnailBottomLabel.text = archeology?.locationTitle
+            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: ProductModel.self)
         }

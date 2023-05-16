@@ -73,6 +73,7 @@ class CommonViewController: BaseViewController {
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(archeology?.attractions?.title ?? "")"
             descriptionLabel.text = archeology?.attractions?.description?.stripOutHtml()

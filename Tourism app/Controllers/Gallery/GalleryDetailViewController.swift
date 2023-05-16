@@ -44,12 +44,15 @@ class GalleryDetailViewController: BaseViewController {
         collectionView.register(UINib(nibName: collectionElementKindHeader, bundle: nil), forSupplementaryViewOfKind: collectionElementKindHeader, withReuseIdentifier: "header")
         if galleryDetail == nil{
             if exploreDistrict != nil{
-                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GalleryModel.self)
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GalleryModel.self)
             }
             else if attractionDistrict != nil{
-                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
             }
             else if archeology != nil{
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GalleryModel.self)
+            }
+            else{
                 fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GalleryModel.self)
             }
         }
@@ -64,10 +67,8 @@ class GalleryDetailViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let galleryDetail):
-                DispatchQueue.main.async {
-                    self.galleryDetail = galleryDetail as? GalleryModel
-                    self.collectionView.reloadData()
-                }
+                self.galleryDetail = galleryDetail as? GalleryModel
+                self.collectionView.reloadData()
             case .failure(let error):
                 if error == .noInternet {
                     self.collectionView.noInternet()
@@ -77,8 +78,10 @@ class GalleryDetailViewController: BaseViewController {
     }
     
     private func configureTab(){
+        var tag = 0
         for item in Constants.gallerySection {
-            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), selectedImage: UIImage(named: item.selectedImage))
+            let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), tag: tag)
+            tag = tag + 1
             tabbarItems.append(tabbarItem)
         }
         tabbarView.items = tabbarItems
@@ -116,6 +119,14 @@ class GalleryDetailViewController: BaseViewController {
         tabbarView.delegate = self
         tabbarView.contentInsetAdjustmentBehavior = .never
     }
+    
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if scrollView == tabbarView {
+//            if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
+//                scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+//            }
+//        }
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

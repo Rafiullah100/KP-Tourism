@@ -62,6 +62,7 @@ struct ArcheologyAttractions : Codable {
     let description : String?
     let isWished: Int?
     let userLike: Int?
+    let locationTitle: String?
     let districts : ArcheologyDistricts?
 
     enum CodingKeys: String, CodingKey {
@@ -73,6 +74,7 @@ struct ArcheologyAttractions : Codable {
         case districts = "districts"
         case userLike = "userLike"
         case isWished = "isWished"
+        case locationTitle = "location_title"
     }
 
     init(from decoder: Decoder) throws {
@@ -84,6 +86,7 @@ struct ArcheologyAttractions : Codable {
         districts = try values.decodeIfPresent(ArcheologyDistricts.self, forKey: .districts)
         userLike = try values.decodeIfPresent(Int.self, forKey: .userLike)
         isWished = try values.decodeIfPresent(Int.self, forKey: .isWished)
+        locationTitle = try values.decodeIfPresent(String.self, forKey: .locationTitle)
     }
 
 }

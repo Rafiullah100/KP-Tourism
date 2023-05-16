@@ -103,11 +103,9 @@ class EventDetailViewController: BaseViewController {
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                DispatchQueue.main.async {
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-                }
+                self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             case .failure(let error):
-                print("error \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

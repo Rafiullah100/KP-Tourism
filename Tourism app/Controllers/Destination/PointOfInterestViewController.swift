@@ -45,7 +45,7 @@ class PointOfInterestViewController: BaseViewController {
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
-            thumbnailBottomLabel.text = attractionsDistrict?.locationTitle
+            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
         }
     }

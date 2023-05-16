@@ -270,7 +270,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch cellType {
         case .explore:
-            print(exploreDistrict)
             Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[indexPath.row])
         case .event:
             Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row])
@@ -393,7 +392,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
             }
         }
         else if cellType == .arch{
-            print(archeology.count, indexPath.row)
             if archeology.count != totalCount && indexPath.row == archeology.count - 1  {
                 currentPage = currentPage + 1
                 serverCall(cell: .arch)

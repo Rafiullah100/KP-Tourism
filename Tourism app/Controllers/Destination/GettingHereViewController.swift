@@ -58,11 +58,13 @@ class GettingHereViewController: BaseViewController {
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
             fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GettingHereModel.self)
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions?.title
+            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
             fetch(route: .fetchGettingHere, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GettingHereModel.self)
         }

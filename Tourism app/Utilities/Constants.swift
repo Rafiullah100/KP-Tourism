@@ -38,8 +38,8 @@ struct Constants {
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)
     static let blackishGrayColor = #colorLiteral(red: 0.6039215686, green: 0.6039215686, blue: 0.6039215686, alpha: 1)
     static let onlineColor = #colorLiteral(red: 0.01568627451, green: 0.8784313725, blue: 0.07450980392, alpha: 1)
-    static let lightFont = UIFont(name: "Poppins-Light", size: 13.0)
-    static let MediumFont = UIFont(name: "Poppins-Medium", size: 13.0)
+    static let lightFont = UIFont(name: "Poppins-Light", size: 12.0)
+    static let MediumFont = UIFont(name: "Poppins-Medium", size: 12.0)
     static let offlineColor = #colorLiteral(red: 0.7640088797, green: 0.7752518058, blue: 0.8078474402, alpha: 1)
     static let appFontName = "Poppins"
     static let loadFeed = "loadfeed"
@@ -51,7 +51,7 @@ struct Constants {
     static let section =  [Sections(title: "Home", image: "explore", selectedImage: "explore-s"),
 //              Sections(title: "Attractions", image: "attraction", selectedImage: "attraction-s"),
 //              Sections(title: "Adventure", image: "adventure", selectedImage: "adventure-s"),
-              Sections(title: "Investment in KP", image: "investment", selectedImage: "investment-s"),
+              Sections(title: "Invest in KP", image: "investment", selectedImage: "investment-s"),
               Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
               Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
@@ -68,11 +68,7 @@ struct Constants {
     
     static let accomodationSection =  [Sections(title: "Private Hotels", image: "", selectedImage: ""),
               Sections(title: "Camping Pods", image: "", selectedImage: ""),
-              Sections(title: "Government Rest Houses", image: "", selectedImage: ""),
-              Sections(title: "PTDC Hotels", image: "", selectedImage: ""),
-                                       Sections(title: "Others", image: "", selectedImage: ""),
-
-
+              Sections(title: "Government Rest Houses", image: "", selectedImage: "")
    ]
     
     static let profileSection =  [Sections(title: "Post", image: "", selectedImage: ""),

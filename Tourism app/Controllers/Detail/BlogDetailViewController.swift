@@ -116,7 +116,6 @@ class BlogDetailViewController: BaseViewController {
     
     @IBAction func likeBtnAction(_ sender: Any) {
         self.like(route: .likeApi, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
-
     }
     
     func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

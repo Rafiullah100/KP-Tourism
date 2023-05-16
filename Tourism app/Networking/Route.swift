@@ -76,6 +76,7 @@ enum Route {
     case resendOtp
     case visitpdf
     case suggestedUser
+    case galleryByDistrict
 
     var description: String {
         switch self {
@@ -211,6 +212,8 @@ enum Route {
             return "api/mobile/users/followers"
         case .suggestedUser:
             return "api/mobile/users/suggested_users"
+        case .galleryByDistrict:
+            return "api/mobile/attractions/gallerybydistrict"
         }
     }
 }
