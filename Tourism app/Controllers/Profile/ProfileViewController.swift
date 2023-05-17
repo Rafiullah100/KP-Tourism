@@ -80,6 +80,8 @@ class ProfileViewController: UIViewController {
         topProfileView.layer.masksToBounds = true
         topProfileView.layer.cornerRadius = 30
         topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+        topProfileView.viewShadow()
+        
         navigationController?.navigationBar.isHidden = true
         addButton.isHidden = true
         configureTabbar()
@@ -122,28 +124,16 @@ class ProfileViewController: UIViewController {
             tag = tag + 1
             tabbarItems.append(tabbarItem)
         }
-        profileSection = .post
-        tabbarView.backgroundColor = .clear
-        tabbarView.items = tabbarItems
-        tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = UIColor.lightGray
-        tabbarView.rippleColor = .clear
-        tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
-        tabbarView.preferredLayoutStyle = .scrollableCentered
-        tabbarView.isScrollEnabled = false
-        tabbarView.setTitleFont(Constants.lightFont, for: .normal)
-        tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
-        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
-        tabbarView.setTitleColor(Constants.appColor, for: .selected)
-        tabbarView.bounces = false
-        tabbarView.showsVerticalScrollIndicator = false
-        tabbarView.alwaysBounceVertical = false
-        tabbarView.bouncesZoom = false
-        tabbarView.shouldIgnoreScrollingAdjustment = false
-        tabbarView.scrollsToTop = false
-        tabbarView.minItemWidth = 100
         tabbarView.tabBarDelegate = self
-        tabbarView.contentInsetAdjustmentBehavior = .never
+        tabbarView.delegate = self
+        Helper.shared.customTab(tabbar: tabbarView, items: tabbarItems)
+        tabbarView.backgroundColor = .clear
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tabbarView {
+            Helper.shared.disableVerticalScrolling(tabbarView)
+        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -204,12 +194,7 @@ class ProfileViewController: UIViewController {
             case .success(let model):
                 if apiType == .profile{
                     self.userProfile = model as? ProfileModel
-                    if let image: String = self.userProfile?.userDetails.profileImage, image.contains("https"){
-                        self.profileImageView.sd_setImage(with: URL(string: self.userProfile?.userDetails.profileImage ?? ""), placeholderImage: UIImage(named: "user"))
-                    }
-                    else{
-                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-                    }
+                    self.profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.text = self.userProfile?.userDetails.name?.capitalized
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
@@ -221,6 +206,7 @@ class ProfileViewController: UIViewController {
                 else if apiType == .story{
                     self.stories.append(contentsOf: (model as? FeedStoriesModel)?.stories?.rows ?? [])
                     self.storyTotalCount = (model as? FeedStoriesModel)?.stories?.count ?? 0
+                    print(self.storyTotalCount)
                     self.statusCollectionView.reloadData()
                     self.statusView.isHidden = self.storyTotalCount == 0 ? true : false
                 }
@@ -262,7 +248,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
             cell.cellType = indexPath.row == 0 ? .userSelf : .other
             if indexPath.row == 0 {
-                cell.imgView.image = UIImage(named: "placeholder")
+                cell.imgView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
             }
             else{
                 cell.stories = stories[indexPath.row - 1]

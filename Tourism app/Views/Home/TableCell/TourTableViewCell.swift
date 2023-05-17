@@ -26,7 +26,7 @@ class TourTableViewCell: UITableViewCell {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             else{
-                favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
             
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (tour?.preview_image ?? "")))

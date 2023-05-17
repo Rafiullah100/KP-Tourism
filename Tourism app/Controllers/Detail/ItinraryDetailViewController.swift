@@ -21,6 +21,7 @@ class ItinraryDetailViewController: BaseViewController {
             tableView.register(UINib(nibName: "ItinraryDaysTableViewCell", bundle: nil), forCellReuseIdentifier: ItinraryDaysTableViewCell.cellReuseIdentifier())
         }
     }
+    @IBOutlet weak var likeCountLabel: UILabel!
     
     var itinraryDetail: ItinraryRow?
     

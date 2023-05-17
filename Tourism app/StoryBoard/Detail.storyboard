@@ -320,13 +320,6 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zP2-nL-ZrX">
                                                         <rect key="frame" x="0.0" y="0.0" width="189.66666666666666" height="50"/>
                                                         <subviews>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-8m-hMH">
-                                                                <rect key="frame" x="0.0" y="0.0" width="189.66666666666666" height="50"/>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="likeBtnAction:" destination="Ojy-yZ-a9C" eventType="touchUpInside" id="00L-RL-Z8s"/>
-                                                                </connections>
-                                                            </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Xwl-4I-nSL">
                                                                 <rect key="frame" x="12" y="7" width="36.666666666666664" height="36"/>
                                                                 <subviews>
@@ -341,6 +334,13 @@
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-8m-hMH">
+                                                                <rect key="frame" x="0.0" y="0.0" width="189.66666666666666" height="50"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <connections>
+                                                                    <action selector="likeBtnAction:" destination="Ojy-yZ-a9C" eventType="touchUpInside" id="00L-RL-Z8s"/>
+                                                                </connections>
+                                                            </button>
                                                         </subviews>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <constraints>
@@ -1434,6 +1434,7 @@ na aliqua. Ut enim ad minim </string>
                     <connections>
                         <outlet property="descriptionTextView" destination="vVB-Yv-M8P" id="cJk-oi-GnB"/>
                         <outlet property="favoriteBtn" destination="HAp-N9-WCJ" id="5r8-mj-MRw"/>
+                        <outlet property="likeCountLabel" destination="lxj-8F-R5n" id="DMI-xr-tew"/>
                         <outlet property="locationLabel" destination="b2e-b0-uWa" id="aaE-SH-aux"/>
                         <outlet property="onwerImageView" destination="4oW-gW-ed6" id="rqJ-B3-OLg"/>
                         <outlet property="ownerNameLabel" destination="bCB-2a-5sP" id="zQp-TF-IBg"/>
@@ -1612,7 +1613,7 @@ ed do eiusmod tempor </string>
                                                                                         </constraints>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkk-8Z-vlZ">
-                                                                                        <rect key="frame" x="23" y="6" width="73.666666666666671" height="18.333333333333332"/>
+                                                                                        <rect key="frame" x="23" y="6" width="73.666666666666671" height="18.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                                                         <color key="textColor" name="tabbar-tint"/>
                                                                                         <nil key="highlightedColor"/>
@@ -2541,6 +2542,7 @@ ed do eiusmod tempor </string>
                         <outlet property="familyLabel" destination="7wU-lU-3yJ" id="OhV-Hc-o2H"/>
                         <outlet property="favoriteBtn" destination="Z95-Qt-DBr" id="yEQ-QI-I30"/>
                         <outlet property="imageView" destination="Vba-Mc-F3L" id="p8c-UV-Gcz"/>
+                        <outlet property="likeCountLabel" destination="xt7-Yr-wsU" id="h8T-hu-niN"/>
                         <outlet property="locationLabel" destination="qUm-tc-gkr" id="wOh-zu-7Hk"/>
                         <outlet property="nameLabel" destination="N7I-U6-WXj" id="fVM-gL-zBz"/>
                         <outlet property="parkingLabel" destination="22j-1M-Kme" id="Ub1-iF-s0N"/>
@@ -2590,10 +2592,10 @@ ed do eiusmod tempor </string>
                                                         <rect key="frame" x="0.0" y="0.0" width="189.66666666666666" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="x9b-fI-RB9">
-                                                                <rect key="frame" x="12" y="8.3333333333333144" width="36.666666666666664" height="33.666666666666664"/>
+                                                                <rect key="frame" x="12" y="9.3333333333333126" width="38.333333333333336" height="31.333333333333329"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k8i-we-rsv">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="36.666666666666664" height="16.666666666666668"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="38.333333333333336" height="16.666666666666668"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                         <state key="normal" backgroundImage="liked"/>
                                                                         <connections>
@@ -2601,7 +2603,7 @@ ed do eiusmod tempor </string>
                                                                         </connections>
                                                                     </button>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21 Liked" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7S-QE-fhN">
-                                                                        <rect key="frame" x="0.0" y="19.666666666666686" width="36.666666666666664" height="14"/>
+                                                                        <rect key="frame" x="0.0" y="19.666666666666686" width="38.333333333333336" height="11.666666666666664"/>
                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
                                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -2668,19 +2670,19 @@ ed do eiusmod tempor </string>
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="486"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZfH-ud-qHc">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="840.33333333333337"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="487"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jkF-yV-dAV">
-                                                                <rect key="frame" x="8" y="20" width="377" height="820.33333333333337"/>
+                                                                <rect key="frame" x="8" y="20" width="377" height="467"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POLO GAMES" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zK5-rN-upw">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="28"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="23.333333333333332"/>
                                                                         <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="20"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Famous places: shandur " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KjL-MZ-S7N">
-                                                                        <rect key="frame" x="0.0" y="36" width="377" height="17.666666666666671"/>
+                                                                        <rect key="frame" x="0.0" y="31.333333333333314" width="377" height="17.666666666666671"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="17.666666666666671" id="QsL-Y9-oNo"/>
                                                                         </constraints>
@@ -2689,7 +2691,7 @@ ed do eiusmod tempor </string>
                                                                         <nil key="highlightedColor"/>
                                                                     </label>
                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="1000" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0SZ-Mv-zID">
-                                                                        <rect key="frame" x="0.0" y="61.666666666666686" width="377" height="758.66666666666652"/>
+                                                                        <rect key="frame" x="0.0" y="57" width="377" height="410"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" priority="250" id="G1i-JI-vSw"/>
@@ -2760,6 +2762,7 @@ saaj. Lorem ipsum dolor sit amet, consectetur adipiscing e
                         <outlet property="adventureTypeLabel" destination="KjL-MZ-S7N" id="mu0-U4-p2n"/>
                         <outlet property="favoriteBtn" destination="k8i-we-rsv" id="COk-X4-5kS"/>
                         <outlet property="imageView" destination="bPf-4F-G2p" id="IIA-HO-121"/>
+                        <outlet property="likeCount" destination="v7S-QE-fhN" id="xuU-ak-cIs"/>
                         <outlet property="statusBarView" destination="vce-EK-PDS" id="S97-zP-CsQ"/>
                         <outlet property="textView" destination="0SZ-Mv-zID" id="Jtu-Uw-8d4"/>
                         <outlet property="titLabel" destination="zK5-rN-upw" id="sNy-9x-RmY"/>
@@ -2996,6 +2999,7 @@ saaj. Lorem ipsum dolor sit amet, consectetur adipiscing e
                     </view>
                     <connections>
                         <outlet property="favoriteBtn" destination="Qtq-II-R28" id="rOG-iF-sjA"/>
+                        <outlet property="likeCountLabel" destination="ipy-Yt-dSw" id="T41-Wd-gRj"/>
                         <outlet property="placeLabel" destination="WLZ-uz-M5D" id="fYB-yq-YgG"/>
                         <outlet property="statusBarView" destination="phb-Fe-BIi" id="dOK-qp-Obs"/>
                         <outlet property="tableView" destination="N5M-nU-slH" id="77i-7c-25x"/>

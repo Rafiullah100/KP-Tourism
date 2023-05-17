@@ -25,10 +25,7 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
         emailTextField.text = UserDefaults.standard.userEmail
         nameTextField.text = UserDefaults.standard.name?.capitalized
         bioTextField1.text = UserDefaults.standard.userBio
-        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
-            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
-            return }
-        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
     }
 
     @IBAction func takePicture(_ sender: Any) {
@@ -44,6 +41,7 @@ class PersonalInfoViewController: UIViewController, UINavigationControllerDelega
         Networking.shared.updateProfile(route: route, imageParameter: "profile_image", image: profileImageView.image ?? UIImage(), parameters: params) { result in
             switch result {
             case .success(let profile):
+                print(profile)
                 if profile.success == true{
                     UserDefaults.standard.name = profile.data?.name
                     UserDefaults.standard.userEmail = profile.data?.email

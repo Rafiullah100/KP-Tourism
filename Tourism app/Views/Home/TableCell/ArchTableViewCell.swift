@@ -42,16 +42,16 @@ class ArchTableViewCell: UITableViewCell {
     
     var archeology: Archeology? {
         didSet{
-            archeologyLabel.text = archeology?.attractions?.title?.stripOutHtml()
-            districtLabel.text = archeology?.attractions?.description?.stripOutHtml()
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
+            archeologyLabel.text = archeology?.attractions.title?.stripOutHtml()
+            districtLabel.text = archeology?.attractions.description?.stripOutHtml()
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             imageSDWebImageSrc = []
             
-            if archeology?.attractions?.isWished == 0 {
+            if archeology?.attractions.isWished == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             else{
-                favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
         }
     }

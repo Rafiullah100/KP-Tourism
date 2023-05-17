@@ -26,7 +26,7 @@ class ExploreTableViewCell: UITableViewCell {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             else{
-                favoriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
             districtLabel.text = district?.title
             slideArray = []

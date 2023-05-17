@@ -42,7 +42,8 @@ class BlogDetailViewController: BaseViewController {
     var totalCount = 1
     var limit = 100
     var commentText = "Write a comment"
-    
+    var likeCount = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
@@ -54,13 +55,15 @@ class BlogDetailViewController: BaseViewController {
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "blogs"
+        viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
         textView.text = blogDetail?.blogDescription.stripOutHtml()
         blogTitleLabel.text = blogDetail?.title.stripOutHtml()
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
         likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
         favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+        likeCount = blogDetail?.likes.likesCount ?? 0
+        likeLabel.text = "\(String(describing: likeCount)) Liked"
         reloadComment()
     }
 
@@ -124,6 +127,8 @@ class BlogDetailViewController: BaseViewController {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                self.likeLabel.text = "\(self.likeCount) Liked"
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

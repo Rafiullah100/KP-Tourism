@@ -7,7 +7,7 @@
 
 import UIKit
 import SDWebImage
-
+import SVProgressHUD
 class PackageDetailCell: UITableViewCell{
     
     @IBOutlet weak var stayinLabel: UILabel!
@@ -65,11 +65,14 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var favoriteIcon: UIImageView!
     @IBOutlet weak var statusBarView: UIView!
     
+    var likeCount = 0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = tourDetail?.title
+        viewControllerTitle = "\(tourDetail?.title ?? "") | Tour Packages"
+
         tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 60.0
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
@@ -80,12 +83,14 @@ class PackageDetailViewController: BaseViewController {
         eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
         amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
         favoriteIcon.image = tourDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
-        likeLabel.text = "\(tourDetail?.likes?.count ?? 0) Liked"
         durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
         viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
         counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
         districtNameLabel.text = tourDetail?.to_districts?.title
         registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
+        likeCount = tourDetail?.likes?.count ?? 0
+        likeLabel.text = "\(String(describing: likeCount)) Liked"
+
 //        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
     }
     
@@ -110,11 +115,11 @@ class PackageDetailViewController: BaseViewController {
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                DispatchQueue.main.async {
-                    self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked")
-                }
+                self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked")
+                self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                self.likeLabel.text = "\(self.likeCount) Liked"
             case .failure(let error):
-                print("error \(error)")
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

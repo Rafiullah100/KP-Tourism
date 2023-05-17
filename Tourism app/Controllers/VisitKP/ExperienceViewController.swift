@@ -67,10 +67,8 @@ class ExperienceViewController: BaseViewController {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let category):
-                DispatchQueue.main.async {
-                    self.districtCategries = (category as! DistrictCatModel).districtCategorories
-                    self.collectionView.reloadData()
-                }
+                self.districtCategries = (category as! DistrictCatModel).districtCategorories
+                self.collectionView.reloadData()
             case .failure(let error):
                 if error == .noInternet {
                     self.collectionView.noInternet()

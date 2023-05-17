@@ -10,6 +10,7 @@ import MaterialComponents.MaterialTabs_TabBarView
 import SDWebImage
 import AVFoundation
 import AVKit
+import SVProgressHUD
 
 class GalleryDetailViewController: BaseViewController {
 
@@ -35,7 +36,7 @@ class GalleryDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        type = .back1
+        type = .backWithTitle
         configureTab()
         
         navigationController?.navigationBar.isHidden = false
@@ -50,10 +51,10 @@ class GalleryDetailViewController: BaseViewController {
                 fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
             }
             else if archeology != nil{
-                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GalleryModel.self)
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
             }
             else{
-                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: GalleryModel.self)
+                fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
             }
         }
     }
@@ -68,11 +69,9 @@ class GalleryDetailViewController: BaseViewController {
             switch result {
             case .success(let galleryDetail):
                 self.galleryDetail = galleryDetail as? GalleryModel
-                self.collectionView.reloadData()
+                self.galleryDetail?.images?.count == 0 ? self.collectionView.setEmptyView("No image found!") : self.collectionView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.collectionView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
@@ -85,7 +84,9 @@ class GalleryDetailViewController: BaseViewController {
             tabbarItems.append(tabbarItem)
         }
         tabbarView.items = tabbarItems
-
+        tabbarView.tabBarDelegate = self
+        tabbarView.delegate = self
+        Helper.shared.customTab(tabbar: tabbarView, items: tabbarItems)
         switch mediaType {
         case .image:
             tabbarView.selectedItem = tabbarView.items[0]
@@ -96,37 +97,13 @@ class GalleryDetailViewController: BaseViewController {
         default:
             break
         }
-//        tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.selectedItem = tabbarView.items[0]
-        tabbarView.bottomDividerColor = Helper.shared.lineColor()
-        tabbarView.backgroundColor = Helper.shared.backgroundColor()
-        tabbarView.rippleColor = .clear
-        tabbarView.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
-        tabbarView.preferredLayoutStyle = .scrollableCentered
-        tabbarView.isScrollEnabled = true
-        tabbarView.setTitleFont(Constants.lightFont, for: .normal)
-        tabbarView.setTitleFont(Constants.MediumFont, for: .selected)
-        tabbarView.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
-        tabbarView.setTitleColor(Constants.appColor, for: .selected)
-        tabbarView.tabBarDelegate = self
-        tabbarView.bounces = false
-        tabbarView.showsVerticalScrollIndicator = false
-        tabbarView.alwaysBounceVertical = false
-        tabbarView.bouncesZoom = false
-        tabbarView.shouldIgnoreScrollingAdjustment = false
-        tabbarView.scrollsToTop = false
-        tabbarView.minItemWidth = 10
-        tabbarView.delegate = self
-        tabbarView.contentInsetAdjustmentBehavior = .never
     }
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if scrollView == tabbarView {
-//            if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
-//                scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
-//            }
-//        }
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == tabbarView {
+            Helper.shared.disableVerticalScrolling(tabbarView)
+        }
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -147,14 +124,15 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
         switch item.tag {
         case 0:
             mediaType = .image
+            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No image found!") : collectionView.reloadData()
         case 1:
             mediaType = .video
+            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No video found!") : collectionView.reloadData()
         case 2:
-            mediaType = .virtual
+            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No virtual tour found!") : collectionView.reloadData()
         default:
             mediaType = .image
         }
-        collectionView.reloadData()
     }
 }
 
@@ -197,7 +175,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
             return 0
         }
     }
-    //            gridCell.imageView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (galleryDetail?.virtual_tours?.rows?[indexPath.row].video_url ?? "")))
+
     func collectionView(_ asCollectionView: ASCollectionView, cellForItemAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
         switch mediaType {
@@ -212,7 +190,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         }
         return gridCell
     }
-    //imgView.image = Helper.shared.getThumbnailImage(forUrl: URL(string: Route.baseUrl + (images?.video_url ?? "")))
+
     func collectionView(_ asCollectionView: ASCollectionView, parallaxCellForItemAtIndexPath indexPath: IndexPath) -> ASCollectionViewParallaxCell {
         let parallaxCell = collectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
         switch mediaType {
@@ -232,10 +210,6 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ASCollectionViewElement.Header, withReuseIdentifier: "header", for: indexPath)
         return header
     }
-    
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        Switcher.gotoViewerVC(delegate: self, galleryDetail: galleryDetail!)
-//    }
     
 }
     

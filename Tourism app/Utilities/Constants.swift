@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 import Firebase
-
+import SDWebImage
 struct Constants {
         
     static let tourDetail = TourDetail(area: "", experience: "", destination: "", information: "", accomodation: "")
@@ -58,7 +58,7 @@ struct Constants {
               Sections(title: "Events", image: "event", selectedImage: "event-s"),
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
               Sections(title: "KP Local Products", image: "product", selectedImage: "product-s"),
-              Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp"),
+              Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp-s"),
    ]
     
     static let gallerySection =  [Sections(title: "Images", image: "", selectedImage: ""),

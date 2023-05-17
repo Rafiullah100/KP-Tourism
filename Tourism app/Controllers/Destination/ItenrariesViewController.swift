@@ -43,10 +43,10 @@ class ItenrariesViewController: BaseViewController {
             fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ItinraryModel.self)
         }
         else if archeology != nil{
-            thumbnailTopLabel.text = archeology?.attractions?.title
-            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
-            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": archeology?.id ?? 0], model: ItinraryModel.self)
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnailBottomLabel.text = archeology?.attractions.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: ItinraryModel.self)
         }
     }
     

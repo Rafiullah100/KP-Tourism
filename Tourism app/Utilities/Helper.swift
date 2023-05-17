@@ -13,6 +13,7 @@ import MapboxDirections
 import MapboxCoreNavigation
 import MapboxNavigation
 import CoreLocation
+import MaterialComponents.MaterialTabs_TabBarView
 
 class Helper{
     static let shared = Helper()
@@ -148,5 +149,42 @@ class Helper{
 //        }
 //    }
     
+    func getProfileImage() -> String {
+        if let url = UserDefaults.standard.profileImage, url.contains("https"){
+            return url
+        }
+        else{
+            return Route.baseUrl + (UserDefaults.standard.profileImage ?? "")
+        }
+    }
+    
+    func disableVerticalScrolling(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
+            scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
+        }
+    }
+    
+    func customTab(tabbar: MDCTabBarView, items: [UITabBarItem]) {
+       tabbar.items = items
+       tabbar.selectedItem = tabbar.items[0]
+       tabbar.bottomDividerColor = Helper.shared.lineColor()
+       tabbar.backgroundColor = Helper.shared.backgroundColor()
+       tabbar.rippleColor = .clear
+       tabbar.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
+       tabbar.preferredLayoutStyle = .scrollableCentered
+       tabbar.isScrollEnabled = true
+       tabbar.setTitleFont(Constants.lightFont, for: .normal)
+       tabbar.setTitleFont(Constants.MediumFont, for: .selected)
+       tabbar.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
+       tabbar.setTitleColor(Constants.appColor, for: .selected)
+       tabbar.bounces = false
+       tabbar.showsVerticalScrollIndicator = false
+       tabbar.alwaysBounceVertical = false
+       tabbar.bouncesZoom = false
+       tabbar.shouldIgnoreScrollingAdjustment = false
+       tabbar.scrollsToTop = false
+       tabbar.minItemWidth = 10
+       tabbar.contentInsetAdjustmentBehavior = .never
+    }
 }
 

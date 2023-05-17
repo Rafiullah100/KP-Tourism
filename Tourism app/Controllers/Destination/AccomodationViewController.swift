@@ -44,26 +44,24 @@ class AccomodationViewController: BaseViewController {
     }
     
     private func reloadAccomodation(type: String){
-        var attractionID = 0
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            attractionID = exploreDistrict?.id ?? 0
+            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            attractionID = attractionDistrict?.id ?? 0
+            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": attractionDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
         }
         else if archeology != nil{
-            thumbnailTopLabel.text = archeology?.attractions?.title
-            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
-            attractionID = archeology?.id ?? 0
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnailBottomLabel.text = archeology?.attractions.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
         }
-        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": attractionID, "bookStayType": type], model: AccomodationModel.self)
     }
     
     private func configureTab(){
@@ -73,35 +71,14 @@ class AccomodationViewController: BaseViewController {
             let tabbarItem = UITabBarItem(title: item.title, image:  UIImage(named: item.image), tag: tag)
             tabbarItems.append(tabbarItem)
         }
-        tabbar.items = tabbarItems
-        tabbar.selectedItem = tabbar.items[0]
-        tabbar.bottomDividerColor = Helper.shared.lineColor()
-        tabbar.backgroundColor = Helper.shared.backgroundColor()
-        tabbar.rippleColor = .clear
-        tabbar.selectionIndicatorStrokeColor = #colorLiteral(red: 0.2432379425, green: 0.518629849, blue: 0.1918809414, alpha: 1)
-        tabbar.preferredLayoutStyle = .scrollableCentered
-        tabbar.isScrollEnabled = true
-        tabbar.setTitleFont(Constants.lightFont, for: .normal)
-        tabbar.setTitleFont(Constants.MediumFont, for: .selected)
-        tabbar.setTitleColor(Helper.shared.sectionTextColor(), for: .normal)
-        tabbar.setTitleColor(Constants.appColor, for: .selected)
         tabbar.tabBarDelegate = self
-        tabbar.bounces = false
-        tabbar.showsVerticalScrollIndicator = false
-        tabbar.alwaysBounceVertical = false
-        tabbar.bouncesZoom = false
-        tabbar.shouldIgnoreScrollingAdjustment = false
-        tabbar.scrollsToTop = false
-        tabbar.minItemWidth = 10
         tabbar.delegate = self
-        tabbar.contentInsetAdjustmentBehavior = .never
+        Helper.shared.customTab(tabbar: tabbar, items: tabbarItems)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollView == tabbar {
-            if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
-                scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
-            }
+            Helper.shared.disableVerticalScrolling(tabbar)
         }
     }
     

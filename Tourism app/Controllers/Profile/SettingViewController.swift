@@ -34,7 +34,7 @@ class SettingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"),Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help")]
+        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"),Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "", title: "Deactivate Account")]
     }
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
@@ -65,6 +65,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
             Switcher.goToSellerVC(delegate: self)
         case 0:
             Switcher.goToPersonalInfoVC(delegate: self)
+            
         default:
             break
         }

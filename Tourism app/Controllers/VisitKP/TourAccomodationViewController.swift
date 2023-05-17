@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class TravelAccomodation: UITableViewCell {
     //
     @IBOutlet weak var label: UILabel!
@@ -58,21 +58,17 @@ class TourAccomodationViewController: BaseViewController {
         type = .visitKP
         viewControllerTitle = "Tour Planner"
         //id 2
-        fetch(route: .fetchAccomodation, method: .post, parameters: ["attraction_id": districtID ?? 0], model: AccomodationModel.self)
+        fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": districtID ?? 0], model: AccomodationModel.self)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let accomodation):
-                DispatchQueue.main.async {
-                    self.accomodationDetail = accomodation as? AccomodationModel
-                    self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
-                }
+                self.accomodationDetail = accomodation as? AccomodationModel
+                self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
             case .failure(let error):
-                if error == .noInternet {
-                    self.tableView.noInternet()
-                }
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }

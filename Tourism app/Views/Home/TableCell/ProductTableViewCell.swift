@@ -30,7 +30,7 @@ class ProductTableViewCell: UITableViewCell {
                 favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             else{
-                favouriteButton.setBackgroundImage(UIImage(named: "favorite"), for: .normal)
+                favouriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = "\(product?.title ?? "")"

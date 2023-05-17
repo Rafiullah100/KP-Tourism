@@ -41,7 +41,7 @@ class FeedsViewController: UIViewController {
     var totalCount = 0
     var currentPage = 1
     var limit = 5
-    var storyLimit = 20
+    var storyLimit = 5
 
     var storyTotalCount = 1
     var storyCurrentPage = 1
@@ -56,11 +56,8 @@ class FeedsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         loadData()
-        guard let url = UserDefaults.standard.profileImage, url.contains("https") else {
-            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
-            return }
-        profileImageView.sd_setImage(with: URL(string: url))
-        profileButton.sd_setBackgroundImage(with: URL(string: url), for: .normal)
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
+        profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -96,7 +93,7 @@ class FeedsViewController: UIViewController {
     }
     
     @objc func storyApiCall(){
-        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit], model: FeedStoriesModel.self)
+        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""], model: FeedStoriesModel.self)
     }
     
     func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -121,6 +118,7 @@ class FeedsViewController: UIViewController {
                 let model = feedStories as? FeedStoriesModel
                 self.stories.append(contentsOf: model?.stories?.rows ?? [])
                 self.storyTotalCount = model?.stories?.count ?? 0
+                print(self.storyTotalCount)
                 self.storyTotalCount == 0 ? self.collectionView.setEmptyView("No story found!") : self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -210,10 +208,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
         let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
         if indexPath.row == 0 {
-//            cell.imgView.image = UIImage(named: "placeholder")
-            print(Route.baseUrl + (UserDefaults.standard.profileImage ?? ""))
-            cell.imgView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""), placeholderImage: UIImage(named: "placeholder"))
-
+            cell.imgView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
         }
         else{
             cell.stories = stories[indexPath.row - 1]
@@ -228,7 +223,8 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if stories.count != storyTotalCount && indexPath.row == stories.count {
+        print(stories.count, storyTotalCount, indexPath.row)
+        if stories.count != storyTotalCount && indexPath.row == stories.count - 1 {
             storyCurrentPage = storyCurrentPage + 1
             storyApiCall()
         }

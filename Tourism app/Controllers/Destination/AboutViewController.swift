@@ -39,11 +39,11 @@ class AboutViewController: BaseViewController {
             textView.text = "\(attractionDistrict?.description.stripOutHtml() ?? "")"
         }
         else if archeology != nil{
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
-            thumbnailTopLabel.text = "\(archeology?.attractions?.title ?? "")"
-            thumbnailBottomLabel.text = "\(archeology?.attractions?.locationTitle ?? "")"
-            welcomeLabel.text = "Welcome to \(archeology?.attractions?.title ?? "")"
-            textView.text = "\(archeology?.attractions?.description?.stripOutHtml() ?? "")"
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+            thumbnailTopLabel.text = "\(archeology?.attractions.title ?? "")"
+            thumbnailBottomLabel.text = "\(archeology?.attractions.locationTitle ?? "")"
+            welcomeLabel.text = "Welcome to \(archeology?.attractions.title ?? "")"
+            textView.text = "\(archeology?.attractions.description?.stripOutHtml() ?? "")"
         }
     }
     

@@ -57,14 +57,14 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "attraction_id": 1, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
         else if archeology != nil{
             sectionLabel.text = "Attractions"
-            thumbnailTopLabel.text = archeology?.attractions?.title
-            thumbnailBottomLabel.text = archeology?.attractions?.locationTitle
-            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.image_url ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnailBottomLabel.text = archeology?.attractions.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
     }
     

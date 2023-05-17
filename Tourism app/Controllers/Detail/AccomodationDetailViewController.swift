@@ -30,6 +30,7 @@ class AccomodationDetailViewController: BaseViewController {
     @IBOutlet weak var dropDownImageView: UIImageView!
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var likeCountLabel: UILabel!
     
     var accomodationDetail: Accomodation?
     var destinationCoordinate: CLLocationCoordinate2D?

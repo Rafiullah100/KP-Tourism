@@ -14,6 +14,7 @@ class AdventureDetailViewController: BaseViewController {
     @IBOutlet weak var adventureTypeLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     
+    @IBOutlet weak var likeCount: UILabel!
     @IBOutlet weak var favoriteBtn: UIButton!
     var adventureDetail: Adventure?
     

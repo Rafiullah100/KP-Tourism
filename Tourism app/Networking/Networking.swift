@@ -51,7 +51,7 @@ class Networking{
         
         let urlStr = Route.baseUrl + route.description
         //        let urlRequest: Alamofire.URLRequestConvertible = URLRequest(url: url)
-        let imageData = image.jpegData(compressionQuality: 1.0)
+        let imageData = image.jpegData(compressionQuality: 0.5)
         let headers: HTTPHeaders = [
             "Content-type": "multipart/form-data",
             "x-access-token": "\(UserDefaults.standard.accessToken ?? "")"

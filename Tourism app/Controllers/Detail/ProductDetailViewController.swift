@@ -22,13 +22,16 @@ class ProductDetailViewController: BaseViewController {
     
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var statusBarView: UIView!
+    @IBOutlet weak var likeCountLabel: UILabel!
     
+    var likeCount = 0
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "Local Products"
+        viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
 //        viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
         thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         productNameLabel.text = productDetail?.title
@@ -38,6 +41,11 @@ class ProductDetailViewController: BaseViewController {
         locationLabel.text = productDetail?.districts.title
         favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         ownerNameLabel.text = "\(productDetail?.users.name ?? "")"
+        
+        if productDetail?.likes.count ?? 0 > 0{
+            likeCount = productDetail?.likes.count ?? 0
+            likeCountLabel.text = "\(String(describing: likeCount)) Liked"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,7 +73,8 @@ class ProductDetailViewController: BaseViewController {
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
                     self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-
+                    self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):
                 print("error \(error)")

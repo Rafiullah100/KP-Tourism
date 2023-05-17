@@ -68,7 +68,7 @@ class HomeViewController: BaseViewController {
     //pagination
     var totalCount = 1
     var currentPage = 1
-    var limit = 5
+    var limit = 30
     //explore
     var exploreDistrict: [ExploreDistrict] = [ExploreDistrict]()
     var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
@@ -124,6 +124,7 @@ class HomeViewController: BaseViewController {
                 else if self.cellType == .arch{
                     self.archeology.append(contentsOf: (self.model as? ArcheologyModel)?.archeology ?? [])
                     self.totalCount = (self.model as? ArcheologyModel)?.count ?? 0
+                    print(self.totalCount, (self.model as? ArcheologyModel)?.archeology.count ?? 0)
                 }
                 else if self.cellType == .tour{
                     self.tourPackage.append(contentsOf: (self.model as? TourModel)?.tour ?? [])
@@ -239,7 +240,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
             cell.archeology = archeology[indexPath.row]
             cell.actionBlock = {
-                let archeologyID = self.archeology[indexPath.row].attractions?.id
+                let archeologyID = self.archeology[indexPath.row].attractions.id
                 self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
             }
             return cell
@@ -432,7 +433,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         case .tour:
             fetch(route: .fetchTourPackage, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: TourModel.self)
         case .arch:
-            fetch(route: .fetchArcheology, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? ""], model: ArcheologyModel.self)
+            fetch(route: .fetchArcheology, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? "", "user_id": UserDefaults.standard.userID ?? ""], model: ArcheologyModel.self)
         case .event:
             fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
         case .blog:
@@ -450,16 +451,16 @@ extension HomeViewController: MDCTabBarViewDelegate{
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 if  self.cellType == .explore{
-                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
                 else if self.cellType == .tour{
-                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
                 else if self.cellType == .arch{
-                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
                 else if self.cellType == .product{
-                    productCell?.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "favorite") : UIImage(named: "unfavorite-gray"), for: .normal)
+                    productCell?.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)

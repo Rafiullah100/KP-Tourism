@@ -10,7 +10,7 @@ import SVProgressHUD
 class SignupViewController: BaseViewController {
     
     let pickerView = UIPickerView()
-    let userType = ["Tourist", "Seller"]
+    let userType = ["User", "Tourist", "Seller"]
     
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var confirmTextField: UITextField!

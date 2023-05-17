@@ -32,7 +32,7 @@ enum Route {
     case login
     case doComment
     case fetchAlerts
-    case fetchAccomodation
+    case fetchDistrictAccomodation
     case fetchGettingHere
     case fetchVisitKp
     case weatherApi
@@ -77,6 +77,7 @@ enum Route {
     case visitpdf
     case suggestedUser
     case galleryByDistrict
+    case fetchAttrctionAccomodation
 
     var description: String {
         switch self {
@@ -124,8 +125,8 @@ enum Route {
             return "api/mobile/likes_comments/do_comment"
         case .fetchAlerts:
            return "api/mobile/notifications/list"
-        case .fetchAccomodation:
-            return "api/mobile/attractions/accomodations"
+        case .fetchDistrictAccomodation:
+            return "api/mobile/districts/accomodations"
         case .fetchGettingHere:
             return "api/mobile/districts/gettinghere"
         case .fetchVisitKp:
@@ -214,6 +215,8 @@ enum Route {
             return "api/mobile/users/suggested_users"
         case .galleryByDistrict:
             return "api/mobile/attractions/gallerybydistrict"
+        case .fetchAttrctionAccomodation:
+            return "api/mobile/attractions/accomodations"
         }
     }
 }
