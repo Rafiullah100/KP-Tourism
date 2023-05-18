@@ -24,9 +24,7 @@ class EventTableViewCell: UITableViewCell {
             titleLabel.text = event?.title
             typeLabel.text = event?.locationTitle
             opendateLabel.text = "\(event?.startDate ?? "") | \(event?.isExpired ?? "")"
-            if event?.socialEventUsers?.count != 0 {
-                interestGoingLabel.text = "\(event?.socialEventUsers?[0].userCount ?? 0)"
-            }
+            interestGoingLabel.text = "\(event?.usersInterestCount ?? 0)"
             if event?.isExpired == "Closed" {
                 statusView.backgroundColor = .red
             }

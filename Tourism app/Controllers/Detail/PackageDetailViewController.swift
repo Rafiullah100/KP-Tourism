@@ -65,7 +65,7 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var favoriteIcon: UIImageView!
     @IBOutlet weak var statusBarView: UIView!
     
-    var likeCount = 0
+    var interestCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,14 +82,14 @@ class PackageDetailViewController: BaseViewController {
         
         eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
         amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
-        favoriteIcon.image = tourDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
+        favoriteIcon.image = tourDetail?.userInterest == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
         durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
         viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
         counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
         districtNameLabel.text = tourDetail?.to_districts?.title
         registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
-        likeCount = tourDetail?.likes?.count ?? 0
-        likeLabel.text = "\(String(describing: likeCount)) Liked"
+        interestCount = tourDetail?.usersInterestCount ?? 0
+        likeLabel.text = "\(String(describing: interestCount)) Interested"
 
 //        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
     }
@@ -107,17 +107,18 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
-        self.like(route: .likeApi, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+        self.interest(route: .doInterest, method: .post, parameters: ["package_id": tourDetail?.id ?? 0], model: SuccessModel.self)
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+    func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                self.favoriteIcon.image = successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked")
-                self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
-                self.likeLabel.text = "\(self.likeCount) Liked"
+                self.favoriteIcon.image = successDetail?.message == "Interest Added" ? UIImage(named: "liked-red") : UIImage(named: "liked")
+                self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                self.likeLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

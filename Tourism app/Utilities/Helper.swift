@@ -186,5 +186,11 @@ class Helper{
        tabbar.minItemWidth = 10
        tabbar.contentInsetAdjustmentBehavior = .never
     }
+    
+    func logoutUser(self: UIViewController) {
+        UserDefaults.clean()
+        Switcher.goToLoginVC(delegate: self)
+    }
+    
 }
 

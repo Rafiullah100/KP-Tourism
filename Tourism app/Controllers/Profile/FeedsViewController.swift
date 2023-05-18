@@ -55,6 +55,7 @@ class FeedsViewController: UIViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadStories), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         loadData()
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
         profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
@@ -83,6 +84,13 @@ class FeedsViewController: UIViewController {
     
     func loadNewsFeed(){
         fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
+    }
+    
+    @objc func reloadStories(){
+        stories = []
+        storyTotalCount = 0
+        storyCurrentPage = 1
+        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""], model: FeedStoriesModel.self)
     }
     
     @objc func reloadNewsFeed(){
@@ -127,16 +135,18 @@ class FeedsViewController: UIViewController {
     }
     
     private func actionSheet(row: Int){
-        let alert = UIAlertController(title: "", message: "choose action", preferredStyle: .actionSheet)
-        alert.addAction(UIAlertAction(title: "Edit", style: .default, handler: { action in
-            Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
-        }))
-        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
-            self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id ?? 0], model: SuccessModel.self, row: row)
-        }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-        }))
-        present(alert, animated: true)
+        Utility.actionSheet(message: "choose action", buttonTitles: ["Edit", "Delete", "Cancel"]) { responce in
+            if responce == "Edit"{
+                Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
+            }
+            else if responce == "Delete"{
+                Utility.showAlert(message: "Are you sure you want to delete?", buttonTitles: ["No", "Yes"]) { responce in
+                    if responce == "Yes"{
+                        self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id ?? 0], model: SuccessModel.self, row: row)
+                    }
+                }
+            }
+        }
     }
     
     func deletePost<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: Int) {

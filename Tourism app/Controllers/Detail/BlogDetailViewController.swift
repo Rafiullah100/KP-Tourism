@@ -118,6 +118,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         self.like(route: .likeApi, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
     }
     

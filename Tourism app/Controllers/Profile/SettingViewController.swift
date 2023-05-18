@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import SVProgressHUD
 class SettingTableViewCell: UITableViewCell {
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var label: UILabel!
@@ -36,9 +36,29 @@ class SettingViewController: UIViewController {
         topBarView.addBottomShadow()
         settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"),Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "", title: "Deactivate Account")]
     }
+    
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
+    
+    func deleteAccount<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let change):
+                let res = change as? SuccessModel
+                if res?.success == true {
+                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                    Helper.shared.logoutUser(self: self)
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: res?.message)
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
 }
 
 extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
@@ -65,7 +85,12 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
             Switcher.goToSellerVC(delegate: self)
         case 0:
             Switcher.goToPersonalInfoVC(delegate: self)
-            
+        case 5:
+            Utility.showAlert(message: "Are you sure you want to delete you account?", buttonTitles: ["cancel", "Yes"]) { response in
+                if response == "Yes"{
+                    self.deleteAccount(route: .deleteProfile, method: .post, model: SuccessModel.self)
+                }
+            }
         default:
             break
         }

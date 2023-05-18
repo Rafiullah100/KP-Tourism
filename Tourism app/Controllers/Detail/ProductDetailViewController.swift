@@ -63,6 +63,7 @@ class ProductDetailViewController: BaseViewController {
         self.share(text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
     }
     @IBAction func likeBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         self.like(route: .likeApi, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
     }
     

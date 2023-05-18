@@ -60,7 +60,7 @@ class AccomodationViewController: BaseViewController {
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
         }
     }
     

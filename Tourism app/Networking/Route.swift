@@ -78,6 +78,9 @@ enum Route {
     case suggestedUser
     case galleryByDistrict
     case fetchAttrctionAccomodation
+    case deleteProfile
+    case doInterest
+    case doEventInterest
 
     var description: String {
         switch self {
@@ -214,9 +217,15 @@ enum Route {
         case .suggestedUser:
             return "api/mobile/users/suggested_users"
         case .galleryByDistrict:
-            return "api/mobile/attractions/gallerybydistrict"
+            return "api/mobile/attractions/gallerybydistrictandattraction"
         case .fetchAttrctionAccomodation:
             return "api/mobile/attractions/accomodations"
+        case .deleteProfile:
+            return "api/mobile/users/delete_profile"
+        case .doInterest:
+           return "api/mobile/users/do_interest_tourpackage"
+        case .doEventInterest:
+            return "api/mobile/users/do_interest"
         }
     }
 }

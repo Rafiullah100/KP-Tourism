@@ -26,12 +26,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToDestination(delegate: UIViewController, type: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeologyDistrict: Archeology? = nil){
+    static func goToDestination(delegate: UIViewController, type: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeologyDistrict: Archeology? = nil, distirctID: Int? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "CommonViewController") as! CommonViewController
         vc.locationCategory = type
         vc.explore = exploreDistrict
         vc.attraction = attractionDistrict
         vc.archeology = archeologyDistrict
+        vc.districtID = distirctID ?? 0
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -72,12 +73,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAttraction(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToAttraction(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, districtID: Int? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AttractionViewController") as! AttractionViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.districtID = districtID
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

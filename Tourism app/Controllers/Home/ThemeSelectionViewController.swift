@@ -63,7 +63,6 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
     }
     
     @IBAction func logoutBtnAction(_ sender: Any) {
-        UserDefaults.clean()
-        Switcher.goToLoginVC(delegate: self)
+        Helper.shared.logoutUser(self: self)
     }
 }

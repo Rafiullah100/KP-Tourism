@@ -48,10 +48,10 @@ class GalleryDetailViewController: BaseViewController {
                 fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: GalleryModel.self)
             }
             else if attractionDistrict != nil{
-                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["attraction_id": attractionDistrict?.id ?? 0], model: GalleryModel.self)
             }
             else if archeology != nil{
-                fetch(route: .galleryByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
+                fetch(route: .galleryByDistrict, method: .post, parameters: ["attraction_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
             }
             else{
                 fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
@@ -124,15 +124,23 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
         switch item.tag {
         case 0:
             mediaType = .image
-            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No image found!") : collectionView.reloadData()
+            if self.galleryDetail?.images?.count == 0{
+                collectionView.setEmptyView("No image found!")
+            }
         case 1:
             mediaType = .video
-            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No video found!") : collectionView.reloadData()
+            if self.galleryDetail?.videos?.count == 0{
+                collectionView.setEmptyView("No video found!")
+            }
         case 2:
-            self.galleryDetail?.images?.count == 0 ? collectionView.setEmptyView("No virtual tour found!") : collectionView.reloadData()
+            mediaType = .virtual
+            if self.galleryDetail?.virtual_tours?.count == 0{
+                collectionView.setEmptyView("No virtual tour found!")
+            }
         default:
             mediaType = .image
         }
+        collectionView.reloadData()
     }
 }
 

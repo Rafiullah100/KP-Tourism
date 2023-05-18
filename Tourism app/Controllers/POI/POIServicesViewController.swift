@@ -38,13 +38,14 @@ class POIServicesViewController: BaseViewController {
     }
     
     private func fetch() {
+        var parameters = [String: Any]()
         if exploreDistrict != nil{
-            districtId = exploreDistrict?.id
+            parameters = ["district_id": exploreDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         }
         else if attractionDistrict != nil{
             districtId = attractionDistrict?.id
+            parameters = ["attraction_id": attractionDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         }
-        let parameters = ["district_id": districtId ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         print(parameters)
         URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
             switch result {

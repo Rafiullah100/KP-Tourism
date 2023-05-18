@@ -30,6 +30,9 @@ class EventDetailViewController: BaseViewController {
     var originCoordinate: CLLocationCoordinate2D?
     var locationManager = CLLocationManager()
     
+    var interestCount = 0
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -43,16 +46,14 @@ class EventDetailViewController: BaseViewController {
         descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.previewImage ?? "")))
         openDateLabel.text = "\(eventDetail?.startDate ?? "") | \(eventDetail?.isExpired ?? "")"
-        if eventDetail?.socialEventUsers?.count != 0 {
-            interestGoingLabel.text = "\(eventDetail?.socialEventUsers?[0].userCount ?? 0) Interested"
-        }
         if eventDetail?.isExpired == "Closed" {
             statusView.backgroundColor = .red
-        }
-        else{
+        }else{
             statusView.backgroundColor = Constants.appColor
         }
-        favoriteBtn.setImage(eventDetail?.userLike == 1 ? UIImage(named: "like-red") : UIImage(named: "liked"), for: .normal)
+        interestCount = eventDetail?.usersInterestCount ?? 0
+        interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
+        favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "like-red") : UIImage(named: "liked"), for: .normal)
         view.bringSubviewToFront(statusView)
     }
     
@@ -96,15 +97,18 @@ class EventDetailViewController: BaseViewController {
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
-        self.like(route: .likeApi, method: .post, parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event"], model: SuccessModel.self)
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+        self.interest(route: .doEventInterest, method: .post, parameters: ["event_id": eventDetail?.id ?? 0], model: SuccessModel.self)
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+    func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                self.favoriteBtn.setImage(UIImage(named: successDetail?.message == "Interest Added" ? "liked-red" : "liked"), for: .normal)
+                self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                self.interestGoingLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

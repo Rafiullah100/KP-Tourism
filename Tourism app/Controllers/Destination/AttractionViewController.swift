@@ -36,6 +36,8 @@ class AttractionViewController: BaseViewController {
 
     var currentPage = 1
     var totalPages = 1
+    var districtID: Int?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,7 +59,8 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0, "attraction_id": 1, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0, "type": "subattraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            print(attractionDistrict?.id ?? 0, districtID ?? 0)
         }
         else if archeology != nil{
             sectionLabel.text = "Attractions"
@@ -128,7 +131,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if locationCategory == .district{
-            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDistrictsArray[indexPath.row])
+            Switcher.goToDestination(delegate: self, type: .tourismSpot, attractionDistrict: attractionDistrictsArray[indexPath.row], distirctID: districtID ?? 0)
         }
         else if locationCategory == .tourismSpot{
             Switcher.gotoAttractionDetail(delegate: self, attractionDistrict: attractionDistrictsArray[indexPath.row])

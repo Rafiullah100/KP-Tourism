@@ -34,19 +34,18 @@ class ItenrariesViewController: BaseViewController {
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0], model: ItinraryModel.self)
-                //id = 5
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ItinraryModel.self)
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": attractionDistrict?.districtID ?? 0], model: ItinraryModel.self)
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: ItinraryModel.self)
+            fetch(route: .fetchItinraries, method: .post, parameters: ["district_id": archeology?.attractions.districtID ?? 0], model: ItinraryModel.self)
         }
     }
     

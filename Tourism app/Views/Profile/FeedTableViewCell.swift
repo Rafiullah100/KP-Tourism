@@ -44,7 +44,12 @@ class FeedTableViewCell: UITableViewCell {
                 imgbgView.isHidden = true
             }
             nameLabel.text = feed?.post?.users?.name?.capitalized
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
+            if let url = feed?.post?.users?.profile_image, url.contains("https://") {
+                userImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
+            }
+            else{
+                userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
+            }
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             timeLabel.text = "\(feed?.updatedAt ?? "")"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"

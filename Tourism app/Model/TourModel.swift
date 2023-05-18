@@ -60,7 +60,10 @@ struct TourPackage : Codable {
     let likes : [TourPackageLikes]?
     let activities : [TourActivities]?
     let userLike: Int?
+    let userInterest: Int?
     let isWished: Int?
+    let usersInterestCount: Int?
+    
     enum CodingKeys: String, CodingKey {
         
         case id = "id"
@@ -104,7 +107,9 @@ struct TourPackage : Codable {
         case startDate = "startDate"
         case endDate = "endDate"
         case userLike
+        case userInterest = "user_interest"
         case isWished
+        case usersInterestCount = "users_interest_count"
     }
 }
 

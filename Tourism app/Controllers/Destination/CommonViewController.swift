@@ -36,6 +36,9 @@ class CommonViewController: BaseViewController {
     var attraction: AttractionsDistrict?
     var archeology: Archeology?
     
+    var districtID = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -63,6 +66,7 @@ class CommonViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
             descriptionLabel.text = explore?.description?.stripOutHtml()
+            districtID = explore?.id ?? 0
         }
         else if attraction != nil{
             thumbnailTopLabel.text = attraction?.title
@@ -77,6 +81,7 @@ class CommonViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(archeology?.attractions.title ?? "")"
             descriptionLabel.text = archeology?.attractions.description?.stripOutHtml()
+            districtID = archeology?.attractions.id ?? 0
         }
     }
 }
@@ -96,7 +101,7 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.row {
         case 0:
             guard let locationCategory = locationCategory else { return }
-            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, districtID: districtID)
 //        case 1:
 //            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 1:

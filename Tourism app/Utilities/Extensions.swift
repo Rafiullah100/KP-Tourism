@@ -466,6 +466,15 @@ extension UIViewController {
          }))
          self.present(alert, animated: true, completion: nil)
      }
+    
+    func actionSheet(title:String = "", message:String, buttonTitles:[String], completion: @escaping (_ responce: String) -> Void) {
+                let actionSheet = UIAlertController(title: "", message: "choose action", preferredStyle: .actionSheet)
+                actionSheet.addAction(UIAlertAction(title: "Edit", style: .default, handler: { action in
+                }))
+                actionSheet.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { action in
+                }))
+                present(actionSheet, animated: true)
+    }
 }
 
 extension UICollectionView{
@@ -595,3 +604,5 @@ extension UITextField{
         self.layer.masksToBounds = true
     }
 }
+
+

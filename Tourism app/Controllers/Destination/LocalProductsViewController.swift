@@ -37,13 +37,13 @@ class LocalProductsViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.id ?? 0], model: ProductModel.self)
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": attractionDistrict?.districtID ?? 0], model: ProductModel.self)
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: ProductModel.self)
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.districtID ?? 0], model: ProductModel.self)
         }
     }
     

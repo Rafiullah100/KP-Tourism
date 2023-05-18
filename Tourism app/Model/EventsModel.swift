@@ -28,6 +28,8 @@ struct EventListModel: Codable {
     let durationDays: String?
     let socialEventUsers: [SocialEventUser]?
     let userLike: Int?
+    let userInterest: Int?
+    let usersInterestCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case id, uuid
@@ -48,6 +50,8 @@ struct EventListModel: Codable {
         case durationDays = "duration_days"
         case socialEventUsers = "social_event_users"
         case userLike
+        case userInterest = "user_interest"
+        case usersInterestCount = "users_interest_count"
     }
 }
 
