@@ -83,8 +83,7 @@ class ProfileViewController: UIViewController {
         topProfileView.viewShadow()
         
         navigationController?.navigationBar.isHidden = true
-        addButton.isHidden = true
-        configureTabbar()
+//        addButton.isHidden = true
         print(uuid ?? "")
         dispatchGroup?.enter()
         fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? ""], model: ProfileModel.self, apiType: .profile)
@@ -101,6 +100,7 @@ class ProfileViewController: UIViewController {
         dispatchGroup?.enter()
         postApiCall()
         dispatchGroup?.leave()
+//        configureTabbar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -119,11 +119,22 @@ class ProfileViewController: UIViewController {
     
     private func configureTabbar(){
         var tag = 0
-        for item in Constants.profileSection {
+        var user: [Sections] = []
+        if UserDefaults.standard.userType == "seller", UserDefaults.standard.isSeller == "approved" {
+            user = Constants.sellerUser
+        }
+        else if UserDefaults.standard.userType == "tourist"{
+            user = Constants.touristUser
+        }
+        else if UserDefaults.standard.userType == "user" {
+            user = Constants.sampleUser
+        }
+        for item in user {
             let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), tag: tag)
             tag = tag + 1
             tabbarItems.append(tabbarItem)
         }
+        profileSection = .post
         tabbarView.tabBarDelegate = self
         tabbarView.delegate = self
         Helper.shared.customTab(tabbar: tabbarView, items: tabbarItems)
@@ -166,7 +177,12 @@ class ProfileViewController: UIViewController {
             Switcher.gotoWriteBlogVC(delegate: self)
         }
         else if profileSection == .product{
-            Switcher.gotoAddProductVC(delegate: self)
+            if UserDefaults.standard.userType == "seller"{
+                Switcher.gotoAddProductVC(delegate: self)
+            }
+            else{
+//                Switcher.gotoAddProductVC(delegate: self)
+            }
         }
     }
     
@@ -202,6 +218,7 @@ class ProfileViewController: UIViewController {
                     self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"
                     UserDefaults.standard.userType = self.userProfile?.userDetails.userType
                     UserDefaults.standard.isSeller = self.userProfile?.userDetails.isSeller
+                    self.configureTabbar()
                 }
                 else if apiType == .story{
                     self.stories.append(contentsOf: (model as? FeedStoriesModel)?.stories?.rows ?? [])
@@ -336,21 +353,16 @@ extension ProfileViewController: MDCTabBarViewDelegate{
             self.post.count == 0 ? self.contentCollectionView.setEmptyView("No Post found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 1{
-            if UserDefaults.standard.userType == "seller", UserDefaults.standard.isSeller == "approved" {
-                addButton.isHidden = false
-            }
-            else{
-                addButton.isHidden = true
-            }
-            writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
-            profileSection = .product
-            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No product found!") : self.contentCollectionView.reloadData()
-        }
-        else if item.tag == 2{
             addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
             profileSection = .blog
-            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView("No blog found!") : self.contentCollectionView.reloadData()
+            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No blog found!") : self.contentCollectionView.reloadData()
+        }
+        else if item.tag == 2{
+            addButton.isHidden = false
+            writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
+            profileSection = .product
+            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView("No data found!") : self.contentCollectionView.reloadData()
         }
         contentCollectionView.reloadData()
     }

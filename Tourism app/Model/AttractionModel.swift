@@ -33,6 +33,8 @@ struct AttractionsDistrict: Codable {
     let createdAt, updatedAt: String?
     let attractionGalleries: [AttractionGallery]?
     let userLike: Int?
+    let isWished: Int?
+
     
     enum CodingKeys: String, CodingKey {
         case id, title, slug
@@ -51,6 +53,7 @@ struct AttractionsDistrict: Codable {
         case isDeleted, createdAt, updatedAt
         case attractionGalleries = "attraction_galleries"
         case userLike
+        case isWished
     }
 }
 

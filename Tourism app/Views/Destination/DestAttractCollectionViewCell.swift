@@ -18,14 +18,14 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
     var attraction: AttractionsDistrict?{
         didSet{
             
-            if attraction?.userLike == 1 {
+            if attraction?.isWished == 1 {
                 favoriteBtn.setImage(UIImage(named: "fav"), for: .normal)
             }
             else{
                 favoriteBtn.setImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.displayImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")))
             attractionLabel.text = attraction?.title
         }
     }

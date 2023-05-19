@@ -91,7 +91,7 @@ enum Route {
         case .fetchPoiCategories:
             return "api/mobile/poi/getcategories"
         case .fetchPoiSubCategories:
-            return "api/mobile/poi/getbydistrict"
+            return "api/mobile/poi/getbydistrictandattraction"
         case .attractionbyDistrict:
             return "api/mobile/attractions/list"
         case .fetchAllEvents:

@@ -78,7 +78,7 @@
                                                             <action selector="chatBtnAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="vW1-vB-Xc7"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyQ-5k-YCG">
+                                                    <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KyQ-5k-YCG">
                                                         <rect key="frame" x="38" y="0.0" width="30" height="30"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                         <state key="normal" backgroundImage="user"/>
@@ -511,8 +511,11 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="muD-IY-WiP">
                                                                         <rect key="frame" x="146.66666666666666" y="0.0" width="100" height="100"/>
                                                                         <subviews>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="feed-cell-bg" translatesAutoresizingMaskIntoConstraints="NO" id="Cbg-PX-WVe">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                                            </imageView>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="002-rI-RfB">
-                                                                                <rect key="frame" x="2" y="2" width="96" height="96"/>
+                                                                                <rect key="frame" x="3" y="3" width="94" height="94"/>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
                                                                                         <real key="value" value="48"/>
@@ -520,10 +523,10 @@
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </imageView>
                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vQm-ed-Z7j">
-                                                                                <rect key="frame" x="27.333333333333343" y="75" width="45" height="30"/>
+                                                                                <rect key="frame" x="32.333333333333343" y="80" width="35" height="25"/>
                                                                                 <constraints>
-                                                                                    <constraint firstAttribute="height" constant="30" id="BwW-eS-0Jn"/>
-                                                                                    <constraint firstAttribute="width" constant="45" id="TOd-3J-Wnh"/>
+                                                                                    <constraint firstAttribute="height" constant="25" id="BwW-eS-0Jn"/>
+                                                                                    <constraint firstAttribute="width" constant="35" id="TOd-3J-Wnh"/>
                                                                                 </constraints>
                                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                                 <state key="normal" image="add-friend"/>
@@ -531,19 +534,20 @@
                                                                         </subviews>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <constraints>
-                                                                            <constraint firstItem="002-rI-RfB" firstAttribute="leading" secondItem="muD-IY-WiP" secondAttribute="leading" constant="2" id="8CV-09-Fif"/>
-                                                                            <constraint firstAttribute="trailing" secondItem="002-rI-RfB" secondAttribute="trailing" constant="2" id="9f5-nk-3Kh"/>
+                                                                            <constraint firstItem="002-rI-RfB" firstAttribute="leading" secondItem="muD-IY-WiP" secondAttribute="leading" constant="3" id="8CV-09-Fif"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="002-rI-RfB" secondAttribute="trailing" constant="3" id="9f5-nk-3Kh"/>
                                                                             <constraint firstAttribute="width" constant="100" id="Muk-zB-Fyd"/>
-                                                                            <constraint firstItem="002-rI-RfB" firstAttribute="top" secondItem="muD-IY-WiP" secondAttribute="top" constant="2" id="dJp-Z8-une"/>
-                                                                            <constraint firstAttribute="bottom" secondItem="002-rI-RfB" secondAttribute="bottom" constant="2" id="mAP-Bw-m0G"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="Cbg-PX-WVe" secondAttribute="trailing" id="NcQ-VY-eLY"/>
+                                                                            <constraint firstItem="Cbg-PX-WVe" firstAttribute="top" secondItem="muD-IY-WiP" secondAttribute="top" id="Vyh-6b-eTu"/>
+                                                                            <constraint firstItem="002-rI-RfB" firstAttribute="top" secondItem="muD-IY-WiP" secondAttribute="top" constant="3" id="dJp-Z8-une"/>
+                                                                            <constraint firstItem="Cbg-PX-WVe" firstAttribute="leading" secondItem="muD-IY-WiP" secondAttribute="leading" id="j1o-ZB-RJH"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="002-rI-RfB" secondAttribute="bottom" constant="3" id="mAP-Bw-m0G"/>
                                                                             <constraint firstAttribute="height" constant="100" id="may-Bw-YW4"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="Cbg-PX-WVe" secondAttribute="bottom" id="nsQ-qL-GgY"/>
                                                                             <constraint firstAttribute="bottom" secondItem="vQm-ed-Z7j" secondAttribute="bottom" constant="-5" id="rtF-ey-D8V"/>
                                                                             <constraint firstItem="vQm-ed-Z7j" firstAttribute="centerX" secondItem="muD-IY-WiP" secondAttribute="centerX" id="uQ3-90-0YQ"/>
                                                                         </constraints>
                                                                         <userDefinedRuntimeAttributes>
-                                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                <real key="value" value="0.5"/>
-                                                                            </userDefinedRuntimeAttribute>
                                                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
                                                                                 <color key="value" name="#327425"/>
                                                                             </userDefinedRuntimeAttribute>
@@ -732,8 +736,8 @@
                                                                                                 <rect key="frame" x="0.0" y="0.0" width="101" height="24"/>
                                                                                                 <subviews>
                                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5N-Gr-gX4">
-                                                                                                        <rect key="frame" x="0.0" y="1.3333333333333321" width="101" height="21.333333333333336"/>
-                                                                                                        <imageReference key="image" image="figure.mind.and.body" catalog="system" renderingMode="original"/>
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="101" height="24"/>
+                                                                                                        <imageReference key="image" image="suggested-user" renderingMode="original"/>
                                                                                                     </imageView>
                                                                                                 </subviews>
                                                                                                 <constraints>
@@ -4611,13 +4615,14 @@
         <image name="cross-btn-gray" width="18" height="18"/>
         <image name="drop-down" width="11" height="5.6666665077209473"/>
         <image name="fav" width="22" height="21"/>
-        <image name="figure.mind.and.body" catalog="system" width="128" height="102"/>
+        <image name="feed-cell-bg" width="72" height="72"/>
         <image name="follower-dismiss" width="9.3333330154418945" height="9"/>
         <image name="no-message-received" width="18.666666030883789" height="20.666666030883789"/>
         <image name="post-gallery" width="16" height="16"/>
         <image name="profile" width="21" height="21"/>
         <image name="search" width="17.666666030883789" height="17.666666030883789"/>
         <image name="setting-btn-icon" width="19.666666030883789" height="20"/>
+        <image name="suggested-user" width="10.666666984558105" height="10.666666984558105"/>
         <image name="user" width="128" height="128"/>
         <image name="write-icon" width="96" height="96"/>
         <namedColor name="#327425">

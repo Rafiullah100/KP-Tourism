@@ -27,6 +27,8 @@ struct Constants {
     
     static var kpkCoordinates = Coordinates(lat: 34.9526, long: 72.3311)
     
+    static let userType = ["User", "Tourist", "Seller"]
+    
         static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGdrazJyMDkwZDd2M21xcXU5b25waW9jIn0.iOMmUGeAHWNOKKrDU5S2pg"
     
 //    static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"
@@ -71,9 +73,18 @@ struct Constants {
               Sections(title: "Government Rest Houses", image: "", selectedImage: "")
    ]
     
-    static let profileSection =  [Sections(title: "Post", image: "", selectedImage: ""),
-              Sections(title: "Products", image: "", selectedImage: ""),
+    static let sampleUser =  [Sections(title: "Post", image: "", selectedImage: ""),
               Sections(title: "Blogs", image: "", selectedImage: "")
+   ]
+    
+    static let sellerUser =  [Sections(title: "Post", image: "", selectedImage: ""),
+                              Sections(title: "Blogs", image: "", selectedImage: ""),
+              Sections(title: "Products", image: "", selectedImage: "")
+   ]
+    
+    static let touristUser =  [Sections(title: "Post", image: "", selectedImage: ""),
+                               Sections(title: "Blogs", image: "", selectedImage: ""),
+              Sections(title: "Tour Package", image: "", selectedImage: "")
    ]
     
     static let slides = [Slides(image: "car", title: "Travel by car", description: "Travel by car Travel by car  Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Road", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car"), Slides(image: "car", title: "Travel by Air", description: "Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car Travel by car")]

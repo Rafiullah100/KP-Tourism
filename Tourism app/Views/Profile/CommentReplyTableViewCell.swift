@@ -29,7 +29,7 @@ class CommentReplyTableViewCell: UITableViewCell {
     var commentReply: CommentsReply?{
         didSet{
             timeLabel.text = "\(commentReply?.createdAt ?? "")"
-            commentLabel.text = "\(commentReply?.reply ?? "")"
+            commentLabel.text = "\(commentReply?.reply ?? "")".trimmingCharacters(in: .whitespaces)
             nameLabel.text = "\(commentReply?.users?.name ?? "")"
             userImageView.sd_setImage(with: URL(string: Route.baseUrl + (commentReply?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }

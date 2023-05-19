@@ -23,26 +23,28 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .title1
-//        emailTextField.text = "arsalan@gmail.com"
-//        passwordTextField.text = "123456"
         viewControllerTitle = "Login"
+        emailTextField.text = "murtazakhan68@gmail.com"
+        passwordTextField.text = "12345678"
         navigationItem.hidesBackButton = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        navigationController?.navigationBar.isHidden = true
-//        self.navigationController?.navigationItem.hidesBackButton = true
     }
 
     @IBAction func googleSigninBtn(_ sender: Any) {
         guard let clientID = Constants.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
-         GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
-            if error == nil{
-                let parameters = ["username": result?.user.profile?.email ?? "", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
-                self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
+            DispatchQueue.main.async {
+                if error == nil{
+                    Utility.showAlert(message: "Select user type.", buttonTitles: [Constants.userType[0], Constants.userType[1], Constants.userType[2]]) { responce in
+                        let parameters = ["username": result?.user.profile?.email ?? "", "user_type": responce, "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
+                        self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
+                    }
+                }
             }
         }
     }
@@ -115,11 +117,11 @@ class LoginViewController: BaseViewController {
     }
     
     private func validateLoginFields(){
-        guard let email = emailTextField.text, let password = passwordTextField.text else {
-            self.view.makeToast("All fields are required.", duration: 3.0, position: .center)
+        guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else {
+            self.view.makeToast("All fields are required.", duration: 2.0, position: .center)
             return }
         guard passwordTextField.text == passwordTextField.text else {
-            self.view.makeToast("Password doesn't match.", duration: 3.0, position: .top)
+            self.view.makeToast("Password doesn't match.", duration: 2.0, position: .top)
             return }
         let parameters = ["username": email, "password": password]
         loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)

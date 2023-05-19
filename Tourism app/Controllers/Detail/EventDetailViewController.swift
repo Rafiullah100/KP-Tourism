@@ -53,7 +53,7 @@ class EventDetailViewController: BaseViewController {
         }
         interestCount = eventDetail?.usersInterestCount ?? 0
         interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
-        favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "like-red") : UIImage(named: "liked"), for: .normal)
+        favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
         view.bringSubviewToFront(statusView)
     }
     
@@ -106,7 +106,7 @@ class EventDetailViewController: BaseViewController {
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
-                self.favoriteBtn.setImage(UIImage(named: successDetail?.message == "Interest Added" ? "liked-red" : "liked"), for: .normal)
+                self.favoriteBtn.setImage(UIImage(named: successDetail?.message == "Interest Added" ? "interested-red" : "interested"), for: .normal)
                 self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.interestGoingLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):

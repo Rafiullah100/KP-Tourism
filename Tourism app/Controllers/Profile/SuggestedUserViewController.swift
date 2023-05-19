@@ -26,7 +26,7 @@ class SuggestedUserViewController: UIViewController {
     
     var totalCount = 0
     var currentPage = 1
-    var limit = 5
+    var limit = 20
     
     var suggestedUsers: [SuggestedUser] = [SuggestedUser]()
     private var apiType: ApiType?
@@ -103,6 +103,7 @@ extension SuggestedUserViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if suggestedUsers.count != totalCount && indexPath.row == suggestedUsers.count - 1  {
+            print(suggestedUsers.count, totalCount)
             currentPage = currentPage + 1
             loadData()
         }

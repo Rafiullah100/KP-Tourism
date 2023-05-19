@@ -28,6 +28,7 @@ class BlogDetailViewController: BaseViewController {
     var blogDetail: Blog?
     var allComments: [CommentsRows] = [CommentsRows]()
     
+    @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: DynamicHeightTableView!{
@@ -57,6 +58,7 @@ class BlogDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         textView.text = blogDetail?.blogDescription.stripOutHtml()
         blogTitleLabel.text = blogDetail?.title.stripOutHtml()
         autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"

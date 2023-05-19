@@ -10,7 +10,6 @@ import SVProgressHUD
 class SignupViewController: BaseViewController {
     
     let pickerView = UIPickerView()
-    let userType = ["User", "Tourist", "Seller"]
     
     @IBOutlet weak var phoneTextField: UITextField!
     @IBOutlet weak var confirmTextField: UITextField!
@@ -26,7 +25,7 @@ class SignupViewController: BaseViewController {
         type = .title
         viewControllerTitle = "Sign up"
         userTypeTextField.inputView = pickerView
-        userTypeTextField.text = userType[0]
+        userTypeTextField.text = Constants.userType[0]
         pickerView.delegate = self
         pickerView.dataSource = self
     }
@@ -73,14 +72,14 @@ extension SignupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        userType.count
+        Constants.userType.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return userType[row]
+        return Constants.userType[row]
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        userTypeTextField.text = userType[row]
+        userTypeTextField.text = Constants.userType[row]
     }
 }

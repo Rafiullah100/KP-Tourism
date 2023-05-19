@@ -43,7 +43,6 @@ class POIServicesViewController: BaseViewController {
             parameters = ["district_id": exploreDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         }
         else if attractionDistrict != nil{
-            districtId = attractionDistrict?.id
             parameters = ["attraction_id": attractionDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         }
         print(parameters)

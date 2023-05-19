@@ -118,8 +118,9 @@ class HomeViewController: BaseViewController {
                     self.totalCount = (self.model as? ProductModel)?.count ?? 0
                 }
                 else if self.cellType == .event{
-                    self.event = (self.model as? EventsModel)?.events ?? []
-                    self.totalCount = (self.model as? EventsModel)?.count ?? 0
+                    let eventModel = self.model as? EventsModel
+                    self.event.append(contentsOf: eventModel?.events ?? [])
+                    self.totalCount = eventModel?.count ?? 0
                 }
                 else if self.cellType == .arch{
                     self.archeology.append(contentsOf: (self.model as? ArcheologyModel)?.archeology ?? [])
@@ -404,12 +405,12 @@ extension HomeViewController: MDCTabBarViewDelegate{
                 serverCall(cell: .tour)
             }
         }
-//        else if cellType == .event{
-//            if event.count != totalCount && indexPath.row == event.count - 1  {
-//                currentPage = currentPage + 1
-//                serverCall(cell: .tour)
-//            }
-//        }
+        else if cellType == .event{
+            if event.count != totalCount && indexPath.row == event.count - 1  {
+                currentPage = currentPage + 1
+                serverCall(cell: .tour)
+            }
+        }
         else if cellType == .blog{
             if blogs.count != totalCount && indexPath.row == blogs.count - 1  {
                 currentPage = currentPage + 1
@@ -435,7 +436,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         case .arch:
             fetch(route: .fetchArcheology, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? "", "user_id": UserDefaults.standard.userID ?? ""], model: ArcheologyModel.self)
         case .event:
-            fetch(route: .fetchAllEvents, method: .get, parameters: ["user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
+            fetch(route: .fetchAllEvents, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
         case .blog:
             fetch(route: .fetchBlogs, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: BlogsModel.self)
         case .product:
@@ -446,10 +447,10 @@ extension HomeViewController: MDCTabBarViewDelegate{
     }
     
     func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil, productCell: ProductTableViewCell? = nil) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
-            case .success(let like):
-                let successDetail = like as? SuccessModel
+            case .success(let wish):
+                let successDetail = wish as? SuccessModel
                 if  self.cellType == .explore{
                     exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }

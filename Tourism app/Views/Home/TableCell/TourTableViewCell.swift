@@ -22,11 +22,11 @@ class TourTableViewCell: UITableViewCell {
     var tour: TourPackage?{
         didSet{
             
-            if tour?.isWished == 0 {
-                favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+            if tour?.userWishlist == 1 && tour?.userWishlist != nil {
+                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
             else{
-                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
+                favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
             
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (tour?.preview_image ?? "")))
