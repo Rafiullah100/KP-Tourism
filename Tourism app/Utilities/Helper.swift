@@ -164,7 +164,7 @@ class Helper{
         }
     }
     
-    func customTab(tabbar: MDCTabBarView, items: [UITabBarItem]) {
+    func customTab(tabbar: MDCTabBarView, items: [UITabBarItem], fontSize: Int? = nil) {
        tabbar.items = items
        tabbar.selectedItem = tabbar.items[0]
        tabbar.bottomDividerColor = Helper.shared.lineColor()

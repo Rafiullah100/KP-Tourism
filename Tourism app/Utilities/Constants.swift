@@ -101,6 +101,9 @@ struct Constants {
 //    static profileImage(){
 //
 //    }
+    
+    static let priceType: [String] = ["group", "individual"]
+    static let transport: [String] = ["Motor", "Car", "4x4", "Bike","Public","Bus"]
  }
 
 enum Envoirment {

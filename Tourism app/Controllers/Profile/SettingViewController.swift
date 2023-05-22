@@ -30,11 +30,10 @@ class SettingViewController: UIViewController {
     var settings: [Settings]? = nil
     
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"),Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "delete-account", title: "Deactivate Account")]
+        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"), Settings(image: "setting-tourist", title: "Become a Tourist"), Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "delete-account", title: "Deactivate Account")]
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -79,13 +78,17 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 3:
+        case 4:
             Switcher.goToSecurityVC(delegate: self)
         case 1:
-            Switcher.goToSellerVC(delegate: self)
+            Switcher.goToSellerVC(delegate: self, userType: .seller)
+        case 2:
+            Switcher.goToSellerVC(delegate: self, userType: .tourist)
         case 0:
             Switcher.goToPersonalInfoVC(delegate: self)
-        case 5:
+        case 3:
+            Switcher.gotoNotificationListVC(delegate: self)
+        case 6:
             Utility.showAlert(message: "Are you sure you want to delete you account?", buttonTitles: ["cancel", "Yes"]) { response in
                 if response == "Yes"{
                     self.deleteAccount(route: .deleteProfile, method: .post, model: SuccessModel.self)

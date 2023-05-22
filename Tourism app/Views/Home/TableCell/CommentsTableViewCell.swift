@@ -29,6 +29,7 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     var actionBlock: ((String) -> Void)? = nil
+    var commentReplyBlock: (() -> Void)? = nil
     var inputText = "Reply"
     
     var comment: CommentsRows?{
@@ -58,6 +59,9 @@ class CommentsTableViewCell: UITableViewCell {
         textView.textColor = UIColor.lightGray
     }
 
+    @IBAction func hideShowBtnAction(_ sender: Any) {
+        commentReplyBlock?()
+    }
     @IBAction func replyButtonAction(_ sender: Any) {
         guard let text = textView.text, !text.isEmpty, text != inputText else { return }
         actionBlock?(text)

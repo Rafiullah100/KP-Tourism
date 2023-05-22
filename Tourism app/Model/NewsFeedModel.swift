@@ -181,6 +181,8 @@ struct FeedUsers : Codable {
     let id : Int?
     let name : String?
     let profile_image : String?
+    let isSeller, isTourist: String?
+    
     let profile_image_thumb : String?
 
     enum CodingKeys: String, CodingKey {
@@ -188,17 +190,10 @@ struct FeedUsers : Codable {
         case id = "id"
         case name = "name"
         case profile_image = "profile_image"
+        case isSeller = "is_seller"
+        case isTourist = "is_tourist"
         case profile_image_thumb = "profile_image_thumb"
     }
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        id = try values.decodeIfPresent(Int.self, forKey: .id)
-        name = try values.decodeIfPresent(String.self, forKey: .name)
-        profile_image = try values.decodeIfPresent(String.self, forKey: .profile_image)
-        profile_image_thumb = try values.decodeIfPresent(String.self, forKey: .profile_image_thumb)
-    }
-
 }
 
 

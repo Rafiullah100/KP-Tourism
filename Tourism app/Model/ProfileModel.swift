@@ -18,6 +18,7 @@ struct UserProfileDetails: Codable {
     let about: String?
     let userType: String?
     let isSeller: String?
+    let isTourist: String?
     let profileImage, profileImageThumb: String?
     let userFollowers, userFollowings, isFollowed, postsCount: Int?
 
@@ -25,6 +26,7 @@ struct UserProfileDetails: Codable {
         case name, uuid, about
         case userType = "user_type"
         case isSeller = "is_seller"
+        case isTourist = "is_tourist"
         case profileImage = "profile_image"
         case profileImageThumb = "profile_image_thumb"
         case userFollowers, userFollowings, isFollowed, postsCount

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import GoogleSignIn
 
 class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelegate {
 
@@ -63,6 +64,7 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
     }
     
     @IBAction func logoutBtnAction(_ sender: Any) {
+        GIDSignIn.sharedInstance.signOut()
         Helper.shared.logoutUser(self: self)
     }
 }

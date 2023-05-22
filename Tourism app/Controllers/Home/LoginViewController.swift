@@ -32,19 +32,15 @@ class LoginViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
-
+    
     @IBAction func googleSigninBtn(_ sender: Any) {
         guard let clientID = Constants.clientID else { return }
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
-            DispatchQueue.main.async {
-                if error == nil{
-                    Utility.showAlert(message: "Select user type.", buttonTitles: [Constants.userType[0], Constants.userType[1], Constants.userType[2]]) { responce in
-                        let parameters = ["username": result?.user.profile?.email ?? "", "user_type": responce, "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
-                        self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
-                    }
-                }
+            if error == nil{
+                let parameters = ["username": result?.user.profile?.email ?? "", "user_type": "user", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
+                self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
             }
         }
     }
@@ -72,7 +68,7 @@ class LoginViewController: BaseViewController {
             if error == nil{
                 guard let json = result as? NSDictionary else { return }
                 if let email = json["email"] as? String, let picture = json["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
-                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": url], model: LoginModel.self)
+                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": url, "user_type": "user"], model: LoginModel.self)
                 }
             }
         }

@@ -312,9 +312,10 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToSellerVC(delegate: UIViewController){
+    static func goToSellerVC(delegate: UIViewController, userType: UserType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SellerViewController") as! SellerViewController
         vc.modalPresentationStyle = .fullScreen
+        vc.userType = userType
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -490,5 +491,17 @@ class Switcher {
 //        }
 //        delegate.present(nav, animated: true, completion: nil)
 //    }
+    
+    static func gotoNotificationListVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "NotificationListViewController") as! NotificationListViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func gotoAddTourVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddTourPackageViewController") as! AddTourPackageViewController
+        vc.modalPresentationStyle = .automatic
+        delegate.present(vc, animated: true, completion: nil)
+    }
 }
 

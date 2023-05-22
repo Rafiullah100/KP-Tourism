@@ -166,6 +166,11 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         cell.comment = allComments[indexPath.row]
+        cell.commentReplyBlock = {
+            cell.bottomView.isHidden = !cell.bottomView.isHidden
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         cell.actionBlock = { text in
             cell.textView.text = ""
             self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], model: SuccessModel.self, row: indexPath)

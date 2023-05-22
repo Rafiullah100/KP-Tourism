@@ -432,11 +432,11 @@ extension HomeViewController: MDCTabBarViewDelegate{
         case .investment:
             fetch(route: .fetchInvestment, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? ""], model: InvestmentModel.self)
         case .tour:
-            fetch(route: .fetchTourPackage, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: TourModel.self)
+            fetch(route: .fetchTourPackage, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "uuid": UserDefaults.standard.uuid ?? "", "search": textField.text ?? ""], model: TourModel.self)
         case .arch:
             fetch(route: .fetchArcheology, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? "", "user_id": UserDefaults.standard.userID ?? ""], model: ArcheologyModel.self)
         case .event:
-            fetch(route: .fetchAllEvents, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? ""], model: EventsModel.self)
+            fetch(route: .fetchAllEvents, method: .post, parameters: ["limit": limit, "page": currentPage, "search": textField.text ?? "", "user_id": UserDefaults.standard.userID ?? "", "uuid": UserDefaults.standard.uuid ?? ""], model: EventsModel.self)
         case .blog:
             fetch(route: .fetchBlogs, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: BlogsModel.self)
         case .product:

@@ -76,8 +76,8 @@ class ProfileViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        topProfileView.clipsToBounds = true
-        topProfileView.layer.masksToBounds = true
+        topProfileView.clipsToBounds = false
+        topProfileView.layer.masksToBounds = false
         topProfileView.layer.cornerRadius = 30
         topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         topProfileView.viewShadow()
@@ -120,13 +120,13 @@ class ProfileViewController: UIViewController {
     private func configureTabbar(){
         var tag = 0
         var user: [Sections] = []
-        if UserDefaults.standard.userType == "seller", UserDefaults.standard.isSeller == "approved" {
+        if UserDefaults.standard.isSeller == "approved" {
             user = Constants.sellerUser
         }
-        else if UserDefaults.standard.userType == "tourist"{
+        else if UserDefaults.standard.isTourist == "approved"{
             user = Constants.touristUser
         }
-        else if UserDefaults.standard.userType == "user" {
+        else{
             user = Constants.sampleUser
         }
         for item in user {
@@ -139,6 +139,10 @@ class ProfileViewController: UIViewController {
         tabbarView.delegate = self
         Helper.shared.customTab(tabbar: tabbarView, items: tabbarItems)
         tabbarView.backgroundColor = .clear
+        tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 15), for: .normal)
+        tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15), for: .selected)
+        tabbarView.bottomDividerColor = .clear
+        tabbarView.selectionIndicatorStrokeColor = .clear
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -177,11 +181,11 @@ class ProfileViewController: UIViewController {
             Switcher.gotoWriteBlogVC(delegate: self)
         }
         else if profileSection == .product{
-            if UserDefaults.standard.userType == "seller"{
+            if UserDefaults.standard.isSeller == "approved"{
                 Switcher.gotoAddProductVC(delegate: self)
             }
             else{
-//                Switcher.gotoAddProductVC(delegate: self)
+                Switcher.gotoAddTourVC(delegate: self)
             }
         }
     }
@@ -218,6 +222,7 @@ class ProfileViewController: UIViewController {
                     self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"
                     UserDefaults.standard.userType = self.userProfile?.userDetails.userType
                     UserDefaults.standard.isSeller = self.userProfile?.userDetails.isSeller
+                    UserDefaults.standard.isTourist = self.userProfile?.userDetails.isTourist
                     self.configureTabbar()
                 }
                 else if apiType == .story{

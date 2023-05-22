@@ -58,7 +58,7 @@ enum Route {
     case userStories
     case addBlog
     case addProduct
-    case sellerTypeAPI
+    case userTypeAPI
     case messageAPI
     case notificationSwitchApi
     case forgotPasswordApi
@@ -81,6 +81,7 @@ enum Route {
     case deleteProfile
     case doInterest
     case doEventInterest
+    case notificationList
 
     var description: String {
         switch self {
@@ -180,7 +181,7 @@ enum Route {
            return "api/mobile/users/create_blog"
         case .addProduct:
             return "api/mobile/users/addproduct"
-        case .sellerTypeAPI:
+        case .userTypeAPI:
             return "api/mobile/users/account_switch"
         case .messageAPI:
             return "api/mobile/users/do_message"
@@ -226,6 +227,8 @@ enum Route {
            return "api/mobile/users/do_interest_tourpackage"
         case .doEventInterest:
             return "api/mobile/users/do_interest"
+        case .notificationList:
+            return "api/mobile/users/notifications"
         }
     }
 }

@@ -21,6 +21,7 @@ class FeedTableViewCell: UITableViewCell {
     @IBOutlet weak var threeDotButton: UIButton!
     @IBOutlet weak var expandableLabel: ExpandableLabel!
     
+    @IBOutlet weak var verfiedIcon: UIImageView!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var likeButton: UIButton!
     var actionBlock: (() -> Void)? = nil
@@ -31,7 +32,6 @@ class FeedTableViewCell: UITableViewCell {
 
     var feed: FeedModel? {
         didSet {
-            
             likeButton.setImage(feed?.isLiked == 1 ? UIImage(named: "Arrow---Top-red") : UIImage(named: "Arrow---Top"), for: .normal)
             saveButton.setImage(feed?.isWished == 1 ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
             
@@ -50,6 +50,22 @@ class FeedTableViewCell: UITableViewCell {
             else{
                 userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
             }
+            
+            verfiedIcon.isHidden = true
+            
+            if feed?.post?.users?.isSeller == "approved"{
+                verfiedIcon.isHidden = false
+                verfiedIcon.image = UIImage(named: "verified-seller")
+            }
+            else if feed?.post?.users?.isTourist == "approved"{
+                verfiedIcon.isHidden = false
+                verfiedIcon.image = UIImage(named: "verified-tourist")
+            }
+            else{
+                verfiedIcon.isHidden = true
+                verfiedIcon.image = UIImage(named: "")
+            }
+                                
             likeCountLabel.text = "\(feed?.likesCount ?? 0)"
             timeLabel.text = "\(feed?.updatedAt ?? "")"
             commentCountLabel.text = "\(feed?.commentsCount ?? 0)"

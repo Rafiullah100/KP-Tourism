@@ -186,7 +186,7 @@ class FeedsViewController: UIViewController {
     }
     
     func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
@@ -198,7 +198,7 @@ class FeedsViewController: UIViewController {
     }
     
     func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
@@ -261,7 +261,11 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
             self.actionSheet(row: indexPath.row)
         }
         cell.shareActionBlock = {
-            self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0], model: SuccessModel.self)
+            Utility.showAlert(message: "Do you want to share the post?", buttonTitles: ["No", "Yes"]) { responce in
+                if responce == "Yes"{
+                    self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0], model: SuccessModel.self)
+                }
+            }
         }
         
         cell.likeActionBlock = {

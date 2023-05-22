@@ -51,6 +51,12 @@ enum DetailType {
     case adventure
 }
 
+enum UserType {
+    case seller
+    case tourist
+    case user
+}
+
 enum MediaType: CaseIterable {
     case image
     case video

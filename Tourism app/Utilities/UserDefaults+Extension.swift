@@ -28,6 +28,8 @@ extension UserDefaults {
         case pdfArray
         case otpEmail
         case isSeller
+        case isTourist
+
     }
         
     var accessToken: String? {
@@ -171,6 +173,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.isSeller.rawValue)
+        }
+    }
+    
+    var isTourist: String? {
+        get {
+            string(forKey: UserDefaultsKeys.isTourist.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.isTourist.rawValue)
         }
     }
     
