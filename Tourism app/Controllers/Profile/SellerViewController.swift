@@ -11,6 +11,9 @@ class SellerViewController: UIViewController {
    
     @IBOutlet weak var switchView: UISwitch!
     @IBOutlet weak var topBarView: UIView!
+    @IBOutlet weak var navigationLabel: UILabel!
+    @IBOutlet weak var switchLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
     
     var type = "user"
     var userType: UserType?
@@ -19,41 +22,29 @@ class SellerViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
+        
         if userType == .seller{
-            if UserDefaults.standard.isSeller == "approved"{
-                switchView.setOn(true, animated: true)
-            }
-            else{
-                switchView.setOn(false, animated: true)
-            }
+            navigationLabel.text = "Become Seller"
+            switchLabel.text = "Switch to Seller Mode"
+            descriptionLabel.text = "KP has a unique selection of local products. As a registered seller, you can buy or sell your own local products."
+            switchView.setOn(UserDefaults.standard.isSeller == "approved" ? true : false, animated: true)
         }
         else if userType == .tourist{
-            if UserDefaults.standard.isTourist == "approved"{
-                switchView.setOn(true, animated: true)
-            }
-            else{
-                switchView.setOn(false, animated: true)
-            }
+            navigationLabel.text = "Become Tourist"
+            switchLabel.text = "Switch to Tourist Mode"
+            descriptionLabel.text = ""
+            switchView.setOn(UserDefaults.standard.isTourist == "approved" ? true : false, animated: true)
         }
     }
     
     @IBAction func switchUser(_ sender: Any) {
         if userType == .seller{
-            if switchView.isOn{
-                type = "seller"
-            }
-            else{
-                type = UserDefaults.standard.userType ?? ""
-            }
+            type = switchView.isOn == true ? "seller" : UserDefaults.standard.userType ?? ""
         }
         else if userType == .tourist{
-            if switchView.isOn{
-                type = "tourist"
-            }
-            else{
-                type = UserDefaults.standard.userType ?? ""
-            }
+            type = switchView.isOn == true ? "tourist" : UserDefaults.standard.userType ?? ""
         }
+        print(type)
         changeUserType(route: .userTypeAPI, method: .post, parameters: ["type": type], model: SuccessModel.self)
     }
     
@@ -77,14 +68,4 @@ class SellerViewController: UIViewController {
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

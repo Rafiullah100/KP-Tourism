@@ -137,3 +137,8 @@ struct CommentModel: Codable {
     let commentId: Int?
     
 }
+
+struct Checkbox {
+    var id: Int
+    var isChecked: Bool
+}

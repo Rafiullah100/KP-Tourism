@@ -503,5 +503,12 @@ class Switcher {
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
     }
+    
+    static func showDatePicker(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "DateTimeViewController") as! DateTimeViewController
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
+        delegate.present(vc, animated: true, completion: nil)
+    }
 }
 

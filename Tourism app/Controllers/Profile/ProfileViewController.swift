@@ -142,7 +142,6 @@ class ProfileViewController: UIViewController {
         tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 15), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15), for: .selected)
         tabbarView.bottomDividerColor = .clear
-        tabbarView.selectionIndicatorStrokeColor = .clear
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

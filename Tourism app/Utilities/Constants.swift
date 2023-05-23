@@ -103,7 +103,9 @@ struct Constants {
 //    }
     
     static let priceType: [String] = ["group", "individual"]
-    static let transport: [String] = ["Motor", "Car", "4x4", "Bike","Public","Bus"]
+    static let transportType: [String] = ["Public", "Personal"]
+    
+    static let transport: [String] = ["Motor Car", "4x4", "Bike", "Bus", "Hiace","Coaster", "Rent a Car"]
  }
 
 enum Envoirment {

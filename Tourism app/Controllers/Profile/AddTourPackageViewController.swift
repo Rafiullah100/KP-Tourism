@@ -37,8 +37,12 @@ class AddTourPackageViewController: UIViewController {
     @IBOutlet weak var adultImageView: UIImageView!
     @IBOutlet weak var wheelChairImageView: UIImageView!
     
+    @IBOutlet weak var wheelChairButton: UIButton!
+    @IBOutlet weak var adultButton: UIButton!
+    @IBOutlet weak var familyButton: UIButton!
+    @IBOutlet weak var childrenAgeTextField: UITextField!
+    
     var imagePicker: UIImagePickerController!
-
     var districtList: [DistrictsListRow]?
 
     
@@ -50,8 +54,9 @@ class AddTourPackageViewController: UIViewController {
 
     var fromDistrictID: Int?
     var toDistrictID: Int?
-
+    var groupTour: Bool?
     
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         transportPickerView.delegate = self
@@ -71,7 +76,12 @@ class AddTourPackageViewController: UIViewController {
         fromDistrictTextField.inputView = fromPickerView
         toDistrictTextField.inputView = toPickerView
         
+        titleTextField.delegate = self
         fetch(route: .districtListApi, method: .post, model: DistrictListModel.self)
+    }
+    
+    @objc func myTargetFunction(textField: UITextField) {
+        Switcher.showDatePicker(delegate: self)
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -88,11 +98,13 @@ class AddTourPackageViewController: UIViewController {
     }
     
     @IBAction func groupTourYesBtnAction(_ sender: Any) {
+        groupTour = true
         yesImageView.image =  UIImage(named: "radio-select")
         noImageView.image =  UIImage(named: "radio-unselect")
     }
     
     @IBAction func groupTourNoBtnAction(_ sender: Any) {
+        groupTour = false
         yesImageView.image =  UIImage(named: "radio-unselect")
         noImageView.image =  UIImage(named: "radio-select")
     }
@@ -107,18 +119,66 @@ class AddTourPackageViewController: UIViewController {
     }
     
     @IBAction func familyBtnAction(_ sender: Any) {
-        familyImageView.image =  UIImage(named: "check-list")
-        //uncheck-list
+        familyButton.isSelected = !familyButton.isSelected
     }
     
-    @IBAction func adultImageView(_ sender: Any) {
-        adultImageView.image =  UIImage(named: "check-list")
+    @IBAction func adultImageView(_ sender: UIButton) {
+        adultButton.isSelected = !adultButton.isSelected
     }
     
     @IBAction func wheelChairBtnAction(_ sender: Any) {
-        wheelChairImageView.image =  UIImage(named: "check-list")
+        wheelChairButton.isSelected = !wheelChairButton.isSelected
     }
+    
     @IBAction func createBtnAction(_ sender: Any) {
+       validate()
+    }
+    
+    private func createTourPackage(route: Route, params: [String: Any]){
+        Networking.shared.uploadMultipart(route: route, imageParameter: "preview_image", image: imageView.image ?? UIImage(), parameters: params) { result in
+            switch result {
+            case .success(let success):
+                if success.success == true{
+                    self.dismiss(animated: true) {
+                        SVProgressHUD.showSuccess(withStatus: "Tour Package successfully added.")
+                    }
+                }
+                else{
+                    SVProgressHUD.showError(withStatus: success.message)
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func validate(){
+        guard let title = titleTextField.text, !title.isEmpty,
+              let fromDistrict = fromDistrictTextField.text, !fromDistrict.isEmpty,
+              let toDistrict = toDistrictTextField.text, !toDistrict.isEmpty,
+              let startDate = startDateTextField.text, !startDate.isEmpty,
+              let endDate = endDateTextField.text, !endDate.isEmpty,
+              let deadline = deadlineTextField.text, !deadline.isEmpty,
+              let startTime = startTimeTextField.text, !startTime.isEmpty,
+              let endTime = endTimeTextField.text, !endTime.isEmpty,
+              let noOfpeople = poepleTextField.text, !noOfpeople.isEmpty,
+              let noOfadult = adultTextField.text, !noOfadult.isEmpty,
+              let noOfchildren = childrenTextField.text, !noOfchildren.isEmpty,
+              let childrenAge = childrenAgeTextField.text, !childrenAge.isEmpty,
+              let oldPrice = oldPriceTextField.text, !oldPrice.isEmpty,
+              let newPrice = newPriceTextField.text, !newPrice.isEmpty,
+              let priceType = priceTypeTextField.text, !priceType.isEmpty,
+              let transportType = transportTypeTextField.text, !transportType.isEmpty,
+              let transport = transportTextField.text, !transport.isEmpty,
+              let email = emailTextField.text, !email.isEmpty,
+              let phone = phoneTextField.text, !phone.isEmpty,
+              let description = descriptionTextField.text, !description.isEmpty
+              else {
+            return
+        }
+        let para = ["title":title, "from_district_id": fromDistrictID ?? 0, "to_district_id": toDistrictID ?? 0, "price_old": oldPrice, "price": newPrice, "price_type": priceType, "family": familyButton.isSelected, "adults": adultButton.isSelected, "children": noOfchildren, "children_age": childrenAge, "number_of_people": noOfpeople, "no_of_adults": noOfadult, "wheelchair": wheelChairButton.isSelected, "group_tour": groupTour ?? "", "transport_type": transportType, "phone_no": phone, "email": email, "start_date": startDate, "end_date": endDate, "start_time": startTime, "end_time": endTime, "deadline": deadline, "description": description] as [String : Any]
+        print(para)
+        createTourPackage(route: .createPackage, params: para)
     }
 }
 
@@ -132,7 +192,7 @@ extension AddTourPackageViewController: UIPickerViewDelegate, UIPickerViewDataSo
             return Constants.priceType.count
         }
         else if pickerView == transportTypePickerView{
-            return Constants.priceType.count
+            return Constants.transportType.count
         }
         else if pickerView == transportPickerView{
             return Constants.transport.count
@@ -151,7 +211,7 @@ extension AddTourPackageViewController: UIPickerViewDelegate, UIPickerViewDataSo
             return Constants.priceType[row]
         }
         else if pickerView == transportTypePickerView{
-            return Constants.priceType[row]
+            return Constants.transportType[row]
         }
         else if pickerView == transportPickerView{
             return Constants.transport[row]
@@ -170,7 +230,7 @@ extension AddTourPackageViewController: UIPickerViewDelegate, UIPickerViewDataSo
             priceTypeTextField.text = Constants.priceType[row]
         }
         else if pickerView == transportTypePickerView{
-            transportTypeTextField.text = Constants.priceType[row]
+            transportTypeTextField.text = Constants.transportType[row]
         }
         else if pickerView == transportPickerView{
             transportTextField.text = Constants.transport[row]
@@ -198,5 +258,12 @@ extension AddTourPackageViewController: UIImagePickerControllerDelegate, UINavig
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
+    }
+}
+
+extension AddTourPackageViewController: UITextFieldDelegate{
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        Switcher.showDatePicker(delegate: self)
+        textField.resignFirstResponder()
     }
 }

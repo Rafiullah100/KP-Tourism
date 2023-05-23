@@ -53,7 +53,7 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
     }
     
     @IBAction func saveBlogBtn(_ sender: Any) {
-        guard let title = titleTextField.text, let districtID = districtID, let price = priceTextField.text,  let descriptin = textView.text else { return }
+        guard let title = titleTextField.text,  let districtID = districtID, let price = priceTextField.text,  let descriptin = textView.text else { return }
         createPost(route: .addProduct, params: ["title": title, "description": descriptin, "district_id": districtID, "price": price])
     }
     
