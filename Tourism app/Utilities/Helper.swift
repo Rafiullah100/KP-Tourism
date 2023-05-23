@@ -198,5 +198,13 @@ class Helper{
         let dateString = dateFormatter.string(from: date)
         return dateString
     }
+    
+    func tableViewHeight(tableView: UITableView, tbHeight: NSLayoutConstraint) {
+        tbHeight.constant = CGFloat.greatestFiniteMagnitude
+        tableView.reloadData()
+        tableView.layoutIfNeeded()
+        tbHeight.constant = tableView.contentSize.height
+        tableView.layoutIfNeeded()
+    }
 }
 

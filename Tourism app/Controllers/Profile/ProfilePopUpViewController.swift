@@ -23,6 +23,7 @@ class ProfilePopUpViewController: UIViewController {
         }
     }
     
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var headerLabel: UILabel!
     
     var following: [FollowingRow] = [FollowingRow]()
@@ -61,13 +62,13 @@ class ProfilePopUpViewController: UIViewController {
                         let followingModel = model as! FollowingModel
                         self.following.append(contentsOf: followingModel.chatUsers.rows)
                         self.totalCount = followingModel.chatUsers.count ?? 0
-                        self.following.count != 0 ? self.tableView.reloadData() : self.tableView.setEmptyView("No Following Found!")
+                        Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                     }
                     else{
                         let followerModel = model as! FollowerModel
                         self.follower.append(contentsOf: followerModel.followers.rows)
                         self.totalCount = followerModel.followers.count ?? 0
-                        self.follower.count != 0 ? self.tableView.reloadData() : self.tableView.setEmptyView("No Follower Found!")
+                        Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                     }
                 }
                 else{

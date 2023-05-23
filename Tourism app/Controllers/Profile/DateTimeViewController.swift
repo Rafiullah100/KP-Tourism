@@ -22,7 +22,7 @@ class DateTimeViewController: UIViewController {
         super.viewDidLoad()
         if dateFormate == .date{
             datePicker.datePickerMode = .date
-            datePicker.preferredDatePickerStyle = .wheels
+            datePicker.preferredDatePickerStyle = .inline
         }
         else{
             datePicker.datePickerMode = .time
@@ -35,7 +35,7 @@ class DateTimeViewController: UIViewController {
     
     @IBAction func okBtnAction(_ sender: Any) {
         if dateFormate == .date{
-            timeClosure?(Helper.shared.date(date: datePicker.date, formate: "dd/MM/yyyy"))
+            timeClosure?(Helper.shared.date(date: datePicker.date, formate: "MM/dd/yyyy"))
         }
         else if dateFormate == .time{
             timeClosure?(Helper.shared.date(date: datePicker.date, formate: "HH:mm"))

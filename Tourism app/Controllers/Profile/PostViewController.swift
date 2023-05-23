@@ -20,6 +20,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var bottomView: UIView!
+    @IBOutlet weak var captionView: UIView!
     
     var imagePicker: UIImagePickerController!
     
@@ -31,6 +32,7 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             label.text = "Create Post"
             postButton.setTitle("Post", for: .normal)
         case .story:
+            captionView.isHidden = true
             label.text = "Highlight"
             postButton.setTitle("Create story", for: .normal)
         case .edit:
