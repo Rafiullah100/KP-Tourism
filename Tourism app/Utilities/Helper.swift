@@ -192,5 +192,11 @@ class Helper{
         Switcher.goToLoginVC(delegate: self)
     }
     
+    func date(date: Date, formate: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = formate
+        let dateString = dateFormatter.string(from: date)
+        return dateString
+    }
 }
 

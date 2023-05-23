@@ -56,6 +56,7 @@ class AddTourPackageViewController: UIViewController {
     var toDistrictID: Int?
     var groupTour: Bool?
     
+
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -76,7 +77,11 @@ class AddTourPackageViewController: UIViewController {
         fromDistrictTextField.inputView = fromPickerView
         toDistrictTextField.inputView = toPickerView
         
-        titleTextField.delegate = self
+        deadlineTextField.delegate = self
+        startDateTextField.delegate = self
+        endDateTextField.delegate = self
+        startTimeTextField.delegate = self
+        endTimeTextField.delegate = self
         fetch(route: .districtListApi, method: .post, model: DistrictListModel.self)
     }
     
@@ -263,7 +268,19 @@ extension AddTourPackageViewController: UIImagePickerControllerDelegate, UINavig
 
 extension AddTourPackageViewController: UITextFieldDelegate{
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        Switcher.showDatePicker(delegate: self)
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "DateTimeViewController") as! DateTimeViewController
+        vc.timeClosure = { date in
+            textField.text = date
+        }
+        if textField == startTimeTextField || textField == endTimeTextField{
+            vc.dateFormate = .time
+        }
+        else{
+            vc.dateFormate = .date
+        }
+        vc.modalPresentationStyle = .overFullScreen
+        vc.modalTransitionStyle = .crossDissolve
         textField.resignFirstResponder()
+        self.present(vc, animated: true, completion: nil)
     }
 }

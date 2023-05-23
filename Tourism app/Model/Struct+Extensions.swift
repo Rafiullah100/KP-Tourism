@@ -142,3 +142,9 @@ struct Checkbox {
     var id: Int
     var isChecked: Bool
 }
+
+
+enum DateFormate {
+    case time
+    case date
+}

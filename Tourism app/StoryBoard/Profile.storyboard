@@ -7430,34 +7430,41 @@
                                                 <rect key="frame" x="0.0" y="360" width="353" height="40"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uHJ-SL-p5f">
-                                                        <rect key="frame" x="0.0" y="0.0" width="353" height="40"/>
+                                                        <rect key="frame" x="213" y="0.0" width="140" height="40"/>
                                                         <subviews>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lhX-7z-n6e">
-                                                                <rect key="frame" x="0.0" y="0.0" width="313" height="40"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fMu-K5-5nH">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="313" height="40"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                        <state key="normal" title="Ok"/>
+                                                                        <state key="normal" title="Cancel"/>
+                                                                        <connections>
+                                                                            <action selector="cancelBtnAction:" destination="gOZ-as-hSi" eventType="touchUpInside" id="0Ig-k9-MVV"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="trailing" secondItem="fMu-K5-5nH" secondAttribute="trailing" id="0VY-nz-sPy"/>
+                                                                    <constraint firstAttribute="width" constant="100" id="2cH-aE-0Nh"/>
                                                                     <constraint firstAttribute="bottom" secondItem="fMu-K5-5nH" secondAttribute="bottom" id="OpG-uw-bHE"/>
                                                                     <constraint firstItem="fMu-K5-5nH" firstAttribute="leading" secondItem="lhX-7z-n6e" secondAttribute="leading" id="VHG-1j-jGE"/>
                                                                     <constraint firstItem="fMu-K5-5nH" firstAttribute="top" secondItem="lhX-7z-n6e" secondAttribute="top" id="xRu-Kb-3Fv"/>
                                                                 </constraints>
                                                             </view>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHC-Y0-h8y">
-                                                                <rect key="frame" x="313" y="0.0" width="40" height="40"/>
+                                                                <rect key="frame" x="100" y="0.0" width="40" height="40"/>
                                                                 <subviews>
                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VKT-oj-r79">
                                                                         <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                         <state key="normal" title="Ok"/>
+                                                                        <connections>
+                                                                            <action selector="okBtnAction:" destination="gOZ-as-hSi" eventType="touchUpInside" id="IQA-QR-681"/>
+                                                                        </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -7477,7 +7484,6 @@
                                                     <constraint firstAttribute="height" constant="40" id="LGV-nP-URU"/>
                                                     <constraint firstAttribute="trailing" secondItem="uHJ-SL-p5f" secondAttribute="trailing" id="aCQ-iK-Z8f"/>
                                                     <constraint firstItem="uHJ-SL-p5f" firstAttribute="top" secondItem="rKb-Dy-REp" secondAttribute="top" id="cBa-fA-gnI"/>
-                                                    <constraint firstItem="uHJ-SL-p5f" firstAttribute="leading" secondItem="rKb-Dy-REp" secondAttribute="leading" id="fdr-Tr-6Ka"/>
                                                     <constraint firstAttribute="bottom" secondItem="uHJ-SL-p5f" secondAttribute="bottom" id="mra-2u-7XW"/>
                                                 </constraints>
                                             </view>
@@ -7515,6 +7521,9 @@
                             <constraint firstAttribute="trailing" secondItem="iu9-J3-9aV" secondAttribute="trailing" constant="20" id="lna-78-OD0"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="datePicker" destination="AjA-hd-68o" id="zBZ-dN-Mce"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3ds-DD-QmM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
