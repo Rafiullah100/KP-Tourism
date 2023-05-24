@@ -83,7 +83,8 @@ enum Route {
     case doEventInterest
     case notificationList
     case createPackage
-    
+    case deleteApi
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -234,6 +235,8 @@ enum Route {
         case .createPackage:
             return "api/mobile/users/tourpackage_create"
             
+        case .deleteApi:
+            return "api/mobile/users/delete_record"
         }
     }
 }

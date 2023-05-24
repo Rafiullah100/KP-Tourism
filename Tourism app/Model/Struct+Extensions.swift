@@ -84,10 +84,10 @@ enum PostType {
     case edit
 }
 
-enum ProfileSection: CaseIterable {
-    case post
-    case product
-    case blog
+enum ProfileSection: String {
+    case post = "post"
+    case product = "local_product"
+    case blog = "blog"
 }
 
 enum Travel {

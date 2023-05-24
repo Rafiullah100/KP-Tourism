@@ -123,20 +123,13 @@
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="fep-hV-QR1" secondAttribute="bottom" id="21d-Gc-lSk"/>
                                     <constraint firstAttribute="trailing" secondItem="fep-hV-QR1" secondAttribute="trailing" id="J2g-cW-vd6"/>
-                                    <constraint firstAttribute="height" priority="250" constant="66" id="UVg-u5-3b9"/>
+                                    <constraint firstAttribute="height" priority="250" id="UVg-u5-3b9"/>
                                     <constraint firstItem="fep-hV-QR1" firstAttribute="top" secondItem="s64-Eb-77p" secondAttribute="top" id="g10-U9-v5A"/>
                                     <constraint firstItem="fep-hV-QR1" firstAttribute="leading" secondItem="s64-Eb-77p" secondAttribute="leading" id="lE0-tU-pVg"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="byO-uB-vZ9" customClass="DynamicHeightTableView" customModule="Tourism_app" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="80.666666666666686" width="362" height="121.33333333333331"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="250" id="qZu-IK-vqI"/>
-                                </constraints>
-                            </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6ZT-of-oig">
-                                <rect key="frame" x="0.0" y="205" width="362" height="15"/>
+                                <rect key="frame" x="0.0" y="80.666666666666671" width="362" height="15"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oag-Yk-jBp">
                                         <rect key="frame" x="30" y="0.0" width="88" height="15"/>
@@ -158,6 +151,13 @@
                                     <constraint firstAttribute="height" constant="15" id="qGn-Na-oc0"/>
                                 </constraints>
                             </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="byO-uB-vZ9" customClass="DynamicHeightTableView" customModule="Tourism_app" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="98.666666666666686" width="362" height="121.33333333333331"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" priority="250" id="qZu-IK-vqI"/>
+                                </constraints>
+                            </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NcQ-UP-GtH">
                                 <rect key="frame" x="0.0" y="220" width="362" height="70"/>
                                 <subviews>
@@ -255,6 +255,7 @@
                 <outlet property="bottomView" destination="NcQ-UP-GtH" id="24Y-rc-5mn"/>
                 <outlet property="commentLabel" destination="TN4-6a-D1O" id="5IA-l8-8UD"/>
                 <outlet property="nameLabel" destination="n2O-ia-Mq5" id="0WW-Qb-fHH"/>
+                <outlet property="replyButton" destination="oag-Yk-jBp" id="yMt-7V-LiH"/>
                 <outlet property="tableView" destination="byO-uB-vZ9" id="aGj-4r-6he"/>
                 <outlet property="tableViewHeight" destination="qZu-IK-vqI" id="lac-bd-Wts"/>
                 <outlet property="textView" destination="uxZ-Au-ezn" id="Jcg-xK-MMv"/>

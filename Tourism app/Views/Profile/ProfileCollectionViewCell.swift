@@ -11,6 +11,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
     
+    @IBOutlet weak var editButton: UIButton!
+    @IBOutlet weak var deleteButton: UIButton!
+    
+    @IBOutlet weak var label: UILabel!
     var post: UserPostRow? {
         didSet {
             if post?.postFiles?.count ?? 0 > 0{
@@ -18,6 +22,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
             }
         }
     }
+    
+    var editActionBlock: (() -> Void)? = nil
+    var deleteActionBlock: (() -> Void)? = nil
+
     
     var product: UserProductRow? {
         didSet {
@@ -36,4 +44,10 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    @IBAction func deleteBtnAction(_ sender: Any) {
+        deleteActionBlock?()
+    }
+    @IBAction func editBtnAction(_ sender: Any) {
+        editActionBlock?()
+    }
 }

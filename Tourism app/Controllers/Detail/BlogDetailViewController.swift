@@ -38,6 +38,7 @@ class BlogDetailViewController: BaseViewController {
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
         }
     }
+    @IBOutlet weak var contentView: UIView!
     
     var currentPage = 1
     var totalCount = 1
@@ -51,7 +52,7 @@ class BlogDetailViewController: BaseViewController {
         scrollView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
-        self.tableViewHeight.constant = self.tableView.contentSize.height
+//        self.tableViewHeight.constant = self.tableView.contentSize.height
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         navigationController?.navigationBar.isHidden = false
@@ -87,6 +88,7 @@ class BlogDetailViewController: BaseViewController {
             switch result {
             case .success(let result):
                 if (result as? SuccessModel)?.success == true{
+                    self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
                 }
@@ -103,11 +105,7 @@ class BlogDetailViewController: BaseViewController {
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-                self.tableView.reloadData()
-                self.tableView.layoutIfNeeded()
-                self.tableViewHeight.constant = self.tableView.contentSize.height
-                self.tableView.layoutIfNeeded()
+                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -115,7 +113,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
-        guard let text = textView.text, !text.isEmpty else { return }
+        guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text], model: SuccessModel.self)
     }
     
@@ -166,10 +164,10 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         cell.comment = allComments[indexPath.row]
+     
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

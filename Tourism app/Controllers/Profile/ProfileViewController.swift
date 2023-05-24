@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
         case blog
         case product
         case post
+       case delete
     }
     
     @IBOutlet weak var bottomView: UIView!
@@ -79,7 +80,7 @@ class ProfileViewController: UIViewController {
         topProfileView.clipsToBounds = false
         topProfileView.layer.masksToBounds = false
         topProfileView.layer.cornerRadius = 30
-        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
+//        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         topProfileView.viewShadow()
         
         navigationController?.navigationBar.isHidden = true
@@ -129,6 +130,7 @@ class ProfileViewController: UIViewController {
         else{
             user = Constants.sampleUser
         }
+        
         for item in user {
             let tabbarItem = UITabBarItem(title: item.title, image: UIImage(named: item.image), tag: tag)
             tag = tag + 1
@@ -194,11 +196,6 @@ class ProfileViewController: UIViewController {
         Switcher.showSuggestedUser(delegate: self)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-      
-    }
-    
     private func storyApiCall(){
         fetch(route: .userStories, method: .post, parameters: ["uuid": uuid ?? "", "limit": limit, "page": storyCurrentPage], model: FeedStoriesModel.self, apiType: .story)
     }
@@ -244,6 +241,12 @@ class ProfileViewController: UIViewController {
                     self.blogs = (model as? UserBlogModel)?.blogs?.rows
                     self.contentCollectionView.reloadData()
                 }
+                else if apiType == .delete{
+                    let successModel = model as? SuccessModel
+                    if successModel?.success == true{
+                        
+                    }
+                }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -278,6 +281,15 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         case contentCollectionView:
             let cell: ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! ProfileCollectionViewCell
             loadCollection(cell: cell, indexPath: indexPath)
+            cell.deleteActionBlock = {
+                Utility.showAlert(message: "Do you want to delete?", buttonTitles: ["No", "Yes"]) { responce in
+                    if responce == "Yes"{
+                        if self.profileSection == .blog{
+                            self.fetch(route: .deleteApi, method: .post, parameters: ["section": self.profileSection.rawValue,  "id": self.blogs?[indexPath.row].id ?? 0], model: SuccessModel.self, apiType: .delete)
+                        }
+                    }
+                }
+            }
             return cell
         default:
             return UICollectionViewCell()

@@ -27,6 +27,7 @@ class CommentsTableViewCell: UITableViewCell {
             tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
+    @IBOutlet weak var replyButton: UIButton!
     
     var actionBlock: ((String) -> Void)? = nil
     var commentReplyBlock: (() -> Void)? = nil
@@ -35,20 +36,18 @@ class CommentsTableViewCell: UITableViewCell {
     var comment: CommentsRows?{
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
-            commentLabel.text = "\(comment?.comment ?? "")"
+            commentLabel.text = "\(comment?.comment ?? "")".removeSpaces()
             nameLabel.text = "\(comment?.users?.name ?? "")"
+            print(comment?.users?.profileImage ?? "")
+            print(Helper.shared.getProfileImage())
             userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-            self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
-            self.tableView.reloadData()
-            self.tableView.layoutIfNeeded()
-            self.tableViewHeight.constant = self.tableView.contentSize.height
-            self.tableView.layoutIfNeeded()
+            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        tableViewHeight.constant = self.tableView.contentSize.height
+//        tableViewHeight.constant = self.tableView.contentSize.height
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -60,8 +59,16 @@ class CommentsTableViewCell: UITableViewCell {
     }
 
     @IBAction func hideShowBtnAction(_ sender: Any) {
+        if replyButton.isSelected == false{
+            textView.becomeFirstResponder()
+        }
+        else{
+            textView.resignFirstResponder()
+        }
+        replyButton.isSelected = !replyButton.isSelected
         commentReplyBlock?()
     }
+    
     @IBAction func replyButtonAction(_ sender: Any) {
         guard let text = textView.text, !text.isEmpty, text != inputText else { return }
         actionBlock?(text)
@@ -84,9 +91,9 @@ extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
     }
     
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        tableViewHeight.constant = tableView.contentSize.height
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        tableViewHeight.constant = tableView.contentSize.height
+//    }
 }
 
 extension CommentsTableViewCell: UITextViewDelegate{

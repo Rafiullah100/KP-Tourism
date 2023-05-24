@@ -262,6 +262,11 @@ extension String{
             return nil
         }
     }
+    
+    func removeSpaces() -> String {
+        let trimmedStr = self.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedStr
+    }
      
 }
 

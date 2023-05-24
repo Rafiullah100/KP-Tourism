@@ -14,7 +14,7 @@ import MapboxCoreNavigation
 import MapboxNavigation
 import CoreLocation
 import MaterialComponents.MaterialTabs_TabBarView
-
+import Toast_Swift
 class Helper{
     static let shared = Helper()
     
@@ -206,5 +206,24 @@ class Helper{
         tbHeight.constant = tableView.contentSize.height
         tableView.layoutIfNeeded()
     }
+    
+    func locationPermission(self: UIViewController) -> CLLocationManager{
+        let locationManager = CLLocationManager()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        return locationManager
+    }
+    
+    func loginned(_ view: UIView) {
+        guard  UserDefaults.standard.isLoginned == true else {
+            view.makeToast("", point: .zero, title: "You're not loggin", image: nil, completion: nil)
+            return  }
+    }
+    
+    
 }
 

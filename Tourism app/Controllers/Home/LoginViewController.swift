@@ -14,9 +14,18 @@ import Toast_Swift
 import SVProgressHUD
 class LoginViewController: BaseViewController {
     
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            self.passwordTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var emailTextField: UITextField!{
+        didSet{
+            self.emailTextField.delegate = self
+        }
+    }
     
+    @IBOutlet weak var loginButton: UIButton!
     var login: LoginModel?
     
     
@@ -118,12 +127,14 @@ class LoginViewController: BaseViewController {
             return }
         guard passwordTextField.text == passwordTextField.text else {
             self.view.makeToast("Password doesn't match.", duration: 2.0, position: .top)
-            return }
+            return  }
         let parameters = ["username": email, "password": password]
         loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
     }
-    
-    private func changeTabbar(){
-//        tabBarController?.setViewControllers(<#T##viewControllers: [UIViewController]?##[UIViewController]?#>, animated: <#T##Bool#>)
-    }
+}
+
+extension LoginViewController: UITextFieldDelegate {
+//    func textFieldDidChangeSelection(_ textField: UITextField) {
+//        loginb.isEnabled = isFormValid()
+//    }
 }
