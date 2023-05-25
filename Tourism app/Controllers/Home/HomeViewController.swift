@@ -93,6 +93,7 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
+        print(UserDefaults.standard.accessToken ?? "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

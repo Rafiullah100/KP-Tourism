@@ -37,7 +37,7 @@ class ProductTableViewCell: UITableViewCell {
             ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
             ownerNameLAbel.text = "\(product?.users.name ?? "")"
             locationLabel.text = "\(product?.districts.title ?? "")"
-            uploadedTimeLabel.text =  "\(product?.approvedBy ?? "")"
+            uploadedTimeLabel.text =  "\(product?.createdAt ?? "")"
         }
     }
     
@@ -45,6 +45,11 @@ class ProductTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
     
     @IBAction func favoriteBtnAction(_ sender: Any) {

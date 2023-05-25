@@ -53,8 +53,9 @@ class ExploreTableViewCell: UITableViewCell {
         }
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
 
     static func configureCell() {

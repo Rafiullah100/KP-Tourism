@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController {
         case product
         case post
        case delete
+       case tourPackage
     }
     
     @IBOutlet weak var bottomView: UIView!
@@ -49,6 +50,7 @@ class ProfileViewController: UIViewController {
     var storyTotalCount = 1
     var storyCurrentPage = 1
     
+    @IBOutlet weak var buttonsView: UIView!
     @IBOutlet weak var editPhotoButton: UIButton!
     @IBOutlet weak var settingButton: UIButton!
     @IBOutlet weak var favoriteButton: UIButton!
@@ -71,6 +73,8 @@ class ProfileViewController: UIViewController {
     var products: [UserProductRow]?
     var stories: [StoriesRow]   = [StoriesRow]()
     
+    var tourPackages: [UserProfileTourPackages]?
+    
     var profileType: ProfileType?
     var uuid: String?
     
@@ -80,11 +84,12 @@ class ProfileViewController: UIViewController {
         topProfileView.clipsToBounds = false
         topProfileView.layer.masksToBounds = false
         topProfileView.layer.cornerRadius = 30
-//        topProfileView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         topProfileView.viewShadow()
-        
+        addButton.isHidden = profileType == .user ? false : true
+        writeBlogButton.isHidden = profileType == .user ? false : true
+        buttonsView.isUserInteractionEnabled = profileType == .user ? true : false
+
         navigationController?.navigationBar.isHidden = true
-//        addButton.isHidden = true
         print(uuid ?? "")
         dispatchGroup?.enter()
         fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? ""], model: ProfileModel.self, apiType: .profile)
@@ -96,7 +101,12 @@ class ProfileViewController: UIViewController {
         fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid ?? ""], model: UserBlogModel.self, apiType: .blog)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
-        fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid ?? ""], model: UserProductModel.self, apiType: .product)
+        if UserDefaults.standard.isSeller == "approved"{
+            fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid ?? ""], model: UserProductModel.self, apiType: .product)
+        }
+        else{
+            fetch(route: .userTourPackage, method: .post, model: ProfileTourPackage.self, apiType: .tourPackage)
+        }
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         postApiCall()
@@ -144,6 +154,7 @@ class ProfileViewController: UIViewController {
         tabbarView.setTitleFont(UIFont(name: "Poppins-Light", size: 15), for: .normal)
         tabbarView.setTitleFont(UIFont(name: "Poppins-Medium", size: 15), for: .selected)
         tabbarView.bottomDividerColor = .clear
+        tabbarView.minItemWidth = (view.bounds.width - 100) / CGFloat(tabbarItems.count)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -179,11 +190,11 @@ class ProfileViewController: UIViewController {
     
     @IBAction func writeBlogBtnAction(_ sender: Any) {
         if profileSection == .blog{
-            Switcher.gotoWriteBlogVC(delegate: self)
+            Switcher.gotoWriteBlogVC(delegate: self, postType: .post)
         }
         else if profileSection == .product{
             if UserDefaults.standard.isSeller == "approved"{
-                Switcher.gotoAddProductVC(delegate: self)
+                Switcher.gotoAddProductVC(delegate: self, postType: .post)
             }
             else{
                 Switcher.gotoAddTourVC(delegate: self)
@@ -204,13 +215,18 @@ class ProfileViewController: UIViewController {
         fetch(route: .userPost, method: .post, parameters: ["uuid": uuid ?? "", "limit": limit, "page": postCurrentPage], model: UserPostModel.self, apiType: .post)
     }
     
-   private func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType) {
+    private func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType, index: Int? = nil) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 if apiType == .profile{
                     self.userProfile = model as? ProfileModel
-                    self.profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
+                    if self.profileType == .user{
+                        self.profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
+                    }
+                    else{
+                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                    }
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.text = self.userProfile?.userDetails.name?.capitalized
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
@@ -235,18 +251,28 @@ class ProfileViewController: UIViewController {
                 }
                 else if apiType == .product{
                     self.products = (model as? UserProductModel)?.localProducts?.rows
-                    self.contentCollectionView.reloadData()
                 }
                 else if apiType == .blog{
                     self.blogs = (model as? UserBlogModel)?.blogs?.rows
-                    self.contentCollectionView.reloadData()
+                }
+                else if apiType == .tourPackage{
+                    self.tourPackages = (model as? ProfileTourPackage)?.userTourPackages
                 }
                 else if apiType == .delete{
                     let successModel = model as? SuccessModel
                     if successModel?.success == true{
-                        
+                        if self.profileSection == .blog{
+                            self.blogs?.remove(at: index ?? 0)
+                            self.contentCollectionView.reloadData()
+                        }
+                        else if self.profileSection == .product{
+                            self.products?.remove(at: index ?? 0)
+                            self.contentCollectionView.reloadData()
+                        }
+                        self.view.makeToast(successModel?.message)
                     }
                 }
+                self.contentCollectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -280,13 +306,35 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             return cell
         case contentCollectionView:
             let cell: ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! ProfileCollectionViewCell
+            cell.profileType = profileType
+            cell.sectionType = profileSection
             loadCollection(cell: cell, indexPath: indexPath)
+            
+            cell.editActionBlock = {
+                if self.profileSection == .blog{
+                    Switcher.gotoWriteBlogVC(delegate: self, blog: self.blogs?[indexPath.row], postType: .edit)
+                }
+                else if self.profileSection == .product{
+                    Switcher.gotoAddProductVC(delegate: self, product: self.products?[indexPath.row], postType: .edit)
+                }
+            }
+            
             cell.deleteActionBlock = {
                 Utility.showAlert(message: "Do you want to delete?", buttonTitles: ["No", "Yes"]) { responce in
                     if responce == "Yes"{
+                        var id = 0
                         if self.profileSection == .blog{
-                            self.fetch(route: .deleteApi, method: .post, parameters: ["section": self.profileSection.rawValue,  "id": self.blogs?[indexPath.row].id ?? 0], model: SuccessModel.self, apiType: .delete)
+                            id = self.blogs?[indexPath.row].id ?? 0
                         }
+                        else {
+                            if UserDefaults.standard.isSeller == "approved"{
+                                id = self.products?[indexPath.row].id ?? 0
+                            }
+                            else{
+                                id = self.products?[indexPath.row].id ?? 0
+                            }
+                        }
+                        self.fetch(route: .deleteApi, method: .post, parameters: ["section": self.profileSection.rawValue,  "id": id], model: SuccessModel.self, apiType: .delete, index: indexPath.row)
                     }
                 }
             }
@@ -317,10 +365,16 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.post = post[indexPath.row]
         case .product:
             products?.count == 0 ? contentCollectionView.setEmptyView() : nil
-            cell.product = products?[indexPath.row]
+            if UserDefaults.standard.isSeller == "approved" {
+                cell.product = products?[indexPath.row]
+            }
+            else{
+                cell.tourPackage = tourPackages?[indexPath.row]
+            }
         case .blog:
             blogs?.count == 0 ? contentCollectionView.setEmptyView() : nil
             cell.blog = blogs?[indexPath.row]
+            
         default:
             break
         }
@@ -372,13 +426,13 @@ extension ProfileViewController: MDCTabBarViewDelegate{
             addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "write-blog"), for: .normal)
             profileSection = .blog
-            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No blog found!") : self.contentCollectionView.reloadData()
+            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView("No blog found!") : self.contentCollectionView.reloadData()
         }
         else if item.tag == 2{
             addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
-            self.blogs?.count == 0 ? self.contentCollectionView.setEmptyView("No data found!") : self.contentCollectionView.reloadData()
+            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No data found!") : self.contentCollectionView.reloadData()
         }
         contentCollectionView.reloadData()
     }

@@ -31,7 +31,7 @@ struct UserProductRow: Codable {
     let price: Int?
     let previewImage, thumbnailImage, description: String?
     let isFeatured: Bool?
-    let approvedBy: String?
+    let approvedBy: Int?
     let viewsCounter: Int?
     let updatedAt: String?
 
@@ -49,3 +49,4 @@ struct UserProductRow: Codable {
         case updatedAt
     }
 }
+

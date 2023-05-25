@@ -224,6 +224,12 @@ class Helper{
             return  }
     }
     
+    func hideWhenNotLogin() -> Bool {
+        return !(UserDefaults.standard.isLoginned ?? false)
+    }
     
+    func disableWhenNotLogin() -> Bool {
+        return (UserDefaults.standard.isLoginned ?? false)
+    }
 }
 

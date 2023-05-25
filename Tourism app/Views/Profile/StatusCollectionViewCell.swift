@@ -9,14 +9,13 @@ import UIKit
 import SDWebImage
 class StatusCollectionViewCell: UICollectionViewCell {
 
-    enum FeedCellType {
-        case userSelf
-        case other
-    }
+   
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var statusImageView: UIImageView!
     
     @IBOutlet weak var imgView: UIImageView!
+        
+    
     var cellType: FeedCellType? {
         didSet{
             switch cellType {

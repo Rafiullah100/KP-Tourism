@@ -22,6 +22,7 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var districtTextField: UITextField!
     
+    @IBOutlet weak var topLabel: UILabel!
     var dispatchGroup: DispatchGroup?
     var districtList: [DistrictsListRow]?
     var Poicategory: [Poicategory]?
@@ -37,6 +38,9 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
     
     var imagePicker: UIImagePickerController!
     
+    var userBlog: UserBlogRow?
+    var postType: PostType?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         districtPickerView.delegate = self
@@ -48,12 +52,21 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
         districtTextField.inputView = districtPickerView
         poiTextField.inputView = poiPickerView
         attractionTextField.inputView = attractionPickerView
-
+        
+        titleTextField.text = userBlog?.title
+        textView.text = userBlog?.description
+        blogImageView.sd_setImage(with: URL(string: Route.baseUrl + (userBlog?.previewImage ?? "")))
+        topLabel.text = postType == .post ? "Add Blog" : "Edit Blog"
+        
         dispatchGroup?.enter()
         fetch(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self, apiType: .district)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .fetchPoiCategories, method: .post, model: PoiCategoriesModel.self, apiType: .poi)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": userBlog?.districtID ?? 0], model: AttractionModel.self, apiType: .attraction)
+        dispatchGroup?.leave()
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: BlogApiType) {
@@ -63,15 +76,23 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
                 if apiType == .district{
                     self.districtList = (model as! DistrictListModel).districts?.rows
                     self.districtPickerView.reloadAllComponents()
+                    if self.postType == .edit{
+                        self.findDistrictObject()
+                    }
                 }
                 else if apiType == .poi{
                     self.Poicategory = (model as! PoiCategoriesModel).poicategories
                     self.poiPickerView.reloadAllComponents()
-                    print(self.Poicategory?.count ?? 0)
+                    if self.postType == .edit{
+                        self.findPoiObject()
+                    }
                 }
                 else{
                     self.attractionArray = (model as! AttractionModel).attractions?.rows
                     self.attractionPickerView.reloadAllComponents()
+                    if self.postType == .edit{
+                        self.findAttractionObject()
+                    }
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -79,6 +100,27 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
         }
     }
     
+    
+    private func findDistrictObject(){
+        if let index = districtList?.firstIndex(where: { $0.id ==  userBlog?.districtID }) {
+            districtTextField.text = districtList?[index].title
+            districtID = districtList?[index].id
+        }
+    }
+    
+    private func findAttractionObject(){
+        if let index = attractionArray?.firstIndex(where: { $0.id == userBlog?.attractionID }) {
+            attractionTextField.text = attractionArray?[index].title
+            attractionID = attractionArray?[index].id
+        }
+    }
+    
+    private func findPoiObject(){
+        if let index = Poicategory?.firstIndex(where: { $0.id == userBlog?.poiID }) {
+            poiTextField.text = Poicategory?[index].title
+            poiID = Poicategory?[index].id
+        }
+    }
     
     
     @IBAction func takeImageBtn(_ sender: Any) {
@@ -93,17 +135,21 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
     
     @IBAction func saveBlogBtn(_ sender: Any) {
         guard let title = titleTextField.text, let districtID = districtID, let attractionID = attractionID, let poiID = poiID, let descriptin = textView.text else { return }
-        createPost(route: .addBlog, params: ["title": title, "description": descriptin, "district_id": districtID, "attraction_id": attractionID, "poi_id": poiID])
+        if postType == .post{
+            createBlog(route: .addBlog, params: ["title": title, "description": descriptin, "district_id": districtID, "attraction_id": attractionID, "poi_id": poiID])
+        }
+        else if postType == .edit{
+            createBlog(route: .updateBlog, params: ["id": userBlog?.id ?? 0, "title": title, "description": descriptin, "district_id": districtID, "attraction_id": attractionID, "poi_id": poiID, "old_preview_image_path": userBlog?.previewImage ?? "", "old_thumnail_image_path": userBlog?.thumbnailImage ?? ""])
+        }
     }
     
-    private func createPost(route: Route, params: [String: Any]){
+    private func createBlog(route: Route, params: [String: Any]){
         Networking.shared.uploadMultipart(route: route, imageParameter: "images", image: blogImageView.image ?? UIImage(), parameters: params) { result in
             switch result {
             case .success(let success):
-                print(success)
                 if success.success == true{
                     self.dismiss(animated: true) {
-                        SVProgressHUD.showSuccess(withStatus: "Blog successfully added.")
+                        SVProgressHUD.showSuccess(withStatus: success.message)
                     }
                 }
                 else{

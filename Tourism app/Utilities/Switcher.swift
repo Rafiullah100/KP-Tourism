@@ -441,14 +441,18 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: false)
     }
     
-    static func gotoWriteBlogVC(delegate: UIViewController){
+    static func gotoWriteBlogVC(delegate: UIViewController, blog: UserBlogRow? = nil, postType: PostType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "WriteBlogViewController") as! WriteBlogViewController
+        vc.userBlog = blog
+        vc.postType = postType
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
     }
     
-    static func gotoAddProductVC(delegate: UIViewController){
+    static func gotoAddProductVC(delegate: UIViewController, product: UserProductRow? = nil, postType: PostType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddProductViewController") as! AddProductViewController
+        vc.postType = postType
+        vc.product = product
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
     }

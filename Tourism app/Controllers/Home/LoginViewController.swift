@@ -33,8 +33,13 @@ class LoginViewController: BaseViewController {
         super.viewDidLoad()
         type = .title1
         viewControllerTitle = "Login"
+        //tourist
         emailTextField.text = "murtazakhan68@gmail.com"
         passwordTextField.text = "12345678"
+        
+        //seller
+//        emailTextField.text = "rafiseller@gmail.com"
+//        passwordTextField.text = "123"
         navigationItem.hidesBackButton = true
     }
     

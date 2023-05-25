@@ -148,3 +148,8 @@ enum DateFormate {
     case time
     case date
 }
+
+enum FeedCellType {
+    case userSelf
+    case other
+}

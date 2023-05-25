@@ -56,6 +56,10 @@ class ArchTableViewCell: UITableViewCell {
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
+    }
     
     
     @IBAction func LikeBtnAction(_ sender: Any) {

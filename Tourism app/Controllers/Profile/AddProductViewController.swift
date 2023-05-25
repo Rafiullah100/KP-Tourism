@@ -16,18 +16,27 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
     
     @IBOutlet weak var priceTextField: UITextField!
     
+    @IBOutlet weak var topLabel: UILabel!
     let districtPickerView = UIPickerView()
     var districtList: [DistrictsListRow]?
     var imagePicker: UIImagePickerController!
     var districtID: Int?
 
+    var product: UserProductRow?
+    var postType: PostType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        titleTextField.text = product?.title
+        textView.text = product?.description
+        priceTextField.text = "\(product?.price ?? 0)"
+        blogImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")))
+        topLabel.text = postType == .post ? "Add Product" : "Edit Product"
+        
         districtPickerView.delegate = self
         districtPickerView.dataSource = self
         districtTextField.inputView = districtPickerView
-        fetch(route: .districtListApi, method: .post, model: DistrictListModel.self)
+        fetch(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
     }
     
     @IBAction func takeImageBtn(_ sender: Any) {
@@ -45,16 +54,30 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
             case .success(let model):
                 self.districtList = (model as! DistrictListModel).districts?.rows
                 self.districtPickerView.reloadAllComponents()
-                
+                if self.postType == .edit{
+                    self.findDistrictObject()
+                }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
         }
     }
     
+    private func findDistrictObject(){
+        if let index = districtList?.firstIndex(where: { $0.id ==  product?.districtID }) {
+            districtTextField.text = districtList?[index].title
+            districtID = districtList?[index].id
+        }
+    }
+    
     @IBAction func saveBlogBtn(_ sender: Any) {
         guard let title = titleTextField.text,  let districtID = districtID, let price = priceTextField.text,  let descriptin = textView.text else { return }
-        createPost(route: .addProduct, params: ["title": title, "description": descriptin, "district_id": districtID, "price": price])
+        if postType == .post{
+            createPost(route: .addProduct, params: ["title": title, "description": descriptin, "district_id": districtID, "price": price])
+        }
+        else if postType == .edit{
+            createPost(route: .updateProduct, params: ["id": product?.id ?? 0, "title": title, "description": descriptin, "district_id": districtID, "price": price, "old_preview_image_path": product?.previewImage ?? "", "old_thumnail_image_path": product?.thumbnailImage ?? ""])
+        }
     }
     
     private func createPost(route: Route, params: [String: Any]){
@@ -64,7 +87,7 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
             case .success(let success):
                 if success.success == true{
                     self.dismiss(animated: true) {
-                        SVProgressHUD.showSuccess(withStatus: "Product successfully added.")
+                        SVProgressHUD.showSuccess(withStatus: success.message)
                     }
                 }
                 else{
