@@ -72,7 +72,6 @@ extension URLSession{
         var urlRequest = URLRequest(url: url)
         urlRequest.addValue("application/json", forHTTPHeaderField: "Content-Type")
         urlRequest.addValue(UserDefaults.standard.accessToken ?? "", forHTTPHeaderField: "x-access-token")
-//        urlRequest.addValue("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJiaWxfaGF6QHlhaG9vLmNvbSIsImlhdCI6MTY2OTYzMzE5NiwiZXhwIjoxNzAxMTY5MTk2fQ.DnhUZCXykkc2Gd7q3xQ8dIZX78DtEZ26Ux0yKtktChY", forHTTPHeaderField: "x-access-token")
 
         urlRequest.httpMethod = method.rawValue
         if let params = parameters {

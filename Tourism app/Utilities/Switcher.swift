@@ -502,7 +502,7 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoAddTourVC(delegate: UIViewController){
+    static func gotoAddTourVC(delegate: UIViewController, tourPackage: UserProfileTourPackages? = nil, postType: PostType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddTourPackageViewController") as! AddTourPackageViewController
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)

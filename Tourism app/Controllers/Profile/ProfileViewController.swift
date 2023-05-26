@@ -101,7 +101,7 @@ class ProfileViewController: UIViewController {
         fetch(route: .userBlog, method: .post, parameters: ["uuid": uuid ?? ""], model: UserBlogModel.self, apiType: .blog)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
-        if UserDefaults.standard.isSeller == "approved"{
+        if Helper.shared.isSeller() {
             fetch(route: .userProduct, method: .post, parameters: ["uuid": uuid ?? ""], model: UserProductModel.self, apiType: .product)
         }
         else{
@@ -111,7 +111,6 @@ class ProfileViewController: UIViewController {
         dispatchGroup?.enter()
         postApiCall()
         dispatchGroup?.leave()
-//        configureTabbar()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -131,10 +130,10 @@ class ProfileViewController: UIViewController {
     private func configureTabbar(){
         var tag = 0
         var user: [Sections] = []
-        if UserDefaults.standard.isSeller == "approved" {
+        if Helper.shared.isSeller()  {
             user = Constants.sellerUser
         }
-        else if UserDefaults.standard.isTourist == "approved"{
+        else if Helper.shared.isTourist() {
             user = Constants.touristUser
         }
         else{
@@ -193,11 +192,11 @@ class ProfileViewController: UIViewController {
             Switcher.gotoWriteBlogVC(delegate: self, postType: .post)
         }
         else if profileSection == .product{
-            if UserDefaults.standard.isSeller == "approved"{
+            if Helper.shared.isSeller() {
                 Switcher.gotoAddProductVC(delegate: self, postType: .post)
             }
             else{
-                Switcher.gotoAddTourVC(delegate: self)
+                Switcher.gotoAddTourVC(delegate: self, postType: .post)
             }
         }
     }
@@ -266,8 +265,14 @@ class ProfileViewController: UIViewController {
                             self.contentCollectionView.reloadData()
                         }
                         else if self.profileSection == .product{
-                            self.products?.remove(at: index ?? 0)
-                            self.contentCollectionView.reloadData()
+                            if Helper.shared.isSeller() {
+                                self.products?.remove(at: index ?? 0)
+                                self.contentCollectionView.reloadData()
+                            }
+                            else{
+                                self.tourPackages?.remove(at: index ?? 0)
+                                self.contentCollectionView.reloadData()
+                            }
                         }
                         self.view.makeToast(successModel?.message)
                     }
@@ -315,7 +320,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                     Switcher.gotoWriteBlogVC(delegate: self, blog: self.blogs?[indexPath.row], postType: .edit)
                 }
                 else if self.profileSection == .product{
-                    Switcher.gotoAddProductVC(delegate: self, product: self.products?[indexPath.row], postType: .edit)
+                    if Helper.shared.isSeller() {
+                        Switcher.gotoAddProductVC(delegate: self, product: self.products?[indexPath.row], postType: .edit)
+                    }
+                    else if Helper.shared.isTourist() {
+                        Switcher.gotoAddTourVC(delegate: self, tourPackage: self.tourPackages?[indexPath.row], postType: .edit)
+                    }
                 }
             }
             
@@ -323,24 +333,27 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
                 Utility.showAlert(message: "Do you want to delete?", buttonTitles: ["No", "Yes"]) { responce in
                     if responce == "Yes"{
                         var id = 0
+                        var section = ""
                         if self.profileSection == .blog{
+                            section = "blog"
                             id = self.blogs?[indexPath.row].id ?? 0
                         }
                         else {
-                            if UserDefaults.standard.isSeller == "approved"{
+                            if Helper.shared.isSeller() {
+                                section = "local_product"
                                 id = self.products?[indexPath.row].id ?? 0
                             }
-                            else{
-                                id = self.products?[indexPath.row].id ?? 0
+                            else if Helper.shared.isTourist() {
+                                section = "tour_package"
+                                id = self.tourPackages?[indexPath.row].id ?? 0
                             }
                         }
-                        self.fetch(route: .deleteApi, method: .post, parameters: ["section": self.profileSection.rawValue,  "id": id], model: SuccessModel.self, apiType: .delete, index: indexPath.row)
+                        self.fetch(route: .deleteApi, method: .post, parameters: ["section": section,  "id": id], model: SuccessModel.self, apiType: .delete, index: indexPath.row)
                     }
                 }
             }
             return cell
-        default:
-            return UICollectionViewCell()
+        default: return UICollectionViewCell()
         }
     }
 
@@ -351,9 +364,9 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         case .blog:
             return blogs?.count ?? 0
         case .product:
-            return products?.count ?? 0
-        default:
-            return 0
+            let count = Helper.shared.isSeller() == true ? products?.count : tourPackages?.count
+            return count ?? 0
+        default: return 0
         }
     }
 
@@ -365,7 +378,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             cell.post = post[indexPath.row]
         case .product:
             products?.count == 0 ? contentCollectionView.setEmptyView() : nil
-            if UserDefaults.standard.isSeller == "approved" {
+            if Helper.shared.isSeller() {
                 cell.product = products?[indexPath.row]
             }
             else{
@@ -374,9 +387,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         case .blog:
             blogs?.count == 0 ? contentCollectionView.setEmptyView() : nil
             cell.blog = blogs?[indexPath.row]
-            
-        default:
-            break
+        default: break
         }
     }
     
@@ -432,7 +443,12 @@ extension ProfileViewController: MDCTabBarViewDelegate{
             addButton.isHidden = false
             writeBlogButton.setBackgroundImage(UIImage(named: "add-product"), for: .normal)
             profileSection = .product
-            self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No data found!") : self.contentCollectionView.reloadData()
+            if Helper.shared.isSeller() {
+                self.products?.count == 0 ? self.contentCollectionView.setEmptyView("No Product found!") : self.contentCollectionView.reloadData()
+            }
+            else if Helper.shared.isTourist() {
+                self.tourPackages?.count == 0 ? self.contentCollectionView.setEmptyView("No Tour Package found!") : self.contentCollectionView.reloadData()
+            }
         }
         contentCollectionView.reloadData()
     }

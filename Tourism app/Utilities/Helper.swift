@@ -231,5 +231,13 @@ class Helper{
     func disableWhenNotLogin() -> Bool {
         return (UserDefaults.standard.isLoginned ?? false)
     }
+    
+    func isSeller() -> Bool {
+        return UserDefaults.standard.isSeller == "approved" ? true : false
+    }
+    
+    func isTourist() -> Bool {
+        return UserDefaults.standard.isTourist == "approved" ? true : false
+    }
 }
 

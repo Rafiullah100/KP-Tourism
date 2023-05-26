@@ -47,7 +47,7 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     var tourPackage: UserProfileTourPackages? {
         didSet {
             label.text = tourPackage?.title
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (tourPackage?.preview_image ?? "")))
         }
     }
     
