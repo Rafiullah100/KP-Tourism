@@ -26,12 +26,14 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToDestination(delegate: UIViewController, type: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeologyDistrict: Archeology? = nil, distirctID: Int? = nil){
+    static func goToDestination(delegate: UIViewController, type: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeologyDistrict: Archeology? = nil, distirctID: Int? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "CommonViewController") as! CommonViewController
         vc.locationCategory = type
         vc.explore = exploreDistrict
         vc.attraction = attractionDistrict
         vc.archeology = archeologyDistrict
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.districtID = distirctID ?? 0
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
@@ -73,12 +75,14 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAttraction(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, districtID: Int? = nil){
+    static func goToAttraction(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, districtID: Int? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AttractionViewController") as! AttractionViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.districtID = districtID
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
@@ -94,49 +98,59 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
 
-    static func goToPOI(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToPOI(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PointOfInterestViewController") as! PointOfInterestViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionsDistrict = attractionDistrict
+        vc.wishlistAttraction = wishlistAttraction
         vc.archeology = archeology
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToAccomodation(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToAccomodation(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AccomodationViewController") as! AccomodationViewController
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToEvents(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToEvents(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventsViewController") as! EventsViewController
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToItinrary(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToItinrary(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ItenrariesViewController") as! ItenrariesViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToProducts(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func goToProducts(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "LocalProductsViewController") as! LocalProductsViewController
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -156,11 +170,14 @@ class Switcher {
     }
     
     
-    static func gotoGallery(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, mediaType: MediaType, archeology: Archeology? = nil){
+    static func gotoGallery(delegate: UIViewController, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, mediaType: MediaType, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.gallery.rawValue, bundle: nil).instantiateViewController(withIdentifier: "GalleryDetailViewController") as! GalleryDetailViewController
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+//        vc.wishlistDistrict = wishlistDistrict
+
+//        vc.wishlistAttraction = wishlistAttraction
         vc.mediaType = mediaType
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)

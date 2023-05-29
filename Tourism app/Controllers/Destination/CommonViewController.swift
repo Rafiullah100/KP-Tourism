@@ -35,7 +35,8 @@ class CommonViewController: BaseViewController {
     var explore: ExploreDistrict?
     var attraction: AttractionsDistrict?
     var archeology: Archeology?
-    
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
     var districtID = 0
     
     
@@ -83,6 +84,22 @@ class CommonViewController: BaseViewController {
             descriptionLabel.text = archeology?.attractions.description?.stripOutHtml()
             districtID = archeology?.attractions.id ?? 0
         }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            welcomeLabel.text = "Welcome to \(wishlistAttraction?.title ?? "")"
+            descriptionLabel.text = wishlistAttraction?.description?.stripOutHtml()
+            districtID = wishlistAttraction?.id ?? 0
+        }
+        else if wishlistDistrict != nil{
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
+            welcomeLabel.text = "Welcome to \(wishlistDistrict?.title ?? "")"
+            descriptionLabel.text = wishlistDistrict?.description?.stripOutHtml()
+            districtID = wishlistDistrict?.id ?? 0
+        }
     }
 }
 
@@ -101,21 +118,21 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.row {
         case 0:
             guard let locationCategory = locationCategory else { return }
-            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, districtID: districtID)
+            Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, districtID: districtID, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
 //        case 1:
 //            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
         case 1:
-            Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToPOI(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 2:
-            Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToAccomodation(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 3:
-            Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToEvents(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 4:
-            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image, archeology: archeology)
+            Switcher.gotoGallery(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, mediaType: .image, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 5:
-            Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 6:
-            Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)
+            Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         default:
             break
         }

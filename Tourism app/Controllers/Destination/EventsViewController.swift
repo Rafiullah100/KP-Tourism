@@ -22,7 +22,8 @@ class EventsViewController: BaseViewController {
     var attractionDistrict: AttractionsDistrict?
     var eventDetail: EventsModel?
     var archeology: Archeology?
-
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +45,18 @@ class EventsViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.districtID ?? 0], model: EventsModel.self)
+        }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+            fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": wishlistAttraction?.districtID ?? 0], model: EventsModel.self)
+        }
+        if wishlistDistrict != nil {
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            fetch(route: .fetchEventsByDistrict, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0], model: EventsModel.self)
         }
     }
     

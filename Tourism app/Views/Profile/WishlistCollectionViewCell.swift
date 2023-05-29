@@ -10,7 +10,8 @@ import SDWebImage
 class WishlistCollectionViewCell: UICollectionViewCell {
 
     @IBOutlet weak var imgView: UIImageView!
-    
+    var deleteCallback : (() -> Void)?
+
     var postWishlist: PostWishlistModel?{
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (postWishlist?.post.post.postFiles[0].imageURL ?? "")), placeholderImage: UIImage(named: "placeholder"))
@@ -19,13 +20,13 @@ class WishlistCollectionViewCell: UICollectionViewCell {
     
     var attractionWishlist: AttractionWishlistModel?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (attractionWishlist?.attraction?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (attractionWishlist?.attraction.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         }
     }
     
     var districtWishlist: DistrictWishlistModel?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (districtWishlist?.district?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (districtWishlist?.district.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         }
     }
     
@@ -47,4 +48,7 @@ class WishlistCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
 
+    @IBAction func deleteBtnAction(_ sender: Any) {
+        deleteCallback?()
+    }
 }

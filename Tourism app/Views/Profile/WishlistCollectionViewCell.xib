@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -29,10 +30,49 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yy3-WV-EFp">
+                                <rect key="frame" x="68" y="10" width="40" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="fxW-cm-Usa">
+                                        <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="K8U-Tg-eHc"/>
+                                            <constraint firstAttribute="width" constant="20" id="X3v-Hs-qjl"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aau-VV-vYS">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <connections>
+                                            <action selector="deleteBtnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="GCm-pz-F61"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="backgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="40" id="5qr-mu-FIJ"/>
+                                    <constraint firstAttribute="bottom" secondItem="aau-VV-vYS" secondAttribute="bottom" id="6by-nu-MDC"/>
+                                    <constraint firstItem="fxW-cm-Usa" firstAttribute="centerX" secondItem="Yy3-WV-EFp" secondAttribute="centerX" id="93x-B5-8YV"/>
+                                    <constraint firstItem="fxW-cm-Usa" firstAttribute="centerY" secondItem="Yy3-WV-EFp" secondAttribute="centerY" id="I4j-RR-xK5"/>
+                                    <constraint firstAttribute="height" constant="40" id="SOs-oH-fXB"/>
+                                    <constraint firstAttribute="bottom" secondItem="aau-VV-vYS" secondAttribute="bottom" id="UD7-Yg-aQM"/>
+                                    <constraint firstItem="aau-VV-vYS" firstAttribute="leading" secondItem="Yy3-WV-EFp" secondAttribute="leading" id="VGw-WI-Une"/>
+                                    <constraint firstAttribute="trailing" secondItem="aau-VV-vYS" secondAttribute="trailing" id="Z7P-1F-GD5"/>
+                                    <constraint firstItem="aau-VV-vYS" firstAttribute="leading" secondItem="Yy3-WV-EFp" secondAttribute="leading" id="c3X-ij-mG8"/>
+                                    <constraint firstItem="aau-VV-vYS" firstAttribute="top" secondItem="Yy3-WV-EFp" secondAttribute="top" id="x8x-v6-DaB"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="YTN-U6-nbx" secondAttribute="trailing" constant="2" id="HYM-tp-44D"/>
+                            <constraint firstAttribute="trailing" secondItem="Yy3-WV-EFp" secondAttribute="trailing" constant="10" id="RIT-d7-VJ6"/>
+                            <constraint firstItem="Yy3-WV-EFp" firstAttribute="top" secondItem="aGE-mp-Kg3" secondAttribute="top" constant="10" id="Ylw-NW-7yK"/>
                             <constraint firstAttribute="bottom" secondItem="YTN-U6-nbx" secondAttribute="bottom" constant="2" id="ZZ4-6d-QBJ"/>
                             <constraint firstItem="YTN-U6-nbx" firstAttribute="top" secondItem="aGE-mp-Kg3" secondAttribute="top" constant="2" id="p5f-YS-3cP"/>
                             <constraint firstItem="YTN-U6-nbx" firstAttribute="leading" secondItem="aGE-mp-Kg3" secondAttribute="leading" constant="2" id="zC2-oz-xz5"/>
@@ -54,7 +94,11 @@
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="delete" width="21.333333969116211" height="21.333333969116211"/>
         <image name="virtual" width="115" height="92"/>
+        <namedColor name="backgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

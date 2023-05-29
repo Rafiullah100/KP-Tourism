@@ -79,7 +79,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser1?.user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser1?.user?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
         }
-      
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

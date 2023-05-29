@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+
+
 struct DistrictSectionModel: Codable {
     let success: Bool
     let wishlist: [DistrictWishlistModel]
@@ -21,7 +24,7 @@ struct DistrictWishlistModel: Codable {
     let localProductID: Int?
     let sourceType: String?
     let status, isDeleted: Int?
-    let district: WishlistDistrict?
+    let district: WishlistDistrict
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id

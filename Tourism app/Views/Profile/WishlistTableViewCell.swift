@@ -17,6 +17,7 @@ class WishlistTableViewCell: UITableViewCell {
     }
     @IBOutlet weak var label: UILabel!
     var wishlistCallback : ((_ section: wishlistSection, _ index: Int) -> Void)?
+    var wishlistDeleteCallback : ((_ section: wishlistSection, _ index: Int) -> Void)?
 
     var postWishlist: [PostWishlistModel]?{
         didSet{
@@ -103,6 +104,25 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
         else if !(productWishlist?.isEmpty ?? true){
             cell.productWishlist = productWishlist?[indexPath.row]
         }
+        
+        cell.deleteCallback = {
+            if !(self.postWishlist?.isEmpty ?? true){
+                self.wishlistDeleteCallback?(.post, indexPath.row)
+            }
+            else if !(self.attractionWishlist?.isEmpty ?? true){
+                self.wishlistDeleteCallback?(.attraction, indexPath.row)
+            }
+            else if !(self.districtWishlist?.isEmpty ?? true){
+                self.wishlistDeleteCallback?(.district, indexPath.row)
+            }
+            else if !(self.packageWishlist?.isEmpty ?? true){
+                self.wishlistDeleteCallback?(.package, indexPath.row)
+            }
+            else if !(self.productWishlist?.isEmpty ?? true){
+                self.wishlistDeleteCallback?(.product, indexPath.row)
+            }
+        }
+        
         return cell
     }
     
@@ -111,10 +131,10 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             wishlistCallback?(.post, indexPath.row)
         }
         else if !(attractionWishlist?.isEmpty ?? true){
-            wishlistCallback?(.product, indexPath.row)
+            wishlistCallback?(.attraction, indexPath.row)
         }
         else if !(districtWishlist?.isEmpty ?? true){
-            wishlistCallback?(.product, indexPath.row)
+            wishlistCallback?(.district, indexPath.row)
         }
         else if !(packageWishlist?.isEmpty ?? true){
             wishlistCallback?(.package, indexPath.row)
@@ -127,6 +147,6 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
 
 extension WishlistTableViewCell: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 120)
+        return CGSize(width: 160, height: 160)
     }
 }

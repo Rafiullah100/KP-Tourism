@@ -24,7 +24,9 @@ class PointOfInterestViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionsDistrict: AttractionsDistrict?
     var archeology: Archeology?
-    
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -47,6 +49,16 @@ class PointOfInterestViewController: BaseViewController {
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+        }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+        }
+        else if wishlistDistrict != nil{
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
         }
     }
     

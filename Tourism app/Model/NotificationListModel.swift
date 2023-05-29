@@ -13,18 +13,18 @@ struct NotificationListModel: Codable {
 
 // MARK: - Notifications
 struct Notifications: Codable {
-    let count: Int
+    let count: Int?
     let rows: [NotificationsRow]
 }
 
 // MARK: - Row
 struct NotificationsRow: Codable {
-    let createdAt: String
-    let id: Int
-    let userBy, userFor, sourceID, source: String
-    let action, title, description: String
-    let isRead: Bool
-    let updatedAt: String
+    let createdAt: String?
+    let id: Int?
+    let userBy, userFor, sourceID, source: String?
+    let action, title, description: String?
+    let isRead: Bool?
+    let updatedAt: String?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, id
@@ -36,3 +36,4 @@ struct NotificationsRow: Codable {
         case updatedAt
     }
 }
+

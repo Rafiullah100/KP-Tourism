@@ -31,6 +31,8 @@ class AttractionViewController: BaseViewController {
     var attractionDetail: AttractionModel?
     var attractionDistrict: AttractionsDistrict?
     var archeology: Archeology?
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
 
     var attractionDistrictsArray: [AttractionsDistrict] = [AttractionsDistrict]()
 
@@ -68,6 +70,20 @@ class AttractionViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+        }
+        else if wishlistAttraction != nil{
+            sectionLabel.text = "What to see"
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+        }
+        if wishlistDistrict != nil {
+            sectionLabel.text = "Attractions"
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
         }
     }
     

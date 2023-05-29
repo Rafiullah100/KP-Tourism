@@ -22,6 +22,8 @@ class LocalProductsViewController: BaseViewController {
     var productDetail: ProductModel?
     var attractionDistrict: AttractionsDistrict?
     var archeology: Archeology?
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +46,18 @@ class LocalProductsViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.districtID ?? 0], model: ProductModel.self)
+        }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": wishlistAttraction?.districtID ?? 0], model: ProductModel.self)
+        }
+        if wishlistDistrict != nil {
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            fetch(route: .fetchProductByDistrict, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0], model: ProductModel.self)
         }
     }
     

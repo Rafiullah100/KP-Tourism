@@ -22,13 +22,14 @@ class AccomodationViewController: BaseViewController {
     }
     @IBOutlet weak var tabbar: MDCTabBarView!
     var locationCategory: LocationCategory?
-
     
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var accomodationDetail: AccomodationModel?
     var archeology: Archeology?
     var tabbarItems = [UITabBarItem]()
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
 
     var hotelTypes = ["camping_pods", "government_rest_houses", "private_hotels"]
     var totalCount = 0
@@ -61,6 +62,18 @@ class AccomodationViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+        }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": wishlistAttraction?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+        }
+        if wishlistDistrict != nil {
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
         }
     }
     

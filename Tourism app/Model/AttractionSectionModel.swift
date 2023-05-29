@@ -8,21 +8,21 @@
 import Foundation
 
 struct AttractionSectionModel: Codable {
-    let success: Bool?
-    let wishlist: [AttractionWishlistModel]?
+    let success: Bool
+    let wishlist: [AttractionWishlistModel]
 }
 
 // MARK: - Wishlist
 struct AttractionWishlistModel: Codable {
     let createdAt, updatedAt: String?
     let id, userID: Int?
-    let districtID: String?
+    let districtID: Int?
     let attractionID: Int?
-    let poiID, socialEventID, blogID, bookStayID: String?
-    let postPivotID, tourPackageID, itineraryID, localProductID: String?
+    let poiID, socialEventID, blogID, bookStayID: Int?
+    let postPivotID, tourPackageID, itineraryID, localProductID: Int?
     let sourceType: String?
     let status, isDeleted: Int?
-    let attraction: WishlistAttraction?
+    let attraction: WishlistAttraction
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -48,9 +48,8 @@ struct WishlistAttraction: Codable {
     let title, slug: String?
     let districtID: Int?
     let isFeatured, isTop, family, adults: Bool?
-    let locationTitle: String?
-    let latitude, longitude: String?
-    let description, displayImage, previewImage: String?
+    let locationTitle, latitude, longitude, description: String?
+    let displayImage, previewImage: String?
     let authorID: Int?
     let parentID: Int?
     let type: String?
