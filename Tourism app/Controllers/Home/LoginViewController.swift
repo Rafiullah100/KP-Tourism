@@ -40,6 +40,7 @@ class LoginViewController: BaseViewController {
         //seller
 //        emailTextField.text = "rafiseller@gmail.com"
 //        passwordTextField.text = "123"
+        loginButton.isEnabled = false
         navigationItem.hidesBackButton = true
     }
     
@@ -98,7 +99,9 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func LoginBtnAction(_ sender: Any) {
-        validateLoginFields()
+        guard let email = emailTextField.text, let password = passwordTextField.text  else { return }
+        let parameters = ["username": email, "password": password]
+        loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
     }
     
     func loginUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -125,21 +128,11 @@ class LoginViewController: BaseViewController {
             }
         }
     }
-    
-    private func validateLoginFields(){
-        guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty else {
-            self.view.makeToast("All fields are required.", duration: 2.0, position: .center)
-            return }
-        guard passwordTextField.text == passwordTextField.text else {
-            self.view.makeToast("Password doesn't match.", duration: 2.0, position: .top)
-            return  }
-        let parameters = ["username": email, "password": password]
-        loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
-    }
 }
 
 extension LoginViewController: UITextFieldDelegate {
-//    func textFieldDidChangeSelection(_ textField: UITextField) {
-//        loginb.isEnabled = isFormValid()
-//    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let allTextFieldsFilled = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
+        loginButton.isEnabled = allTextFieldsFilled
+    }
 }

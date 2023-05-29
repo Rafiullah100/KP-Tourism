@@ -28,6 +28,8 @@ class WishlistViewController: UIViewController {
     var type: wishlistSection?
     var wishlistTypeArray: [wishlistSection]?
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
@@ -109,9 +111,22 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
         else if indexPath.row == 3{
             cell.packageWishlist = packageWishlist
         }
-        else{
+        else if indexPath.row == 4{
             cell.productWishlist = productWishlist
         }
+        
+        cell.wishlistCallback = { type, index in
+            if type == .product{
+                Switcher.gotoProductDetail(delegate: self, wishListProduct: self.productWishlist?[index].localProduct, type: .wishlist)
+            }
+            else if type == .package{
+                Switcher.gotoPackageDetail(delegate: self, wishListPackage: self.packageWishlist?[index].tourPackage, type: .wishlist)
+            }
+            else if type == .post{
+                Switcher.gotoPostVC(delegate: self, postType: .view, wishlistfeed: self.postWishlist?[index].post)
+            }
+        }
+        
         return cell
     }
     

@@ -78,7 +78,7 @@ extension LocalProductsViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let product = productDetail?.localProducts[indexPath.row] else { return }
-        Switcher.gotoProductDetail(delegate: self, product: product)
+        Switcher.gotoProductDetail(delegate: self, product: product, type: .list)
     }
 }
 

@@ -199,9 +199,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoProductDetail(delegate: UIViewController, product: LocalProduct){
+    static func gotoProductDetail(delegate: UIViewController, product: LocalProduct? = nil, wishListProduct: WishlistLocalProduct? = nil, type: DetailType){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ProductDetailViewController") as! ProductDetailViewController
         vc.productDetail = product
+        vc.wishListProductDetail = wishListProduct
+        vc.detailType = type
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -220,9 +222,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoPackageDetail(delegate: UIViewController, tourDetail: TourPackage){
+    static func gotoPackageDetail(delegate: UIViewController, tourDetail: TourPackage? = nil, wishListPackage: WishlistTourPackage? = nil, type: DetailType){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PackageDetailViewController") as! PackageDetailViewController
         vc.tourDetail = tourDetail
+        vc.wishlistTourPackage = wishListPackage
+        vc.detailType = type
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -418,12 +422,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoPostVC(delegate: UIViewController, postType: PostType, feed: FeedModel? = nil){
+    static func gotoPostVC(delegate: UIViewController, postType: PostType, feed: FeedModel? = nil, wishlistfeed: PostWishlist? = nil){ 
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PostViewController") as! PostViewController
         vc.modalPresentationStyle = .overFullScreen
         vc.modalTransitionStyle = .crossDissolve
         vc.postType = postType
         vc.feed = feed
+        vc.wishlistFeed = wishlistfeed
         delegate.present(vc, animated: true, completion: nil)
     }
     
@@ -504,6 +509,8 @@ class Switcher {
     
     static func gotoAddTourVC(delegate: UIViewController, tourPackage: UserProfileTourPackages? = nil, postType: PostType){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AddTourPackageViewController") as! AddTourPackageViewController
+        vc.postType = postType
+        vc.tourPackage = tourPackage
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
     }

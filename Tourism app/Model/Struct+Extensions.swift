@@ -47,8 +47,8 @@ enum LocationCategory {
 }
 
 enum DetailType {
-    case event
-    case adventure
+    case wishlist
+    case list
 }
 
 enum UserType {
@@ -82,6 +82,7 @@ enum PostType {
     case post
     case story
     case edit
+    case view
 }
 
 enum ProfileSection: String {
@@ -153,3 +154,5 @@ enum FeedCellType {
     case userSelf
     case other
 }
+
+

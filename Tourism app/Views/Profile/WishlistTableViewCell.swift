@@ -16,7 +16,8 @@ class WishlistTableViewCell: UITableViewCell {
         }
     }
     @IBOutlet weak var label: UILabel!
-    
+    var wishlistCallback : ((_ section: wishlistSection, _ index: Int) -> Void)?
+
     var postWishlist: [PostWishlistModel]?{
         didSet{
             label.text = "Post"
@@ -103,6 +104,24 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             cell.productWishlist = productWishlist?[indexPath.row]
         }
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if !(postWishlist?.isEmpty ?? true){
+            wishlistCallback?(.post, indexPath.row)
+        }
+        else if !(attractionWishlist?.isEmpty ?? true){
+            wishlistCallback?(.product, indexPath.row)
+        }
+        else if !(districtWishlist?.isEmpty ?? true){
+            wishlistCallback?(.product, indexPath.row)
+        }
+        else if !(packageWishlist?.isEmpty ?? true){
+            wishlistCallback?(.package, indexPath.row)
+        }
+        else if !(productWishlist?.isEmpty ?? true){
+            wishlistCallback?(.product, indexPath.row)
+        }
     }
 }
 

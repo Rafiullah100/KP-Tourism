@@ -7,9 +7,10 @@
 
 import Foundation
 
+
 struct PackageSectionModel: Codable {
-    let success: Bool?
-    let wishlist: [PackageWishlistModel]?
+    let success: Bool
+    let wishlist: [PackageWishlistModel]
 }
 
 // MARK: - Wishlist
@@ -22,7 +23,7 @@ struct PackageWishlistModel: Codable {
     let itineraryID, localProductID: Int?
     let sourceType: String?
     let status, isDeleted: Int?
-    let tourPackage: WishlistTourPackage?
+    let tourPackage: WishlistTourPackage
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -45,8 +46,8 @@ struct PackageWishlistModel: Codable {
 
 // MARK: - TourPackage
 struct WishlistTourPackage: Codable {
-    let createdAt, updatedAt, startDate, endDate: String?
-    let isExpired, durationDays, registration, discount: String?
+    let startDate, endDate, isExpired, durationDays: String?
+    let registration, discount: String?
     let id: Int?
     let uuid: String?
     let userID, fromDistrictID, toDistrictID: Int?
@@ -58,12 +59,14 @@ struct WishlistTourPackage: Codable {
     let groupTour, family, adults, wheelchair: Bool?
     let transportType, previewImage, thumbnailImage, tourPackageStartDate: String?
     let tourPackageEndDate, deadline, startTime, endTime: String?
-    let description, status: String?
+    let description: String?
     let isFeatured: Bool?
-    let approvedBy, viewsCounter, isDeleted: Int?
+    let approvedBy, viewsCounter, userInterest, likeCount: Int?
+    let usersInterestCount, userLike, userWishlist: Int?
+    let activities: [WishlistTourPackageActivity]
 
     enum CodingKeys: String, CodingKey {
-        case createdAt, updatedAt, startDate, endDate
+        case startDate, endDate
         case isExpired = "is_expired"
         case durationDays = "duration_days"
         case registration, discount, id, uuid
@@ -91,10 +94,37 @@ struct WishlistTourPackage: Codable {
         case deadline
         case startTime = "start_time"
         case endTime = "end_time"
-        case description, status
+        case description
         case isFeatured = "is_featured"
         case approvedBy = "approved_by"
         case viewsCounter = "views_counter"
-        case isDeleted
+        case userInterest = "user_interest"
+        case likeCount = "like_count"
+        case usersInterestCount = "users_interest_count"
+        case userLike = "user_like"
+        case userWishlist = "user_wishlist"
+        case activities
+    }
+}
+
+// MARK: - Activity
+struct WishlistTourPackageActivity: Codable {
+    let departureDate, departureTime: String?
+    let id, tourPackageID, day: Int?
+    let fromPlace, toPlace, activityDepartureDate, activityDepartureTime: String?
+    let stayIn, description: String?
+    let isDeleted: Int?
+    let createdAt, updatedAt: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case departureDate, departureTime, id
+        case tourPackageID = "tour_package_id"
+        case day
+        case fromPlace = "from_place"
+        case toPlace = "to_place"
+        case activityDepartureDate = "departure_date"
+        case activityDepartureTime = "departure_time"
+        case stayIn = "stay_in"
+        case description, isDeleted, createdAt, updatedAt
     }
 }

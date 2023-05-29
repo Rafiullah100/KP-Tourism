@@ -13,7 +13,8 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
 
     var postType: PostType?
     var feed: FeedModel?
-    
+    var wishlistFeed: PostWishlist?
+
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var textView: UITextView!
@@ -22,11 +23,17 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var captionView: UIView!
     
+    @IBOutlet weak var imageButton: UIButton!
+    @IBOutlet weak var postButtonView: UIView!
     var imagePicker: UIImagePickerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
+        updateUI()
+    }
+    
+    private func updateUI(){
         switch postType {
         case .post:
             label.text = "Create Post"
@@ -40,14 +47,16 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             postButton.setTitle("Edit Post", for: .normal)
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (feed?.post?.post_files?[0].image_url ?? "")))
             textView.text = feed?.post?.description
+        case .view:
+            label.text = "Post"
+            textView.isEditable = false
+            imageButton.isUserInteractionEnabled = false
+            postButtonView.isHidden = true
+            textView.text = wishlistFeed?.post.description
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistFeed?.post.postFiles[0].imageURL ?? "")))
         default:
             label.text = "Create Post"
         }
-
-        guard let profileImage = UserDefaults.standard.profileImage, profileImage.contains("https") else {
-            profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (UserDefaults.standard.profileImage ?? "")))
-            return }
-        profileImageView.sd_setImage(with: URL(string: UserDefaults.standard.profileImage ?? ""))
     }
     
     @IBAction func galleryImageBtnAction(_ sender: Any) {
@@ -100,34 +109,6 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
             }
         }
     }
-    
-    func update_photo() {
-                
-//        let urlStr = "https://staging-admin.kptourism.com/api/mobile/users/create_post?images&description"
-//        let url = URL(string: urlStr)!
-////        let urlRequest: Alamofire.URLRequestConvertible = URLRequest(url: url)
-//        let imageData = imageView.image?.jpegData(compressionQuality: 0.5)
-//        let parameter: [String: String] = ["description": "This is my post"]
-//
-//        let headers: HTTPHeaders = [
-//            "Content-type": "multipart/form-data"
-//        ]
-//
-//        let file: String = String(format: "file.jpg")
-//        let URL = try! URLRequest(url: url, method: .post, headers: headers)
-//
-//        AF.upload(multipartFormData: { multipartFormData in
-//
-//            for (key, value) in parameter {
-//                multipartFormData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key as String)
-//            }
-//            multipartFormData.append(imageData!, withName: "images", fileName: file, mimeType: "image/jpg")
-//        }, to: urlStr)
-//        .responseDecodable(of: SuccessModel.self) { response in
-//
-//        }
-    }
-    
 }
 
 

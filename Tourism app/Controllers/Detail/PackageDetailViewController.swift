@@ -27,7 +27,19 @@ class PackageDetailCell: UITableViewCell{
             descriptionLabel.text = activity?.description?.stripOutHtml()
         }
     }
+    
+    var wishlistActivity: WishlistTourPackageActivity? {
+        didSet{
+            titleLabel.text = "Day \(wishlistActivity?.day ?? 0)"
+            departureTimeLabel.text = wishlistActivity?.departureTime
+            departureDateLabel.text = wishlistActivity?.departureDate
+            stayinLabel.text = wishlistActivity?.stayIn
+            descriptionLabel.text = wishlistActivity?.description?.stripOutHtml()
+        }
+    }
 }
+
+
 
 
 class PackageDetailViewController: BaseViewController {
@@ -42,6 +54,9 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var likeLabel: UILabel!
     var selectedRow: Int?
     var tourDetail: TourPackage?
+    var detailType: DetailType?
+    var wishlistTourPackage: WishlistTourPackage?
+
     
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -71,27 +86,48 @@ class PackageDetailViewController: BaseViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "\(tourDetail?.title ?? "") | Tour Packages"
-
         tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 60.0
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
-        packageNameLabel.text = tourDetail?.title
-        descriptionLabel.text = tourDetail?.description?.stripOutHtml()
-        daysLabel.text = tourDetail?.duration_days
-        
-        eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
-        amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
-        favoriteIcon.image = tourDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested")
-        durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
-        viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
-        counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
-        districtNameLabel.text = tourDetail?.to_districts?.title
-        registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
-        interestCount = tourDetail?.usersInterestCount ?? 0
-        likeLabel.text = "\(String(describing: interestCount)) Interested"
+        updateUI()
+    }
+    
+    private func updateUI(){
+        if detailType == .list {
+            viewControllerTitle = "\(tourDetail?.title ?? "") | Tour Packages"
 
-//        descriptionLabel.text = "Up to 23 million people could be affected by the massive earthquake that has killed thousands in Turkey and Syria, the WHO warned on Tuesday, promising long-term assistance."
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            packageNameLabel.text = tourDetail?.title
+            descriptionLabel.text = tourDetail?.description?.stripOutHtml()
+            daysLabel.text = tourDetail?.duration_days
+            
+            eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
+            amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
+            favoriteIcon.image = tourDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested")
+            durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
+            viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
+            counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
+            districtNameLabel.text = tourDetail?.to_districts?.title
+            registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
+            interestCount = tourDetail?.usersInterestCount ?? 0
+            likeLabel.text = "\(String(describing: interestCount)) Interested"
+        }
+        else if detailType == .wishlist{
+            viewControllerTitle = "\(wishlistTourPackage?.title ?? "") | Tour Packages"
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistTourPackage?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            packageNameLabel.text = wishlistTourPackage?.title
+            descriptionLabel.text = wishlistTourPackage?.description?.stripOutHtml()
+            daysLabel.text = wishlistTourPackage?.durationDays
+            eventTypeLabel.text = wishlistTourPackage?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
+            amountLabel.text = wishlistTourPackage?.price == 0 ? "FREE" : "RS. \(wishlistTourPackage?.price ?? 0)"
+            favoriteIcon.image = wishlistTourPackage?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested")
+            durationDateLabel.text = "\(wishlistTourPackage?.startDate ?? "") TO \(wishlistTourPackage?.endDate ?? "")"
+            viewsLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) VIEWS"
+            counterLabel.text = "\(wishlistTourPackage?.numberOfPeople ?? 0) Seats"
+//            districtNameLabel.text = wishlistTourPackage?.dis?
+            registrationLabel.text = "Last registration date \(wishlistTourPackage?.startDate ?? "")"
+            interestCount = wishlistTourPackage?.usersInterestCount ?? 0
+            likeLabel.text = "\(String(describing: interestCount)) Interested"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,8 +143,15 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
-        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        self.interest(route: .doInterest, method: .post, parameters: ["package_id": tourDetail?.id ?? 0], model: SuccessModel.self)
+        if detailType == .list{
+            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+            self.interest(route: .doInterest, method: .post, parameters: ["package_id": tourDetail?.id ?? 0], model: SuccessModel.self)
+        }
+        else if detailType == .wishlist{
+            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+            self.interest(route: .doInterest, method: .post, parameters: ["package_id": wishlistTourPackage?.id ?? 0], model: SuccessModel.self)
+        }
+        
     }
     
     func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -126,19 +169,33 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+        if detailType == .list{
+            self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+        }
+        else if detailType == .wishlist{
+            self.share(text: wishlistTourPackage?.description ?? "", image: imageView.image ?? UIImage())
+        }
     }
-    
 }
 
 extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tourDetail?.activities?.count ?? 0
+        if detailType == .list{
+            return tourDetail?.activities?.count ?? 0
+        } else if detailType == .wishlist{
+            return wishlistTourPackage?.activities.count ?? 0
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PackageDetailCell = tableView.dequeueReusableCell(withIdentifier: "cell_identifier") as! PackageDetailCell
-        cell.activity = tourDetail?.activities?[indexPath.row]
+        if detailType == .list{
+            cell.activity = tourDetail?.activities?[indexPath.row]
+        }
+        else if detailType == .wishlist{
+            cell.wishlistActivity = wishlistTourPackage?.activities[indexPath.row]
+        }
         if indexPath.row == selectedRow{
             if cell.expandableView.isHidden == false{
                 cell.expandableView.isHidden = true

@@ -13,7 +13,7 @@ class WishlistCollectionViewCell: UICollectionViewCell {
     
     var postWishlist: PostWishlistModel?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (postWishlist?.post?.post?.postFiles?[0].imageURL ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (postWishlist?.post.post.postFiles[0].imageURL ?? "")), placeholderImage: UIImage(named: "placeholder"))
         }
     }
     
@@ -31,7 +31,7 @@ class WishlistCollectionViewCell: UICollectionViewCell {
     
     var packageWishlist: PackageWishlistModel?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (packageWishlist?.tourPackage?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (packageWishlist?.tourPackage.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
         }
     }
     

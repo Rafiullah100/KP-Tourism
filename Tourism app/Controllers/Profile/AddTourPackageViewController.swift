@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import SDWebImage
 class AddTourPackageViewController: UIViewController {
   
     @IBOutlet weak var titleTextField: UITextField!
@@ -40,6 +41,7 @@ class AddTourPackageViewController: UIViewController {
     @IBOutlet weak var wheelChairButton: UIButton!
     @IBOutlet weak var adultButton: UIButton!
     @IBOutlet weak var familyButton: UIButton!
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var childrenAgeTextField: UITextField!
     
     var imagePicker: UIImagePickerController!
@@ -55,8 +57,9 @@ class AddTourPackageViewController: UIViewController {
     var fromDistrictID: Int?
     var toDistrictID: Int?
     var groupTour: Bool?
+    var postType: PostType?
+    var tourPackage: UserProfileTourPackages?
     
-
         
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +85,43 @@ class AddTourPackageViewController: UIViewController {
         endDateTextField.delegate = self
         startTimeTextField.delegate = self
         endTimeTextField.delegate = self
-        fetch(route: .districtListApi, method: .post, model: DistrictListModel.self)
+        updateUI()
+        
+        fetch(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
+    }
+    
+    private func updateUI(){
+        guard postType == .edit else {
+            return
+        }
+        topLabel.text = postType == .post ? "Add Tour Package" : "Edit Tour Package"
+        titleTextField.text = tourPackage?.title
+        startDateTextField.text = tourPackage?.start_date
+        endDateTextField.text = tourPackage?.endDate
+        startTimeTextField.text = tourPackage?.start_time
+        endTimeTextField.text = tourPackage?.end_time
+        deadlineTextField.text = tourPackage?.deadline
+        poepleTextField.text = "\(tourPackage?.number_of_people ?? 0)"
+        adultTextField.text = "\(tourPackage?.no_of_adults ?? 0)"
+        childrenTextField.text = "\(tourPackage?.children ?? 0)"
+        priceTypeTextField.text = "\(tourPackage?.price ?? 0)"
+        oldPriceTextField.text = "\(tourPackage?.price_old ?? 0)"
+        newPriceTextField.text = "\(tourPackage?.price ?? 0)"
+        priceTypeTextField.text = tourPackage?.price_type
+        childrenAgeTextField.text = tourPackage?.children_age
+        transportTextField.text = tourPackage?.transport
+        transportTypeTextField.text = tourPackage?.transport_type
+        transportTypeTextField.text = tourPackage?.transport_type
+        emailTextField.text = tourPackage?.email
+        phoneTextField.text = tourPackage?.phone_no
+        descriptionTextField.text = tourPackage?.description
+        familyButton.isSelected = tourPackage?.family ?? false
+        adultButton.isSelected = tourPackage?.adults ?? false
+        wheelChairButton.isSelected = tourPackage?.wheelchair ?? false
+        yesImageView.image = UIImage(named: tourPackage?.group_tour == true ? "radio-select" : "radio-unselect")
+        noImageView.image = UIImage(named: tourPackage?.group_tour == false ? "radio-select" : "radio-unselect")
+        groupTour = tourPackage?.group_tour ?? false
+        imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourPackage?.preview_image ?? "")))
     }
     
     @objc func myTargetFunction(textField: UITextField) {
@@ -96,9 +135,25 @@ class AddTourPackageViewController: UIViewController {
                 self.districtList = (model as! DistrictListModel).districts?.rows
                 self.fromPickerView.reloadAllComponents()
                 self.toPickerView.reloadAllComponents()
+                self.findFromDistrictObject()
+                self.findToDistrictObject()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
+        }
+    }
+    
+    private func findFromDistrictObject(){
+        if let index = districtList?.firstIndex(where: { $0.id ==  tourPackage?.from_district_id }) {
+            fromDistrictTextField.text = districtList?[index].title
+            fromDistrictID = districtList?[index].id
+        }
+    }
+    
+    private func findToDistrictObject(){
+        if let index = districtList?.firstIndex(where: { $0.id ==  tourPackage?.to_district_id }) {
+            toDistrictTextField.text = districtList?[index].title
+            toDistrictID = districtList?[index].id
         }
     }
     
@@ -145,7 +200,7 @@ class AddTourPackageViewController: UIViewController {
             case .success(let success):
                 if success.success == true{
                     self.dismiss(animated: true) {
-                        SVProgressHUD.showSuccess(withStatus: "Tour Package successfully added.")
+                        SVProgressHUD.showSuccess(withStatus: success.message)
                     }
                 }
                 else{
@@ -181,9 +236,17 @@ class AddTourPackageViewController: UIViewController {
               else {
             return
         }
-        let para = ["title":title, "from_district_id": fromDistrictID ?? 0, "to_district_id": toDistrictID ?? 0, "price_old": oldPrice, "price": newPrice, "price_type": priceType, "family": familyButton.isSelected, "adults": adultButton.isSelected, "children": noOfchildren, "children_age": childrenAge, "number_of_people": noOfpeople, "no_of_adults": noOfadult, "wheelchair": wheelChairButton.isSelected, "group_tour": groupTour ?? "", "transport_type": transportType, "phone_no": phone, "email": email, "start_date": startDate, "end_date": endDate, "start_time": startTime, "end_time": endTime, "deadline": deadline, "description": description] as [String : Any]
-        print(para)
-        createTourPackage(route: .createPackage, params: para)
+        var para = ["title":title, "from_district_id": fromDistrictID ?? 0, "to_district_id": toDistrictID ?? 0, "price_old": oldPrice, "price": newPrice, "price_type": priceType, "family": familyButton.isSelected, "adults": adultButton.isSelected, "children": noOfchildren, "children_age": childrenAge, "number_of_people": noOfpeople, "no_of_adults": noOfadult, "wheelchair": wheelChairButton.isSelected, "group_tour": groupTour ?? "", "transport_type": transportType, "transport": transport, "phone_no": phone, "email": email, "start_date": startDate, "end_date": endDate, "start_time": startTime, "end_time": endTime, "deadline": deadline, "description": description] as [String : Any]
+        if postType == .post{
+            createTourPackage(route: .createPackage, params: para)
+        }
+        else if postType == .edit{
+            para["tourPackageId"] = tourPackage?.id
+            para["old_preview_image_path"] = tourPackage?.preview_image
+            para["old_preview_image_path"] = tourPackage?.thumbnail_image
+            print(para)
+            createTourPackage(route: .updateTourPackage, params: para)
+        }
     }
 }
 

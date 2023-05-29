@@ -11,14 +11,40 @@ class SignupViewController: BaseViewController {
     
     let pickerView = UIPickerView()
     
-    @IBOutlet weak var phoneTextField: UITextField!
-    @IBOutlet weak var confirmTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var lastNameTextField: UITextField!
-    @IBOutlet weak var firstNameTextFeild: UITextField!
-    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var phoneTextField: UITextField!{
+        didSet{
+            self.phoneTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var confirmTextField: UITextField!{
+        didSet{
+            self.confirmTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var passwordTextField: UITextField!{
+        didSet{
+            self.passwordTextField.delegate = self
+        }
+    }
+    @IBOutlet weak var lastNameTextField: UITextField!{
+        didSet{
+            self.lastNameTextField.delegate = self
+        }
+    }
+    
+    @IBOutlet weak var firstNameTextFeild: UITextField!{
+        didSet{
+            self.firstNameTextFeild.delegate = self
+        }
+    }
+    @IBOutlet weak var emailTextField: UITextField!{
+        didSet{
+            self.emailTextField.delegate = self
+        }
+    }
     @IBOutlet weak var userTypeTextField: UITextField!
     
+    @IBOutlet weak var signupButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationItem.hidesBackButton = true
@@ -28,6 +54,7 @@ class SignupViewController: BaseViewController {
         userTypeTextField.text = Constants.userType[0]
         pickerView.delegate = self
         pickerView.dataSource = self
+        signupButton.isEnabled = false
     }
     
     @IBAction func signupBtnAction(_ sender: Any) {
@@ -55,8 +82,10 @@ class SignupViewController: BaseViewController {
     }
     
     private func validateSignupFields(){
-        guard let email = emailTextField.text, !email.isEmpty, let firstName = firstNameTextFeild.text, !firstName.isEmpty, let password = passwordTextField.text, !password.isEmpty, let confirmPassword = confirmTextField.text, !confirmPassword.isEmpty, let phone = phoneTextField.text, !phone.isEmpty else { return }
-        guard passwordTextField.text == confirmTextField.text else { return }
+        guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, !firstName.isEmpty, let password = passwordTextField.text,  let confirmPassword = confirmTextField.text, let phone = phoneTextField.text else { return }
+        guard passwordTextField.text == confirmTextField.text else {
+            self.view.makeToast("Password does not match")
+            return }
         let parameters = ["username": email, "name": firstName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
         registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
     }
@@ -81,5 +110,12 @@ extension SignupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         userTypeTextField.text = Constants.userType[row]
+    }
+}
+
+extension SignupViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let allTextFieldsFilled = !emailTextField.text!.isEmpty && !phoneTextField.text!.isEmpty && !firstNameTextFeild.text!.isEmpty && !passwordTextField.text!.isEmpty && !confirmTextField.text!.isEmpty
+        signupButton.isEnabled = allTextFieldsFilled
     }
 }

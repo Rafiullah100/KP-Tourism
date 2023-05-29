@@ -8,79 +8,30 @@
 import Foundation
 
 
-//struct PostSectionModel: Codable {
-//    let success: Bool
-//    let wishlist: [PostWishlist]
-//}
-//
-//// MARK: - Wishlist
-//struct PostWishlistModel: Codable {
-//    let createdAt, updatedAt: String?
-//    let id, userID: Int?
-//    let districtID, attractionID, poiID, socialEventID: String?
-//    let blogID, bookStayID: String?
-//    let postID: Int
-//    let tourPackageID, itineraryID, localProductID: String?
-//    let sourceType: String?
-//    let status, isDeleted: Int?
-//    let post: PostWishlist?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case createdAt, updatedAt, id
-//        case userID = "user_id"
-//        case districtID = "district_id"
-//        case attractionID = "attraction_id"
-//        case poiID = "poi_id"
-//        case socialEventID = "social_event_id"
-//        case blogID = "blog_id"
-//        case bookStayID = "book_stay_id"
-//        case postID = "post_id"
-//        case tourPackageID = "tour_package_id"
-//        case itineraryID = "itinerary_id"
-//        case localProductID = "local_product_id"
-//        case sourceType = "source_type"
-//        case status, isDeleted, post
-//    }
-//}
-//
-//// MARK: - Post
-//struct PostWishlist: Codable {
-//    let createdAt, updatedAt: String?
-//    let id, userID: Int?
-//    let description, type: String?
-//    let viewsCounter, status, isDeleted: Int?
-//
-//    enum CodingKeys: String, CodingKey {
-//        case createdAt, updatedAt, id
-//        case userID = "user_id"
-//        case description, type
-//        case viewsCounter = "views_counter"
-//        case status, isDeleted
-//    }
-//}
+//********************\\
 
 struct PostSectionModel: Codable {
-    let success: Bool?
-    let wishlist: [PostWishlistModel]?
+    let success: Bool
+    let wishlist: [PostWishlistModel]
 }
 
 // MARK: - Wishlist
 struct PostWishlistModel: Codable {
     let createdAt, updatedAt: String?
     let id, userID: Int?
-    let districtID, attractionID, poiID, socialEventID: String?
-    let blogID, bookStayID: String?
+    let districtID, attractionID, poiID, socialEventID: Int?
+    let blogID, bookStayID: Int?
     let postPivotID: Int?
-    let tourPackageID, itineraryID, localProductID: String?
+    let tourPackageID, itineraryID, localProductID: Int?
     let sourceType: String?
     let status, isDeleted: Int?
-    let post: PostWishlist?
+    let post: PostWishlist
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
         case userID = "user_id"
         case districtID = "district_id"
-        case attractionID = "attraction_id"
+        case attractionID = "attraction_id" 
         case poiID = "poi_id"
         case socialEventID = "social_event_id"
         case blogID = "blog_id"
@@ -101,7 +52,7 @@ struct PostWishlist: Codable {
     let description: String?
     let action: String?
     let status, isDeleted: Int?
-    let post: post?
+    let post: post
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -117,7 +68,7 @@ struct post: Codable {
     let id, userID: Int?
     let description, type: String?
     let viewsCounter, status, isDeleted: Int?
-    let postFiles: [WishlistPostFile]?
+    let postFiles: [WishlistPostFile]
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id

@@ -277,11 +277,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         case .event:
             Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row])
         case .tour:
-            Switcher.gotoPackageDetail(delegate: self, tourDetail: tourPackage[indexPath.row])
+            Switcher.gotoPackageDetail(delegate: self, tourDetail: tourPackage[indexPath.row], type: .list)
         case .blog:
             Switcher.gotoBlogDetail(delegate: self, blogDetail: blogs[indexPath.row])
         case .product:
-            Switcher.gotoProductDetail(delegate: self, product: localProducts[indexPath.row])
+            Switcher.gotoProductDetail(delegate: self, product: localProducts[indexPath.row], type: .list)
         case .adventure:
             Switcher.gotoAdventureDetail(delegate: self, adventure: (model as! AdventureModel).adventures[indexPath.row])
         case .attraction:
