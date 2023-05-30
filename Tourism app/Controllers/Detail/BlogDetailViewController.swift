@@ -39,6 +39,7 @@ class BlogDetailViewController: BaseViewController {
         }
     }
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var viewCounterLabel: UILabel!
     
     var currentPage = 1
     var totalCount = 1
@@ -67,7 +68,20 @@ class BlogDetailViewController: BaseViewController {
         favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         likeCount = blogDetail?.likes.likesCount ?? 0
         likeLabel.text = "\(String(describing: likeCount)) Liked"
+        viewCounterLabel.text = "\(blogDetail?.viewsCounter ?? 0) Views"
+        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
         reloadComment()
+    }
+    
+    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let viewCount):
+                print(viewCount)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 
     private func reloadComment(){

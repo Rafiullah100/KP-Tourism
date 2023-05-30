@@ -7,22 +7,22 @@
 
 import Foundation
 
+
 struct NotificationListModel: Codable {
     let notifications: Notifications
 }
 
 // MARK: - Notifications
 struct Notifications: Codable {
-    let count: Int?
+    let count: Int
     let rows: [NotificationsRow]
 }
 
 // MARK: - Row
 struct NotificationsRow: Codable {
     let createdAt: String?
-    let id: Int?
-    let userBy, userFor, sourceID, source: String?
-    let action, title, description: String?
+    let id, userBy, userFor, sourceID: Int?
+    let source, action, title, description: String?
     let isRead: Bool?
     let updatedAt: String?
 
@@ -36,4 +36,3 @@ struct NotificationsRow: Codable {
         case updatedAt
     }
 }
-

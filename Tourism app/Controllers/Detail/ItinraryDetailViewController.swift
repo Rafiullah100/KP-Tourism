@@ -22,6 +22,7 @@ class ItinraryDetailViewController: BaseViewController {
         }
     }
     @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var viewCounterLabel: UILabel!
     
     var itinraryDetail: ItinraryRow?
     
@@ -29,9 +30,22 @@ class ItinraryDetailViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         placeLabel.text = "\(itinraryDetail?.fromDistricts.title ?? "") - \(itinraryDetail?.toDistricts.title ?? "")"
+        viewCounterLabel.text = "\(itinraryDetail?.viewsCounter ?? 0) Views"
         textView.text = itinraryDetail?.description?.stripOutHtml()
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
+        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"], model: SuccessModel.self)
+    }
+    
+    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let viewCount):
+                print(viewCount)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

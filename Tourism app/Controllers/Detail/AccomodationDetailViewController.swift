@@ -31,6 +31,7 @@ class AccomodationDetailViewController: BaseViewController {
     @IBOutlet weak var detailView: UIView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var viewCounterLabel: UILabel!
     
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -82,7 +83,20 @@ class AccomodationDetailViewController: BaseViewController {
         bedLabel.text = "\(accomodationDetail?.noRoom ?? 0) Rooms"
         parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
+        viewCounterLabel.text = "\(accomodationDetail?.viewsCounter ?? 0) Views"
+        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"], model: SuccessModel.self)
         reloadComment()
+    }
+    
+    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let viewCount):
+                print(viewCount)
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

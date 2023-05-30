@@ -7,6 +7,7 @@
 
 import UIKit
 import SDWebImage
+import SVProgressHUD
 class ProductDetailViewController: BaseViewController {
 
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -24,17 +25,46 @@ class ProductDetailViewController: BaseViewController {
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var likeCountLabel: UILabel!
+    @IBOutlet weak var profileImageView: UIImageView!
+
+    @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var tableView: DynamicHeightTableView!{
+        didSet{
+            tableView.delegate = self
+            tableView.dataSource = self
+            tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
+        }
+    }
+    
+    @IBOutlet weak var viewsCounterLabel: UILabel!
+    @IBOutlet weak var commentTextView: UITextView!{
+        didSet{
+            commentTextView.delegate = self
+        }
+    }
+    
     var likeCount = 0
     var detailType: DetailType?
     
+    var commentText = "Write a comment"
+    var limit = 100
+    var currentPage = 1
+    var totalCount = 1
+    var allComments: [CommentsRows] = [CommentsRows]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-       updateUI()
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 44.0
+        commentTextView.text = commentText
+        commentTextView.textColor = UIColor.lightGray
+        updateUI()
+        reloadComment()
     }
     
     private func updateUI(){
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         if detailType == .list{
             type = .backWithTitle
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
@@ -46,6 +76,8 @@ class ProductDetailViewController: BaseViewController {
             locationLabel.text = productDetail?.districts.title
             favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             ownerNameLabel.text = "\(productDetail?.users.name ?? "")"
+            viewsCounterLabel.text = "\(productDetail?.viewsCounter ?? 0) Views"
+            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
             if productDetail?.likes.count ?? 0 > 0{
                 likeCount = productDetail?.likes.count ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
@@ -62,9 +94,22 @@ class ProductDetailViewController: BaseViewController {
             locationLabel.text = wishListProductDetail?.districts.title
             favoriteBtn.setImage(wishListProductDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             ownerNameLabel.text = "\(wishListProductDetail?.users.name ?? "")"
+            viewsCounterLabel.text = "\(wishListProductDetail?.viewsCounter ?? 0) Views"
+            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
             if wishListProductDetail?.likes.count ?? 0 > 0{
                 likeCount = wishListProductDetail?.likes.count ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
+            }
+        }
+    }
+    
+    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let viewCount):
+                print(viewCount)
+            case .failure(let error):
+                print(error)
             }
         }
     }
@@ -120,5 +165,99 @@ class ProductDetailViewController: BaseViewController {
                 print("error \(error)")
             }
         }
+    }
+    
+    private func reloadComment(){
+        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product", "page": currentPage, "limit": limit], model: CommentsModel.self)
+    }
+    
+    @IBAction func loginToComment(_ sender: Any) {
+        guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
+        doComment(route: .doComment, method: .post, parameters: ["section_id": productDetail?.id ?? "", "section": "local_product", "comment": text], model: SuccessModel.self)
+    }
+    
+    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let result):
+                if (result as? SuccessModel)?.success == true{
+                    self.commentTextView.text = ""
+                    self.allComments = []
+                    self.reloadComment()
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let result):
+                if (result as? SuccessModel)?.success == true{
+                    self.reloadComment()
+                    self.tableView.scrollToRow(at: row, at: .none, animated: false)
+                }
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+    
+    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let comments):
+                print((comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
+                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
+    }
+}
+
+extension ProductDetailViewController: UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if commentTextView.textColor == UIColor.lightGray {
+            commentTextView.text = ""
+            commentTextView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if commentTextView.text == "" {
+            commentTextView.text = commentText
+            commentTextView.textColor = UIColor.lightGray
+        }
+    }
+}
+
+extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return allComments.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+        cell.comment = allComments[indexPath.row]
+        cell.commentReplyBlock = {
+            cell.bottomView.isHidden = !cell.bottomView.isHidden
+            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+        }
+        cell.actionBlock = { text in
+            cell.textView.text = ""
+            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "local_product"], model: SuccessModel.self, row: indexPath)
+            self.allComments = []
+        }
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
     }
 }

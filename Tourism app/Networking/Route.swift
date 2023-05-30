@@ -88,6 +88,7 @@ enum Route {
     case updateBlog
     case updateProduct
     case updateTourPackage
+    case viewCounter
 
     var description: String {
         switch self {
@@ -249,6 +250,8 @@ enum Route {
             return "api/mobile/users/localproduct_update"
         case .updateTourPackage:
             return "api/mobile/users/tourpackage_update"
+        case .viewCounter:
+            return "api/mobile/common/do_count"
         }
     }
 }

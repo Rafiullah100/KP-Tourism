@@ -275,7 +275,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
             self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
         }
         cell.commentActionBlock = {
-            Switcher.gotoPostCommentVC(delegate: self)
+            Switcher.gotoPostCommentVC(delegate: self, postId: self.newsFeed[indexPath.row].id ?? 0)
         }
         return cell
     }

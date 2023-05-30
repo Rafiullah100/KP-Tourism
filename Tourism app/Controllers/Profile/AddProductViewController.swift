@@ -16,6 +16,7 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
     
     @IBOutlet weak var priceTextField: UITextField!
     
+    @IBOutlet weak var imageNameLabel: UILabel!
     @IBOutlet weak var topLabel: UILabel!
     let districtPickerView = UIPickerView()
     var districtList: [DistrictsListRow]?
@@ -33,6 +34,7 @@ class AddProductViewController: UIViewController, UINavigationControllerDelegate
         blogImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")))
         topLabel.text = postType == .post ? "Add Product" : "Edit Product"
         
+        blogImageView.isHidden = true
         districtPickerView.delegate = self
         districtPickerView.dataSource = self
         districtTextField.inputView = districtPickerView
@@ -127,6 +129,10 @@ extension AddProductViewController: UIImagePickerControllerDelegate {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             blogImageView.contentMode = .scaleToFill
             blogImageView.image = pickedImage
+            if let imageURL = info[.imageURL] as? URL {
+                let imageName = imageURL.lastPathComponent
+                imageNameLabel.text = imageName
+            }
         }
         dismiss(animated: true, completion: nil)
     }

@@ -497,8 +497,9 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoPostCommentVC(delegate: UIViewController){
+    static func gotoPostCommentVC(delegate: UIViewController, postId: Int){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PostCommentViewController") as! PostCommentViewController
+        vc.postId = postId
         vc.modalPresentationStyle = .automatic
         delegate.present(vc, animated: true, completion: nil)
     }

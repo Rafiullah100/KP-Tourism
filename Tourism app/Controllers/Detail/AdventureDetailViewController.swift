@@ -21,6 +21,9 @@ class AdventureDetailViewController: BaseViewController {
     @IBOutlet weak var statusBarView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "Polo Games"

@@ -173,7 +173,6 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
                 }
             }
         }
-        
         return cell
     }
     

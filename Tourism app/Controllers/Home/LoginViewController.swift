@@ -38,8 +38,8 @@ class LoginViewController: BaseViewController {
         passwordTextField.text = "12345678"
         
         //seller
-//        emailTextField.text = "rafiseller@gmail.com"
-//        passwordTextField.text = "123"
+        emailTextField.text = "rafiseller@gmail.com"
+        passwordTextField.text = "123"
         loginButton.isEnabled = false
         navigationItem.hidesBackButton = true
     }

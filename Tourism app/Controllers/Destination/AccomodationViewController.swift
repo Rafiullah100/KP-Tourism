@@ -31,7 +31,7 @@ class AccomodationViewController: BaseViewController {
     var wishlistAttraction: WishlistAttraction?
     var wishlistDistrict: WishlistDistrict?
 
-    var hotelTypes = ["camping_pods", "government_rest_houses", "private_hotels"]
+    var hotelTypes = ["camping_pods", "private_hotels", "government_rest_houses"]
     var totalCount = 0
     var currentPage = 1
     var limit = 5

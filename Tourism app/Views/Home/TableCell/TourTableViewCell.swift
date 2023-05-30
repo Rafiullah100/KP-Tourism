@@ -16,8 +16,10 @@ class TourTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var favoriteButton: UIButton!
 
+    @IBOutlet weak var doscountLabel: UILabel!
     var actionBlock: (() -> Void)? = nil
     
+    @IBOutlet weak var discountView: UIView!
     @IBOutlet weak var likesLabel: UILabel!
     var tour: TourPackage?{
         didSet{
@@ -35,7 +37,7 @@ class TourTableViewCell: UITableViewCell {
             viewsLabel.text = "\(tour?.views_counter ?? 0)"
             likesLabel.text = "\(tour?.likes?.count ?? 0)"
             commentsLabel.text = "\(tour?.comments?.count ?? 0)"
-
+//            doscountLabel.text = "\(tour?.discount ?? "")"
 //            if tour?.likes?.count != 0 {
 //                likesLabel.text = "\(tour?.likes?[0].likesCount ?? 0)"
 //            }
@@ -53,6 +55,7 @@ class TourTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        discountView.roundCorners(corners: [.topRight, .bottomRight], radius: 20.0)
     }
     
     override func prepareForReuse() {

@@ -54,18 +54,19 @@ class CommentsTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        bottomView.isHidden = true
         textView.text = inputText
         textView.textColor = UIColor.lightGray
     }
 
     @IBAction func hideShowBtnAction(_ sender: Any) {
-        if replyButton.isSelected == false{
-            textView.becomeFirstResponder()
-        }
-        else{
-            textView.resignFirstResponder()
-        }
-        replyButton.isSelected = !replyButton.isSelected
+//        if replyButton.isSelected == false{
+//            textView.becomeFirstResponder()
+//        }
+//        else{
+//            textView.resignFirstResponder()
+//        }
+//        replyButton.isSelected = !replyButton.isSelected
         commentReplyBlock?()
     }
     
