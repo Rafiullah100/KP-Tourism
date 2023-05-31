@@ -13,13 +13,13 @@ class CallNowViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        type = .title
+        type = .title1
         viewControllerTitle = "Tourism Emergency Helpline"
         imageView.loadGif(name: "call-icon")
     }
 
     @IBAction func callnowBtn(_ sender: Any) {
-        let url: NSURL = URL(string: "TEL://1422")! as NSURL
+        let url: NSURL = URL(string: Constants.helpline)! as NSURL
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
     }
 }

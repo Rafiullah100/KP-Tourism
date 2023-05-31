@@ -28,6 +28,7 @@ class BlogDetailViewController: BaseViewController {
     var blogDetail: Blog?
     var allComments: [CommentsRows] = [CommentsRows]()
     
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -56,6 +57,8 @@ class BlogDetailViewController: BaseViewController {
 //        self.tableViewHeight.constant = self.tableView.contentSize.height
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
+        commentTextView.isScrollEnabled = false
+        commentTextView.isScrollEnabled = false
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
@@ -120,6 +123,7 @@ class BlogDetailViewController: BaseViewController {
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+               
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -181,7 +185,8 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
      
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
         cell.actionBlock = { text in
             cell.textView.text = ""
@@ -208,6 +213,15 @@ extension BlogDetailViewController: UITextViewDelegate{
         if commentTextView.text == "" {
             commentTextView.text = commentText
             commentTextView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            commentTextViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
         }
     }
 }

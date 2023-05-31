@@ -223,7 +223,8 @@ extension EventDetailViewController: UITableViewDelegate, UITableViewDataSource{
         cell.comment = allComments[indexPath.row]
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

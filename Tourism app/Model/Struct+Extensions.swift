@@ -51,6 +51,11 @@ enum DetailType {
     case list
 }
 
+enum WeatherAlertType {
+    case weather
+    case alert
+}
+
 enum UserType {
     case seller
     case tourist

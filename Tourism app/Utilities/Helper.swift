@@ -205,6 +205,9 @@ class Helper{
         tableView.layoutIfNeeded()
         tbHeight.constant = tableView.contentSize.height
         tableView.layoutIfNeeded()
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     func locationPermission(self: UIViewController) -> CLLocationManager{
@@ -238,6 +241,20 @@ class Helper{
     
     func isTourist() -> Bool {
         return UserDefaults.standard.isTourist == "approved" ? true : false
+    }
+    
+    func attributedString(text1: String, text2: String) -> NSMutableAttributedString {
+        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Medium", size: 18) ?? UIFont()]
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Light", size: 12) ?? UIFont()]
+        let firstString = NSAttributedString(string: text1, attributes: firstAttributes)
+        let secondString = NSAttributedString(string: text2, attributes: secondAttributes)
+        let thirdString = NSAttributedString(string: " ", attributes: secondAttributes)
+
+        let concatenatedString = NSMutableAttributedString()
+        concatenatedString.append(firstString)
+        concatenatedString.append(thirdString)
+        concatenatedString.append(secondString)
+        return concatenatedString
     }
 }
 

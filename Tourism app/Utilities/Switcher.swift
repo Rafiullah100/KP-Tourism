@@ -539,5 +539,12 @@ class Switcher {
         vc.modalTransitionStyle = .crossDissolve
         delegate.present(vc, animated: true, completion: nil)
     }
+    
+    static func gotoWeatherVC(delegate: UIViewController, type: WeatherAlertType){
+        let vc = UIStoryboard(name: Storyboard.main.rawValue, bundle: nil).instantiateViewController(withIdentifier: "WeatherAlertViewController") as! WeatherAlertViewController
+        vc.alertType = type
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 

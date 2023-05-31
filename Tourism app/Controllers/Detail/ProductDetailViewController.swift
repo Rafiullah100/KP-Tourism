@@ -27,6 +27,7 @@ class ProductDetailViewController: BaseViewController {
     @IBOutlet weak var likeCountLabel: UILabel!
     @IBOutlet weak var profileImageView: UIImageView!
 
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: DynamicHeightTableView!{
         didSet{
@@ -234,6 +235,15 @@ extension ProductDetailViewController: UITextViewDelegate{
             commentTextView.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            commentTextViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
+        }
+    }
 }
 
 extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSource{
@@ -247,7 +257,8 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
         cell.comment = allComments[indexPath.row]
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

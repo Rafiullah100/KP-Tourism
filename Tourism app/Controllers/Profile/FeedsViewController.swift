@@ -135,7 +135,14 @@ class FeedsViewController: UIViewController {
     }
     
     private func actionSheet(row: Int){
-        Utility.actionSheet(message: "choose action", buttonTitles: ["Edit", "Delete", "Cancel"]) { responce in
+        var buttonTitles: [String]?
+//        if newsFeed[row].action == "created" {
+            buttonTitles = ["Edit", "Delete", "Cancel"]
+//        }
+//        else{
+//            buttonTitles = ["Delete", "Cancel"]
+//        }
+        Utility.actionSheet(message: "choose action", buttonTitles: buttonTitles ?? []) { responce in
             if responce == "Edit"{
                 Switcher.gotoPostVC(delegate: self, postType: .edit, feed: self.newsFeed[row])
             }

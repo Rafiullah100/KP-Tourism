@@ -337,7 +337,8 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
             cell.comment = allComments[indexPath.row]
             cell.commentReplyBlock = {
                 cell.bottomView.isHidden = !cell.bottomView.isHidden
-                Helper.shared.tableViewHeight(tableView: self.commenTableView, tbHeight: self.commentTableViewHeight)
+                tableView.beginUpdates()
+                tableView.endUpdates()
             }
             cell.actionBlock = { text in
                 cell.textView.text = ""

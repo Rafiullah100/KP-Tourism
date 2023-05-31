@@ -10,6 +10,7 @@ import SVProgressHUD
 class PostCommentViewController: UIViewController {
 
 
+    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -110,12 +111,27 @@ extension PostCommentViewController: UITextViewDelegate{
             commentTextView.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            textViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
+        }
+    }
 }
 
 extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return allComments.count
+        if allComments.count > 0 {
+            return allComments.count
+        }
+        else{
+            tableView.setEmptyView("No comments found!")
+            return 0
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -123,8 +139,8 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
         cell.comment = allComments[indexPath.row]
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            self.tableView.reloadData()
-//            self.tableView.reloadRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

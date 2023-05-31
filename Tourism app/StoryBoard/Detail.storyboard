@@ -1910,6 +1910,9 @@ na aliqua. Ut enim ad minim </string>
                                                                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="5n7-zt-gP9">
                                                                                                                         <rect key="frame" x="0.0" y="0.0" width="282" height="75"/>
                                                                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                                                        <constraints>
+                                                                                                                            <constraint firstAttribute="height" priority="250" constant="75" id="8hg-I5-3Yw"/>
+                                                                                                                        </constraints>
                                                                                                                         <color key="textColor" systemColor="labelColor"/>
                                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -1979,7 +1982,7 @@ na aliqua. Ut enim ad minim </string>
                                                                                     <constraint firstAttribute="bottom" secondItem="3J3-Pc-16S" secondAttribute="bottom" constant="10" id="dmp-Pv-CiQ"/>
                                                                                     <constraint firstAttribute="trailing" secondItem="3J3-Pc-16S" secondAttribute="trailing" id="nx3-Tt-N4c"/>
                                                                                     <constraint firstItem="3J3-Pc-16S" firstAttribute="leading" secondItem="TGa-us-HAg" secondAttribute="leading" id="qPF-cC-grP"/>
-                                                                                    <constraint firstAttribute="height" constant="105" id="zrF-86-yn8"/>
+                                                                                    <constraint firstAttribute="height" priority="250" constant="105" id="zrF-86-yn8"/>
                                                                                 </constraints>
                                                                             </view>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="6eG-fZ-ssq">
@@ -1998,7 +2001,7 @@ na aliqua. Ut enim ad minim </string>
                                                                             </stackView>
                                                                         </subviews>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="150" id="X8D-gU-280"/>
+                                                                            <constraint firstAttribute="height" priority="250" constant="150" id="X8D-gU-280"/>
                                                                         </constraints>
                                                                     </stackView>
                                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="CiW-me-jjv" customClass="DynamicHeightTableView" customModule="Tourism_app" customModuleProvider="target">
@@ -2062,6 +2065,7 @@ na aliqua. Ut enim ad minim </string>
                     <size key="freeformSize" width="393" height="900"/>
                     <connections>
                         <outlet property="commentTextView" destination="5n7-zt-gP9" id="YVP-B1-1U6"/>
+                        <outlet property="commentTextViewHeight" destination="8hg-I5-3Yw" id="Y5D-Ly-amC"/>
                         <outlet property="descriptionTextView" destination="vVB-Yv-M8P" id="cJk-oi-GnB"/>
                         <outlet property="favoriteBtn" destination="HAp-N9-WCJ" id="5r8-mj-MRw"/>
                         <outlet property="likeCountLabel" destination="lxj-8F-R5n" id="DMI-xr-tew"/>
@@ -2225,10 +2229,10 @@ na aliqua. Ut enim ad minim </string>
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="486"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WCk-4H-h8n">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="601.33333333333337"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="571.33333333333337"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="939-74-Mhs">
-                                                                <rect key="frame" x="8" y="20" width="377" height="581.33333333333337"/>
+                                                                <rect key="frame" x="8" y="20" width="377" height="551.33333333333337"/>
                                                                 <subviews>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7 THINGS TO DO IN PESHAWAR" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xzU-1r-eYF">
                                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="28"/>
@@ -2258,7 +2262,7 @@ ed do eiusmod tempor </string>
                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     </textView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="gES-N6-HMc">
-                                                                        <rect key="frame" x="0.0" y="153.33333333333331" width="377" height="150"/>
+                                                                        <rect key="frame" x="0.0" y="153.33333333333331" width="377" height="120"/>
                                                                         <subviews>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ake-JE-Ds2">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="377" height="30"/>
@@ -2300,19 +2304,19 @@ ed do eiusmod tempor </string>
                                                                                 </constraints>
                                                                             </view>
                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dgl-CL-BWm">
-                                                                                <rect key="frame" x="0.0" y="30.000000000000057" width="377" height="105"/>
+                                                                                <rect key="frame" x="0.0" y="30.000000000000057" width="377" height="75"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hLq-ru-hag">
-                                                                                        <rect key="frame" x="0.0" y="10" width="377" height="85"/>
+                                                                                        <rect key="frame" x="0.0" y="10" width="377" height="55"/>
                                                                                         <subviews>
                                                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="aTi-uN-5d0">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="85"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="55"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="arR-pg-5hH">
-                                                                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="85"/>
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="55"/>
                                                                                                         <subviews>
                                                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="rqF-UW-5nO">
-                                                                                                                <rect key="frame" x="0.0" y="22.666666666666629" width="40" height="40"/>
+                                                                                                                <rect key="frame" x="0.0" y="7.6666666666666288" width="40" height="40"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="height" constant="40" id="5hh-hS-6lg"/>
                                                                                                                     <constraint firstAttribute="width" constant="40" id="oua-s1-RGk"/>
@@ -2332,14 +2336,17 @@ ed do eiusmod tempor </string>
                                                                                                         </constraints>
                                                                                                     </view>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hjt-ks-Be9">
-                                                                                                        <rect key="frame" x="45" y="0.0" width="332" height="85"/>
+                                                                                                        <rect key="frame" x="45" y="0.0" width="332" height="55"/>
                                                                                                         <subviews>
                                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PCa-1V-Sbx">
-                                                                                                                <rect key="frame" x="0.0" y="5" width="322" height="75"/>
+                                                                                                                <rect key="frame" x="0.0" y="5" width="322" height="45"/>
                                                                                                                 <subviews>
                                                                                                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YDo-x4-TP6">
-                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="282" height="75"/>
+                                                                                                                        <rect key="frame" x="0.0" y="0.0" width="282" height="45"/>
                                                                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                                                        <constraints>
+                                                                                                                            <constraint firstAttribute="height" priority="250" constant="45" id="ydc-I5-WCO"/>
+                                                                                                                        </constraints>
                                                                                                                         <color key="textColor" systemColor="labelColor"/>
                                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -2350,7 +2357,7 @@ ed do eiusmod tempor </string>
                                                                                                                         </userDefinedRuntimeAttributes>
                                                                                                                     </textView>
                                                                                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sGm-gb-v9p">
-                                                                                                                        <rect key="frame" x="282" y="0.0" width="40" height="75"/>
+                                                                                                                        <rect key="frame" x="282" y="0.0" width="40" height="45"/>
                                                                                                                         <constraints>
                                                                                                                             <constraint firstAttribute="width" constant="40" id="Gt6-yR-eB9"/>
                                                                                                                         </constraints>
@@ -2405,14 +2412,14 @@ ed do eiusmod tempor </string>
                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="trailing" secondItem="hLq-ru-hag" secondAttribute="trailing" id="BYL-xt-Fmh"/>
+                                                                                    <constraint firstAttribute="height" priority="250" constant="75" id="Bk0-Th-Etx"/>
                                                                                     <constraint firstItem="hLq-ru-hag" firstAttribute="leading" secondItem="dgl-CL-BWm" secondAttribute="leading" id="S7W-Lk-bcW"/>
-                                                                                    <constraint firstAttribute="height" constant="105" id="Wua-Mk-Gtr"/>
                                                                                     <constraint firstItem="hLq-ru-hag" firstAttribute="top" secondItem="dgl-CL-BWm" secondAttribute="top" constant="10" id="hdq-l5-Vbc"/>
                                                                                     <constraint firstAttribute="bottom" secondItem="hLq-ru-hag" secondAttribute="bottom" constant="10" id="ycF-BJ-iRm"/>
                                                                                 </constraints>
                                                                             </view>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="0S9-CV-BQI">
-                                                                                <rect key="frame" x="0.0" y="135.00000000000006" width="377" height="15"/>
+                                                                                <rect key="frame" x="0.0" y="105.00000000000006" width="377" height="15"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Older Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CX8-g1-MK1">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="15"/>
@@ -2427,11 +2434,11 @@ ed do eiusmod tempor </string>
                                                                             </stackView>
                                                                         </subviews>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="height" constant="150" id="1UC-Ct-mx4"/>
+                                                                            <constraint firstAttribute="height" priority="250" constant="100" id="1UC-Ct-mx4"/>
                                                                         </constraints>
                                                                     </stackView>
                                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VEr-dv-1uT" customClass="DynamicHeightTableView" customModule="Tourism_app" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="311.33333333333337" width="377" height="270"/>
+                                                                        <rect key="frame" x="0.0" y="281.33333333333337" width="377" height="270"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="270" id="2lr-q9-aFe"/>
@@ -2493,6 +2500,7 @@ ed do eiusmod tempor </string>
                         <outlet property="blogTitleLabel" destination="xzU-1r-eYF" id="bEA-5Z-K0F"/>
                         <outlet property="bottomView" destination="Whw-xa-qZr" id="EJb-Zh-gsZ"/>
                         <outlet property="commentTextView" destination="YDo-x4-TP6" id="RGS-p1-5c5"/>
+                        <outlet property="commentTextViewHeight" destination="ydc-I5-WCO" id="Asd-ME-poL"/>
                         <outlet property="commentView" destination="dgl-CL-BWm" id="5wU-Dm-dQ7"/>
                         <outlet property="contentView" destination="WCk-4H-h8n" id="UDF-Jz-fBD"/>
                         <outlet property="favoriteBtn" destination="oiw-Iw-eVY" id="Ej6-9i-yyt"/>
@@ -2640,10 +2648,10 @@ ed do eiusmod tempor </string>
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="834"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="036-4z-FTI">
-                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="650.66666666666663"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="605.66666666666663"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="3" translatesAutoresizingMaskIntoConstraints="NO" id="irW-pI-ceU">
-                                                                <rect key="frame" x="8" y="10" width="377" height="640.66666666666663"/>
+                                                                <rect key="frame" x="8" y="10" width="377" height="595.66666666666663"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDb-R8-dnG">
                                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="30"/>
@@ -3127,19 +3135,19 @@ ed do eiusmod tempor </string>
                                                                         </constraints>
                                                                     </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hzt-7k-chT">
-                                                                        <rect key="frame" x="0.0" y="422.66666666666663" width="377" height="95"/>
+                                                                        <rect key="frame" x="0.0" y="422.66666666666663" width="377" height="50"/>
                                                                         <subviews>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9S2-6Q-0vD">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="85"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="377" height="40"/>
                                                                                 <subviews>
                                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="cIV-bW-fmF">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="85"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="40"/>
                                                                                         <subviews>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RES-1M-ZOB">
-                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="85"/>
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                 <subviews>
                                                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="profile" translatesAutoresizingMaskIntoConstraints="NO" id="ToV-q7-e5L">
-                                                                                                        <rect key="frame" x="0.0" y="22.666666666666742" width="40" height="40"/>
+                                                                                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                                                                         <constraints>
                                                                                                             <constraint firstAttribute="height" constant="40" id="0Cf-lp-gye"/>
                                                                                                             <constraint firstAttribute="width" constant="40" id="62E-3z-TyD"/>
@@ -3159,14 +3167,17 @@ ed do eiusmod tempor </string>
                                                                                                 </constraints>
                                                                                             </view>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbY-iK-fki">
-                                                                                                <rect key="frame" x="45" y="0.0" width="332" height="85"/>
+                                                                                                <rect key="frame" x="45" y="0.0" width="332" height="40"/>
                                                                                                 <subviews>
                                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RnB-tN-pNA">
-                                                                                                        <rect key="frame" x="0.0" y="5" width="322" height="75"/>
+                                                                                                        <rect key="frame" x="0.0" y="5" width="322" height="30"/>
                                                                                                         <subviews>
                                                                                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="H8F-OL-EZi">
-                                                                                                                <rect key="frame" x="0.0" y="0.0" width="282" height="75"/>
+                                                                                                                <rect key="frame" x="0.0" y="0.0" width="282" height="30"/>
                                                                                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                                                                <constraints>
+                                                                                                                    <constraint firstAttribute="height" constant="30" id="1QE-jf-7cM"/>
+                                                                                                                </constraints>
                                                                                                                 <color key="textColor" systemColor="labelColor"/>
                                                                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
@@ -3177,7 +3188,7 @@ ed do eiusmod tempor </string>
                                                                                                                 </userDefinedRuntimeAttributes>
                                                                                                             </textView>
                                                                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mtn-gH-38x">
-                                                                                                                <rect key="frame" x="282" y="0.0" width="40" height="75"/>
+                                                                                                                <rect key="frame" x="282" y="0.0" width="40" height="30"/>
                                                                                                                 <constraints>
                                                                                                                     <constraint firstAttribute="width" constant="40" id="aPL-Qt-nBe"/>
                                                                                                                 </constraints>
@@ -3236,11 +3247,11 @@ ed do eiusmod tempor </string>
                                                                             <constraint firstItem="9S2-6Q-0vD" firstAttribute="leading" secondItem="Hzt-7k-chT" secondAttribute="leading" id="NuQ-9J-y1y"/>
                                                                             <constraint firstAttribute="trailing" secondItem="9S2-6Q-0vD" secondAttribute="trailing" id="bP1-Xi-CgO"/>
                                                                             <constraint firstItem="9S2-6Q-0vD" firstAttribute="top" secondItem="Hzt-7k-chT" secondAttribute="top" id="l2B-bL-97I"/>
-                                                                            <constraint firstAttribute="height" constant="95" id="pzp-Yi-1BU"/>
+                                                                            <constraint firstAttribute="height" constant="50" id="pzp-Yi-1BU"/>
                                                                         </constraints>
                                                                     </view>
                                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Kns-Yr-JCv" customClass="DynamicHeightTableView" customModule="Tourism_app" customModuleProvider="target">
-                                                                        <rect key="frame" x="0.0" y="520.66666666666663" width="377" height="120"/>
+                                                                        <rect key="frame" x="0.0" y="475.66666666666663" width="377" height="120"/>
                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="120" id="eqj-0B-jfN"/>
@@ -3303,6 +3314,7 @@ ed do eiusmod tempor </string>
                         <outlet property="bathLabel" destination="Xnv-IU-eXv" id="hyk-eG-J3i"/>
                         <outlet property="bedLabel" destination="Sz1-27-Atc" id="EIO-cB-dnP"/>
                         <outlet property="commentTextView" destination="H8F-OL-EZi" id="1oR-ab-88f"/>
+                        <outlet property="commentTextViewHeight" destination="1QE-jf-7cM" id="FCi-eo-nkd"/>
                         <outlet property="detailView" destination="Trl-E4-bYN" id="ryC-9f-bjN"/>
                         <outlet property="dropDownImageView" destination="nHU-Cl-ukH" id="NFY-bN-ae6"/>
                         <outlet property="familyLabel" destination="7wU-lU-3yJ" id="OhV-Hc-o2H"/>

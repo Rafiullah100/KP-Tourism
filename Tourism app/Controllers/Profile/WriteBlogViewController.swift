@@ -22,6 +22,7 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var districtTextField: UITextField!
     
+    @IBOutlet weak var imageNameLabel: UILabel!
     @IBOutlet weak var topLabel: UILabel!
     var dispatchGroup: DispatchGroup?
     var districtList: [DistrictsListRow]?
@@ -52,7 +53,7 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
         districtTextField.inputView = districtPickerView
         poiTextField.inputView = poiPickerView
         attractionTextField.inputView = attractionPickerView
-        
+        blogImageView.isHidden = true
         titleTextField.text = userBlog?.title
         textView.text = userBlog?.description
         blogImageView.sd_setImage(with: URL(string: Route.baseUrl + (userBlog?.previewImage ?? "")))
@@ -216,6 +217,10 @@ extension WriteBlogViewController: UIImagePickerControllerDelegate {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             blogImageView.contentMode = .scaleToFill
             blogImageView.image = pickedImage
+            if let imageURL = info[.imageURL] as? URL {
+                let imageName = imageURL.lastPathComponent
+                imageNameLabel.text = imageName
+            }
         }
         dismiss(animated: true, completion: nil)
     }

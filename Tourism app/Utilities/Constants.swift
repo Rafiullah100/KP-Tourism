@@ -27,8 +27,9 @@ struct Constants {
     
     static var kpkCoordinates = Coordinates(lat: 34.9526, long: 72.3311)
     
+    static var helpline = "TEL://1422"
     static let userType = ["User", "Tourist", "Seller"]
-    
+    static let bookingStay = "https://booking.kptourism.com/"
         static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGdrazJyMDkwZDd2M21xcXU5b25waW9jIn0.iOMmUGeAHWNOKKrDU5S2pg"
     
 //    static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGU3NDA0dTgwMXdvM3BxZW1pdm9kMDljIn0.nHpmpsfGiySmMFMpQ4PxfQ"

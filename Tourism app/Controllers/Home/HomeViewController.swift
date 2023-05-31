@@ -26,6 +26,7 @@ class HomeViewController: BaseViewController {
     
     @IBOutlet weak var siteLabel: UILabel!
     
+    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -153,6 +154,16 @@ class HomeViewController: BaseViewController {
         }
     }
 
+    @IBAction func bookBtnAction(_ sender: Any) {
+        if let url = URL(string: Constants.bookingStay) {
+            UIApplication.shared.open(url)
+        }
+    }
+    
+    @IBAction func helplineBtnAction(_ sender: Any) {
+        Switcher.gotoWeatherVC(delegate: self, type: .weather)
+    }
+    
     override func show(_ vc: UIViewController, sender: Any?) {
         let vc: ExploreMapViewController = UIStoryboard(name: "MapView", bundle: nil).instantiateViewController(withIdentifier: "ExploreMapViewController") as! ExploreMapViewController
         vc.exploreDistrict = exploreDistrict
@@ -319,6 +330,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
             galleryContainer.isHidden = true
             tableViewContainer.isHidden = false
         }
+        topLabel.text = Constants.section[item.tag].title
         textField.text = ""
         addChild(tag: item.tag)
 //        tableView.reloadData()

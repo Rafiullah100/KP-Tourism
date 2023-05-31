@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class WeatherAlertViewController: UIViewController {
+class WeatherAlertViewController: BaseViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var districtLabel: UILabel!
@@ -41,9 +41,25 @@ class WeatherAlertViewController: UIViewController {
     var weatherDetail: WeatherModel?
     var districtList: [DistrictsListRow]?
 
+    var alertType: WeatherAlertType?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = true
+        navigationController?.navigationBar.isHidden = false
+        if alertType == .weather {
+            type = .title
+            viewControllerTitle = "Weather"
+            update()
+        }
+        else{
+            type = .title1
+            viewControllerTitle = "Alerts"
+            changeCell(type: .AlertTableViewCell)
+        }
+    }
+    
+    func update()  {
         pickerView.delegate = self
         pickerView.dataSource = self
         textField.isHidden = true

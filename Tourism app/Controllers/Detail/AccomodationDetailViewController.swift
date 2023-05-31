@@ -43,6 +43,7 @@ class AccomodationDetailViewController: BaseViewController {
         }
     }
     
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var commentTextView: UITextView!{
         didSet{
             commentTextView.delegate = self
@@ -67,7 +68,7 @@ class AccomodationDetailViewController: BaseViewController {
         tableView.estimatedRowHeight = 44.0
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
-        
+        commentTextView.isScrollEnabled = false
         type = .backWithTitle
         viewControllerTitle = "\(accomodationDetail?.title ?? "") | Accomodation"
         detailView.isHidden = true
@@ -223,6 +224,15 @@ extension AccomodationDetailViewController: UITextViewDelegate{
             commentTextView.textColor = UIColor.lightGray
         }
     }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            commentTextViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
+        }
+    }
 }
 
 extension AccomodationDetailViewController: UITableViewDelegate, UITableViewDataSource{
@@ -236,7 +246,8 @@ extension AccomodationDetailViewController: UITableViewDelegate, UITableViewData
         cell.comment = allComments[indexPath.row]
         cell.commentReplyBlock = {
             cell.bottomView.isHidden = !cell.bottomView.isHidden
-            Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+            tableView.beginUpdates()
+            tableView.endUpdates()
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

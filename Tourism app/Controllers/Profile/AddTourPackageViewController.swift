@@ -44,6 +44,7 @@ class AddTourPackageViewController: UIViewController {
     @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var childrenAgeTextField: UITextField!
     
+    @IBOutlet weak var imageNameLabel: UILabel!
     var imagePicker: UIImagePickerController!
     var districtList: [DistrictsListRow]?
 
@@ -85,6 +86,8 @@ class AddTourPackageViewController: UIViewController {
         endDateTextField.delegate = self
         startTimeTextField.delegate = self
         endTimeTextField.delegate = self
+        
+        imageView.isHidden = true
         updateUI()
         
         fetch(route: .districtListApi, method: .post, parameters: ["limit": 50], model: DistrictListModel.self)
@@ -320,6 +323,10 @@ extension AddTourPackageViewController: UIImagePickerControllerDelegate, UINavig
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             imageView.contentMode = .scaleToFill
             imageView.image = pickedImage
+            if let imageURL = info[.imageURL] as? URL {
+                let imageName = imageURL.lastPathComponent
+                imageNameLabel.text = imageName
+            }
         }
         dismiss(animated: true, completion: nil)
     }

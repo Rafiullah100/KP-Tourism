@@ -41,9 +41,10 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         }
         
         if UserDefaults.standard.isLoginned == true{
+            print(UserDefaults.standard.userType ?? "")
             userParentView.isHidden = false
             topLineView.isHidden = true
-            nameLabel.text = UserDefaults.standard.name?.capitalized
+            nameLabel.attributedText = Helper.shared.attributedString(text1: UserDefaults.standard.name?.capitalized ?? "", text2: UserDefaults.standard.userType ?? "")
             profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
         }
         else{
