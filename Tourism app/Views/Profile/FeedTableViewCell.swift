@@ -32,7 +32,7 @@ class FeedTableViewCell: UITableViewCell {
 
     var feed: FeedModel? {
         didSet {
-            likeButton.setImage(feed?.isLiked == 1 ? UIImage(named: "Arrow---Top-red") : UIImage(named: "Arrow---Top"), for: .normal)
+            likeButton.setImage(feed?.isLiked == 1 ? UIImage(named: "liked-red") : UIImage(named: "like-black"), for: .normal)
             saveButton.setImage(feed?.isWished == 1 ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
             
 //            imgView.image = UIImage(named: "placeholder")

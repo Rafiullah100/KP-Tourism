@@ -60,7 +60,8 @@ class AccomodationDetailViewController: BaseViewController {
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
-    
+    var likeCount = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -86,6 +87,9 @@ class AccomodationDetailViewController: BaseViewController {
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         viewCounterLabel.text = "\(accomodationDetail?.viewsCounter ?? 0) Views"
         viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"], model: SuccessModel.self)
+        favoriteBtn.setImage(accomodationDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+        likeCount = accomodationDetail?.likeCount ?? 0
+        likeCountLabel.text = "\(accomodationDetail?.likeCount ?? 0) Liked"
         reloadComment()
     }
     
@@ -126,6 +130,23 @@ class AccomodationDetailViewController: BaseViewController {
         }
     }
     @IBAction func likeBtnAction(_ sender: Any) {
+        self.like(route: .likeApi, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"], model: SuccessModel.self)
+    }
+    
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let like):
+                let successDetail = like as? SuccessModel
+                DispatchQueue.main.async {
+                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                    self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    self.likeCountLabel.text = "\(self.likeCount) Liked"
+                }
+            case .failure(let error):
+                print("error \(error)")
+            }
+        }
     }
     
     @IBAction func directionBtnAction(_ sender: Any) {

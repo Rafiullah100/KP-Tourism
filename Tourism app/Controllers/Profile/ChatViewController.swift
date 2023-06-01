@@ -40,11 +40,14 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var recieverProfileImage: UIImageView!
-
+    
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?
-
+    
+    var manager: SocketManager?
+    var socket: SocketIOClient?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
@@ -55,6 +58,18 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
+        connectSocket()
+    }
+    
+    private func connectSocket(){
+        print(Constants.socketIOUrl)
+        guard let url = URL(string: Constants.socketIOUrl) else { return }
+        manager = SocketManager(socketURL: url, config: [.log(true), .compress])
+        socket = manager?.defaultSocket
+        socket?.on(clientEvent: .connect) {data, ack in
+            print("connection established")
+        }
+        socket?.connect()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -119,28 +134,23 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     
     func configureAvatarView(_ avatarView: AvatarView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
         if message.sender.senderId ==  "self"{
-            let avatar = Avatar(image: UIImage(named: "user"))
-            avatarView.set(avatar: avatar)
+            avatarView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         }
         else{
-//            if self.conversation?.count ?? 0 > 0{
-//                if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].sender?.profileImage ?? "")) {
-//                    avatarView.sd_setImage(with: imageUrl, completed: nil)
-//                }
-//            }
+            if self.conversation?.count ?? 0 > 0{
+                if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].imageURL ?? "")) {
+                    avatarView.sd_setImage(with: imageUrl, completed: nil)
+                }
+            }
         }
     }
-    
-//    func configureMediaMessageImageView(_ imageView: UIImageView, for message: MessageType, at indexPath: IndexPath, in messagesCollectionView: MessagesCollectionView) {
-//        <#code#>
-//    }
 
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(
           string: name,
           attributes: [
-            .font: UIFont(name: Constants.appFontName, size: 12),
+            .font: UIFont(name: Constants.appFontName, size: 12) ?? UIFont(),
             .foregroundColor: UIColor.black
           ]
         )
@@ -163,6 +173,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 let success = message as? SuccessModel
                 if success?.success == true {
                     guard let currentUser = self.currentUser else { return }
+                    print(self.chatUser1?.user?.uuid ?? "")
+//                    self.socket?.emit("user-chat-message", with: [self.chatUser1?.user?.uuid ?? "", self.messageInputBar.inputTextView.text ?? ""])
+
                     self.messages.append(Message(sender: currentUser, messageId: "\(Date())", sentDate: Date().addingTimeInterval(000), kind: .text(text)))
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.resignFirstResponder()
@@ -174,62 +187,3 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
     }
 }
-
-//extension ChatViewController: UITableViewDataSource {
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return self.conversation?.count ?? 0
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return 1
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        if conversation?[indexPath.row].sender.id == UserDefaults.standard.userID{
-//            guard let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIds.receiverCellId, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
-//            cell.textView.text = conversation?[indexPath.section].content
-//            cell.bottomLabel.text = conversation?[indexPath.row].createdAt
-//            return cell
-//        }
-//        else{
-//            guard let cell: ChatTableViewCell = tableView.dequeueReusableCell(withIdentifier: CellIds.senderCellId, for: indexPath) as? ChatTableViewCell else { return UITableViewCell() }
-//            cell.textView.text = conversation?[indexPath.section].content
-//            cell.bottomLabel.text = conversation?[indexPath.row].createdAt
-//            return cell
-//        }
-//    }
-//}
-
-//extension ChatViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//}
-
-//extension ChatViewController: KeyboardInputAccessoryViewProtocol{
-////    func scrollView() -> UIScrollView {
-////        return UIScrollView()
-////    }
-//
-//    func send(data type: String) {
-//        if chatUser != nil{
-//            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser?.id ?? "", "uuid": chatUser?.uuid ?? ""], model: SuccessModel.self)
-//        }
-//        else{
-//            SocketHelper.shared.sendMessage(message: "message", withNickname: "name")
-////            sendMessage(route: .messageAPI, method: .post, parameters: ["message": type, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], model: SuccessModel.self)
-//        }
-////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
-//    }
-//
-//
-////    func send(textView: UITextView) {
-////        commentTextView.resignFirstResponder()
-////        textView.resignFirstResponder()
-////        commentView.isHidden = false
-//////        doComment(route: .doComment, method: .post, parameters: ["blog_id": blogDetail?.id ?? "", "comment": type], model: SuccessModel.self)
-////    }
-//
-//
-//
-//}

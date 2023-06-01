@@ -209,7 +209,7 @@ class FeedsViewController: UIViewController {
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
-                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "Arrow---Top-red") : UIImage(named: "Arrow---Top"), for: .normal)
+                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "like-black"), for: .normal)
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }

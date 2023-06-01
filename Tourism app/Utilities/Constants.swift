@@ -36,6 +36,8 @@ struct Constants {
     
     static var mapboxPublicKey = "pk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGR6cWN2YmUxNDBhM29waDRyM3B6ZHE3In0.Dz1OdPdSp56h072TorpygA"
 
+    static var socketIOUrl = "https://staging-admin.kptourism.com?uuid=\(UserDefaults.standard.uuid ?? "")"
+
     
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)

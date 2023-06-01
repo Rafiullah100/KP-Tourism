@@ -11,14 +11,14 @@ import SDWebImage
 import SVProgressHUD
 class ProfileViewController: UIViewController {
 
-   private enum ApiType {
+    private enum ApiType {
         case profile
         case story
         case blog
         case product
         case post
-       case delete
-       case tourPackage
+        case delete
+        case tourPackage
     }
     
     @IBOutlet weak var bottomView: UIView!
@@ -118,12 +118,12 @@ class ProfileViewController: UIViewController {
         if profileType == .otherUser{
             settingButton.setImage(UIImage(named: "arrow-back"), for: .normal)
             favoriteButton.isHidden = true
-            editPhotoButton.isHidden = true
+            editPhotoButton.isHidden = false
         }
         else{
             settingButton.setImage(UIImage(named: "setting-btn-icon"), for: .normal)
             favoriteButton.isHidden = false
-            editPhotoButton.isHidden = false
+            editPhotoButton.isHidden = true
         }
     }
     
@@ -164,6 +164,22 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    @IBAction func followBtnAction(_ sender: Any) {
+        followUser(route: .doFollow, method: .post, parameters: ["uuid": uuid ?? ""], model: SuccessModel.self)
+    }
+    
+    func followUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let success):
+                let res = success as? SuccessModel
+                SVProgressHUD.showSuccess(withStatus: res?.message)
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            }
+        }
     }
     
     @IBAction func followingBtnAction(_ sender: Any) {

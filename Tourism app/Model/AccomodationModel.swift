@@ -22,6 +22,7 @@ struct Accomodation: Codable {
     let type: String
     let viewsCounter: Int
     let createdAt: String
+    let userLike: Int?
     let commentCount, likeCount, priceFrom: Int
 
     enum CodingKeys: String, CodingKey {
@@ -44,5 +45,7 @@ struct Accomodation: Codable {
         case commentCount = "comment_count"
         case likeCount = "like_count"
         case priceFrom = "price_from"
+        case userLike
+
     }
 }
