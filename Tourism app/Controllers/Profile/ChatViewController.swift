@@ -45,7 +45,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?
     
-    var manager: SocketManager?
+    var manager = SocketManager(socketURL: URL(string: Constants.socketIOUrl)!, config: [.log(true), .compress])
     var socket: SocketIOClient?
     
     override func viewDidLoad() {
@@ -58,18 +58,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
-        connectSocket()
-    }
-    
-    private func connectSocket(){
-        print(Constants.socketIOUrl)
-        guard let url = URL(string: Constants.socketIOUrl) else { return }
-        manager = SocketManager(socketURL: url, config: [.log(true), .compress])
-        socket = manager?.defaultSocket
-        socket?.on(clientEvent: .connect) {data, ack in
-            print("connection established")
+//        SocketHelper.shared.establishConnection()
+        SocketHelper.shared.getMessage { messageInfo in
+            print(messageInfo)
         }
-        socket?.connect()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -174,6 +166,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 if success?.success == true {
                     guard let currentUser = self.currentUser else { return }
                     print(self.chatUser1?.user?.uuid ?? "")
+                    SocketHelper.shared.sendMessage(message: self.messageInputBar.inputTextView.text ?? "", to: self.chatUser1?.user?.uuid ?? "")
 //                    self.socket?.emit("user-chat-message", with: [self.chatUser1?.user?.uuid ?? "", self.messageInputBar.inputTextView.text ?? ""])
 
                     self.messages.append(Message(sender: currentUser, messageId: "\(Date())", sentDate: Date().addingTimeInterval(000), kind: .text(text)))

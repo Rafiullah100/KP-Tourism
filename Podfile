@@ -31,7 +31,7 @@ pod 'Mapbox-iOS-SDK', '~> 4.9'
 pod 'Alamofire', '~> 5.0.0-rc.2'
 pod 'ReadMoreTextView'
 pod "ExpandableLabel"
-pod 'Socket.IO-Client-Swift', '~> 15.2.0'
+pod 'Socket.IO-Client-Swift', '~> 16.0.1'
 pod 'MessageKit', '~> 3.3.0'
 #pod 'UIAlertDateTimePicker', '~> 1.0'
 end

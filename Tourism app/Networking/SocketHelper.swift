@@ -10,7 +10,8 @@ import UIKit
 import Foundation
 import SocketIO
 
-let kHost = "https://staging-admin.kptourism.com/api/mobile/users/do_message"
+let kHost = "https://staging-admin.kptourism.com?uuid=\(UserDefaults.standard.uuid ?? "")"
+
 let kConnectUser = "connectUser"
 let kUserList = "userList"
 let kExitUser = "exitUser"
@@ -20,9 +21,9 @@ final class SocketHelper: NSObject {
     
     static let shared = SocketHelper()
     
-    private var manager: SocketManager?
     private var socket: SocketIOClient?
-    
+    let manager = SocketManager(socketURL: URL(string: kHost)!, config: [.log(false), .compress])
+
     override init() {
         super.init()
         configureSocketClient()
@@ -33,21 +34,24 @@ final class SocketHelper: NSObject {
         guard let url = URL(string: kHost) else {
             return
         }
+                
         
-        manager = SocketManager(socketURL: url, config: [.log(true), .compress])
-        
-        
-        guard let manager = manager else {
-            return
-        }
-        
-        socket = manager.socket(forNamespace: "/**********")
+//        guard let manager = manager else {
+//            return
+//        }
+//
+//        socket = manager.socket(forNamespace: "/**********")
     }
     
     func establishConnection() {
         
-        guard let socket = manager?.defaultSocket else{
-            return
+//        guard let socket = manager.defaultSocket else{
+//            return
+//        }
+        let socket = manager.defaultSocket
+
+        socket.on(clientEvent: .connect) {data, ack in
+            print("socket connected")
         }
         
         socket.connect()
@@ -55,9 +59,10 @@ final class SocketHelper: NSObject {
     
     func closeConnection() {
         
-        guard let socket = manager?.defaultSocket else{
-            return
-        }
+//        guard let socket = manager.defaultSocket else{
+//            return
+//        }
+        let socket = manager.defaultSocket
         
         socket.disconnect()
     }
@@ -109,46 +114,16 @@ final class SocketHelper: NSObject {
 //
 //    }
     
-//    func getMessage(completion: @escaping (_ messageInfo: Message?) -> Void) {
-//
-//        guard let socket = manager?.defaultSocket else {
-//            return
-//        }
-//
-//        socket.on("newChatMessage") { (dataArray, socketAck) -> Void in
-//
-//            var messageInfo = [String: Any]()
-//
-//            guard let nickName = dataArray[0] as? String,
-//                let message = dataArray[1] as? String,
-//                let date = dataArray[2] as? String else{
-//                    return
-//            }
-//
-//            messageInfo["nickname"] = nickName
-//            messageInfo["message"] = message
-//            messageInfo["date"] = date
-//
-//            guard let data = UIApplication.jsonData(from: messageInfo) else {
-//                return
-//            }
-//
-//            do {
-//                let messageModel = try JSONDecoder().decode(Message.self, from: data)
-//                completion(messageModel)
-//
-//            } catch let error {
-//                print("Something happen wrong here...\(error)")
-//                completion(nil)
-//            }
-//        }
-//    }
-    
-    func sendMessage(message: String, withNickname nickname: String) {
-        
-        guard let socket = manager?.defaultSocket else {
-            return
+    func getMessage(completion: @escaping (_ messageInfo: Message?) -> Void) {
+
+        let socket = manager.defaultSocket
+        socket.on("user-chat-message") { (dataArray, socketAck) -> Void in
+            print("dataArray", dataArray)
         }
-        socket.emit("chatMessage", nickname, message)
+    }
+    
+    func sendMessage(message: String, to: String) {
+        let socket = manager.defaultSocket
+        socket.emit("user-chat-message", ["to": to, "message": message])
     }
 }
