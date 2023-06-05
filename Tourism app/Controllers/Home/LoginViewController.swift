@@ -37,7 +37,7 @@ class LoginViewController: BaseViewController {
         emailTextField.text = "murtazakhan68@gmail.com"
         passwordTextField.text = "12345678"
         
-        //seller
+//        //seller
         emailTextField.text = "rafiseller@gmail.com"
         passwordTextField.text = "123"
         loginButton.isEnabled = false

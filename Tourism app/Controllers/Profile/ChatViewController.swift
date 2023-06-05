@@ -51,7 +51,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.isHidden = false
-
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
@@ -59,8 +58,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
 //        SocketHelper.shared.establishConnection()
-        SocketHelper.shared.getMessage { messageInfo in
-            print(messageInfo)
+        DispatchQueue.main.async {
+            SocketHelper.shared.getMessage { message in
+                self.messages.append(Message(sender: self.otherUser!, messageId: "000", sentDate: Date().addingTimeInterval(000), kind: .text(message ?? "")))
+                self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToBottom()
+            }
         }
     }
     
@@ -82,6 +85,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
         }
         else{
+            print(chatUser1)
             nameLabel.text = chatUser1?.user?.name?.capitalized
             recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser1?.user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser1?.user?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
@@ -129,10 +133,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             avatarView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         }
         else{
-            if self.conversation?.count ?? 0 > 0{
-                if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[1].imageURL ?? "")) {
-                    avatarView.sd_setImage(with: imageUrl, completed: nil)
-                }
+            if let imageUrl = URL(string: Route.baseUrl + (self.conversation?[indexPath.row].sender?.profileImage ?? "")) {
+                print(imageUrl)
+                avatarView.sd_setImage(with: imageUrl, placeholderImage: UIImage(named: "user"), completed: nil)
             }
         }
     }

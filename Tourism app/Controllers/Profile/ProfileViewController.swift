@@ -243,7 +243,7 @@ class ProfileViewController: UIViewController {
                         self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
                     }
                     self.bioLabel.text = self.userProfile?.userDetails.about
-                    self.nameLabel.attributedText = Helper.shared.attributedString(text1: self.userProfile?.userDetails.name?.capitalized ?? "", text2: (self.userProfile?.userDetails.userType) ?? "")
+                    self.nameLabel.attributedText = Helper.shared.attributedString(text1: self.userProfile?.userDetails.name?.capitalized ?? "", text2: "(\(self.userProfile?.userDetails.userType ?? ""))")
                     self.postCountLabel.text = "\(self.userProfile?.userDetails.postsCount ?? 0)"
                     self.followerCountLabel.text = "\(self.userProfile?.userDetails.userFollowers ?? 0)"
                     self.followingCountLabel.text = "\(self.userProfile?.userDetails.userFollowings ?? 0)"

@@ -126,6 +126,7 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if allComments.count > 0 {
+            tableView.setEmptyView("")
             return allComments.count
         }
         else{

@@ -31,6 +31,8 @@ class ChatListViewController: UIViewController {
         topBarView.addBottomShadow()
         tableView.keyboardDismissMode = .onDrag
         searchField.becomeFirstResponder()
+        
+//        profileButton.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
         searchField.addTarget(self, action: #selector(SearchUserViewController.textFieldDidChange(_:)), for: .editingChanged)
     }
     
