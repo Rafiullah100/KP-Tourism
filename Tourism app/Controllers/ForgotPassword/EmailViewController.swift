@@ -29,14 +29,14 @@ class EmailViewController: BaseViewController {
             case .success(let success):
                 let res = success as? SuccessModel
                 if res?.success == true{
-                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                     Switcher.gotoForgotPassword(delegate: self)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

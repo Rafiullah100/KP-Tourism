@@ -150,7 +150,7 @@ class HomeViewController: BaseViewController {
                 }
                 self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -478,7 +478,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
                     productCell?.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

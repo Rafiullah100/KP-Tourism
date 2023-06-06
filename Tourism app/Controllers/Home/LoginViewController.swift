@@ -121,10 +121,10 @@ class LoginViewController: BaseViewController {
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: self.login?.message)
+                    self.view.makeToast(self.login?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

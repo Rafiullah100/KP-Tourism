@@ -67,7 +67,7 @@ class EventsViewController: BaseViewController {
                 self.eventDetail = events as? EventsModel
                 self.eventDetail?.events.count == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

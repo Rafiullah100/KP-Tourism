@@ -58,7 +58,6 @@ class BlogDetailViewController: BaseViewController {
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         commentTextView.isScrollEnabled = false
-        commentTextView.isScrollEnabled = false
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
@@ -82,7 +81,7 @@ class BlogDetailViewController: BaseViewController {
             case .success(let viewCount):
                 print(viewCount)
             case .failure(let error):
-                print(error)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -110,7 +109,7 @@ class BlogDetailViewController: BaseViewController {
                     self.reloadComment()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -125,7 +124,7 @@ class BlogDetailViewController: BaseViewController {
                 Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -141,7 +140,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
@@ -149,7 +148,7 @@ class BlogDetailViewController: BaseViewController {
                 self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                 self.likeLabel.text = "\(self.likeCount) Liked"
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -163,7 +162,7 @@ class BlogDetailViewController: BaseViewController {
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

@@ -62,7 +62,7 @@ class ChatListViewController: UIViewController {
                 self.totalCount = (users as? LoadedConversationModel)?.count ?? 0
                 self.conversationUsers.count == 0 ? self.tableView.setEmptyView("No Record found!") : self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

@@ -42,9 +42,9 @@ class SecurityViewController: UIViewController {
                     self.newPasswordTF.text = ""
                     self.confirmPasswordTF.text = ""
                 }
-                SVProgressHUD.showSuccess(withStatus: (change as! SuccessModel).message)
+                self.view.makeToast((change as! SuccessModel).message)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

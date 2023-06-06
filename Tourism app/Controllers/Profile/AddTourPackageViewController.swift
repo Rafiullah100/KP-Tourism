@@ -141,7 +141,7 @@ class AddTourPackageViewController: UIViewController {
                 self.findFromDistrictObject()
                 self.findToDistrictObject()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -203,14 +203,14 @@ class AddTourPackageViewController: UIViewController {
             case .success(let success):
                 if success.success == true{
                     self.dismiss(animated: true) {
-                        SVProgressHUD.showSuccess(withStatus: success.message)
+                        self.view.makeToast(success.message)
                     }
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: success.message)
+                    self.view.makeToast(success.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

@@ -96,16 +96,16 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
                 print(success)
                 if success.success == true{
                     if self.postType == .post{
-                        SVProgressHUD.showSuccess(withStatus: "Post created.")
+                        self.view.makeToast("Post created.")
                     }
                     else if self.postType == .edit{
-                        SVProgressHUD.showSuccess(withStatus: "Post edited.")
+                        self.view.makeToast("Post edited.")
                     }
                     NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
                     self.dismiss(animated: true)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

@@ -45,7 +45,8 @@ class FeedsViewController: UIViewController {
 
     var storyTotalCount = 1
     var storyCurrentPage = 1
-    
+    var interestCount = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
@@ -114,7 +115,7 @@ class FeedsViewController: UIViewController {
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -129,7 +130,7 @@ class FeedsViewController: UIViewController {
                 print(self.storyTotalCount)
                 self.storyTotalCount == 0 ? self.collectionView.setEmptyView("No story found!") : self.collectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -164,13 +165,13 @@ class FeedsViewController: UIViewController {
                 if successDetail?.success == true{
                     self.newsFeed.remove(at: row)
                     self.tableView.reloadData()
-                    SVProgressHUD.showSuccess(withStatus: successDetail?.message)
+                    self.view.makeToast(successDetail?.message)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: successDetail?.message)
+                    self.view.makeToast(successDetail?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -181,13 +182,13 @@ class FeedsViewController: UIViewController {
             case .success(let success):
                 let successDetail = success as? SuccessModel
                 if successDetail?.success == true{
-                    SVProgressHUD.showSuccess(withStatus: "Post shared successfully.")
+                    self.view.makeToast("Post shared successfully.")
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: successDetail?.message)
+                    self.view.makeToast(successDetail?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -199,7 +200,7 @@ class FeedsViewController: UIViewController {
                 let successDetail = wish as? SuccessModel
                 feedCell.saveButton.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -209,9 +210,9 @@ class FeedsViewController: UIViewController {
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
-                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "like-black"), for: .normal)
+                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

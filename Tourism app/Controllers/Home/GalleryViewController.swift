@@ -59,7 +59,7 @@ class GalleryViewController: BaseViewController {
                 self.videoCollectionView.reloadData()
                 self.virtualCollectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

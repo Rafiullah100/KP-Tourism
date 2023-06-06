@@ -57,7 +57,7 @@ class SuggestedUserViewController: UIViewController {
                 else if self.apiType == .follow{
                     let res = model as! SuccessModel
                     if res.success == false {
-                        SVProgressHUD.showError(withStatus: res.message)
+                        self.view.makeToast(res.message)
                     }
                     else{
                         if res.message == "Followed"{
@@ -69,7 +69,7 @@ class SuggestedUserViewController: UIViewController {
                     }
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

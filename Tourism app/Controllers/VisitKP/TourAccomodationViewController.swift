@@ -68,7 +68,7 @@ class TourAccomodationViewController: BaseViewController {
                 self.accomodationDetail = accomodation as? AccomodationModel
                 self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

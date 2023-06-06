@@ -14,6 +14,7 @@ import MapboxMaps
 import SVProgressHUD
 class EventDetailViewController: BaseViewController {
 
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var statusView: UIView!
     @IBOutlet weak var titLabel: UILabel!
@@ -60,6 +61,7 @@ class EventDetailViewController: BaseViewController {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
+        commentTextView.isScrollEnabled = false
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         type = .backWithTitle
@@ -132,7 +134,7 @@ class EventDetailViewController: BaseViewController {
                     self.reloadComment()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -147,7 +149,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
@@ -155,7 +157,7 @@ class EventDetailViewController: BaseViewController {
                 self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.interestGoingLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -169,7 +171,7 @@ class EventDetailViewController: BaseViewController {
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -183,7 +185,7 @@ class EventDetailViewController: BaseViewController {
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -208,6 +210,15 @@ extension EventDetailViewController: UITextViewDelegate{
         if commentTextView.text == "" {
             commentTextView.text = commentText
             commentTextView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            commentTextViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
         }
     }
 }

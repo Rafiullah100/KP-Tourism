@@ -46,14 +46,14 @@ class SettingViewController: UIViewController {
             case .success(let change):
                 let res = change as? SuccessModel
                 if res?.success == true {
-                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                     Helper.shared.logoutUser(self: self)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

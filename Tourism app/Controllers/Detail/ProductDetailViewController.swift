@@ -110,7 +110,7 @@ class ProductDetailViewController: BaseViewController {
             case .success(let viewCount):
                 print(viewCount)
             case .failure(let error):
-                print(error)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -153,7 +153,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let like):
                 let successDetail = like as? SuccessModel
@@ -163,7 +163,7 @@ class ProductDetailViewController: BaseViewController {
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):
-                print("error \(error)")
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -187,7 +187,7 @@ class ProductDetailViewController: BaseViewController {
                     self.reloadComment()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -201,7 +201,7 @@ class ProductDetailViewController: BaseViewController {
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -215,7 +215,7 @@ class ProductDetailViewController: BaseViewController {
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

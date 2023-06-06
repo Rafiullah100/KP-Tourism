@@ -107,14 +107,14 @@ class OTPViewController: BaseViewController {
             case .success(let otp):
                 let res = otp as? OTPModel
                 if res?.success == true{
-                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                     Switcher.goToLoginVC(delegate: self)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

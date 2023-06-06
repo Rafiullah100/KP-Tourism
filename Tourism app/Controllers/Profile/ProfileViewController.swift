@@ -295,7 +295,7 @@ class ProfileViewController: UIViewController {
                 }
                 self.contentCollectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

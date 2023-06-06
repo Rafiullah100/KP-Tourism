@@ -27,9 +27,9 @@ class NotificationViewController: BaseViewController {
             switch result {
             case .success(let success):
                 let model = success as! SuccessModel
-                SVProgressHUD.showSuccess(withStatus: model.message)
+                self.view.makeToast(model.message)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

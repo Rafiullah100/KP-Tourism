@@ -43,7 +43,7 @@ class ItinraryDetailViewController: BaseViewController {
             case .success(let viewCount):
                 print(viewCount)
             case .failure(let error):
-                print(error)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

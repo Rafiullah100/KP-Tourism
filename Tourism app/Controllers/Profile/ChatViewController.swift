@@ -85,7 +85,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
         }
         else{
-            print(chatUser1)
             nameLabel.text = chatUser1?.user?.name?.capitalized
             recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (chatUser1?.user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": chatUser1?.user?.uuid ?? "", "limit": 1000], model: OnetoOneConversationModel.self)
@@ -111,7 +110,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -178,7 +177,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     self.messagesCollectionView.reloadData()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

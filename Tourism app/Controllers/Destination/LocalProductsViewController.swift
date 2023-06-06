@@ -69,7 +69,7 @@ class LocalProductsViewController: BaseViewController {
                 self.collecttionView.reloadData()
                 self.productDetail?.localProducts.count == 0 ? self.collecttionView.setEmptyView("No Products Found!") : self.collecttionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

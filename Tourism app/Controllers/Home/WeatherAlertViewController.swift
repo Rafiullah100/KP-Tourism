@@ -133,7 +133,7 @@ class WeatherAlertViewController: BaseViewController {
                     print("none")
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -152,7 +152,7 @@ class WeatherAlertViewController: BaseViewController {
                 })
                 self.serverCall(type: .WeatherTableViewCell)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

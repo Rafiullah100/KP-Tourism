@@ -70,7 +70,7 @@ class ItenrariesViewController: BaseViewController {
                 self.ItinraryDetail = itinraries as? ItinraryModel
                 self.ItinraryDetail?.itineraries?.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

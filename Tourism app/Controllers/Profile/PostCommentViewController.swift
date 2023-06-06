@@ -76,7 +76,7 @@ class PostCommentViewController: UIViewController {
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -90,7 +90,7 @@ class PostCommentViewController: UIViewController {
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

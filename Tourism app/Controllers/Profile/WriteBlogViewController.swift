@@ -96,7 +96,7 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
                     }
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -150,14 +150,14 @@ class WriteBlogViewController: UIViewController, UINavigationControllerDelegate 
             case .success(let success):
                 if success.success == true{
                     self.dismiss(animated: true) {
-                        SVProgressHUD.showSuccess(withStatus: success.message)
+                        self.view.makeToast(success.message)
                     }
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: success.message)
+                    self.view.makeToast(success.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

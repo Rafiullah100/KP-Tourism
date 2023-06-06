@@ -111,7 +111,7 @@ class AccomodationViewController: BaseViewController {
                     self.tableView.reloadData()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

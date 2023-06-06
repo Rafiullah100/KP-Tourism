@@ -73,7 +73,7 @@ class TourDestinationViewController: BaseViewController {
 
                 }
             case .failure(let error):
-                print("Erorr \(error)")
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

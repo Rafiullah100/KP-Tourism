@@ -45,6 +45,7 @@ class PackageDetailCell: UITableViewCell{
 class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
 
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var descriptionLabel: UITextView!
@@ -112,6 +113,7 @@ class PackageDetailViewController: BaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 60.0
         
+        commentTextView.isScrollEnabled = false
         commenTableView.rowHeight = UITableView.automaticDimension
         commenTableView.rowHeight = 60.0
         
@@ -197,13 +199,13 @@ class PackageDetailViewController: BaseViewController {
             case .success(let viewCount):
                 print(viewCount)
             case .failure(let error):
-                print(error)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
     
     func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
@@ -211,7 +213,7 @@ class PackageDetailViewController: BaseViewController {
                 self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.likeLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -256,7 +258,7 @@ class PackageDetailViewController: BaseViewController {
                     self.reloadComment()
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -270,7 +272,7 @@ class PackageDetailViewController: BaseViewController {
                     self.commenTableView.scrollToRow(at: row, at: .none, animated: false)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -284,7 +286,7 @@ class PackageDetailViewController: BaseViewController {
                 print(self.allComments.count)
                 Helper.shared.tableViewHeight(tableView: self.commenTableView, tbHeight: self.commentTableViewHeight)
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -379,6 +381,15 @@ extension PackageDetailViewController: UITextViewDelegate{
         if commentTextView.text == "" {
             commentTextView.text = commentText
             commentTextView.textColor = UIColor.lightGray
+        }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == commentTextView{
+            let fixedWidth = textView.frame.size.width
+            let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+            commentTextViewHeight.constant = newSize.height
+            view.layoutIfNeeded()
         }
     }
 }

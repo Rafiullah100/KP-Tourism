@@ -85,7 +85,7 @@ class WishlistViewController: UIViewController {
                     self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -204,10 +204,10 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
                     self.tableView.reloadData()
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

@@ -69,7 +69,7 @@ class PointOfInterestViewController: BaseViewController {
                 self.category = poiCategory
                 self.category?.poicategories.count == 0 ? self.collectionView.setEmptyView("No POI Found!") : self.collectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

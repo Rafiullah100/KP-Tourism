@@ -20,7 +20,7 @@ class ForgotPasswordViewController: BaseViewController {
 
     @IBAction func resetPasswordBtn(_ sender: Any) {
         guard let new = newPasswordTF.text, let confirm = confirmPasswordTF.text, let otp = otpTextField.text, !new.isEmpty, !confirm.isEmpty, !otp.isEmpty else {
-            SVProgressHUD.showError(withStatus: "Fill all fields.")
+            self.view.makeToast("Fill all fields.")
             SVProgressHUD.setDefaultMaskType(.none)
             return  }
         fetch(route: .resetPassword, method: .post, parameters: ["password": new, "confirm_password":confirm, "otp": otp], model: SuccessModel.self)
@@ -32,14 +32,14 @@ class ForgotPasswordViewController: BaseViewController {
             case .success(let success):
                 let res = success as? SuccessModel
                 if res?.success == true{
-                    SVProgressHUD.showSuccess(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                     Switcher.goToLoginVC(delegate: self)
                 }
                 else{
-                    SVProgressHUD.showError(withStatus: res?.message)
+                    self.view.makeToast(res?.message)
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

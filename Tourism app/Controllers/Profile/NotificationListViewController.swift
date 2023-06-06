@@ -55,7 +55,7 @@ class NotificationListViewController: UIViewController {
                 self.notifications = notificationModel?.notifications.rows ?? []
                 self.notifications.count == 0 ? self.tableView.setEmptyView("No Notification Found!") : self.tableView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

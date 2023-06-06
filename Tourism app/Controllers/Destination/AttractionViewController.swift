@@ -95,7 +95,7 @@ class AttractionViewController: BaseViewController {
                 self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
                 self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: "\(error.localizedDescription)")
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
@@ -162,13 +162,13 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, cell: DestAttractCollectionViewCell) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
                 cell.favoriteBtn.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
             case .failure(let error):
-                print("error \(error)")
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }

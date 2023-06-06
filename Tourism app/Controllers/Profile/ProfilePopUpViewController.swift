@@ -74,7 +74,7 @@ class ProfilePopUpViewController: UIViewController {
                 else{
                     let res = model as! SuccessModel
                     if res.success == false {
-                        SVProgressHUD.showError(withStatus: res.message)
+                        self.view.makeToast(res.message)
                     }
                     else{
                         if res.message == "Followed"{
@@ -86,7 +86,7 @@ class ProfilePopUpViewController: UIViewController {
                     }
                 }
             case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
+                self.view.makeToast(error.localizedDescription)
             }
         }
     }
