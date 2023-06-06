@@ -43,12 +43,7 @@ class GettingHereMapViewController: BaseViewController, CLLocationManagerDelegat
     }
     
     func loadMap() {
-        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
-        let mapView = MGLMapView(frame: mapViewContainer.bounds, styleURL: url)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
-        mapView.styleURL = MGLStyle.streetsStyleURL
-        mapView.tintColor = .darkGray
+        mapView = Helper.shared.showMap(view: view)
         mapViewContainer.addSubview(mapView)
         
         gettingArray?.forEach({ point in

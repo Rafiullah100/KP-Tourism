@@ -150,24 +150,10 @@ class AccomodationDetailViewController: BaseViewController {
     }
     
     @IBAction func directionBtnAction(_ sender: Any) {
-        guard let originCoordinate = originCoordinate, let latitude: Double = Double(accomodationDetail?.latitude ?? ""), let longitude: Double = Double(accomodationDetail?.longitude ?? "") else { return  }
-        let origin = Waypoint(coordinate: originCoordinate, name: "")
-        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), name: "")
-        
-        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        SVProgressHUD.show(withStatus: "Please wait...")
-        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
-            SVProgressHUD.dismiss()
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let response):
-                guard let self = self else { return }
-                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true, completion: nil)
-            }
-        }
+        guard let originCoordinate = originCoordinate, let lat: Double = Double(accomodationDetail?.latitude ?? ""),let lon: Double = Double(accomodationDetail?.longitude ?? "") else {
+            self.view.makeToast(Constants.noCoordinate)
+            return  }
+        getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
     }
     
     private func reloadComment(){

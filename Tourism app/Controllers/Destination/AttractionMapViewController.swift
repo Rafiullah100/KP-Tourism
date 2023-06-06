@@ -42,12 +42,7 @@ class AttractionMapViewController: UIViewController {
     }
     
     private func loadMap(){
-        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
-        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.setCenter(CLLocationCoordinate2D(latitude: Double(attractionsArray?[0].latitude ?? "") ?? Constants.kpkCoordinates.lat, longitude: Double(attractionsArray?[0].longitude ?? "") ?? Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
-        mapView.styleURL = MGLStyle.streetsStyleURL
-        mapView.tintColor = .darkGray
+        mapView = Helper.shared.showMap(view: view)
         view.addSubview(mapView)
         mapView.delegate = self
     }
@@ -72,24 +67,10 @@ extension AttractionMapViewController: MGLMapViewDelegate{
     }
     
     func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
-        guard let originCoordinate = originCoordinate else { return  }
-        let origin = Waypoint(coordinate: originCoordinate, name: "")
-        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), name: "")
-        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        
-        SVProgressHUD.show(withStatus: "Please wait...")
-        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
-            SVProgressHUD.dismiss()
-            switch result {
-            case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            case .success(let response):
-                guard let self = self else { return }
-                let viewController = NavigationViewController(for: IndexedRouteResponse(routeResponse: response, routeIndex: 0))
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true, completion: nil)
-            }
-        }
+        guard let originCoordinate = originCoordinate else {
+            self.view.makeToast(Constants.noCoordinate)
+            return  }
+        getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
     }
 }
 

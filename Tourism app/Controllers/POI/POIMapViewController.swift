@@ -7,6 +7,8 @@
 
 import UIKit
 import Mapbox
+import CoreLocation
+
 class POIMapViewController: BaseViewController {
         
     @IBOutlet weak var thumbnail: UIImageView!
@@ -20,21 +22,30 @@ class POIMapViewController: BaseViewController {
     var POISubCatories: POISubCatoriesModel?
     var mapView = MGLMapView()
 
+    var destinationCoordinate: CLLocationCoordinate2D?
+    var originCoordinate: CLLocationCoordinate2D?
+    var locationManager = CLLocationManager()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
+        DispatchQueue.global().async {
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
+        }
         loadMap()
     }
     
     func loadMap() {
-        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
-        let mapView = MGLMapView(frame: mapViewContainer.bounds, styleURL: url)
-        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
-        mapView.styleURL = MGLStyle.streetsStyleURL
-        mapView.tintColor = .darkGray
+        mapView = Helper.shared.showMap(view: mapViewContainer)
         mapViewContainer.addSubview(mapView)
-        
+        mapView.delegate = self
+
         POISubCatories?.pois.rows.forEach({ point in
             guard let lat = Double(point.latitude ?? ""), let lon = Double(point.longitude ?? "")  else { return }
             let point = MGLPointAnnotation()
@@ -45,7 +56,39 @@ class POIMapViewController: BaseViewController {
     
     @IBAction func listBtnAction(_ sender: Any) {
         self.navigationController?.popViewController(animated: false)
-        //        guard let district = district else { return }
-        //        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, district: district)
+    }
+}
+
+extension POIMapViewController: MGLMapViewDelegate{
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        POISubCatories?.pois.rows.forEach({ poi in
+            guard let lat = Double(poi.latitude ?? ""), let lon = Double(poi.longitude ?? "")  else { return }
+            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: poi.title, subtitle: poi.locationTitle , image: UIImage(named: "dummy") ?? UIImage())
+            mapView.addAnnotation(point)
+        })
+    }
+    
+    
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
+    }
+    
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        return nil
+    }
+    
+    func mapView(_ mapView: MGLMapView, tapOnCalloutFor annotation: MGLAnnotation) {
+        guard let originCoordinate = originCoordinate else {
+            self.view.makeToast(Constants.noCoordinate)
+            return  }
+        print(annotation.coordinate.latitude, annotation.coordinate.longitude)
+        getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
+    }
+}
+
+extension POIMapViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
     }
 }

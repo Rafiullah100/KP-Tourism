@@ -40,6 +40,8 @@ class POIDetailViewController: BaseViewController {
     var originCoordinate: CLLocationCoordinate2D?
     var locationManager = CLLocationManager()
     
+    var exploreDistrict: ExploreDistrict?
+    var attractionDistrict: AttractionsDistrict?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +55,18 @@ class POIDetailViewController: BaseViewController {
         let poi = NSMutableAttributedString(string: "Point Of Interest", attributes: secondAttributes)
         name.append(poi)
         nameLabel.attributedText = name
+        updateUI()
+    }
+    
+    func updateUI() {
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,25 +83,10 @@ class POIDetailViewController: BaseViewController {
     }
     
     @IBAction func directionBtnAction(_ sender: Any) {
-        print(originCoordinate, poiDetail?.latitude, poiDetail?.longitude)
-        guard let originCoordinate = originCoordinate, let lat: Double = Double(poiDetail?.latitude ?? ""), let lon: Double = Double(poiDetail?.longitude ?? "") else { return  }
-        let origin = Waypoint(coordinate: originCoordinate, name: "")
-        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), name: "")
-        
-        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        SVProgressHUD.show(withStatus: "Please wait...")
-        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
-            SVProgressHUD.dismiss()
-            switch result {
-            case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            case .success(let response):
-                guard let self = self else { return }
-                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true, completion: nil)
-            }
-        }
+        guard let originCoordinate = originCoordinate, let lat: Double = Double(poiDetail?.latitude ?? ""), let lon: Double = Double(poiDetail?.longitude ?? "") else {
+            self.view.makeToast(Constants.noCoordinate)
+            return  }
+        getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
     }
 }
 

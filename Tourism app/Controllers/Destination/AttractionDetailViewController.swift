@@ -55,24 +55,10 @@ class AttractionDetailViewController: BaseViewController {
     }
     
     @IBAction func directionBtnAction(_ sender: Any) {
-        guard let originCoordinate = originCoordinate, let lat: Double = Double(attractionDistrict?.latitude ?? ""), let lon: Double = Double(attractionDistrict?.longitude ?? "") else { return  }
-        let origin = Waypoint(coordinate: originCoordinate, name: "")
-        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), name: "")
-        
-        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
-        SVProgressHUD.show(withStatus: "Please wait...")
-        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
-            SVProgressHUD.dismiss()
-            switch result {
-            case .failure(let error):
-                SVProgressHUD.showError(withStatus: error.localizedDescription)
-            case .success(let response):
-                guard let self = self else { return }
-                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
-                viewController.modalPresentationStyle = .fullScreen
-                self.present(viewController, animated: true, completion: nil)
-            }
-        }
+        guard let originCoordinate = originCoordinate, let lat: Double = Double(attractionDistrict?.latitude ?? ""), let lon: Double = Double(attractionDistrict?.longitude ?? "") else {
+            self.view.makeToast(Constants.noCoordinate)
+            return  }
+        getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
     }
 }
 

@@ -96,6 +96,6 @@ extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }
-        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail)
+        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail, exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict)
     }
 }

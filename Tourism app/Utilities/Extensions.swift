@@ -9,6 +9,11 @@ import Foundation
 import UIKit
 import Toast_Swift
 
+import MapboxDirections
+import MapboxCoreNavigation
+import MapboxNavigation
+import MapboxMaps
+import SVProgressHUD
 extension NSMutableAttributedString {
     public func setAsLink(textToFind:String, linkURL:String) -> Bool {
         let foundRange = self.mutableString.range(of: textToFind)
@@ -611,3 +616,24 @@ extension UITextField{
 }
 
 
+extension UIViewController{
+    func getDirection(originCoordinate: CLLocationCoordinate2D, destinationCoordinate: CLLocationCoordinate2D) {
+        let origin = Waypoint(coordinate: originCoordinate, name: "")
+        let destination = Waypoint(coordinate: destinationCoordinate, name: "")
+
+        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
+        SVProgressHUD.show(withStatus: "Please wait...")
+        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+            SVProgressHUD.dismiss()
+            switch result {
+            case .failure(let error):
+                SVProgressHUD.showError(withStatus: error.localizedDescription)
+            case .success(let response):
+                guard let self = self else { return }
+                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
+                viewController.modalPresentationStyle = .fullScreen
+                self.present(viewController, animated: true, completion: nil)
+            }
+        }
+    }
+}

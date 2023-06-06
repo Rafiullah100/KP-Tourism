@@ -8,13 +8,18 @@
 import Foundation
 import UIKit
 import AVFoundation
-import MapboxMaps
+import CoreLocation
+import MaterialComponents.MaterialTabs_TabBarView
+import Toast_Swift
+import SVProgressHUD
+
 import MapboxDirections
 import MapboxCoreNavigation
 import MapboxNavigation
 import CoreLocation
-import MaterialComponents.MaterialTabs_TabBarView
-import Toast_Swift
+import Mapbox
+
+
 class Helper{
     static let shared = Helper()
     
@@ -210,7 +215,17 @@ class Helper{
         tableView.endUpdates()
     }
     
-    func locationPermission(self: UIViewController) -> CLLocationManager{
+    func showMap(view: UIView) -> MGLMapView {
+        let url = URL(string: "mapbox://styles/mapbox/streets-v12")
+        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
+        mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
+        mapView.styleURL = MGLStyle.streetsStyleURL
+        mapView.tintColor = .darkGray
+        return mapView
+    }
+    
+    func locationPermission() -> CLLocationManager{
         let locationManager = CLLocationManager()
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
@@ -256,5 +271,27 @@ class Helper{
         concatenatedString.append(secondString)
         return concatenatedString
     }
+    
+//    func getDirection(originCoordinate: CLLocationCoordinate2D? = nil, lat: Double? = nil, lon: Double? = nil) {
+//        guard let originCoordinate = originCoordinate, let lat: Double = lat, let lon: Double = lon else { return  }
+//        let origin = Waypoint(coordinate: originCoordinate, name: "")
+//        let destination = Waypoint(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), name: "")
+//
+//        let routeOptions = NavigationRouteOptions(waypoints: [origin, destination])
+//        SVProgressHUD.show(withStatus: "Please wait...")
+//        Directions(credentials: Credentials(accessToken: Constants.mapboxPublicKey)).calculate(routeOptions) { [weak self] (session, result) in
+//            SVProgressHUD.dismiss()
+//            switch result {
+//            case .failure(let error):
+//                SVProgressHUD.showError(withStatus: error.localizedDescription)
+//            case .success(let response):
+//                guard let self = self else { return }
+//                let viewController = NavigationViewController(for: response, routeIndex: 0, routeOptions: routeOptions)
+//                viewController.modalPresentationStyle = .fullScreen
+//                self.present(viewController, animated: true, completion: nil)
+//            }
+//        }
+//    }
+    
 }
 

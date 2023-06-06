@@ -38,6 +38,7 @@ struct Constants {
 
     static var socketIOUrl = "https://staging-admin.kptourism.com?uuid=\(UserDefaults.standard.uuid ?? "")"
 
+    static var noCoordinate = "No direction found!"
     
     static let lightGrayColor = #colorLiteral(red: 0.9529411765, green: 0.9529411765, blue: 0.9529411765, alpha: 1)
     static let darkGrayColor = #colorLiteral(red: 0.8470588235, green: 0.8470588235, blue: 0.8470588235, alpha: 1)

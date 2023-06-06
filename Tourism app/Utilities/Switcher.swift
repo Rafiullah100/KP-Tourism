@@ -420,12 +420,11 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIDetailVC(delegate: UIViewController, poiDetail: POIRow /*locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int*/){
+    static func goToPOIDetailVC(delegate: UIViewController, poiDetail: POIRow, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIDetailViewController") as! POIDetailViewController
         vc.poiDetail = poiDetail
-//        vc.locationCategory = locationCategory
-//        vc.exploreDistrict = exploredistrict
-//        vc.attractionDistrict = attractionDistrict
+        vc.exploreDistrict = exploredistrict
+        vc.attractionDistrict = attractionDistrict
 //        vc.poiCategoriId = poiCategoryId
 //        print(poiCategoryId)
         vc.modalPresentationStyle = .fullScreen
