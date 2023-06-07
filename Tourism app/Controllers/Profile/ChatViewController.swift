@@ -109,6 +109,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     }
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
+                self.messagesCollectionView.scrollToBottom()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -169,12 +170,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     guard let currentUser = self.currentUser else { return }
                     print(self.chatUser1?.user?.uuid ?? "")
                     SocketHelper.shared.sendMessage(message: self.messageInputBar.inputTextView.text ?? "", to: self.chatUser1?.user?.uuid ?? "")
-//                    self.socket?.emit("user-chat-message", with: [self.chatUser1?.user?.uuid ?? "", self.messageInputBar.inputTextView.text ?? ""])
-
                     self.messages.append(Message(sender: currentUser, messageId: "\(Date())", sentDate: Date().addingTimeInterval(000), kind: .text(text)))
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.resignFirstResponder()
                     self.messagesCollectionView.reloadData()
+                    self.messagesCollectionView.scrollToBottom()
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

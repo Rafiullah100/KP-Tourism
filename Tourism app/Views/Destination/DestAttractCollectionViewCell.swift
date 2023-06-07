@@ -27,7 +27,12 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
             
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")))
             attractionLabel.text = attraction?.title
+            favoriteBtn.isHidden = Helper.shared.hideWhenNotLogin()
         }
+    }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
     }
     
     

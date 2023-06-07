@@ -170,7 +170,7 @@ class BaseViewController: UIViewController {
     func addBackButtonWithTitle() {
         let button = UIButton.init(type: .custom)
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
-        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         imageView.image = UIImage(named: "Back")
         let label = UILabel(frame: CGRect(x: 35, y: 0, width: UIScreen.main.bounds.width, height: 30))
         let stringArray = viewControllerTitle?.split(separator: "|")

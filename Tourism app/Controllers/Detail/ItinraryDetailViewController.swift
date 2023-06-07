@@ -35,6 +35,7 @@ class ItinraryDetailViewController: BaseViewController {
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"], model: SuccessModel.self)
+        favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
     }
     
     func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {

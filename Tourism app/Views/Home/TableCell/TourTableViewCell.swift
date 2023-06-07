@@ -23,7 +23,7 @@ class TourTableViewCell: UITableViewCell {
     @IBOutlet weak var likesLabel: UILabel!
     var tour: TourPackage?{
         didSet{
-            
+            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             if tour?.userWishlist == 1 && tour?.userWishlist != nil {
                 favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
@@ -37,7 +37,8 @@ class TourTableViewCell: UITableViewCell {
             viewsLabel.text = "\(tour?.views_counter ?? 0)"
             likesLabel.text = "\(tour?.likes?.count ?? 0)"
             commentsLabel.text = "\(tour?.comments?.count ?? 0)"
-//            doscountLabel.text = "\(tour?.discount ?? "")"
+            doscountLabel.text = "\(tour?.discount ?? "")"
+            discountView.isHidden = tour?.discount == "0" ? true : false
 //            if tour?.likes?.count != 0 {
 //                likesLabel.text = "\(tour?.likes?[0].likesCount ?? 0)"
 //            }
@@ -60,7 +61,6 @@ class TourTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

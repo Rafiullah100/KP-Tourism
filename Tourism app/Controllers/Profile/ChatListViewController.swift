@@ -95,11 +95,11 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
         Switcher.goToChatVC(delegate: self, receiverUser1: conversation)
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        print(conversationUsers.count, totalCount, indexPath.row)
-        if conversationUsers.count != totalCount && indexPath.row == conversationUsers.count - 1  {
-            currentPage = currentPage + 1
-            load()
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        print(conversationUsers.count, totalCount, indexPath.row)
+//        if conversationUsers.count != totalCount && indexPath.row == conversationUsers.count - 1  {
+//            currentPage = currentPage + 1
+//            load()
+//        }
+//    }
 }

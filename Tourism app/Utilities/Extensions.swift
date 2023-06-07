@@ -256,17 +256,42 @@ extension String{
         return URL(string: self)
     }
     
-    func stripOutHtml() -> String? {
-        do {
-            guard let data = self.data(using: .unicode) else {
-                return nil
-            }
-            let attributed = try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
-            return attributed.string
-        } catch {
-            return nil
+    //    func stripOutHtml() -> String? {
+    //        do {
+    //            guard let data = self.data(using: .unicode) else {
+    //                return nil
+    //            }
+    //            let attributed = try NSAttributedString(data: data, options: [.documentType: NSAttributedString.DocumentType.html, .characterEncoding: String.Encoding.utf8.rawValue], documentAttributes: nil)
+    //            return attributed.string
+    //        } catch {
+    //            return nil
+    //        }
+    //    }
+    
+    
+    func stripOutHtml() -> String {
+        guard let data = self.data(using: .utf8) else {
+            return self
+        }
+        
+        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+            .documentType: NSAttributedString.DocumentType.html,
+            .characterEncoding: String.Encoding.utf8.rawValue
+        ]
+        
+        if let attributedString = try? NSAttributedString(data: data, options: options, documentAttributes: nil) {
+            var plainText = attributedString.string
+            plainText = plainText.trimmingCharacters(in: .whitespacesAndNewlines)
+            return plainText
+        } else {
+            return self
         }
     }
+
+
+
+
+
     
     func removeSpaces() -> String {
         let trimmedStr = self.trimmingCharacters(in: .whitespacesAndNewlines)

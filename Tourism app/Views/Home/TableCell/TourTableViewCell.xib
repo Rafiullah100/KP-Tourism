@@ -114,11 +114,24 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="URb-Fc-vVG">
                                                                 <rect key="frame" x="0.0" y="0.0" width="50" height="18"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="wCo-e4-WbH">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="33" height="18"/>
-                                                                    </imageView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e0X-D7-XFs">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                        <subviews>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="view" translatesAutoresizingMaskIntoConstraints="NO" id="wCo-e4-WbH">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                            </imageView>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="bottom" secondItem="wCo-e4-WbH" secondAttribute="bottom" id="75V-yK-5qX"/>
+                                                                            <constraint firstItem="wCo-e4-WbH" firstAttribute="leading" secondItem="e0X-D7-XFs" secondAttribute="leading" id="MFn-wK-vWb"/>
+                                                                            <constraint firstItem="wCo-e4-WbH" firstAttribute="top" secondItem="e0X-D7-XFs" secondAttribute="top" id="QqD-93-yeH"/>
+                                                                            <constraint firstAttribute="width" constant="18" id="bzq-RW-v09"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="wCo-e4-WbH" secondAttribute="trailing" id="upR-F4-ARR"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sMI-b6-hYt">
-                                                                        <rect key="frame" x="43" y="0.0" width="7" height="18"/>
+                                                                        <rect key="frame" x="28" y="0.0" width="22" height="18"/>
                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -128,11 +141,24 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gye-yg-87x">
                                                                 <rect key="frame" x="75" y="0.0" width="50" height="18"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like-black" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-U9-f1Y">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="21.5" height="18"/>
-                                                                    </imageView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SHl-Oj-W0m">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                        <subviews>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="like-black" translatesAutoresizingMaskIntoConstraints="NO" id="Z7e-U9-f1Y">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                            </imageView>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="bottom" secondItem="Z7e-U9-f1Y" secondAttribute="bottom" id="DjM-ZQ-EIA"/>
+                                                                            <constraint firstAttribute="width" constant="18" id="Prp-sY-O1V"/>
+                                                                            <constraint firstItem="Z7e-U9-f1Y" firstAttribute="top" secondItem="SHl-Oj-W0m" secondAttribute="top" id="c1D-bl-B7I"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="Z7e-U9-f1Y" secondAttribute="trailing" id="maT-An-q8P"/>
+                                                                            <constraint firstItem="Z7e-U9-f1Y" firstAttribute="leading" secondItem="SHl-Oj-W0m" secondAttribute="leading" id="w6e-23-cVO"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BaZ-1R-X6z">
-                                                                        <rect key="frame" x="31.5" y="0.0" width="18.5" height="18"/>
+                                                                        <rect key="frame" x="28" y="0.0" width="22" height="18"/>
                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
@@ -142,11 +168,24 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="fhz-sC-5Ia">
                                                                 <rect key="frame" x="150" y="0.0" width="50" height="18"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment-black" translatesAutoresizingMaskIntoConstraints="NO" id="FLc-zg-DQM">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="21.5" height="18"/>
-                                                                    </imageView>
+                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zMd-Bc-GAR">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                        <subviews>
+                                                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment-black" translatesAutoresizingMaskIntoConstraints="NO" id="FLc-zg-DQM">
+                                                                                <rect key="frame" x="0.0" y="0.0" width="18" height="18"/>
+                                                                            </imageView>
+                                                                        </subviews>
+                                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                                        <constraints>
+                                                                            <constraint firstAttribute="width" constant="18" id="0kW-u9-Pne"/>
+                                                                            <constraint firstAttribute="bottom" secondItem="FLc-zg-DQM" secondAttribute="bottom" id="Atp-ir-PiS"/>
+                                                                            <constraint firstItem="FLc-zg-DQM" firstAttribute="top" secondItem="zMd-Bc-GAR" secondAttribute="top" id="J88-zK-BBS"/>
+                                                                            <constraint firstItem="FLc-zg-DQM" firstAttribute="leading" secondItem="zMd-Bc-GAR" secondAttribute="leading" id="Thq-7g-i6l"/>
+                                                                            <constraint firstAttribute="trailing" secondItem="FLc-zg-DQM" secondAttribute="trailing" id="ctI-uA-a2B"/>
+                                                                        </constraints>
+                                                                    </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gnI-bD-hbj">
-                                                                        <rect key="frame" x="31.5" y="0.0" width="18.5" height="18"/>
+                                                                        <rect key="frame" x="28" y="0.0" width="22" height="18"/>
                                                                         <fontDescription key="fontDescription" name="Roboto-Bold" family="Roboto" pointSize="12"/>
                                                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>

@@ -42,6 +42,7 @@ class ArchTableViewCell: UITableViewCell {
     
     var archeology: Archeology? {
         didSet{
+            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             archeologyLabel.text = archeology?.attractions.title?.stripOutHtml()
             districtLabel.text = archeology?.attractions.description?.stripOutHtml()
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
@@ -58,7 +59,6 @@ class ArchTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
     
     

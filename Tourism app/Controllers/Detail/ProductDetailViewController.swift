@@ -66,6 +66,7 @@ class ProductDetailViewController: BaseViewController {
     
     private func updateUI(){
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
+        favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         if detailType == .list{
             type = .backWithTitle
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"

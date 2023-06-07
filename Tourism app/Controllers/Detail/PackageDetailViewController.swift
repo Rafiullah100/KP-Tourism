@@ -111,7 +111,7 @@ class PackageDetailViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.rowHeight = 60.0
+        tableView.rowHeight = 44.0
         
         commentTextView.isScrollEnabled = false
         commenTableView.rowHeight = UITableView.automaticDimension
@@ -146,6 +146,7 @@ class PackageDetailViewController: BaseViewController {
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(tourDetail?.views_counter ?? 0) Views"
             viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+            tableView.isHidden = tourDetail?.activities?.count == 0 ? true : false
         }
         else if detailType == .wishlist{
             viewControllerTitle = "\(wishlistTourPackage?.title ?? "") | Tour Packages"
@@ -165,6 +166,7 @@ class PackageDetailViewController: BaseViewController {
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) Views"
             viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+            tableView.isHidden = wishlistTourPackage?.activities.count == 0 ? true : false
         }
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
     }
@@ -183,7 +185,8 @@ class PackageDetailViewController: BaseViewController {
     
     @IBAction func likeBtnAction(_ sender: Any) {
         if detailType == .list{
-            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
+            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else {
+                return }
             self.interest(route: .doInterest, method: .post, parameters: ["package_id": tourDetail?.id ?? 0], model: SuccessModel.self)
         }
         else if detailType == .wishlist{

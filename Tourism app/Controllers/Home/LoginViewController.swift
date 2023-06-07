@@ -14,16 +14,8 @@ import Toast_Swift
 import SVProgressHUD
 class LoginViewController: BaseViewController {
     
-    @IBOutlet weak var passwordTextField: UITextField!{
-        didSet{
-            self.passwordTextField.delegate = self
-        }
-    }
-    @IBOutlet weak var emailTextField: UITextField!{
-        didSet{
-            self.emailTextField.delegate = self
-        }
-    }
+    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
     
     @IBOutlet weak var loginButton: UIButton!
     var login: LoginModel?
@@ -38,9 +30,8 @@ class LoginViewController: BaseViewController {
         passwordTextField.text = "12345678"
         
 //        //seller
-        emailTextField.text = "rafiseller@gmail.com"
-        passwordTextField.text = "123"
-        loginButton.isEnabled = false
+//        emailTextField.text = "rafiseller@gmail.com"
+//        passwordTextField.text = "123"
         navigationItem.hidesBackButton = true
     }
     
@@ -99,7 +90,9 @@ class LoginViewController: BaseViewController {
     }
     
     @IBAction func LoginBtnAction(_ sender: Any) {
-        guard let email = emailTextField.text, let password = passwordTextField.text  else { return }
+        guard let email = emailTextField.text, !email.isEmpty, let password = passwordTextField.text, !password.isEmpty  else {
+            self.view.makeToast("Enter all fields.")
+            return }
         let parameters = ["username": email, "password": password]
         loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
     }
@@ -118,6 +111,7 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.name = self.login?.name
                     UserDefaults.standard.uuid = self.login?.uuID
                     UserDefaults.standard.userBio = self.login?.about
+                    UserDefaults.standard.loadFirstTime = true
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{
@@ -127,12 +121,5 @@ class LoginViewController: BaseViewController {
                 self.view.makeToast(error.localizedDescription)
             }
         }
-    }
-}
-
-extension LoginViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        let allTextFieldsFilled = !emailTextField.text!.isEmpty && !passwordTextField.text!.isEmpty
-        loginButton.isEnabled = allTextFieldsFilled
     }
 }

@@ -22,6 +22,7 @@ class ExploreTableViewCell: UITableViewCell {
     
     var district: ExploreDistrict? {
         didSet{
+            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             if district?.isWished == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
@@ -55,7 +56,6 @@ class ExploreTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
 
     static func configureCell() {

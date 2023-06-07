@@ -26,6 +26,7 @@ class ProductTableViewCell: UITableViewCell {
     
     var product: LocalProduct?{
         didSet{
+            favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             if product?.isWished == 0 {
                 favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }
@@ -49,7 +50,6 @@ class ProductTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
     }
     
     @IBAction func favoriteBtnAction(_ sender: Any) {

@@ -67,7 +67,6 @@ class EventDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = ""
         viewControllerTitle = "\(eventDetail?.title ?? "") | Events"
-
         titLabel.text = eventDetail?.title
         eventTypeLabel.text = eventDetail?.locationTitle
         descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
@@ -83,6 +82,7 @@ class EventDetailViewController: BaseViewController {
         favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         view.bringSubviewToFront(statusView)
+        favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         reloadComment()
     }
     

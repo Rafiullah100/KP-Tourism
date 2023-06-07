@@ -42,6 +42,7 @@ class AttractionTableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        print(Helper.shared.hideWhenNotLogin())
         favoriteBtn.isHidden = Helper.shared.hideWhenNotLogin()
     }
     

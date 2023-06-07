@@ -29,7 +29,7 @@ extension UserDefaults {
         case otpEmail
         case isSeller
         case isTourist
-
+        case loadFirstTime
     }
         
     var accessToken: String? {
@@ -47,6 +47,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.isLoginned.rawValue)
+        }
+    }
+    
+    var loadFirstTime: Bool? {
+        get {
+            bool(forKey: UserDefaultsKeys.loadFirstTime.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.loadFirstTime.rawValue)
         }
     }
     

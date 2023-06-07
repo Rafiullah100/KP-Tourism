@@ -42,6 +42,10 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
             var array = self.viewControllers
             array?.remove(at: Constants.tab)
             if UserDefaults.standard.isLoginned == true{
+                guard UserDefaults.standard.loadFirstTime == true else {
+                    return
+                }
+                UserDefaults.standard.loadFirstTime = false
                 let newsFeedVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "FeedsViewController") as! FeedsViewController
                 let navRootVC = UINavigationController.init(rootViewController: newsFeedVC)
                 name = Helper.shared.changeTab(isLoggined: true)

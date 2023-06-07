@@ -83,7 +83,8 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(UserDefaults.standard.uuid ?? "")
+//        print(UserDefaults.standard.uuid ?? "")
+//        print(UserDefaults.standard.accessToken ?? "")
         searchBgView.viewShadow()
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
@@ -334,7 +335,9 @@ extension HomeViewController: MDCTabBarViewDelegate{
         topLabel.text = Constants.section[item.tag].title
         textField.text = ""
         addChild(tag: item.tag)
-//        tableView.reloadData()
+        
+        mapButton.isHidden = item.tag == 0 ? false : true
+        self.contentView.frame.origin.y = 0
     }
     
     private func addChild(tag: Int){

@@ -49,8 +49,9 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.centeredVertically, .centeredHorizontally], animated: true)
         collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.top], animated: false)
     }
     
 //    override func viewWillLayoutSubviews() {

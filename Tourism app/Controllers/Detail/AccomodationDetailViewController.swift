@@ -73,7 +73,8 @@ class AccomodationDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = "\(accomodationDetail?.title ?? "") | Accomodation"
         detailView.isHidden = true
-        
+        favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
+
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (accomodationDetail?.previewImage ?? "")))
         nameLabel.text = "\(accomodationDetail?.title ?? "")"
         locationLabel.text = "\(accomodationDetail?.locationTitle ?? "")"

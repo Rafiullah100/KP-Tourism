@@ -72,6 +72,7 @@ class BlogDetailViewController: BaseViewController {
         likeLabel.text = "\(String(describing: likeCount)) Liked"
         viewCounterLabel.text = "\(blogDetail?.viewsCounter ?? 0) Views"
         viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
+        favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         reloadComment()
     }
     
