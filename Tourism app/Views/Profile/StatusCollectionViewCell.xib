@@ -31,9 +31,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J0T-FM-o0a">
                                         <rect key="frame" x="5.3333333333333357" y="0.0" width="70" height="70"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="feed-cell-bg" translatesAutoresizingMaskIntoConstraints="NO" id="Z8O-8M-d8Y">
-                                                <rect key="frame" x="0.0" y="0.0" width="70" height="70"/>
-                                            </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="USU-0Q-1mZ">
                                                 <rect key="frame" x="3" y="3" width="64" height="64"/>
                                                 <userDefinedRuntimeAttributes>
@@ -47,14 +44,21 @@
                                             <constraint firstItem="USU-0Q-1mZ" firstAttribute="top" secondItem="J0T-FM-o0a" secondAttribute="top" constant="3" id="4B0-Gu-XTI"/>
                                             <constraint firstItem="USU-0Q-1mZ" firstAttribute="leading" secondItem="J0T-FM-o0a" secondAttribute="leading" constant="3" id="EOi-yK-7Sa"/>
                                             <constraint firstAttribute="trailing" secondItem="USU-0Q-1mZ" secondAttribute="trailing" constant="3" id="NzB-ma-KYf"/>
-                                            <constraint firstAttribute="bottom" secondItem="Z8O-8M-d8Y" secondAttribute="bottom" id="Oo9-C5-cfv"/>
-                                            <constraint firstItem="Z8O-8M-d8Y" firstAttribute="top" secondItem="J0T-FM-o0a" secondAttribute="top" id="PoX-5m-sXo"/>
-                                            <constraint firstItem="Z8O-8M-d8Y" firstAttribute="leading" secondItem="J0T-FM-o0a" secondAttribute="leading" id="bCS-e1-bAR"/>
-                                            <constraint firstAttribute="trailing" secondItem="Z8O-8M-d8Y" secondAttribute="trailing" id="d6d-Pa-B82"/>
                                             <constraint firstAttribute="bottom" secondItem="USU-0Q-1mZ" secondAttribute="bottom" constant="3" id="gTn-qB-bdC"/>
                                             <constraint firstAttribute="width" constant="70" id="lug-K4-hNq"/>
                                             <constraint firstAttribute="height" constant="70" id="yqW-Np-c3M"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                                <real key="value" value="2"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                                <color key="value" red="0.3927318454" green="0.77539104219999999" blue="0.61174625159999996" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                <real key="value" value="35"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                     </view>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="add-story-icon" translatesAutoresizingMaskIntoConstraints="NO" id="h6i-BG-yUg">
                                         <rect key="frame" x="28.666666666666671" y="57" width="23" height="23"/>
@@ -107,7 +111,6 @@
     </objects>
     <resources>
         <image name="add-story-icon" width="23" height="23"/>
-        <image name="feed-cell-bg" width="72" height="72"/>
         <image name="placeholder" width="1000" height="624"/>
     </resources>
 </document>

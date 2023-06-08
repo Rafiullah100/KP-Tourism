@@ -14,16 +14,18 @@ struct AccomodationModel: Codable {
 
 // MARK: - Accomodation
 struct Accomodation: Codable {
-    let id, districtID, attractionID, userID: Int
-    let title, slug, locationTitle, latitude: String
-    let longitude, previewImage, thumbnailImage, description: String
-    let noRoom: Int
-    let parking, covidSafe, family, adults: Bool
-    let type: String
-    let viewsCounter: Int
-    let createdAt: String
-    let userLike: Int?
-    let commentCount, likeCount, priceFrom: Int
+    let id, districtID, attractionID, userID: Int?
+    let title, slug, locationTitle, latitude: String?
+    let longitude: String?
+    let contactNo: String?
+    let previewImage, thumbnailImage, description: String?
+    let noRoom: Int?
+    let parking, covidSafe, family, adults: Bool?
+    let type: String?
+    let viewsCounter: Int?
+    let createdAt: String?
+    let commentCount, likeCount, priceFrom, userLike: Int?
+    let isWished: Int?
 
     enum CodingKeys: String, CodingKey {
         case id
@@ -33,6 +35,7 @@ struct Accomodation: Codable {
         case title, slug
         case locationTitle = "location_title"
         case latitude, longitude
+        case contactNo = "contact_no"
         case previewImage = "preview_image"
         case thumbnailImage = "thumbnail_image"
         case description
@@ -45,7 +48,6 @@ struct Accomodation: Codable {
         case commentCount = "comment_count"
         case likeCount = "like_count"
         case priceFrom = "price_from"
-        case userLike
-
+        case userLike, isWished
     }
 }

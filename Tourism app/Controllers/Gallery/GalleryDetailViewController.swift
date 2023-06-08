@@ -27,6 +27,7 @@ class GalleryDetailViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var archeology: Archeology?
+    
 
     var mediaType: MediaType?
     var player = AVPlayer()
@@ -57,6 +58,7 @@ class GalleryDetailViewController: BaseViewController {
                 fetch(route: .fetchGallery, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0], model: GalleryModel.self)
             }
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {

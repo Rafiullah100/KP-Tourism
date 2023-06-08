@@ -423,6 +423,12 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
             }
         }
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.row != 0{
+            Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row - 1].postFiles?[0].imageURL)
+        }
+    }
 }
 
 extension ProfileViewController: UICollectionViewDelegateFlowLayout{

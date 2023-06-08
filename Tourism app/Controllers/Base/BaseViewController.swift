@@ -172,24 +172,33 @@ class BaseViewController: UIViewController {
         button.addTarget(self, action: #selector(backButtonAction), for: .touchUpInside)
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 35, height: 35))
         imageView.image = UIImage(named: "Back")
-        let label = UILabel(frame: CGRect(x: 35, y: 0, width: UIScreen.main.bounds.width, height: 30))
+        let labelbgView = UIView(frame: CGRect(x: 35, y: 0, width: UIScreen.main.bounds.width, height: 30))
+        let label = UILabel(frame: CGRect(x: 5, y: 0, width: UIScreen.main.bounds.width, height: 30))
+        labelbgView.addSubview(label)
         let stringArray = viewControllerTitle?.split(separator: "|")
         let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Medium", size: 18) ?? UIFont()]
-        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Light", size: 10) ?? UIFont()]
-        let firstString = NSMutableAttributedString(string: String(stringArray?[0] ?? ""), attributes: firstAttributes)
+        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "\(Constants.appFontName)-Light", size: 12) ?? UIFont()]
+        let firstString = NSMutableAttributedString(string: String("\(stringArray?[0].prefix(25) ?? "")"), attributes: firstAttributes)
         var secondString = NSAttributedString("")
         if stringArray?.count ?? 0 > 1{
             secondString = NSAttributedString(string: String("| \(stringArray?[1] ?? "")"), attributes: secondAttributes)
         }
         firstString.append(secondString)
-
-        label.textColor = .white
+        
+        labelbgView.layer.cornerRadius = 3.0
+        labelbgView.layer.masksToBounds = true
+        labelbgView.backgroundColor = .black
+        labelbgView.layer.opacity = 0.6
         label.attributedText = firstString
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
+        label.textColor = .white
+        
         let buttonView = UIView(frame: CGRect(x: 0, y: 0, width: 90, height: 30))
         button.frame = buttonView.frame
         buttonView.addSubview(button)
         buttonView.addSubview(imageView)
-        buttonView.addSubview(label)
+        buttonView.addSubview(labelbgView)
         let barButton = UIBarButtonItem.init(customView: buttonView)
         self.navigationItem.leftBarButtonItem = barButton
     }

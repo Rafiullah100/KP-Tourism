@@ -13,6 +13,7 @@ protocol PopupDelegate {
 
 class CommonViewController: BaseViewController {
         
+    @IBOutlet weak var collectionViewHeight: NSLayoutConstraint!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!

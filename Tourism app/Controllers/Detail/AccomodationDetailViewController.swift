@@ -92,6 +92,7 @@ class AccomodationDetailViewController: BaseViewController {
         likeCount = accomodationDetail?.likeCount ?? 0
         likeCountLabel.text = "\(accomodationDetail?.likeCount ?? 0) Liked"
         reloadComment()
+        print(accomodationDetail?.isWished, accomodationDetail?.userLike)
     }
     
     func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -140,8 +141,11 @@ class AccomodationDetailViewController: BaseViewController {
             case .success(let like):
                 let successDetail = like as? SuccessModel
                 DispatchQueue.main.async {
+                    print(successDetail?.message ?? "")
                     self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
                     self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    print(successDetail?.message ?? "", self.likeCount)
+
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):

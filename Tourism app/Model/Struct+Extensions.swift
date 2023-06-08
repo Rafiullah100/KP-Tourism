@@ -71,6 +71,7 @@ enum MediaType: CaseIterable {
 enum galleryType: CaseIterable {
     case gallery
     case poi
+    case image
 }
 //this is struct
 

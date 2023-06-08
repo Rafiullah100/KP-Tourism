@@ -83,6 +83,7 @@ extension GalleryViewController: UICollectionViewDelegate, UICollectionViewDataS
         switch collectionView {
         case imageCollectionView:
             let cell: ImageCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageCollectionViewCell.cellIdentifier, for: indexPath) as! ImageCollectionViewCell
+            cell.typeImageView.isHidden = true
             cell.images = gallery?.images?.rows?[indexPath.row]
             return cell
         case videoCollectionView:

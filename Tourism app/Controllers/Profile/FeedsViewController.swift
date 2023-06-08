@@ -205,12 +205,13 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
+    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell, index: Int) {
         URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let wish):
                 let successDetail = wish as? SuccessModel
                 feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
+                feedCell.likeCountLabel.text = successDetail?.message == "Liked" ? "\((self.newsFeed[index].likesCount ?? 0) + 1)" : "\((self.newsFeed[index].likesCount ?? 0) - 1)"
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -237,6 +238,9 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.row == 0{
             Switcher.gotoPostVC(delegate: self, postType: .story)
+        }
+        else{
+            Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row - 1].postFiles?[0].imageURL)
         }
     }
     
@@ -277,7 +281,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         
         cell.likeActionBlock = {
-            self.like(route: .likeApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
+            self.like(route: .likeApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell, index: indexPath.row)
         }
         cell.saveActionBlock = {
             self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)

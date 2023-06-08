@@ -39,7 +39,7 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
     var galleryDetail: GalleryModel?
     var poiGallery: [PoiGallery]?
     var position: Int?
-    
+    var imageUrl: String?
     var galleryType: galleryType?
 
     override func viewDidLoad() {
@@ -53,12 +53,6 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
         collectionView.layoutIfNeeded()
         collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.top], animated: false)
     }
-    
-//    override func viewWillLayoutSubviews() {
-//        super.viewWillLayoutSubviews()
-//        collectionView.scrollToItem(at: position ?? IndexPath(), at: [.centeredVertically, .centeredHorizontally], animated: true)
-//        collectionView.reloadData()
-//    }
 }
 
 extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -68,6 +62,8 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return galleryDetail?.images?.rows?.count ?? 0
         case .poi:
             return poiGallery?.count ?? 0
+        case .image:
+            return 1
         default:
             return 0
         }
@@ -83,6 +79,8 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case .poi:
             cell.value = indexPath.row
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiGallery?[indexPath.row].imageURL ?? "")))
+        case .image:
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (imageUrl ?? "")))
         default:
             return cell
         }

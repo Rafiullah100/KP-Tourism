@@ -125,6 +125,29 @@ class Helper{
 //        }
     }
     
+    
+    func getGradientLayer(bounds : CGRect) -> CAGradientLayer{
+        let gradient = CAGradientLayer()
+        gradient.frame = bounds
+        //order of gradient colors
+        gradient.colors = [UIColor.white.cgColor,UIColor.black.cgColor]
+        // start and end points
+        gradient.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradient.endPoint = CGPoint(x: 1.0, y: 0.5)
+        return gradient
+    }
+    
+    func gradientColor(bounds: CGRect, gradientLayer :CAGradientLayer) -> UIColor? {
+        UIGraphicsBeginImageContext(gradientLayer.bounds.size)
+        //create UIImage by rendering gradient layer.
+        gradientLayer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        //get gradient UIcolor from gradient UIImage
+        return UIColor(patternImage: image!)
+    }
+    
+    
 //    public func gradient(view: UIView){
 //        let gradientLayer = CAGradientLayer()
 //        gradientLayer.frame = view.bounds
@@ -213,6 +236,14 @@ class Helper{
         
         tableView.beginUpdates()
         tableView.endUpdates()
+    }
+    
+    func collectionViewHeight(collectionView: UICollectionView, cvHeight: NSLayoutConstraint) {
+        cvHeight.constant = CGFloat.greatestFiniteMagnitude
+        collectionView.reloadData()
+        collectionView.layoutIfNeeded()
+        cvHeight.constant = collectionView.contentSize.height
+        collectionView.layoutIfNeeded()
     }
     
     func showMap(view: UIView) -> MGLMapView {

@@ -157,6 +157,23 @@ extension UIView {
     }
 }
 
+extension UILabel {
+    func applyGradientText(colors: [UIColor]) {
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.bounds
+        gradientLayer.colors = colors.map { $0.cgColor }
+        gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+        
+        let textMaskLayer = CALayer()
+        textMaskLayer.frame = self.bounds
+        textMaskLayer.contents = self.text?.renderToImage(from: self.font, textColor: UIColor.black).cgImage
+        gradientLayer.mask = textMaskLayer
+        
+        self.layer.addSublayer(gradientLayer)
+    }
+}
+
 extension UIColor{
     func rgbColor() -> UIColor {
        return UIColor(red: 255/229, green: 255/130, blue: 52/255, alpha: 1)
@@ -244,6 +261,26 @@ extension UIApplication {
 }
 
 extension String{
+    
+    func renderToImage(from font: UIFont, textColor: UIColor) -> UIImage {
+            let attributes: [NSAttributedString.Key: Any] = [
+                .font: font,
+                .foregroundColor: textColor
+            ]
+            
+            let size = self.size(withAttributes: attributes)
+            let rect = CGRect(origin: .zero, size: size)
+            
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            
+            self.draw(in: rect, withAttributes: attributes)
+            
+            let image = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            return image ?? UIImage()
+        }
+    
     func isValidEmail() -> Bool {
         // here, `try!` will always succeed because the pattern is valid
         let emailRegEx = "(?:[a-z0-9!#$%\\&'*+/=?\\^_`{|}~-]+(?:\\.[a-z0-9!#$%\\&'*+/=?\\^_`{|}"+"~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\"+"x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-"+"z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5"+"]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-"+"9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21"+"-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])"

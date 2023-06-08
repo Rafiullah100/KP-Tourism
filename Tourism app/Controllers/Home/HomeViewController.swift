@@ -338,6 +338,7 @@ extension HomeViewController: MDCTabBarViewDelegate{
         
         mapButton.isHidden = item.tag == 0 ? false : true
         self.contentView.frame.origin.y = 0
+        cardVisible = true
     }
     
     private func addChild(tag: Int){

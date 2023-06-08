@@ -11,14 +11,20 @@ class ImageCollectionViewCell: UICollectionViewCell {
     static var cellIdentifier = "cell_identifier"
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
+    @IBOutlet weak var typeImageView: UIImageView!
     @IBOutlet weak var imgView: UIImageView!
     var images: GalleryRows?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (images?.image_url ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (images?.image_url ?? ""))) { _,_,_,_  in
+                self.typeImageView.isHidden = false
+            }
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.typeImageView.isHidden = true
+    }
 }

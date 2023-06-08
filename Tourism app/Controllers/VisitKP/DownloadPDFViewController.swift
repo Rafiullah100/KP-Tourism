@@ -115,7 +115,7 @@ extension DownloadPDFViewController: UITableViewDelegate, UITableViewDataSource{
             if let data = UserDefaults.standard.data(forKey: "accomodation"),
                 let accomodation = try? JSONDecoder().decode(Accomodation.self, from: data) {
                 cell.nameLabel.text = accomodation.title
-                cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodation.previewImage)))
+                cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (accomodation.previewImage ?? "")))
             }
         }
         return cell

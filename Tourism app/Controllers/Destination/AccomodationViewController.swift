@@ -49,7 +49,7 @@ class AccomodationViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], model: AccomodationModel.self)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title

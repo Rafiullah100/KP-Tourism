@@ -9,9 +9,13 @@ import UIKit
 import SVProgressHUD
 class NotificationViewController: BaseViewController {
 
+    @IBOutlet weak var skipButton: UIButton!
+    @IBOutlet weak var yesButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .notification
+        yesButton.isEnabled = true
+        yesButton.isUserInteractionEnabled = true
     }
     
     @IBAction func yesnotifyBtn(_ sender: Any) {
