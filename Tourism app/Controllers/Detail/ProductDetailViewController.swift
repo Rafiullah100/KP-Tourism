@@ -58,6 +58,8 @@ class ProductDetailViewController: BaseViewController {
         navigationController?.navigationBar.isHidden = false
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
+        commentTextView.inputAccessoryView = UIView()
+        commentTextView.autocorrectionType = .no
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         updateUI()
@@ -67,6 +69,7 @@ class ProductDetailViewController: BaseViewController {
     private func updateUI(){
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
+        print(self.productDetail?.userLike)
         if detailType == .list{
             type = .backWithTitle
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
@@ -161,6 +164,8 @@ class ProductDetailViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
                     self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    self.productDetail?.userLike = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    print(self.productDetail?.userLike)
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):
@@ -226,7 +231,7 @@ extension ProductDetailViewController: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if commentTextView.textColor == UIColor.lightGray {
             commentTextView.text = ""
-            commentTextView.textColor = UIColor.black
+            commentTextView.textColor = UIColor.label
         }
     }
     
@@ -245,6 +250,7 @@ extension ProductDetailViewController: UITextViewDelegate{
             view.layoutIfNeeded()
         }
     }
+    
 }
 
 extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSource{

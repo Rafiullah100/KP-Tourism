@@ -36,16 +36,26 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         let tabBarIndex = tabBarController.selectedIndex
-        var name = ""
         
+        if tabBarIndex == 4{
+            if let navigationController = viewController as? UINavigationController {
+                if navigationController.viewControllers.count > 1 {
+                    navigationController.popToRootViewController(animated: false)
+                }
+            }
+        }
+        if tabBarIndex == Constants.tab {
+            guard UserDefaults.standard.loadFirstTime ?? false else {
+                return
+            }
+            UserDefaults.standard.loadFirstTime = false
+        }
+        
+        var name = ""
         if tabBarIndex == Constants.tab {
             var array = self.viewControllers
             array?.remove(at: Constants.tab)
             if UserDefaults.standard.isLoginned == true{
-                guard UserDefaults.standard.loadFirstTime == true else {
-                    return
-                }
-                UserDefaults.standard.loadFirstTime = false
                 let newsFeedVC = UIStoryboard(name: "Profile", bundle: nil).instantiateViewController(withIdentifier: "FeedsViewController") as! FeedsViewController
                 let navRootVC = UINavigationController.init(rootViewController: newsFeedVC)
                 name = Helper.shared.changeTab(isLoggined: true)
@@ -57,9 +67,13 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
                 name = Helper.shared.changeTab(isLoggined: false)
                 array?.insert(navRootVC, at: Constants.tab)
             }
+            
             self.viewControllers = array
             self.tabBar.items?[Constants.tab].title = name
             self.tabBar.items?[Constants.tab].image = UIImage(named: "profile")
         }
+        
+       
     }
+    
 }

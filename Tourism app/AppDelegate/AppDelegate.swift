@@ -13,6 +13,7 @@ import FBSDKCoreKit
 import FirebaseCore
 import GoogleSignIn
 import Firebase
+import FirebaseCrashlytics
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate{
     var window: UIWindow?
@@ -20,8 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         FirebaseApp.configure()
+        Crashlytics.crashlytics().setCrashlyticsCollectionEnabled(true)
         window = UIWindow(frame: UIScreen.main.bounds)
-        
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.reloadTabbar), object: nil)
 //        if UserDefaults.standard.theme == ThemeMode.dark.rawValue {
 //            if #available(iOS 13.0, *){
 //                window?.overrideUserInterfaceStyle = .dark
@@ -33,9 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
 //            }
 //        }
         
-        IQKeyboardManager.shared().isEnabled = true
+        UserDefaults.standard.loadFirstTime = true
+
+//        IQKeyboardManager.shared().isEnabled = true
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true
-//        IQKeyboardManager.shared().isEnableAutoToolbar = false
+        IQKeyboardManager.shared().isEnableAutoToolbar = true
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .normal)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.font: UIFont(name: "Poppins-Light", size: 10) ?? UIFont()], for: .selected)
         UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor(named: "tabbarTextColor") ?? UIColor()], for: .normal)

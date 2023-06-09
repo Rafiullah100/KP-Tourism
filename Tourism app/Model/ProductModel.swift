@@ -30,11 +30,11 @@ struct LocalProduct: Codable {
     let approvedBy: Int?
     let viewsCounter: Int
     let districts: ProductDistricts
-    let users: ProductUsers
+    var users: ProductUsers
     let comments: [ProductComment]
-    let likes: [ProductLike]
+    var likes: [ProductLike]
     let createdAt: String?
-    let userLike: Int?
+    var userLike: Int?
     let isWished: Int?
 
     enum CodingKeys: String, CodingKey {
@@ -74,7 +74,7 @@ struct ProductLike: Codable {
 struct ProductUsers: Codable {
     let uuid: String
     let id: Int
-    let name: String
+    var name: String
     let mobileNo: String?
     let profileImage: String
 

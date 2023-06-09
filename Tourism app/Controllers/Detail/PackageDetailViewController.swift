@@ -113,6 +113,8 @@ class PackageDetailViewController: BaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.rowHeight = 44.0
         
+        commentTextView.inputAccessoryView = UIView()
+        commentTextView.autocorrectionType = .no
         commentTextView.isScrollEnabled = false
         commenTableView.rowHeight = UITableView.automaticDimension
         commenTableView.rowHeight = 60.0
@@ -376,7 +378,7 @@ extension PackageDetailViewController: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if commentTextView.textColor == UIColor.lightGray {
             commentTextView.text = ""
-            commentTextView.textColor = UIColor.black
+            commentTextView.textColor = UIColor.label
         }
     }
     

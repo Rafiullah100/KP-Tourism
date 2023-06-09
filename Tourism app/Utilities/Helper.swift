@@ -217,6 +217,7 @@ class Helper{
     
     func logoutUser(self: UIViewController) {
         UserDefaults.clean()
+        UserDefaults.standard.loadFirstTime = true
         Switcher.goToLoginVC(delegate: self)
     }
     

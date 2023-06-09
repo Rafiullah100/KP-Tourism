@@ -34,4 +34,6 @@ pod "ExpandableLabel"
 pod 'Socket.IO-Client-Swift', '~> 16.0.1'
 pod 'MessageKit', '~> 3.3.0'
 #pod 'UIAlertDateTimePicker', '~> 1.0'
+pod 'Firebase/Crashlytics'
+
 end

@@ -49,6 +49,8 @@ struct Constants {
     static let offlineColor = #colorLiteral(red: 0.7640088797, green: 0.7752518058, blue: 0.8078474402, alpha: 1)
     static let appFontName = "Poppins"
     static let loadFeed = "loadfeed"
+    static let reloadTabbar = "reloadTabbar"
+
     static let socketEvent = "user-chat-message"
     static let tab = 3
     

@@ -70,6 +70,8 @@ class AccomodationDetailViewController: BaseViewController {
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         commentTextView.isScrollEnabled = false
+        commentTextView.inputAccessoryView = UIView()
+        commentTextView.autocorrectionType = .no
         type = .backWithTitle
         viewControllerTitle = "\(accomodationDetail?.title ?? "") | Accomodation"
         detailView.isHidden = true
@@ -92,7 +94,6 @@ class AccomodationDetailViewController: BaseViewController {
         likeCount = accomodationDetail?.likeCount ?? 0
         likeCountLabel.text = "\(accomodationDetail?.likeCount ?? 0) Liked"
         reloadComment()
-        print(accomodationDetail?.isWished, accomodationDetail?.userLike)
     }
     
     func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -226,7 +227,7 @@ extension AccomodationDetailViewController: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if commentTextView.textColor == UIColor.lightGray {
             commentTextView.text = ""
-            commentTextView.textColor = UIColor.black
+            commentTextView.textColor = UIColor.label
         }
     }
     

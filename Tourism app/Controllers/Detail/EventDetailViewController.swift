@@ -62,6 +62,8 @@ class EventDetailViewController: BaseViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         commentTextView.isScrollEnabled = false
+        commentTextView.inputAccessoryView = UIView()
+
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
         type = .backWithTitle
@@ -196,7 +198,7 @@ extension EventDetailViewController: UITextViewDelegate{
     func textViewDidEndEditing(_ textView: UITextView) {
         if commentTextView.text == "" {
             commentTextView.text = commentText
-            commentTextView.textColor = UIColor.lightGray
+            commentTextView.textColor = UIColor.label
         }
     }
     

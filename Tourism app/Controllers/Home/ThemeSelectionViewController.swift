@@ -8,7 +8,7 @@
 import UIKit
 import GoogleSignIn
 
-class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelegate {
+class ThemeSelectionViewController: BaseViewController {
 
     @IBOutlet weak var userParentView: UIView!
     @IBOutlet weak var userView: UIView!
@@ -24,15 +24,15 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         super.viewDidLoad()
         type = .title1
         viewControllerTitle = "Settings"
-        
+//        tabBarController?.delegate = self
         userView.clipsToBounds = true
         userView.layer.cornerRadius = 30
         userView.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         userView.viewShadow()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         if UserDefaults.standard.theme == ThemeMode.dark.rawValue{
             switchView.isOn = true
         }
@@ -64,8 +64,43 @@ class ThemeSelectionViewController: BaseViewController, UITabBarControllerDelega
         }
     }
     
+    @IBAction func linkedinBtnAction(_ sender: Any) {
+        if let url = URL(string: "https://twitter.com/kptourism?lang=en") {
+            UIApplication.shared.open(url)
+        }
+    }
+    @IBAction func instagramBtnAction(_ sender: Any) {
+        if let url = URL(string: "https://www.instagram.com/tourisminkp/?utm_source=ig_embed") {
+            UIApplication.shared.open(url)
+        }
+    }
+    @IBAction func youtubeBtnAction(_ sender: Any) {
+        if let url = URL(string: "https://www.youtube.com/channel/UCJJlQUZMDc8SOyxuIMPeJKQ") {
+            UIApplication.shared.open(url)
+        }
+    }
+    @IBAction func facebookBtnAction(_ sender: Any) {
+        if let url = URL(string: "https://www.facebook.com/kptourism/") {
+            UIApplication.shared.open(url)
+        }
+    }
     @IBAction func logoutBtnAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signOut()
         Helper.shared.logoutUser(self: self)
     }
+    
+//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//        let tabBarIndex = tabBarController.selectedIndex
+//        guard tabBarIndex == 4 else {
+//            return
+//        }
+//        if let navigationController = viewController as? UINavigationController {
+//            if navigationController.viewControllers.count > 1 {
+//                navigationController.popToRootViewController(animated: false)
+//            }
+//        }
+//    }
 }
+
+
+

@@ -57,10 +57,13 @@ class FeedsViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         NotificationCenter.default.addObserver(self, selector: #selector(reloadNewsFeed), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadStories), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
+        
         loadData()
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
         profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
     }
+    
+    
     
     @IBAction func postBtnAction(_ sender: Any) {
         Switcher.gotoPostVC(delegate: self, postType: .post)

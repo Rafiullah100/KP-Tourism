@@ -83,8 +83,9 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        print(UserDefaults.standard.uuid ?? "")
-//        print(UserDefaults.standard.accessToken ?? "")
+
+//        fatalError()
+        
         searchBgView.viewShadow()
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
@@ -96,7 +97,6 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         serverCall(cell: .explore)
-        print(UserDefaults.standard.accessToken ?? "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

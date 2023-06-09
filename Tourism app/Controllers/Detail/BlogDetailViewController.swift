@@ -48,12 +48,16 @@ class BlogDetailViewController: BaseViewController {
     var commentText = "Write a comment"
     var likeCount = 0
 
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
+        commentTextView.inputAccessoryView = UIView()
+        commentTextView.autocorrectionType = .no
 //        self.tableViewHeight.constant = self.tableView.contentSize.height
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
@@ -205,7 +209,7 @@ extension BlogDetailViewController: UITextViewDelegate{
     func textViewDidBeginEditing(_ textView: UITextView) {
         if commentTextView.textColor == UIColor.lightGray {
             commentTextView.text = ""
-            commentTextView.textColor = UIColor.black
+            commentTextView.textColor = UIColor.label
         }
     }
     
