@@ -84,7 +84,7 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        fatalError()
+        fatalError()
         
         searchBgView.viewShadow()
         notificationView.viewShadow()
