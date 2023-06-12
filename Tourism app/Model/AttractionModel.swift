@@ -33,7 +33,7 @@ struct AttractionsDistrict: Codable {
     let createdAt, updatedAt: String?
     let attractionGalleries: [AttractionGallery]?
     let userLike: Int?
-    let isWished: Int?
+    var isWished: Int?
 
     
     enum CodingKeys: String, CodingKey {

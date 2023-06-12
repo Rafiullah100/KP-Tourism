@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
@@ -56,11 +57,13 @@ class CommentsTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         bottomView.isHidden = true
+        textView.isScrollEnabled = false
         textView.text = inputText
         textView.textColor = UIColor.lightGray
     }
 
     @IBAction func hideShowBtnAction(_ sender: Any) {
+        self.bottomView.isHidden == true ? self.textView.becomeFirstResponder() : self.textView.resignFirstResponder()
         commentReplyBlock?()
     }
     
@@ -99,6 +102,13 @@ extension CommentsTableViewCell: UITextViewDelegate{
             textView.text = inputText
             textView.textColor = UIColor.lightGray
         }
+    }
+    
+    func textViewDidChange(_ textView: UITextView) {
+        let fixedWidth = textView.frame.size.width
+        let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
+        commentTextViewHeight.constant = newSize.height
+        self.layoutIfNeeded()
     }
 }
 

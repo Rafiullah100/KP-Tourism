@@ -86,9 +86,9 @@ struct FeedModel : Codable {
     let action : String?
     let user_id : Int?
     let commentsCount : Int?
-    let likesCount : Int?
-    let isLiked : Int?
-    let isWished : Int?
+    var likesCount : Int?
+    var isLiked : Int?
+    var isWished : Int?
     let post : FeedPost?
     let user : FeedUser?
 

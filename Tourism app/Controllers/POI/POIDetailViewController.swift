@@ -42,7 +42,8 @@ class POIDetailViewController: BaseViewController {
     
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
-    
+    var archeology: Archeology?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -67,6 +68,11 @@ class POIDetailViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
         }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+        }
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {

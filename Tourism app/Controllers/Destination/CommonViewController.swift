@@ -49,6 +49,12 @@ class CommonViewController: BaseViewController {
         updateUI()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        collectionViewHeight.constant = collectionView.contentSize.height
+    }
+    
+    
     @IBAction func gotoAbout(_ sender: Any) {
         Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction, archeology: archeology)
     }
@@ -62,6 +68,7 @@ class CommonViewController: BaseViewController {
         case .none:
             print("none")
         }
+        
         if explore != nil{
             thumbnailTopLabel.text = explore?.title
             thumbnailBottomLabel.text = explore?.locationTitle
@@ -140,14 +147,12 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
 }
 
-
 extension CommonViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellsAcross: CGFloat = 3
         let spaceBetweenCells: CGFloat = 5
         let width = (collectionView.bounds.width - (cellsAcross - 1) * spaceBetweenCells) / cellsAcross
-        print(width)
-        return CGSize(width: width, height: width - 30)
+        return CGSize(width: width, height: width - 25)
     }
 }
 

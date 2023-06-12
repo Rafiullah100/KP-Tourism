@@ -37,7 +37,7 @@ class GalleryDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        type = .backWithTitle
+        type = .back1
         configureTab()
         
         navigationController?.navigationBar.isHidden = false

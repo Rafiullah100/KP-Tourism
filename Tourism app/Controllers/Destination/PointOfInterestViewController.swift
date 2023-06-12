@@ -104,13 +104,13 @@ extension PointOfInterestViewController: UICollectionViewDelegate{
         }
         else if archeology != nil{
             guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
+            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, archeology: archeology, poiCategoryId: poiCategoryId, poiName: poiName)
         }
     }
 }
 
 extension PointOfInterestViewController: UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        Helper.shared.cellSize(collectionView: collectionView, space: 2, cellsAcross: 4)
+        Helper.shared.cellSize(collectionView: collectionView, space: 10, cellsAcross: 3)
     }
 }

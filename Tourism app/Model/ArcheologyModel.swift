@@ -18,7 +18,7 @@ struct ArcheologyModel: Codable {
 // MARK: - Archeology
 struct Archeology: Codable {
     let attractionID: Int?
-    let attractions: ArcheologyAttractions
+    var attractions: ArcheologyAttractions
 
     enum CodingKeys: String, CodingKey {
         case attractionID = "attraction_id"
@@ -39,7 +39,7 @@ struct ArcheologyAttractions: Codable {
     let type: String?
     let status, viewsCounter, isDeleted: Int?
     let createdAt, updatedAt: String?
-    let userLike, isWished, likesCount, commentsCount: Int?
+    var userLike, isWished, likesCount, commentsCount: Int?
     let districts: Districts
 
     enum CodingKeys: String, CodingKey {

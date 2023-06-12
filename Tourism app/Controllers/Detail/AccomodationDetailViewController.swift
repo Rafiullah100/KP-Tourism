@@ -258,9 +258,11 @@ extension AccomodationDetailViewController: UITableViewDelegate, UITableViewData
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         cell.comment = allComments[indexPath.row]
         cell.commentReplyBlock = {
-            cell.bottomView.isHidden = !cell.bottomView.isHidden
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            tableView.performBatchUpdates {
+                UIView.animate(withDuration: 0.3) {
+                    cell.bottomView.isHidden.toggle()
+                }
+            }
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

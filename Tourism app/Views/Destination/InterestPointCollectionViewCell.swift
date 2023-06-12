@@ -11,6 +11,7 @@ import SDWebImage
 class InterestPointCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var poiLabel: UILabel!
     var poiCategory: Poicategory?{
         didSet{
@@ -23,6 +24,7 @@ class InterestPointCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        bgView.viewShadow()
     }
 
 }

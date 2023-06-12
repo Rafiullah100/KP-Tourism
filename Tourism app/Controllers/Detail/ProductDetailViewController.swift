@@ -69,7 +69,6 @@ class ProductDetailViewController: BaseViewController {
     private func updateUI(){
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
-        print(self.productDetail?.userLike)
         if detailType == .list{
             type = .backWithTitle
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
@@ -165,7 +164,6 @@ class ProductDetailViewController: BaseViewController {
                     self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
                     self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                     self.productDetail?.userLike = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
-                    print(self.productDetail?.userLike)
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):
@@ -262,10 +260,13 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
         cell.comment = allComments[indexPath.row]
+        
         cell.commentReplyBlock = {
-            cell.bottomView.isHidden = !cell.bottomView.isHidden
-            tableView.beginUpdates()
-            tableView.endUpdates()
+            tableView.performBatchUpdates {
+                UIView.animate(withDuration: 0.3) {
+                    cell.bottomView.isHidden.toggle()
+                }
+            }
         }
         cell.actionBlock = { text in
             cell.textView.text = ""

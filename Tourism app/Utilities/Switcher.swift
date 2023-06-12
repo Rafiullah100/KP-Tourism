@@ -46,11 +46,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiCategoryId: Int, poiName: String){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, poiCategoryId: Int, poiName: String){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploredistrict
         vc.attractionDistrict = attractionDistrict
+        vc.archeology = archeology
         vc.poiCategoriId = poiCategoryId
         vc.poiName  = poiName
         print(poiCategoryId)
@@ -58,12 +59,13 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: POISubCatoriesModel){
+    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: POISubCatoriesModel, archeology: Archeology? = nil){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.POISubCatories = poiSubCategory
+        vc.archeology = archeology
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -421,11 +423,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIDetailVC(delegate: UIViewController, poiDetail: POIRow, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil){
+    static func goToPOIDetailVC(delegate: UIViewController, poiDetail: POIRow, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIDetailViewController") as! POIDetailViewController
         vc.poiDetail = poiDetail
         vc.exploreDistrict = exploredistrict
         vc.attractionDistrict = attractionDistrict
+        vc.archeology = archeology
 //        vc.poiCategoriId = poiCategoryId
 //        print(poiCategoryId)
         vc.modalPresentationStyle = .fullScreen

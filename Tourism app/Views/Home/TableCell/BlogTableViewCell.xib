@@ -48,29 +48,37 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5tH-fW-UuS">
                                                 <rect key="frame" x="265" y="290" width="45" height="45"/>
                                                 <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="culture" translatesAutoresizingMaskIntoConstraints="NO" id="eW8-YC-3D1">
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="culture" translatesAutoresizingMaskIntoConstraints="NO" id="eW8-YC-3D1">
                                                         <rect key="frame" x="0.0" y="0.0" width="45" height="45"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     </imageView>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="45" id="DyW-6k-G4L"/>
+                                                    <constraint firstItem="eW8-YC-3D1" firstAttribute="top" secondItem="5tH-fW-UuS" secondAttribute="top" id="Hir-oj-GNm"/>
+                                                    <constraint firstAttribute="bottom" secondItem="eW8-YC-3D1" secondAttribute="bottom" id="PJ0-gR-ZeO"/>
+                                                    <constraint firstItem="eW8-YC-3D1" firstAttribute="leading" secondItem="5tH-fW-UuS" secondAttribute="leading" id="WGt-lX-RxJ"/>
                                                     <constraint firstAttribute="height" constant="45" id="X5s-dw-CWX"/>
+                                                    <constraint firstAttribute="trailing" secondItem="eW8-YC-3D1" secondAttribute="trailing" id="YZt-0o-B6Q"/>
                                                 </constraints>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="maskedCornerRadius">
+                                                        <real key="value" value="22.5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
                                             </view>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Gey-l5-qHQ">
-                                                <rect key="frame" x="23" y="300" width="118.5" height="17"/>
+                                                <rect key="frame" x="23" y="295" width="123.5" height="22"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7wP-Nv-8Hg">
-                                                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="49.5" height="22"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="comment" translatesAutoresizingMaskIntoConstraints="NO" id="uSZ-nA-roK">
-                                                                <rect key="frame" x="0.0" y="0.0" width="17" height="17"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="17" height="22"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LFH-Vx-TuT">
-                                                                <rect key="frame" x="27" y="0.0" width="22.5" height="17"/>
+                                                                <rect key="frame" x="27" y="0.0" width="22.5" height="22"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -78,13 +86,13 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="i5g-jb-LMK">
-                                                        <rect key="frame" x="69.5" y="0.0" width="49" height="17"/>
+                                                        <rect key="frame" x="69.5" y="0.0" width="54" height="22"/>
                                                         <subviews>
                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liked" translatesAutoresizingMaskIntoConstraints="NO" id="Nxc-sW-L3D">
-                                                                <rect key="frame" x="0.0" y="0.0" width="16.5" height="17"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="21.5" height="22"/>
                                                             </imageView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="200" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H3f-Nc-A1W">
-                                                                <rect key="frame" x="26.5" y="0.0" width="22.5" height="17"/>
+                                                                <rect key="frame" x="31.5" y="0.0" width="22.5" height="22"/>
                                                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="12"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -189,6 +197,7 @@
                 <outlet property="likesLabel" destination="H3f-Nc-A1W" id="ukb-Ga-vpw"/>
                 <outlet property="locationLabel" destination="Spc-kd-FOZ" id="3xP-n3-FCX"/>
                 <outlet property="titleLabel" destination="hO3-wI-o3r" id="RtY-tG-She"/>
+                <outlet property="userImageView" destination="eW8-YC-3D1" id="r6J-Mv-xvn"/>
             </connections>
             <point key="canvasLocation" x="885.50724637681162" y="139.95535714285714"/>
         </tableViewCell>
@@ -197,7 +206,7 @@
         <image name="Mask Group 21" width="1077" height="1119"/>
         <image name="comment" width="17" height="17"/>
         <image name="culture" width="47" height="47"/>
-        <image name="liked" width="16.5" height="17"/>
+        <image name="liked" width="21.5" height="22"/>
         <image name="loc" width="13.5" height="10.5"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -1120,7 +1120,6 @@
 				018EF80F28F3D53A00E061CB /* Resources */,
 				04DC3F95F35A92ADB2CA081B /* [CP] Embed Pods Frameworks */,
 				52E0CAA52A34249400D636F3 /* ShellScript */,
-				52E0CAA62A34270900D636F3 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1270,26 +1269,7 @@
 		};
 		52E0CAA52A34249400D636F3 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${TARGET_NAME}",
-				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\n\n$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\n$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\n\n$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)\n\n\n",
-			);
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
-		};
-		52E0CAA62A34270900D636F3 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -1300,9 +1280,9 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "\"find ${DWARF_DSYM_FOLDER_PATH}\" -name \"*.dSYM\" | xargs -I \\{\\} \"$PODS_ROOT/Fabric/upload-symbols\" -gsp \"$PODS_ROOT/../GoogleService-Info.plist\" -p ios \\{\\}\n";
+			shellScript = "\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n\n";
 		};
 		D2F9DC3F5E9A853BE7050B52 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1690,6 +1670,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Tourism app/Tourism app.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 9K786374U5;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Tourism app/Info.plist";

@@ -61,7 +61,7 @@ struct TourPackage : Codable {
     let activities : [TourActivities]?
     let userLike: Int?
     let userInterest: Int?
-    let userWishlist: Int?
+    var userWishlist: Int?
     let usersInterestCount: Int?
     let discount: String?
     enum CodingKeys: String, CodingKey {

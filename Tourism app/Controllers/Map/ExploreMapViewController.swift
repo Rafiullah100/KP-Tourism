@@ -43,6 +43,7 @@ class ExploreMapViewController: UIViewController {
     
     private func loadMap(){
         mapView = Helper.shared.showMap(view: view)
+        mapView.zoomLevel = 7
         view.addSubview(mapView)
         mapView.delegate = self
     }

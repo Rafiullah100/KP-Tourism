@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class POIServiceTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var phoneLabel: UILabel!
@@ -16,6 +17,7 @@ class POIServiceTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        bgView.viewShadow()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

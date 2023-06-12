@@ -247,13 +247,14 @@ class Helper{
         collectionView.layoutIfNeeded()
     }
     
-    func showMap(view: UIView) -> MGLMapView {
+    func showMap(view: UIView, latitude: Double? = nil, longitude: Double? = nil) -> MGLMapView {
         let url = URL(string: "mapbox://styles/mapbox/streets-v12")
         let mapView = MGLMapView(frame: view.bounds, styleURL: url)
         mapView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        mapView.setCenter(CLLocationCoordinate2D(latitude: Constants.kpkCoordinates.lat, longitude: Constants.kpkCoordinates.long), zoomLevel: 7, animated: false)
+        mapView.setCenter(CLLocationCoordinate2D(latitude: latitude ?? Constants.kpkCoordinates.lat, longitude: longitude ?? Constants.kpkCoordinates.long), zoomLevel: 10, animated: false)
         mapView.styleURL = MGLStyle.streetsStyleURL
         mapView.tintColor = .darkGray
+        
         return mapView
     }
     

@@ -20,6 +20,7 @@ class POIMapViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var POISubCatories: POISubCatoriesModel?
+    var archeology: Archeology?
     var mapView = MGLMapView()
 
     var destinationCoordinate: CLLocationCoordinate2D?
@@ -38,11 +39,39 @@ class POIMapViewController: BaseViewController {
                 self.locationManager.startUpdatingLocation()
             }
         }
+        updateUI()
         loadMap()
     }
     
+    func updateUI() {
+        if exploreDistrict != nil {
+            thumbnailTopLabel.text = exploreDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
+        }
+        else if attractionDistrict != nil{
+            thumbnailTopLabel.text = attractionDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+        }
+    }
+
+    
     func loadMap() {
-        mapView = Helper.shared.showMap(view: mapViewContainer)
+        if archeology != nil{
+            guard let latitude = Double(archeology?.attractions.latitude ?? ""), let longitude = Double(archeology?.attractions.longitude ?? "") else {
+                return
+            }
+            mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
+        }
+        else if exploreDistrict != nil{
+            guard let latitude = Double(exploreDistrict?.latitude ?? ""), let longitude = Double(exploreDistrict?.longitude ?? "") else {
+                return
+            }
+            mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
+        }
         mapViewContainer.addSubview(mapView)
         mapView.delegate = self
 

@@ -22,25 +22,43 @@ class ProductTableViewCell: UITableViewCell {
     @IBOutlet weak var productNameLabel: UILabel!
     
     @IBOutlet weak var ownerImageView: UIImageView!
-    var actionBlock: (() -> Void)? = nil
     
-    var product: LocalProduct?{
-        didSet{
-            favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
-            if product?.isWished == 0 {
-                favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
-            }
-            else{
-                favouriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
-            }
-            thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
-            productNameLabel.text = "\(product?.title ?? "")"
-            ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
-            ownerNameLAbel.text = "\(product?.users.name ?? "")"
-            locationLabel.text = "\(product?.districts.title ?? "")"
-            uploadedTimeLabel.text =  "\(product?.createdAt ?? "")"
+    private var product: LocalProduct?
+    var wishlistButtonTappedHandler: (() -> Void)?
+
+    func configure(product: LocalProduct) {
+        self.product = product
+        favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
+        if product.isWished == 0 {
+            favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
         }
+        else{
+            favouriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
+        }
+        thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product.previewImage)), placeholderImage: UIImage(named: "placeholder"))
+        productNameLabel.text = "\(product.title)"
+        ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product.users.profileImage)))
+        ownerNameLAbel.text = "\(product.users.name)"
+        locationLabel.text = "\(product.districts.title)"
+        uploadedTimeLabel.text =  "\(product.createdAt ?? "")"
     }
+//    var product: LocalProduct?{
+//        didSet{
+//            favouriteButton.isHidden = Helper.shared.hideWhenNotLogin()
+//            if product?.isWished == 0 {
+//                favouriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+//            }
+//            else{
+//                favouriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
+//            }
+//            thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+//            productNameLabel.text = "\(product?.title ?? "")"
+//            ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product?.users.profileImage ?? "")))
+//            ownerNameLAbel.text = "\(product?.users.name ?? "")"
+//            locationLabel.text = "\(product?.districts.title ?? "")"
+//            uploadedTimeLabel.text =  "\(product?.createdAt ?? "")"
+//        }
+//    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -54,6 +72,20 @@ class ProductTableViewCell: UITableViewCell {
     
     @IBAction func favoriteBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        actionBlock?()
+        self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.product?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
+
+    }
+    
+    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let wish):
+                let successDetail = wish as? SuccessModel
+                self.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
+                self.wishlistButtonTappedHandler?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

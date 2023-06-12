@@ -42,7 +42,10 @@ class AttractionMapViewController: UIViewController {
     }
     
     private func loadMap(){
-        mapView = Helper.shared.showMap(view: view)
+        guard attractionsArray?.count ?? 0 > 0 else { return }
+        guard let latitude = Double(attractionsArray?.first?.latitude ?? ""), let longitude = Double(attractionsArray?.first?.longitude ?? "")  else { return }
+        print(latitude, longitude)
+        mapView = Helper.shared.showMap(view: view, latitude: latitude, longitude: longitude)
         view.addSubview(mapView)
         mapView.delegate = self
     }

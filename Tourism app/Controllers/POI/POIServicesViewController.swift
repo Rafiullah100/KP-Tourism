@@ -19,6 +19,7 @@ class POIServicesViewController: BaseViewController {
     var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
+    var archeology: Archeology?
     var poiCategoriId: Int?
     var districtId: Int?
     var poiName: String?
@@ -45,6 +46,9 @@ class POIServicesViewController: BaseViewController {
         else if attractionDistrict != nil{
             parameters = ["attraction_id": attractionDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
         }
+        else if archeology != nil{
+            parameters = ["attraction_id": archeology?.attractionID ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
+        }
         print(parameters)
         URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
             switch result {
@@ -61,7 +65,7 @@ class POIServicesViewController: BaseViewController {
     
     @IBAction func mapBtnAction(_ sender: Any) {
         guard let POISubCatories = POISubCatories else { return  }
-        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POISubCatories)
+        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POISubCatories, archeology: archeology)
     }
     
     func updateUI() {
@@ -73,6 +77,10 @@ class POIServicesViewController: BaseViewController {
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.displayImage ?? "")))
+        }
+        else if archeology != nil{
+            thumbnailTopLabel.text = archeology?.attractions.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
         }
     }
 }
@@ -96,6 +104,6 @@ extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }
-        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail, exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict)
+        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail, exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict, archeology: archeology)
     }
 }

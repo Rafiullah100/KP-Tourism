@@ -196,29 +196,19 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
-            switch result {
-            case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                feedCell.saveButton.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
-            case .failure(let error):
-                self.view.makeToast(error.localizedDescription)
-            }
-        }
+    func toggleLikeStatus(for indexPath: IndexPath) {
+        var feed = newsFeed[indexPath.row]
+        feed.isLiked = feed.isLiked == 1 ? 0 : 1
+        feed.likesCount = feed.isLiked == 1 ? (feed.likesCount ?? 0) + 1 : (feed.likesCount ?? 0) - 1
+        newsFeed[indexPath.row] = feed
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, feedCell : FeedTableViewCell, index: Int) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
-            switch result {
-            case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                feedCell.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
-                feedCell.likeCountLabel.text = successDetail?.message == "Liked" ? "\((self.newsFeed[index].likesCount ?? 0) + 1)" : "\((self.newsFeed[index].likesCount ?? 0) - 1)"
-            case .failure(let error):
-                self.view.makeToast(error.localizedDescription)
-            }
-        }
+    func toggleWishlistStatus(for indexPath: IndexPath) {
+        var feed = newsFeed[indexPath.row]
+        feed.isWished = feed.isWished == 1 ? 0 : 1
+        newsFeed[indexPath.row] = feed
+        tableView.reloadRows(at: [indexPath], with: .none)
     }
 }
 
@@ -226,6 +216,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return stories.count + 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
         cell.cellType = indexPath.row == 0 ? .userSelf : .other
@@ -271,23 +262,22 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         let cell: FeedTableViewCell = tableView.dequeueReusableCell(withIdentifier: FeedTableViewCell.cellReuseIdentifier(), for: indexPath) as! FeedTableViewCell
         cell.layoutIfNeeded()
         cell.expandableLabel.delegate = self
-        cell.feed = newsFeed[indexPath.row]
         cell.actionBlock = {
             self.actionSheet(row: indexPath.row)
         }
+        cell.likeButtonTappedHandler = {
+            self.toggleLikeStatus(for: indexPath)
+        }
+        cell.wishlistButtonTappedHandler = {
+            self.toggleWishlistStatus(for: indexPath)
+        }
+        cell.configure(feed: newsFeed[indexPath.row])
         cell.shareActionBlock = {
             Utility.showAlert(message: "Do you want to share the post?", buttonTitles: ["No", "Yes"]) { responce in
                 if responce == "Yes"{
                     self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0], model: SuccessModel.self)
                 }
             }
-        }
-        
-        cell.likeActionBlock = {
-            self.like(route: .likeApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell, index: indexPath.row)
-        }
-        cell.saveActionBlock = {
-            self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.newsFeed[indexPath.row].id ?? 0, "section": "post"], model: SuccessModel.self, feedCell: cell)
         }
         cell.commentActionBlock = {
             Switcher.gotoPostCommentVC(delegate: self, postId: self.newsFeed[indexPath.row].id ?? 0)

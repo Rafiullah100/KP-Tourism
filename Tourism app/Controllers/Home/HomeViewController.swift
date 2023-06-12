@@ -69,7 +69,7 @@ class HomeViewController: BaseViewController {
     //pagination
     var totalCount = 1
     var currentPage = 1
-    var limit = 30
+    var limit = 5
     //explore
     var exploreDistrict: [ExploreDistrict] = [ExploreDistrict]()
     var attractionDistrict: [AttractionsDistrict] = [AttractionsDistrict]()
@@ -83,8 +83,6 @@ class HomeViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        fatalError()
         
         searchBgView.viewShadow()
         notificationView.viewShadow()
@@ -181,6 +179,34 @@ class HomeViewController: BaseViewController {
         blogs = []
         investment = []
     }
+    
+    func toggleWishlistStatus(for indexPath: IndexPath) {
+        var product = localProducts[indexPath.row]
+        product.isWished = product.isWished == 1 ? 0 : 1
+        localProducts[indexPath.row] = product
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func toggleArcheologyWishlistStatus(for indexPath: IndexPath) {
+        var arch = archeology[indexPath.row]
+        arch.attractions.isWished = arch.attractions.isWished == 1 ? 0 : 1
+        archeology[indexPath.row] = arch
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func toggleTourWishlistStatus(for indexPath: IndexPath) {
+        var tour = tourPackage[indexPath.row]
+        tour.userWishlist = tour.userWishlist == 1 ? 0 : 1
+        tourPackage[indexPath.row] = tour
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
+    
+    func toggleDistrictWishlistStatus(for indexPath: IndexPath) {
+        var district = exploreDistrict[indexPath.row]
+        district.isWished = district.isWished == 1 ? 0 : 1
+        exploreDistrict[indexPath.row] = district
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
@@ -218,10 +244,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
         switch cellType {
         case .explore:
             let cell: ExploreTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ExploreTableViewCell
-            cell.district = exploreDistrict[indexPath.row]
-            cell.actionBlock = {
-                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.exploreDistrict[indexPath.row].id ?? 0, "section": "district"], model: SuccessModel.self, exploreCell: cell)
+            cell.wishlistButtonTappedHandler = {
+                self.toggleDistrictWishlistStatus(for: indexPath)
             }
+            cell.configure(district: exploreDistrict[indexPath.row])
             return cell
         case .investment:
             let cell: InvestmentTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! InvestmentTableViewCell
@@ -241,11 +267,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .tour:
             let cell: TourTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! TourTableViewCell
-            cell.tour = tourPackage[indexPath.row]
-            cell.actionBlock = {
-                let packageID = self.tourPackage[indexPath.row].id
-                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": packageID ?? 0, "section": "tour_package"], model: SuccessModel.self, tourCell: cell)
+            cell.wishlistButtonTappedHandler = {
+                self.toggleTourWishlistStatus(for: indexPath)
             }
+            cell.configure(tour: tourPackage[indexPath.row])
             return cell
         case .event:
             let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
@@ -253,11 +278,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .arch:
             let cell: ArchTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ArchTableViewCell
-            cell.archeology = archeology[indexPath.row]
-            cell.actionBlock = {
-                let archeologyID = self.archeology[indexPath.row].attractions.id
-                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self, archeologyCell: cell)
+            cell.wishlistButtonTappedHandler={
+                self.toggleArcheologyWishlistStatus(for: indexPath)
             }
+            cell.configure(archeology: archeology[indexPath.row])
             return cell
         case .blog:
             let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
@@ -265,10 +289,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         case .product:
             let cell: ProductTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! ProductTableViewCell
-            cell.product = localProducts[indexPath.row]
-            cell.actionBlock = {
-                self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.localProducts[indexPath.row].id, "section": "local_product"], model: SuccessModel.self, productCell: cell)
+            cell.wishlistButtonTappedHandler = {
+                self.toggleWishlistStatus(for: indexPath)
             }
+            cell.configure(product: localProducts[indexPath.row])
             return cell
         case .visitKP:
             let cell: VisitKPTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! VisitKPTableViewCell
@@ -324,6 +348,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource{
 
 extension HomeViewController: MDCTabBarViewDelegate{
     func tabBarView(_ tabBarView: MDCTabBarView, didSelect item: UITabBarItem) {
+//        fatalError()
         if item.tag == 3{
             galleryContainer.isHidden = false
             tableViewContainer.isHidden = true
@@ -461,29 +486,6 @@ extension HomeViewController: MDCTabBarViewDelegate{
             fetch(route: .fetchProduct, method: .post, parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": textField.text ?? ""], model: ProductModel.self)
         default: break
             //ejnre
-        }
-    }
-    
-    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, exploreCell: ExploreTableViewCell? = nil, tourCell: TourTableViewCell? = nil, archeologyCell: ArchTableViewCell? = nil, productCell: ProductTableViewCell? = nil) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
-            switch result {
-            case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                if  self.cellType == .explore{
-                    exploreCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
-                }
-                else if self.cellType == .tour{
-                    tourCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
-                }
-                else if self.cellType == .arch{
-                    archeologyCell?.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
-                }
-                else if self.cellType == .product{
-                    productCell?.favouriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
-                }
-            case .failure(let error):
-                self.view.makeToast(error.localizedDescription)
-            }
         }
     }
 }

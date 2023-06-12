@@ -16,6 +16,28 @@ class ArchTableViewCell: UITableViewCell {
     @IBOutlet weak var slideShow: ImageSlideshow!
     @IBOutlet weak var districtLabel: UILabel!
     @IBOutlet weak var archeologyLabel: UILabel!
+    
+    var imageSDWebImageSrc = [SDWebImageSource]()
+
+    private var archeology: Archeology?
+    var wishlistButtonTappedHandler: (() -> Void)?
+
+    func configure(archeology: Archeology) {
+        self.archeology = archeology
+        favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
+        archeologyLabel.text = archeology.attractions.title?.stripOutHtml()
+        districtLabel.text = archeology.attractions.description?.stripOutHtml()
+        imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology.attractions.displayImage ?? "")))
+        imageSDWebImageSrc = []
+        
+        if archeology.attractions.isWished == 0 {
+            favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
+        }
+        else{
+            favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -38,24 +60,7 @@ class ArchTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    var imageSDWebImageSrc = [SDWebImageSource]()
     
-    var archeology: Archeology? {
-        didSet{
-            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
-            archeologyLabel.text = archeology?.attractions.title?.stripOutHtml()
-            districtLabel.text = archeology?.attractions.description?.stripOutHtml()
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            imageSDWebImageSrc = []
-            
-            if archeology?.attractions.isWished == 0 {
-                favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
-            }
-            else{
-                favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
-            }
-        }
-    }
     
     override func prepareForReuse() {
         super.prepareForReuse()
@@ -64,6 +69,20 @@ class ArchTableViewCell: UITableViewCell {
     
     @IBAction func LikeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        actionBlock?()
+        let archeologyID = self.archeology?.attractions.id
+        self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self)
+    }
+    
+    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let wish):
+                let successDetail = wish as? SuccessModel
+                self.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
+                self.wishlistButtonTappedHandler?()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }

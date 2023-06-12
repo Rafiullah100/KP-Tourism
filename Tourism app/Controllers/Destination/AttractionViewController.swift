@@ -39,7 +39,7 @@ class AttractionViewController: BaseViewController {
     var currentPage = 1
     var totalPages = 1
     var districtID: Int?
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +55,7 @@ class AttractionViewController: BaseViewController {
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            
         }
         else if attractionDistrict != nil{
             sectionLabel.text = "What to see"
@@ -63,6 +64,7 @@ class AttractionViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
             print(attractionDistrict?.id ?? 0, districtID ?? 0)
+           
         }
         else if archeology != nil{
             sectionLabel.text = "Attractions"
@@ -70,6 +72,7 @@ class AttractionViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+          
         }
         else if wishlistAttraction != nil{
             sectionLabel.text = "What to see"
@@ -77,6 +80,7 @@ class AttractionViewController: BaseViewController {
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+           
         }
         if wishlistDistrict != nil {
             sectionLabel.text = "Attractions"
@@ -84,6 +88,7 @@ class AttractionViewController: BaseViewController {
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
             fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0, "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            
         }
     }
     
@@ -129,6 +134,13 @@ class AttractionViewController: BaseViewController {
             mapImageView.image = UIImage(named: "map-green")
         }
     }
+    
+    func toggleWishlistStatus(for indexPath: IndexPath) {
+        var attraction = attractionDistrictsArray[indexPath.row]
+        attraction.isWished = attraction.isWished == 1 ? 0 : 1
+        attractionDistrictsArray[indexPath.row] = attraction
+        collectionView.reloadItems(at: [indexPath])
+    }
 }
 
 extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDataSource{
@@ -138,10 +150,10 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: DestAttractCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DestAttractCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DestAttractCollectionViewCell
-        cell.actionBlock = {
-            self.like(route: .doWishApi, method: .post, parameters: ["section_id": self.attractionDistrictsArray[indexPath.row].id ?? 0, "section": "attraction"], model: SuccessModel.self, cell: cell)
+        cell.likeButtonTappedHandler = {
+            self.toggleWishlistStatus(for: indexPath)
         }
-        cell.attraction = attractionDistrictsArray[indexPath.row]
+        cell.configure(attraction: attractionDistrictsArray[indexPath.row])
         return cell
     }
     
@@ -161,17 +173,7 @@ extension AttractionViewController: UICollectionViewDelegate, UICollectionViewDa
         }
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, cell: DestAttractCollectionViewCell) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
-            switch result {
-            case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                cell.favoriteBtn.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
-            case .failure(let error):
-                self.view.makeToast(error.localizedDescription)
-            }
-        }
-    }
+  
 }
 
 extension AttractionViewController: UICollectionViewDelegateFlowLayout{
