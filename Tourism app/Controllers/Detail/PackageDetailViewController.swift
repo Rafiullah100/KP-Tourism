@@ -178,6 +178,11 @@ class PackageDetailViewController: BaseViewController {
         statusBarView.addGradient()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableViewHeight.constant = tableView.contentSize.height
+    }
+    
     private func reload(){
         self.tableViewHeight.constant = CGFloat.greatestFiniteMagnitude
         self.tableView.reloadData()

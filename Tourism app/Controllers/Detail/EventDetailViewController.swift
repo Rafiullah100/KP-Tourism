@@ -97,6 +97,11 @@ class EventDetailViewController: BaseViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableViewHeight.constant = tableView.contentSize.height
+    }
+    
     @IBAction func directionBtnAction(_ sender: Any) {
         guard let originCoordinate = originCoordinate, let lat: Double = Double(eventDetail?.latitude ?? ""),let lon: Double = Double(eventDetail?.longitude ?? "") else {
             self.view.makeToast(Constants.noCoordinate)
@@ -172,7 +177,8 @@ class EventDetailViewController: BaseViewController {
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+                self.tableView.reloadData()
+//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

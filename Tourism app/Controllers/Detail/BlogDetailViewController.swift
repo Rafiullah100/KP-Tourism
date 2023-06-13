@@ -44,11 +44,9 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 1
-    var limit = 100
+    var limit = 10
     var commentText = "Write a comment"
     var likeCount = 0
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +76,11 @@ class BlogDetailViewController: BaseViewController {
         viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         reloadComment()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableViewHeight.constant = tableView.contentSize.height
     }
     
     func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
@@ -126,7 +129,8 @@ class BlogDetailViewController: BaseViewController {
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+                self.tableView.reloadData()
+//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -228,6 +232,18 @@ extension BlogDetailViewController: UITextViewDelegate{
             let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
             commentTextViewHeight.constant = newSize.height
             view.layoutIfNeeded()
+        }
+    }
+}
+
+extension BlogDetailViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            print(allComments.count, totalCount)
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
         }
     }
 }

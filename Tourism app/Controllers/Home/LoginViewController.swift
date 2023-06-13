@@ -30,8 +30,8 @@ class LoginViewController: BaseViewController {
         passwordTextField.text = "12345678"
         
 //        //seller
-//        emailTextField.text = "rafiseller@gmail.com"
-//        passwordTextField.text = "123"
+        emailTextField.text = "rafiseller@gmail.com"
+        passwordTextField.text = "123"
         navigationItem.hidesBackButton = true
     }
     
@@ -112,6 +112,7 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.uuid = self.login?.uuID
                     UserDefaults.standard.userBio = self.login?.about
                     UserDefaults.standard.loadFirstTime = true
+                    print(self.login?.uuID)
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{

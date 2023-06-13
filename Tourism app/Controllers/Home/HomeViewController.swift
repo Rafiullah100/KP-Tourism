@@ -26,7 +26,6 @@ class HomeViewController: BaseViewController {
     
     @IBOutlet weak var siteLabel: UILabel!
     
-    @IBOutlet weak var topLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -357,10 +356,8 @@ extension HomeViewController: MDCTabBarViewDelegate{
             galleryContainer.isHidden = true
             tableViewContainer.isHidden = false
         }
-        topLabel.text = Constants.section[item.tag].title
         textField.text = ""
         addChild(tag: item.tag)
-        
         mapButton.isHidden = item.tag == 0 ? false : true
         self.contentView.frame.origin.y = 0
         cardVisible = true

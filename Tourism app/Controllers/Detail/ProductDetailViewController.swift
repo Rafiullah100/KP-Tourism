@@ -107,6 +107,11 @@ class ProductDetailViewController: BaseViewController {
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableViewHeight.constant = tableView.contentSize.height
+    }
+    
     func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
@@ -217,7 +222,8 @@ class ProductDetailViewController: BaseViewController {
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+                self.tableView.reloadData()
+//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

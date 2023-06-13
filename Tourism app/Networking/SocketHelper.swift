@@ -112,6 +112,7 @@ final class SocketHelper: NSObject {
         socket?.on(Constants.socketEvent) { (dataArray, socketAck) -> Void in
             if let dataArray = dataArray as? [[String: Any]], let firstData = dataArray.first {
                 if let from = firstData["from"] as? String, let message = firstData["message"] as? String {
+                    print(from)
                     completion(message)
                 }
             }
@@ -119,7 +120,22 @@ final class SocketHelper: NSObject {
     }
     
     func sendMessage(message: String, to: String) {
-
         socket?.emit(Constants.socketEvent, ["to": to, "message": message])
+    }
+    
+    func typeListening(completion: @escaping (String?) -> Void) {
+        socket?.on(Constants.socketTypingEvent) { (data, socketAck) -> Void in
+            if let dataArray = data as? [[String: Any]], let firstData = dataArray.first {
+                if let from = firstData["from"] as? String, let message = firstData["message"] as? String {
+                    print(from)
+                    completion(message)
+                }
+            }
+        }
+    }
+    
+    func typeEmiting(to: String){
+        print(to)
+        socket?.emit(Constants.socketTypingEvent, ["to": to])
     }
 }
