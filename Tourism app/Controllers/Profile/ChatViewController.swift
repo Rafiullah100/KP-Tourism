@@ -45,17 +45,16 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?
-    
-    var manager = SocketManager(socketURL: URL(string: Constants.socketIOUrl)!, config: [.log(true), .compress])
-    var socket: SocketIOClient?
-    
+    var conversationID: Int?
     var profileImage: String?
     var uuid: String?
-    var currentPage = 0
+    var currentPage = 1
     var limit = 20
-    var isLoadingMoreMessages = false
+    var totalCount = 0
 
-    
+    var typingTimer: Timer?
+    let typingInterval = 2
+
     override func viewDidLoad() {
         super.viewDidLoad()
         messageInputBar.inputTextView.delegate = self
@@ -66,18 +65,32 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
-        DispatchQueue.main.async {
-            SocketHelper.shared.typeListening { typing in
-                self.typingLabel.isHidden = false
+        registerSocketEvent()
+    }
+    
+    
+    private func registerSocketEvent(){
+        SocketHelper.shared.typeListening { typing in
+            if typing?.lowercased() == "typing..."{
+                DispatchQueue.main.async {
+                    self.typingLabel.isHidden = false
+                    self.typingTimer?.invalidate()
+                    self.typingTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.stopTyping), userInfo: nil, repeats: false)
+                }
             }
         }
+        
         DispatchQueue.main.async {
             SocketHelper.shared.getMessage { message in
-                self.messages.append(Message(sender: self.otherUser!, messageId: "000", sentDate: Date().addingTimeInterval(000), kind: .text(message ?? "")))
+                self.appendMessage(sender: self.otherUser!, message: message ?? "", date: "")
                 self.messagesCollectionView.reloadData()
                 self.messagesCollectionView.scrollToBottom()
             }
         }
+    }
+    
+    @objc func stopTyping() {
+        typingLabel.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,7 +109,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             nameLabel.text = chatUser?.name?.capitalized
             profileImage = chatUser?.profileImage ?? ""
             uuid = chatUser?.uuid
-            uuid = ""
         }else{
             nameLabel.text = chatUser1?.user?.name?.capitalized
             profileImage = chatUser1?.user?.profileImage ?? ""
@@ -107,46 +119,59 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     }
     
     private func loadMessages(){
-        guard !isLoadingMoreMessages else {
-            return
-        }
+        print(currentPage)
         fetch(route: .onetoOneConversation, method: .post, parameters: ["uuid": uuid ?? "", "page": currentPage,  "limit": limit], model: OnetoOneConversationModel.self)
     }
     
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-            guard scrollView.contentOffset.y < 0 else {
-                return
-            }
-
-            let topInset = scrollView.contentInset.top
-            let offsetY = scrollView.contentOffset.y + topInset
-
-            if offsetY < 50 {
-                currentPage = currentPage + 1
-                loadMessages()
-            }
-        }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
-            case .success(let conversation):
-                self.conversation = (conversation as? OnetoOneConversationModel)?.chats?.rows ?? []
+            case .success(let model):
+                let conversationModel = model as? OnetoOneConversationModel
+                self.conversation = conversationModel?.chats?.rows ?? []
+                if !(self.conversation?.isEmpty ?? true){
+                    self.conversationID = self.conversation?[0].conversationID
+                    self.conversation?.remove(at: 0)
+                }
                 self.conversation?.forEach({ item in
                     if item.sender?.id == UserDefaults.standard.userID {
                         self.currentUser = Sender(senderId: "self", displayName: item.sender?.name ?? "")
                         guard let currentUser = self.currentUser else { return }
-                        self.messages.append(Message(sender: currentUser, messageId: "\(item.id ?? 0)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content ?? "")))
+                        self.appendMessage(sender: currentUser, message: item.content ?? "", date: item.createdAt ?? "")
                     }
                     else{
                         self.otherUser = Sender(senderId: "other", displayName: item.sender?.name ?? "")
                         guard let otherUser = self.otherUser else { return }
-                        self.messages.append(Message(sender: otherUser, messageId: "\(item.id ?? 0)", sentDate: Date().addingTimeInterval(000), kind: .text(item.content ?? "")))
+                        self.appendMessage(sender: otherUser, message: item.content ?? "", date: item.createdAt ?? "")
                     }
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
-                if self.currentPage == 0 {
+                self.totalCount = conversationModel?.chats?.count ?? 0
+                print(self.totalCount, self.conversation?.count)
+//                if self.currentPage == 1 {
+//                    self.messagesCollectionView.scrollToBottom()
+//                }
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
+    }
+        
+    func sendMessage<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, text: String, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let message):
+                let success = message as? SuccessModel
+                if success?.success == true {
+                    guard let currentUser = self.currentUser else { return }
+                    SocketHelper.shared.sendMessage(message: self.messageInputBar.inputTextView.text ?? "", to: self.uuid ?? "")
+                    self.appendMessage(sender: currentUser, message: text, date: "")
+                    self.messageInputBar.inputTextView.text = ""
+                    self.messageInputBar.inputTextView.resignFirstResponder()
+                    self.messagesCollectionView.reloadData()
                     self.messagesCollectionView.scrollToBottom()
+                    
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -154,6 +179,20 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
     }
     
+    func appendMessage(sender: SenderType, message: String, date: String)  {
+        self.messages.append(Message(sender: sender, messageId: "000", sentDate: Helper.shared.dateFromString(date), kind: .text(message)))
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            currentPage = currentPage + 1
+            loadMessages()
+        }
+    }
+}
+
+extension ChatViewController{
+        
     func currentSender() -> MessageKit.SenderType {
         return currentUser ?? Sender(senderId: "", displayName: "")
     }
@@ -187,33 +226,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
       }
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        if chatUser != nil{
-            sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": chatUser?.id ?? "", "uuid": chatUser?.uuid ?? ""], text: text, model: SuccessModel.self)
-        }
-        else{
-            sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": chatUser1?.conversationID ?? "", "uuid": chatUser1?.user?.uuid ?? ""], text: text, model: SuccessModel.self)
-        }
-    }
-        
-    func sendMessage<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, text: String, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
-            switch result {
-            case .success(let message):
-                let success = message as? SuccessModel
-                if success?.success == true {
-                    guard let currentUser = self.currentUser else { return }
-                    SocketHelper.shared.sendMessage(message: self.messageInputBar.inputTextView.text ?? "", to: self.chatUser1?.user?.uuid ?? "")
-                    self.messages.append(Message(sender: currentUser, messageId: "\(Date())", sentDate: Date().addingTimeInterval(000), kind: .text(text)))
-                    self.messageInputBar.inputTextView.text = ""
-                    self.messageInputBar.inputTextView.resignFirstResponder()
-                    self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToBottom()
-                    
-                }
-            case .failure(let error):
-                self.view.makeToast(error.localizedDescription)
-            }
-        }
+        print(conversationID ?? 0)
+        sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": conversationID ?? 0, "uuid": uuid ?? ""], text: text, model: SuccessModel.self)
     }
 }
 
@@ -224,4 +238,17 @@ extension ChatViewController: UITextViewDelegate{
         return true
     }
     
+}
+
+extension ChatViewController{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        let currentOffset = scrollView.contentOffset.y
+//        print(currentOffset)
+//        if currentOffset < 0 {
+//            if messages.count != totalCount{
+//                currentPage = currentPage + 1
+//                loadMessages()
+//            }
+//        }
+//    }
 }

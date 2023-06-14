@@ -44,14 +44,14 @@ class CommentsTableViewCell: UITableViewCell {
             print(Helper.shared.getProfileImage())
             userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
+            self.layoutIfNeeded()
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
 //        tableViewHeight.constant = self.tableView.contentSize.height
-        tableView.estimatedRowHeight = 44.0
-        tableView.rowHeight = UITableView.automaticDimension
+        
     }
     
     override func awakeFromNib() {
@@ -60,6 +60,9 @@ class CommentsTableViewCell: UITableViewCell {
         textView.isScrollEnabled = false
         textView.text = inputText
         textView.textColor = UIColor.lightGray
+        
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
     }
 
     @IBAction func hideShowBtnAction(_ sender: Any) {

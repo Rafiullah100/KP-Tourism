@@ -87,7 +87,7 @@ struct ExploreModel: Codable {
 struct ExploreDistrict: Codable {
     let id, userID: Int?
     let title, slug: String?
-//    let geographicalArea: GeographicalArea
+    let geographicalArea: String
     let thumbnailImage, previewImage, locationTitle, latitude: String?
     let longitude, description: String?
     let isFeatured, isTop: Bool?
@@ -100,7 +100,7 @@ struct ExploreDistrict: Codable {
         case id
         case userID = "user_id"
         case title, slug
-//        case geographicalArea = "geographical_area"
+        case geographicalArea = "geographical_area"
         case thumbnailImage = "thumbnail_image"
         case previewImage = "preview_image"
         case locationTitle = "location_title"

@@ -110,11 +110,13 @@ final class SocketHelper: NSObject {
     
     func getMessage(completion: @escaping (_ message: String?) -> Void) {
         socket?.on(Constants.socketEvent) { (dataArray, socketAck) -> Void in
-            if let dataArray = dataArray as? [[String: Any]], let firstData = dataArray.first {
-                if let from = firstData["from"] as? String, let message = firstData["message"] as? String {
-                    print(from)
-                    completion(message)
-                }
+            if let responseArray = dataArray as? [[String: Any]],
+               let firstResponse = responseArray.first,
+               let message = firstResponse["message"] as? [String: Any],
+               let content = message["content"] as? String {
+                completion(content)
+            } else {
+                print("Invalid response format or missing content")
             }
         }
     }

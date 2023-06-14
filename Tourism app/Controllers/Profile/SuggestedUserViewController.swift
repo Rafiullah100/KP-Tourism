@@ -29,7 +29,6 @@ class SuggestedUserViewController: UIViewController {
     var limit = 20
     
     var suggestedUsers: [SuggestedUser] = [SuggestedUser]()
-    private var apiType: ApiType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,35 +38,20 @@ class SuggestedUserViewController: UIViewController {
     }
     
     private func loadData(){
-        apiType = .suggestedUser
         fetch(route: .suggestedUser, method: .post, parameters: ["page": currentPage, "limit": limit, "search": searchTF.text ?? ""], model: SuggestedUserModel.self)
     }
     
 
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, cell: SuggestedCollectionViewCell? = nil) {
+    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
-                if self.apiType == .suggestedUser {
-                    let suggestedModel = model as? SuggestedUserModel
-                    self.suggestedUsers.append(contentsOf: suggestedModel?.suggestedUsers ?? [])
-                    self.totalCount = suggestedModel?.suggestedUsersCount ?? 0
-                    self.suggestedUsers.count == 0 ? self.collectionView.setEmptyView("No user found!") : self.collectionView.reloadData()
-                }
-                else if self.apiType == .follow{
-                    let res = model as! SuccessModel
-                    if res.success == false {
-                        self.view.makeToast(res.message)
-                    }
-                    else{
-                        if res.message == "Followed"{
-                            cell?.followButton.setTitle("UNFollow", for: .normal)
-                        }
-                        else if res.message == "Unfollowed"{
-                            cell?.followButton.setTitle("Follow", for: .normal)
-                        }
-                    }
-                }
+                let suggestedModel = model as? SuggestedUserModel
+                self.suggestedUsers.append(contentsOf: suggestedModel?.suggestedUsers ?? [])
+                self.totalCount = suggestedModel?.suggestedUsersCount ?? 0
+                print(self.totalCount)
+                self.totalCount == 0 ? self.collectionView.setEmptyView("No user found!") : nil
+                self.collectionView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -85,10 +69,6 @@ extension SuggestedUserViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: SuggestedCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SuggestedCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! SuggestedCollectionViewCell
         cell.users = self.suggestedUsers[indexPath.row]
-        cell.followAction = {
-            self.apiType = .follow
-            self.fetch(route: .doFollow, method: .post, parameters: ["uuid": self.suggestedUsers[indexPath.row].uuid ?? ""], model: SuccessModel.self, cell: cell)
-        }
         return cell
     }
 }
@@ -103,7 +83,6 @@ extension SuggestedUserViewController: UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if suggestedUsers.count != totalCount && indexPath.row == suggestedUsers.count - 1  {
-            print(suggestedUsers.count, totalCount)
             currentPage = currentPage + 1
             loadData()
         }

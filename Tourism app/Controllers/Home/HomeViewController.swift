@@ -122,6 +122,7 @@ class HomeViewController: BaseViewController {
                     let eventModel = self.model as? EventsModel
                     self.event.append(contentsOf: eventModel?.events ?? [])
                     self.totalCount = eventModel?.count ?? 0
+                    print(self.totalCount, self.event.count)
                 }
                 else if self.cellType == .arch{
                     self.archeology.append(contentsOf: (self.model as? ArcheologyModel)?.archeology ?? [])

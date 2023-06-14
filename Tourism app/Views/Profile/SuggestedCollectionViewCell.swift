@@ -29,6 +29,20 @@ class SuggestedCollectionViewCell: UICollectionViewCell {
     }
 
     @IBAction func followBtnAction(_ sender: Any) {
-        followAction?()
+        self.followUser(route: .doFollow, method: .post, parameters: ["uuid": self.users?.uuid ?? ""], model: SuccessModel.self)
+    }
+    
+    func followUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
+        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            switch result {
+            case .success(let model):
+                let res = model as! SuccessModel
+                if res.success == true {
+                    self.followButton.setTitle(res.message == "Followed" ? "UNFollow" : "Follow", for: .normal)
+                }
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
 }
