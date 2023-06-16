@@ -34,7 +34,7 @@ struct Message: MessageType {
 class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate, InputBarAccessoryViewDelegate {
     
     var currentUser: Sender?
-    var otherUser: Sender?
+    var otherUser: Sender = Sender(senderId: "other", displayName: "")
     var messages = [MessageType]()
     
     @IBOutlet weak var nameLabel: UILabel!
@@ -49,12 +49,13 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var profileImage: String?
     var uuid: String?
     var currentPage = 1
-    var limit = 20
+    var limit = 1000
     var totalCount = 0
-
+    
     var typingTimer: Timer?
-    let typingInterval = 2
-
+    var isLoadingData = false
+    var userID: Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         messageInputBar.inputTextView.delegate = self
@@ -62,6 +63,8 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
+        self.messagesCollectionView.transform3D = CATransform3DMakeScale(1, -1, 1)
+//        self.collecttionView.collectionViewLayout = InvertedCollectionViewFlowLayout.init()
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
         topBarView.addBottomShadow()
@@ -81,10 +84,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
         
         DispatchQueue.main.async {
-            SocketHelper.shared.getMessage { message in
-                self.appendMessage(sender: self.otherUser!, message: message ?? "", date: "")
-                self.messagesCollectionView.reloadData()
-                self.messagesCollectionView.scrollToBottom()
+            SocketHelper.shared.getMessage { message, from in
+                if from == self.uuid{
+                    self.appendMessage(sender: self.otherUser, message: message ?? "", date: "")
+                }
             }
         }
     }
@@ -98,7 +101,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         navigationItem.title = "Backkk"
         self.navigationController?.navigationBar.isHidden = true
     }
-
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.loadChatUser), object: nil)
+    }
+    
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
@@ -109,12 +117,14 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             nameLabel.text = chatUser?.name?.capitalized
             profileImage = chatUser?.profileImage ?? ""
             uuid = chatUser?.uuid
+            userID = chatUser?.id
         }else{
             nameLabel.text = chatUser1?.user?.name?.capitalized
             profileImage = chatUser1?.user?.profileImage ?? ""
             uuid = chatUser1?.user?.uuid
+            userID = chatUser1?.user?.id
         }
-        recieverProfileImage.sd_setImage(with: URL(string: Route.baseUrl + (profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+        recieverProfileImage.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         loadMessages()
     }
     
@@ -130,9 +140,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             case .success(let model):
                 let conversationModel = model as? OnetoOneConversationModel
                 self.conversation = conversationModel?.chats?.rows ?? []
-                if !(self.conversation?.isEmpty ?? true){
+                if !(self.conversation?.isEmpty ?? true) && self.currentPage == 1{
                     self.conversationID = self.conversation?[0].conversationID
-                    self.conversation?.remove(at: 0)
+                    self.conversation?.removeLast()
                 }
                 self.conversation?.forEach({ item in
                     if item.sender?.id == UserDefaults.standard.userID {
@@ -142,22 +152,21 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     }
                     else{
                         self.otherUser = Sender(senderId: "other", displayName: item.sender?.name ?? "")
-                        guard let otherUser = self.otherUser else { return }
-                        self.appendMessage(sender: otherUser, message: item.content ?? "", date: item.createdAt ?? "")
+                        self.appendMessage(sender: self.otherUser, message: item.content ?? "", date: item.createdAt ?? "")
                     }
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
                 self.totalCount = conversationModel?.chats?.count ?? 0
-                print(self.totalCount, self.conversation?.count)
-//                if self.currentPage == 1 {
-//                    self.messagesCollectionView.scrollToBottom()
-//                }
+                print(self.totalCount, self.messages.count)
+                //                if self.currentPage == 1 {
+                //                    self.messagesCollectionView.scrollToBottom()
+                //                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
     }
-        
+    
     func sendMessage<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, text: String, model: T.Type) {
         URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
@@ -165,13 +174,10 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 let success = message as? SuccessModel
                 if success?.success == true {
                     guard let currentUser = self.currentUser else { return }
-                    SocketHelper.shared.sendMessage(message: self.messageInputBar.inputTextView.text ?? "", to: self.uuid ?? "")
+                    SocketHelper.shared.sendMessage(uuid: self.uuid ?? "", conversationID: self.conversationID ?? 0, message: text)
                     self.appendMessage(sender: currentUser, message: text, date: "")
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.resignFirstResponder()
-                    self.messagesCollectionView.reloadData()
-                    self.messagesCollectionView.scrollToBottom()
-                    
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -179,20 +185,15 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
     }
     
+    
     func appendMessage(sender: SenderType, message: String, date: String)  {
         self.messages.append(Message(sender: sender, messageId: "000", sentDate: Helper.shared.dateFromString(date), kind: .text(message)))
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if indexPath.row == 0 {
-            currentPage = currentPage + 1
-            loadMessages()
-        }
+        self.messagesCollectionView.reloadData()
+        self.messagesCollectionView.scrollToBottom()
     }
 }
 
 extension ChatViewController{
-        
     func currentSender() -> MessageKit.SenderType {
         return currentUser ?? Sender(senderId: "", displayName: "")
     }
@@ -210,24 +211,23 @@ extension ChatViewController{
             avatarView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         }
         else{
-            avatarView.sd_setImage(with: URL(string: Route.baseUrl + (profileImage ?? "")), placeholderImage: UIImage(named: "user"), completed: nil)
+            avatarView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: profileImage ?? "")), placeholderImage: UIImage(named: "user"), completed: nil)
         }
     }
-
+    
     func cellTopLabelAttributedText(for message: MessageType, at indexPath: IndexPath) -> NSAttributedString? {
         let name = message.sender.displayName
         return NSAttributedString(
-          string: name,
-          attributes: [
-            .font: UIFont(name: Constants.appFontName, size: 12) ?? UIFont(),
-            .foregroundColor: UIColor.black
-          ]
+            string: name,
+            attributes: [
+                .font: UIFont(name: Constants.appFontName, size: 12) ?? UIFont(),
+                .foregroundColor: UIColor.black
+            ]
         )
-      }
+    }
     
     func inputBar(_ inputBar: InputBarAccessoryView, didPressSendButtonWith text: String) {
-        print(conversationID ?? 0)
-        sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "conversation_id": conversationID ?? 0, "uuid": uuid ?? ""], text: text, model: SuccessModel.self)
+        sendMessage(route: .messageAPI, method: .post, parameters: ["message": text, "uuid": uuid ?? "", "conversation_id": self.conversationID ?? 0], text: text, model: SuccessModel.self)
     }
 }
 
@@ -241,14 +241,36 @@ extension ChatViewController: UITextViewDelegate{
 }
 
 extension ChatViewController{
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        let currentOffset = scrollView.contentOffset.y
-//        print(currentOffset)
-//        if currentOffset < 0 {
-//            if messages.count != totalCount{
-//                currentPage = currentPage + 1
-//                loadMessages()
-//            }
-//        }
-//    }
+        func scrollViewDidScroll(_ scrollView: UIScrollView) {
+            let currentOffset = scrollView.contentOffset.y
+            print(currentOffset)
+            if currentOffset < 0 {
+                if messages.count != totalCount{
+                    currentPage = currentPage + 1
+                    loadMessages()
+                }
+            }
+        }
+    
+    //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+    //        let contentOffsetY = scrollView.contentOffset.y
+    //        let triggerPoint: CGFloat = 0.0
+    //        let tolerance: CGFloat = 10.0
+    //
+    //        let collectionViewHeight = messagesCollectionView.frame.size.height
+    //        let contentHeight = messagesCollectionView.contentSize.height
+    //        print(contentHeight, collectionViewHeight)
+    //        if isLoadingData || contentHeight < collectionViewHeight {
+    //            return
+    //        }
+    //
+    //        if contentOffsetY < triggerPoint + tolerance {
+    //            if messages.count != totalCount{
+    //                currentPage = currentPage + 1
+    //                loadMessages()
+    //                isLoadingData = false
+    //            }
+    //        }
+    //    }
 }
+

@@ -46,6 +46,7 @@ class FeedsViewController: UIViewController {
     var storyTotalCount = 1
     var storyCurrentPage = 1
     var interestCount = 0
+    let refreshControl = UIRefreshControl()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,16 +62,19 @@ class FeedsViewController: UIViewController {
         loadData()
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
         profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
+        
+        refreshControl.addTarget(self, action: #selector(reloadNewsFeed), for: .valueChanged)
+        tableView.addSubview(refreshControl)
     }
-    
-    
     
     @IBAction func postBtnAction(_ sender: Any) {
         Switcher.gotoPostVC(delegate: self, postType: .post)
     }
+    
     @IBAction func chatBtnAction(_ sender: Any) {
         Switcher.goToChatListVC(delegate: self)
     }
+    
     @IBAction func profileBtnAction(_ sender: Any) {
         guard let uuid = UserDefaults.standard.uuid else { return }
         Switcher.goToProfileVC(delegate: self, profileType: .user, uuid: uuid)
@@ -101,7 +105,8 @@ class FeedsViewController: UIViewController {
         newsFeed = []
         totalCount = 0
         currentPage = 1
-        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
+        loadNewsFeed()
+        refreshControl.endRefreshing()
     }
     
     @objc func storyApiCall(){
@@ -116,7 +121,8 @@ class FeedsViewController: UIViewController {
                 self.totalCount = (feeds as! NewsFeedModel).count ?? 0
                 self.numberOfCells = self.totalCount
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
-                self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.reloadData()
+                self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -271,6 +277,7 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         cell.wishlistButtonTappedHandler = {
             self.toggleWishlistStatus(for: indexPath)
         }
+        print(newsFeed.count)
         cell.configure(feed: newsFeed[indexPath.row])
         cell.shareActionBlock = {
             Utility.showAlert(message: "Do you want to share the post?", buttonTitles: ["No", "Yes"]) { responce in

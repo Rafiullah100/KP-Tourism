@@ -28,7 +28,8 @@ class LocalProductsViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        
+//        self.collecttionView.transform3D = CATransform3DMakeScale(1, -1, 1)
+//        self.collecttionView.collectionViewLayout = InvertedCollectionViewFlowLayout.init()
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle

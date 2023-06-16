@@ -108,22 +108,22 @@ final class SocketHelper: NSObject {
 //
 //    }
     
-    func getMessage(completion: @escaping (_ message: String?) -> Void) {
+    func getMessage(completion: @escaping (_ message: String?, _ from: String?) -> Void) {
         socket?.on(Constants.socketEvent) { (dataArray, socketAck) -> Void in
             if let responseArray = dataArray as? [[String: Any]],
                let firstResponse = responseArray.first,
                let message = firstResponse["message"] as? [String: Any],
-               let content = message["content"] as? String {
-                completion(content)
+               let content = message["content"] as? String, let from = firstResponse["from"] as? String {
+                completion(content, from)
             } else {
                 print("Invalid response format or missing content")
             }
         }
     }
     
-    func sendMessage(message: String, to: String) {
-        socket?.emit(Constants.socketEvent, ["to": to, "message": message])
-    }
+//    func sendMessage(message: String, to: String) {
+//        socket?.emit(Constants.socketEvent, ["to": to, "message": message])
+//    }
     
     func typeListening(completion: @escaping (String?) -> Void) {
         socket?.on(Constants.socketTypingEvent) { (data, socketAck) -> Void in
@@ -139,5 +139,34 @@ final class SocketHelper: NSObject {
     func typeEmiting(to: String){
         print(to)
         socket?.emit(Constants.socketTypingEvent, ["to": to])
+    }
+    
+    func sendMessage(uuid: String, conversationID: Int, message: String){
+        //        socket?.emit(Constants.socketTypingEvent, ["to": to])
+        print(uuid, UserDefaults.standard.uuid ?? "")
+        let senderDict: [String: Any] = [
+            "profile_image_thumb": UserDefaults.standard.profileImage ?? "",
+            "uuid": "\(UserDefaults.standard.uuid ?? "")"
+        ]
+        
+        let messageDict: [String: Any] = [
+            "content": message,
+            "conversation_id": conversationID,
+            "createdAt": "a few seconds ago",
+            "id": 0,
+            "is_read": false,
+            "is_seen": false,
+            "receiver_id": 0,
+            "sender": senderDict,
+            "sender_id": UserDefaults.standard.userID ?? 0,
+            "updatedAt": "a few seconds ago"
+        ]
+        
+        let jsonObject: [String: Any] = [
+            "to": uuid,
+            "message": messageDict
+        ]
+        print(jsonObject)
+        socket?.emit(Constants.socketEvent, jsonObject)
     }
 }

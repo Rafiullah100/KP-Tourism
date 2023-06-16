@@ -50,6 +50,7 @@ struct Constants {
     static let appFontName = "Poppins"
     static let loadFeed = "loadfeed"
     static let reloadTabbar = "reloadTabbar"
+    static let loadChatUser = "chatuser"
 
     static let socketEvent = "user-chat-message"
     static let socketTypingEvent = "is-typing"

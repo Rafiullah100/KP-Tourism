@@ -24,11 +24,16 @@ class ChatListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadUsers), name: NSNotification.Name(rawValue: Constants.loadChatUser), object: nil)
         topBarView.addBottomShadow()
         tableView.keyboardDismissMode = .onDrag
         searchField.becomeFirstResponder()
         profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
         load()
+    }
+    
+    @objc func reloadUsers(){
+        tableView.reloadData()
     }
     
     private func load(){
@@ -40,6 +45,7 @@ class ChatListViewController: UIViewController {
             switch result {
             case .success(let users):
                 self.conversationUsers.append(contentsOf: (users as? LoadedConversationModel)?.userConversations ?? [])
+                self.conversationUsers = self.conversationUsers.reversed()
                 self.conversationUsers.count == 0 ? self.tableView.setEmptyView("No Record found!") : nil
                 self.tableView.reloadData()
             case .failure(let error):
@@ -73,7 +79,9 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let conversation = self.conversationUsers[indexPath.row]
+        var conversation = self.conversationUsers[indexPath.row]
+        conversation.user?.unreadMessages = 0
+        self.conversationUsers[indexPath.row] = conversation
         Switcher.goToChatVC(delegate: self, receiverUser1: conversation)
     }
 }

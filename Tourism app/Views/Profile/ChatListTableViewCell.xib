@@ -4,16 +4,17 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
+        <array key="Poppins-Light.ttf">
+            <string>Poppins-Light</string>
+        </array>
         <array key="Roboto-Light.ttf">
             <string>Roboto-Light</string>
-        </array>
-        <array key="Roboto-Medium.ttf">
-            <string>Roboto-Medium</string>
         </array>
         <array key="Roboto-Regular.ttf">
             <string>Roboto-Regular</string>
@@ -49,7 +50,7 @@
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
                                                     </imageView>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ota-ae-GN2">
+                                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ota-ae-GN2">
                                                         <rect key="frame" x="35" y="35" width="12" height="12"/>
                                                         <color key="backgroundColor" systemColor="systemGrayColor"/>
                                                         <constraints>
@@ -142,25 +143,43 @@
                                                         <rect key="frame" x="0.0" y="22.666666666666664" width="305" height="22.333333333333336"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="We need to re-asses our strategy." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ccO-wH-DUq">
-                                                                <rect key="frame" x="0.0" y="3.3333333333333366" width="255.66666666666666" height="15.333333333333336"/>
+                                                                <rect key="frame" x="0.0" y="3.3333333333333366" width="195.33333333333334" height="15.333333333333336"/>
                                                                 <fontDescription key="fontDescription" name="Roboto-Light" family="Roboto" pointSize="13"/>
                                                                 <color key="textColor" red="0.56470588235294117" green="0.58431372549019611" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Oct 31" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rII-vk-Mqn">
-                                                                <rect key="frame" x="265.66666666666669" y="3.3333333333333366" width="39.333333333333314" height="15.333333333333336"/>
-                                                                <fontDescription key="fontDescription" name="Roboto-Medium" family="Roboto" pointSize="13"/>
-                                                                <color key="textColor" red="0.56470588235294117" green="0.58431372549019611" blue="0.64313725490196072" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <nil key="highlightedColor"/>
-                                                            </label>
+                                                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3rX-zU-eh9">
+                                                                <rect key="frame" x="265" y="1" width="20" height="20"/>
+                                                                <subviews>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rII-vk-Mqn">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="Poppins-Light" family="Poppins" pointSize="15"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                                <color key="backgroundColor" name="#327425"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="bottom" secondItem="rII-vk-Mqn" secondAttribute="bottom" id="Pbg-49-S4Y"/>
+                                                                    <constraint firstAttribute="trailing" secondItem="rII-vk-Mqn" secondAttribute="trailing" id="Rvm-cT-8nR"/>
+                                                                    <constraint firstAttribute="height" constant="20" id="dsM-p5-2Ya"/>
+                                                                    <constraint firstAttribute="width" constant="20" id="epo-Fw-0Pk"/>
+                                                                    <constraint firstItem="rII-vk-Mqn" firstAttribute="leading" secondItem="3rX-zU-eh9" secondAttribute="leading" id="hhL-Ul-2dK"/>
+                                                                    <constraint firstItem="rII-vk-Mqn" firstAttribute="top" secondItem="3rX-zU-eh9" secondAttribute="top" id="k5T-fA-p8n"/>
+                                                                </constraints>
+                                                                <userDefinedRuntimeAttributes>
+                                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                                        <real key="value" value="10"/>
+                                                                    </userDefinedRuntimeAttribute>
+                                                                </userDefinedRuntimeAttributes>
+                                                            </view>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="rII-vk-Mqn" firstAttribute="leading" secondItem="ccO-wH-DUq" secondAttribute="trailing" constant="10" id="27J-ca-y9U"/>
-                                                            <constraint firstAttribute="trailing" secondItem="rII-vk-Mqn" secondAttribute="trailing" id="Ec4-HX-FmV"/>
+                                                            <constraint firstAttribute="trailing" secondItem="3rX-zU-eh9" secondAttribute="trailing" constant="20" id="9gO-Kt-TWw"/>
                                                             <constraint firstItem="ccO-wH-DUq" firstAttribute="leading" secondItem="1Dc-eY-vfo" secondAttribute="leading" id="MHR-Vs-yHx"/>
                                                             <constraint firstItem="ccO-wH-DUq" firstAttribute="centerY" secondItem="1Dc-eY-vfo" secondAttribute="centerY" id="WWi-qi-UIa"/>
-                                                            <constraint firstItem="rII-vk-Mqn" firstAttribute="centerY" secondItem="1Dc-eY-vfo" secondAttribute="centerY" id="qH5-G3-Zp8"/>
+                                                            <constraint firstItem="3rX-zU-eh9" firstAttribute="centerY" secondItem="1Dc-eY-vfo" secondAttribute="centerY" id="vXI-Aw-dxl"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -195,10 +214,11 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="dateLabel" destination="rII-vk-Mqn" id="KOs-ms-82W"/>
                 <outlet property="detailLabel" destination="ccO-wH-DUq" id="vx1-EI-3U0"/>
                 <outlet property="nameLabel" destination="7RK-7k-TBO" id="sHo-bi-6bq"/>
                 <outlet property="statusIndicator" destination="ota-ae-GN2" id="kfc-Pz-HKJ"/>
+                <outlet property="unreadLabel" destination="rII-vk-Mqn" id="cUj-zE-O4B"/>
+                <outlet property="unreadView" destination="3rX-zU-eh9" id="BOm-vP-f57"/>
                 <outlet property="userProfileImageView" destination="e5i-Cq-Hft" id="FvY-g9-CLS"/>
             </connections>
             <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
@@ -207,6 +227,9 @@
     <resources>
         <image name="Menu-three-dot" width="18.666666030883789" height="4.6666665077209473"/>
         <image name="user" width="128" height="128"/>
+        <namedColor name="#327425">
+            <color red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

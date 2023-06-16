@@ -71,7 +71,7 @@ struct LoadedConversationModel: Codable {
 // MARK: - UserConversation
 struct LoadedConversation: Codable {
     let conversationID: Int?
-    let user: LoadedConversationUser?
+    var user: LoadedConversationUser?
 
     enum CodingKeys: String, CodingKey {
         case conversationID = "conversation_id"
@@ -81,11 +81,11 @@ struct LoadedConversation: Codable {
 
 // MARK: - User
 struct LoadedConversationUser: Codable {
-    let id: Int?
-    let uuid, name, profileImage, profileImageThumb: String?
+    var id, unreadMessages: Int?
+    let uuid, name, profileImage, profileImageThumb, username: String?
 
     enum CodingKeys: String, CodingKey {
-        case id, uuid, name
+        case id, uuid, name, username, unreadMessages
         case profileImage = "profile_image"
         case profileImageThumb = "profile_image_thumb"
     }

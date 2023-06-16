@@ -186,6 +186,15 @@ class Helper{
         }
     }
     
+    func getOtherProfileImage(urlString: String) -> String{
+        if urlString.contains("https"){
+            return urlString
+        }
+        else{
+            return Route.baseUrl + urlString
+        }
+    }
+    
     func disableVerticalScrolling(_ scrollView: UIScrollView) {
         if (scrollView.contentOffset.y > 0  ||  scrollView.contentOffset.y < 0 ){
             scrollView.contentOffset = CGPointMake(scrollView.contentOffset.x, 0);
@@ -337,5 +346,8 @@ class Helper{
             return Date()
         }
     }
+    
+    
+  
 }
 

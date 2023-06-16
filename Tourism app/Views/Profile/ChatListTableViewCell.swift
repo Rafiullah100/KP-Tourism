@@ -13,12 +13,17 @@ class ChatListTableViewCell: UITableViewCell {
     @IBOutlet weak var statusIndicator: UIView!
     @IBOutlet weak var userProfileImageView: UIImageView!
     
-    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var unreadView: UIView!
+    @IBOutlet weak var unreadLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     var user: LoadedConversationUser? {
         didSet{
-            userProfileImageView.sd_setImage(with: URL(string: Route.baseUrl + (user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            userProfileImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: user?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             nameLabel.text = user?.name?.capitalized
+            detailLabel.text = user?.username
+            let unread = user?.unreadMessages
+            unreadLabel.text = "\(unread ?? 0)"
+            unreadView.isHidden = unread == 0 ? true : false
         }
     }
     
@@ -32,5 +37,4 @@ class ChatListTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-    
 }
