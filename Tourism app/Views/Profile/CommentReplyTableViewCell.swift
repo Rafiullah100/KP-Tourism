@@ -29,9 +29,9 @@ class CommentReplyTableViewCell: UITableViewCell {
     var commentReply: CommentsReply?{
         didSet{
             timeLabel.text = "\(commentReply?.createdAt ?? "")"
-            commentLabel.text = "\(commentReply?.reply ?? "")".trimmingCharacters(in: .whitespaces)
+            commentLabel.text = "\(commentReply?.reply ?? "")".removeSpaces()
             nameLabel.text = "\(commentReply?.users?.name ?? "")"
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (commentReply?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: commentReply?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }
     }
 }

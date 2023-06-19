@@ -78,7 +78,7 @@ class FeedTableViewCell: UITableViewCell {
         expandableLabel.shouldCollapse = true
         expandableLabel.textReplacementType = .word
         expandableLabel.numberOfLines = 3
-        expandableLabel.text = feed.post?.description
+        expandableLabel.text = feed.post?.description?.removeSpaces()
         if UserDefaults.standard.userID ?? 0 == feed.post?.users?.id ?? 0 {
             threeDotButton.isHidden = false
         }

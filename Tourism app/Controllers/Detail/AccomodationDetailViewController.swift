@@ -56,7 +56,7 @@ class AccomodationDetailViewController: BaseViewController {
     var locationManager = CLLocationManager()
     
     var commentText = "Write a comment"
-    var limit = 100
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -119,7 +119,11 @@ class AccomodationDetailViewController: BaseViewController {
                 self.locationManager.startUpdatingLocation()
             }
         }
-        
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableViewHeight.constant = tableView.contentSize.height
     }
     
     @IBAction func showDetailBtn(_ sender: Any) {
@@ -201,13 +205,14 @@ class AccomodationDetailViewController: BaseViewController {
     }
     
     func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
+                self.tableView.reloadData()
+//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

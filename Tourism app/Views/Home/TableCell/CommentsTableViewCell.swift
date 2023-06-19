@@ -42,8 +42,10 @@ class CommentsTableViewCell: UITableViewCell {
             nameLabel.text = "\(comment?.users?.name ?? "")"
             print(comment?.users?.profileImage ?? "")
             print(Helper.shared.getProfileImage())
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
+            userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+//            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
+            tableView.reloadData()
+            tableViewHeight.constant = self.tableView.contentSize.height
             self.layoutIfNeeded()
         }
     }
@@ -51,7 +53,6 @@ class CommentsTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
 //        tableViewHeight.constant = self.tableView.contentSize.height
-        
     }
     
     override func awakeFromNib() {

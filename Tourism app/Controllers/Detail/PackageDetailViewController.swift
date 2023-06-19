@@ -87,7 +87,7 @@ class PackageDetailViewController: BaseViewController {
     var interestCount = 0
     
     var commentText = "Write a comment"
-    var limit = 100
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -124,6 +124,11 @@ class PackageDetailViewController: BaseViewController {
         
         updateUI()
         reloadComment()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        commentTableViewHeight.constant = commenTableView.contentSize.height
     }
     
     private func updateUI(){
@@ -176,11 +181,6 @@ class PackageDetailViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         statusBarView.addGradient()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        tableViewHeight.constant = tableView.contentSize.height
     }
     
     private func reload(){
@@ -288,13 +288,12 @@ class PackageDetailViewController: BaseViewController {
     }
     
     func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
-                print(self.allComments.count)
-                Helper.shared.tableViewHeight(tableView: self.commenTableView, tbHeight: self.commentTableViewHeight)
+                self.commenTableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

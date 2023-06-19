@@ -44,7 +44,7 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 1
-    var limit = 10
+    var limit = 1000
     var commentText = "Write a comment"
     var likeCount = 0
     
@@ -123,7 +123,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method,  showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
@@ -237,13 +237,13 @@ extension BlogDetailViewController: UITextViewDelegate{
 }
 
 extension BlogDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
 }

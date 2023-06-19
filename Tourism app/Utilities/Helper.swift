@@ -187,6 +187,7 @@ class Helper{
     }
     
     func getOtherProfileImage(urlString: String) -> String{
+        print(urlString.contains("https"))
         if urlString.contains("https"){
             return urlString
         }

@@ -48,7 +48,7 @@ class ProductDetailViewController: BaseViewController {
     var detailType: DetailType?
     
     var commentText = "Write a comment"
-    var limit = 100
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -216,7 +216,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        URLSession.shared.request(route: route, method: method,  showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let comments):
                 print((comments as? CommentsModel)?.comments?.rows ?? [])
