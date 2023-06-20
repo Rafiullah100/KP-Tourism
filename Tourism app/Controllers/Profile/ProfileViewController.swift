@@ -240,7 +240,7 @@ class ProfileViewController: UIViewController {
                         self.profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
                     }
                     else{
-                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + (self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + Helper.shared.getOtherProfileImage(urlString: self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
                     }
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.attributedText = Helper.shared.attributedString(text1: self.userProfile?.userDetails.name?.capitalized ?? "", text2: "(\(self.userProfile?.userDetails.userType ?? ""))")

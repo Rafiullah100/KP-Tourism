@@ -45,14 +45,14 @@ class CommentsTableViewCell: UITableViewCell {
             userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
 //            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
             tableView.reloadData()
-            tableViewHeight.constant = self.tableView.contentSize.height
+//            tableViewHeight.constant = self.tableView.contentSize.height
             self.layoutIfNeeded()
         }
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-//        tableViewHeight.constant = self.tableView.contentSize.height
+        tableViewHeight.constant = self.tableView.contentSize.height
     }
     
     override func awakeFromNib() {

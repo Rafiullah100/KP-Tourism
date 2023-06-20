@@ -10,6 +10,7 @@ import SDWebImage
 import SVProgressHUD
 class ProductDetailViewController: BaseViewController {
 
+    @IBOutlet weak var olderCommentLabel: UILabel!
     @IBOutlet weak var descriptionTextView: UITextView!
     @IBOutlet weak var uploadTimeLabel: UILabel!
     @IBOutlet weak var productNameLabel: UILabel!
@@ -50,7 +51,7 @@ class ProductDetailViewController: BaseViewController {
     var commentText = "Write a comment"
     var limit = 1000
     var currentPage = 1
-    var totalCount = 1
+    var totalCount = 0
     var allComments: [CommentsRows] = [CommentsRows]()
     
     override func viewDidLoad() {
@@ -74,7 +75,7 @@ class ProductDetailViewController: BaseViewController {
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = productDetail?.title
-            descriptionTextView.text = productDetail?.localProductDescription.stripOutHtml()
+            descriptionTextView.text = productDetail?.localProductDescription.stripOutHtml().removeSpaces()
             onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = productDetail?.createdAt
             locationLabel.text = productDetail?.districts.title
@@ -92,7 +93,7 @@ class ProductDetailViewController: BaseViewController {
             viewControllerTitle = "\(wishListProductDetail?.title ?? "") | Local Products"
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = wishListProductDetail?.title
-            descriptionTextView.text = wishListProductDetail?.description?.stripOutHtml()
+            descriptionTextView.text = wishListProductDetail?.description?.stripOutHtml().removeSpaces()
             onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = wishListProductDetail?.createdAt
             locationLabel.text = wishListProductDetail?.districts.title
@@ -223,6 +224,7 @@ class ProductDetailViewController: BaseViewController {
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 self.tableView.reloadData()
+                self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
 //                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

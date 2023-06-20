@@ -412,7 +412,7 @@ class Switcher {
         vc.poiGallery = poiGallery
         vc.galleryType = type
         vc.imageUrl = imageUrl
-        vc.modalPresentationStyle = .automatic
+        vc.modalPresentationStyle = .fullScreen
         delegate.present(vc, animated: true)
     }
     

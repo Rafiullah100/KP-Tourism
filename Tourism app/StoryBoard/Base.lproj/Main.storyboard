@@ -20,6 +20,9 @@
         <array key="Poppins-Regular.ttf">
             <string>Poppins-Regular</string>
         </array>
+        <array key="Poppins-SemiBold.ttf">
+            <string>Poppins-SemiBold</string>
+        </array>
         <array key="Roboto-Bold.ttf">
             <string>Roboto-Bold</string>
         </array>
@@ -55,44 +58,58 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5rx-lH-GOv">
-                                <rect key="frame" x="131.66666666666666" y="376" width="129.99999999999997" height="130"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-JD-Y2h">
+                                <rect key="frame" x="96.666666666666686" y="351" width="200" height="150"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ix7-BC-U6D">
-                                        <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="23"/>
-                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                        <state key="normal">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        </state>
-                                        <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                        </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <action selector="callnowBtn:" destination="DQx-w7-1Un" eventType="touchUpInside" id="PqP-vo-JuP"/>
-                                        </connections>
-                                    </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-qe-kDd">
-                                        <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
-                                    </imageView>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5rx-lH-GOv">
+                                        <rect key="frame" x="34.999999999999986" y="0.0" width="130" height="130"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ix7-BC-U6D">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <fontDescription key="fontDescription" name="Roboto-Regular" family="Roboto" pointSize="23"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="callnowBtn:" destination="DQx-w7-1Un" eventType="touchUpInside" id="PqP-vo-JuP"/>
+                                                </connections>
+                                            </button>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8aZ-qe-kDd">
+                                                <rect key="frame" x="0.0" y="0.0" width="130" height="130"/>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="8aZ-qe-kDd" secondAttribute="bottom" id="9M8-Jy-vKG"/>
+                                            <constraint firstItem="ix7-BC-U6D" firstAttribute="leading" secondItem="5rx-lH-GOv" secondAttribute="leading" id="DaF-8L-L3C"/>
+                                            <constraint firstItem="8aZ-qe-kDd" firstAttribute="leading" secondItem="5rx-lH-GOv" secondAttribute="leading" id="Xzp-5k-zaR"/>
+                                            <constraint firstItem="ix7-BC-U6D" firstAttribute="top" secondItem="5rx-lH-GOv" secondAttribute="top" id="e2K-QH-UGg"/>
+                                            <constraint firstItem="8aZ-qe-kDd" firstAttribute="top" secondItem="5rx-lH-GOv" secondAttribute="top" id="gEg-Q1-wHJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="ix7-BC-U6D" secondAttribute="trailing" id="phA-lF-MXi"/>
+                                            <constraint firstAttribute="bottom" secondItem="ix7-BC-U6D" secondAttribute="bottom" id="qdb-Dh-hg5"/>
+                                            <constraint firstAttribute="height" constant="130" id="tQP-Fl-4y9"/>
+                                            <constraint firstAttribute="trailing" secondItem="8aZ-qe-kDd" secondAttribute="trailing" id="ygY-iS-JJE"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Call Now to (1422)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bur-zb-WsY">
+                                        <rect key="frame" x="31.666666666666671" y="130" width="136.66666666666663" height="20"/>
+                                        <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="15"/>
+                                        <color key="textColor" name="#084F24"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="8aZ-qe-kDd" secondAttribute="bottom" id="9M8-Jy-vKG"/>
-                                    <constraint firstItem="ix7-BC-U6D" firstAttribute="leading" secondItem="5rx-lH-GOv" secondAttribute="leading" id="DaF-8L-L3C"/>
-                                    <constraint firstItem="8aZ-qe-kDd" firstAttribute="leading" secondItem="5rx-lH-GOv" secondAttribute="leading" id="Xzp-5k-zaR"/>
-                                    <constraint firstItem="ix7-BC-U6D" firstAttribute="top" secondItem="5rx-lH-GOv" secondAttribute="top" id="e2K-QH-UGg"/>
-                                    <constraint firstItem="8aZ-qe-kDd" firstAttribute="top" secondItem="5rx-lH-GOv" secondAttribute="top" id="gEg-Q1-wHJ"/>
-                                    <constraint firstAttribute="width" constant="130" id="gTn-CP-WdI"/>
-                                    <constraint firstAttribute="trailing" secondItem="ix7-BC-U6D" secondAttribute="trailing" id="phA-lF-MXi"/>
-                                    <constraint firstAttribute="bottom" secondItem="ix7-BC-U6D" secondAttribute="bottom" id="qdb-Dh-hg5"/>
-                                    <constraint firstAttribute="height" constant="130" id="tQP-Fl-4y9"/>
-                                    <constraint firstAttribute="trailing" secondItem="8aZ-qe-kDd" secondAttribute="trailing" id="ygY-iS-JJE"/>
+                                    <constraint firstAttribute="height" constant="150" id="EFZ-4b-IYS"/>
+                                    <constraint firstAttribute="width" constant="200" id="KtS-Sm-lcC"/>
                                 </constraints>
-                            </view>
+                            </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EIT-Al-rcZ">
                                 <rect key="frame" x="0.0" y="103" width="393" height="1"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -104,10 +121,10 @@
                         <viewLayoutGuide key="safeArea" id="n6X-pH-o7J"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="5rx-lH-GOv" firstAttribute="centerX" secondItem="Uam-7Z-FMa" secondAttribute="centerX" id="LCn-w3-518"/>
+                            <constraint firstItem="JIA-JD-Y2h" firstAttribute="centerX" secondItem="Uam-7Z-FMa" secondAttribute="centerX" id="6BL-Mg-j6M"/>
                             <constraint firstItem="n6X-pH-o7J" firstAttribute="trailing" secondItem="EIT-Al-rcZ" secondAttribute="trailing" id="MZZ-QB-8k9"/>
-                            <constraint firstItem="5rx-lH-GOv" firstAttribute="centerY" secondItem="Uam-7Z-FMa" secondAttribute="centerY" constant="15" id="Qlg-68-jL6"/>
                             <constraint firstItem="EIT-Al-rcZ" firstAttribute="leading" secondItem="n6X-pH-o7J" secondAttribute="leading" id="Qza-ai-S7T"/>
+                            <constraint firstItem="JIA-JD-Y2h" firstAttribute="centerY" secondItem="Uam-7Z-FMa" secondAttribute="centerY" id="oTd-pp-7U8"/>
                             <constraint firstItem="EIT-Al-rcZ" firstAttribute="top" secondItem="n6X-pH-o7J" secondAttribute="top" id="sOf-Zd-3kj"/>
                         </constraints>
                     </view>
@@ -1499,7 +1516,7 @@ details, account, weather and account activity</string>
                                                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="g9t-ZE-pk6">
                                                                                                 <rect key="frame" x="55" y="0.0" width="175" height="40"/>
                                                                                                 <subviews>
-                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visit us on Linkedin" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzt-8h-WIl">
+                                                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Visit us on Twitter" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wzt-8h-WIl">
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="175" height="40"/>
                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="13"/>
                                                                                                         <nil key="textColor"/>
@@ -3210,6 +3227,9 @@ details, account, weather and account activity</string>
         <image name="twitter" width="21.333333969116211" height="21.333333969116211"/>
         <image name="user" width="128" height="128"/>
         <image name="youtube" width="21.333333969116211" height="21.333333969116211"/>
+        <namedColor name="#084F24">
+            <color red="0.031372549019607843" green="0.30980392156862746" blue="0.14117647058823529" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="#327425">
             <color red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

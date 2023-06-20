@@ -31,7 +31,7 @@ class POIServicesViewController: BaseViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.estimatedRowHeight = 140.0
+        tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         type = .back1
         updateUI()
@@ -98,14 +98,13 @@ extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let minimumHeight: CGFloat = 110.0
-        return max(minimumHeight, UITableView.automaticDimension)
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+//
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return tableView.estimatedRowHeight
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }

@@ -10,6 +10,7 @@ import SDWebImage
 import SVProgressHUD
 class BlogDetailViewController: BaseViewController {
 
+    @IBOutlet weak var olderCommentLabel: UILabel!
     @IBOutlet weak var commentView: UIView!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var bottomView: UIView!
@@ -43,7 +44,7 @@ class BlogDetailViewController: BaseViewController {
     @IBOutlet weak var viewCounterLabel: UILabel!
     
     var currentPage = 1
-    var totalCount = 1
+    var totalCount = 0
     var limit = 1000
     var commentText = "Write a comment"
     var likeCount = 0
@@ -130,6 +131,7 @@ class BlogDetailViewController: BaseViewController {
                 self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
                 self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
                 self.tableView.reloadData()
+                self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
 //                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                
             case .failure(let error):

@@ -44,9 +44,11 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
 
+    @IBAction func backBtn(_ sender: Any) {
+        self.dismiss(animated: true)
+    }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         collectionView.reloadData()

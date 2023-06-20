@@ -699,3 +699,13 @@ extension UIViewController{
         }
     }
 }
+
+extension UILabel {
+    func applyShadowEffect() {
+        // Set shadow properties
+        layer.shadowColor = UIColor.gray.cgColor
+        layer.shadowOffset = CGSize(width: 2, height: 2)
+        layer.shadowOpacity = 0.8
+        layer.shadowRadius = 4
+    }
+}

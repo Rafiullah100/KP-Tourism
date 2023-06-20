@@ -80,8 +80,12 @@ class ThemeSelectionViewController: BaseViewController {
         }
     }
     @IBAction func facebookBtnAction(_ sender: Any) {
-        if let url = URL(string: "https://www.facebook.com/kptourism/") {
-            UIApplication.shared.open(url)
+        let facebookURL = URL(string: "fb://page/519462064824979")!
+        if UIApplication.shared.canOpenURL(facebookURL) {
+            UIApplication.shared.open(facebookURL, options: [:], completionHandler: nil)
+        } else {
+            let browserURL = URL(string: "https://www.facebook.com/kptourism/")!
+            UIApplication.shared.open(browserURL, options: [:], completionHandler: nil)
         }
     }
     @IBAction func logoutBtnAction(_ sender: Any) {

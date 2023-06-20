@@ -40,8 +40,6 @@ class DateTimeViewController: UIViewController {
         else if dateFormate == .time{
             timeClosure?(Helper.shared.date(date: datePicker.date, formate: "HH:mm"))
         }
-        
-        
         self.dismiss(animated: true)
     }
 }

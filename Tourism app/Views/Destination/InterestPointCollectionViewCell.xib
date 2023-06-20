@@ -93,8 +93,8 @@
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MMb-4F-1Rt">
                                                 <rect key="frame" x="0.0" y="50" width="86" height="26"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label Label Label Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1h-H9-j8Y">
-                                                        <rect key="frame" x="4" y="3" width="78" height="28"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U1h-H9-j8Y">
+                                                        <rect key="frame" x="4" y="3" width="78" height="23"/>
                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -104,10 +104,16 @@
                                                 <constraints>
                                                     <constraint firstItem="U1h-H9-j8Y" firstAttribute="top" secondItem="MMb-4F-1Rt" secondAttribute="top" constant="3" id="Ecl-po-HTD"/>
                                                     <constraint firstItem="U1h-H9-j8Y" firstAttribute="leading" secondItem="MMb-4F-1Rt" secondAttribute="leading" constant="4" id="H52-YP-T9I"/>
+                                                    <constraint firstAttribute="bottom" secondItem="U1h-H9-j8Y" secondAttribute="bottom" id="IhR-hm-ViH"/>
+                                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="250" id="Jgg-ky-IC4"/>
                                                     <constraint firstAttribute="trailing" secondItem="U1h-H9-j8Y" secondAttribute="trailing" constant="4" id="qGV-gY-yTM"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="76" id="YY4-Uh-cPA"/>
+                                            <constraint firstAttribute="width" constant="86" id="mHZ-E6-mEg"/>
+                                        </constraints>
                                     </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -126,6 +132,7 @@
                         </subviews>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="IUZ-ry-JhD" secondAttribute="trailing" constant="5" id="4dC-hS-gE9"/>
+                            <constraint firstItem="IUZ-ry-JhD" firstAttribute="centerX" secondItem="OWj-RF-FIR" secondAttribute="centerX" id="CIs-TG-vLM"/>
                             <constraint firstItem="IUZ-ry-JhD" firstAttribute="leading" secondItem="OWj-RF-FIR" secondAttribute="leading" constant="5" id="Jig-jv-W2N"/>
                             <constraint firstAttribute="bottom" secondItem="IUZ-ry-JhD" secondAttribute="bottom" constant="5" id="dlA-xM-gYP"/>
                             <constraint firstItem="IUZ-ry-JhD" firstAttribute="top" secondItem="OWj-RF-FIR" secondAttribute="top" constant="5" id="w12-Rc-EXJ"/>
