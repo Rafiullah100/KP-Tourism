@@ -190,7 +190,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         let gridCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GridCell
         switch mediaType {
         case .image:
-            gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+            gridCell.imageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")), placeholderImage: UIImage(named: "thumbnail.jpg"))
         case .video:
             gridCell.imageView.image = UIImage(named: "thumbnail.jpg")
         case .virtual:
@@ -205,7 +205,7 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         let parallaxCell = collectionView.dequeueReusableCell(withReuseIdentifier: "parallaxCell", for: indexPath) as! ParallaxCell
         switch mediaType {
         case .image:
-            parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+            parallaxCell.parallaxImageView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")), placeholderImage: UIImage(named: "thumbnail.jpg"))
         case .video:
             parallaxCell.parallaxImageView.image = UIImage(named: "thumbnail.jpg")
         case .virtual:
@@ -220,7 +220,6 @@ extension GalleryDetailViewController: ASCollectionViewDataSource {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: ASCollectionViewElement.Header, withReuseIdentifier: "header", for: indexPath)
         return header
     }
-    
 }
     
     class GridCell: UICollectionViewCell {

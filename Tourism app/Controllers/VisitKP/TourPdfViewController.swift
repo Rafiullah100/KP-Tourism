@@ -25,16 +25,16 @@ class TourPdfViewController: BaseViewController {
         let destination = UserDefaults.standard.destination
         let information = UserDefaults.standard.information
         let accomodation = UserDefaults.standard.accomodation
-        fetch(route: .visitpdf, method: .post, parameters: ["name": UserDefaults.standard.name ?? "No name", "email": UserDefaults.standard.userEmail ?? "No Email", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf", "accomudation": accomodation ?? ""], model: PDFModel.self)
+        fetch(parameters: ["name": UserDefaults.standard.name ?? "No name", "email": UserDefaults.standard.userEmail ?? "No Email", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf", "accomudation": accomodation ?? ""])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .visitpdf, method: .post, parameters: parameters, model: PDFModel.self) { result in
             switch result {
             case .success(let model):
-                let pdfModel = model as? PDFModel
-                if pdfModel?.success == true{
-                    guard let url = URL(string: pdfModel?.file ?? "") else { return }
+                let pdfModel = model
+                if pdfModel.success == true{
+                    guard let url = URL(string: pdfModel.file ?? "") else { return }
                     if #available(iOS 10.0, *) {
                         UIApplication.shared.open(url , options: [:], completionHandler: nil)
                     } else {

@@ -70,15 +70,14 @@ class ArchTableViewCell: UITableViewCell {
     @IBAction func LikeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
         let archeologyID = self.archeology?.attractions.id
-        self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": archeologyID ?? 0, "section": "attraction"], model: SuccessModel.self)
+        self.wishList(parameters: ["section_id": archeologyID ?? 0, "section": "attraction"])
     }
     
-    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func wishList(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doWishApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                self.favoriteButton.setBackgroundImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
+                self.favoriteButton.setBackgroundImage(wish.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 self.wishlistButtonTappedHandler?()
             case .failure(let error):
                 print(error.localizedDescription)

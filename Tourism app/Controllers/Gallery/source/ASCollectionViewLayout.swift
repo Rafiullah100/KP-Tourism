@@ -433,7 +433,7 @@ import UIKit
         self.gridCellSpacing = CGSize(width: 10, height: 10)
         self.headerSize = CGSize(width: 0, height: 0)
         self.moreLoaderSize = CGSize(width: 50, height: 50)
-        self.gridPadding = 10.0
+        self.gridPadding = 5.0
         self.maxParallaxOffset = 50.0
     }
 }

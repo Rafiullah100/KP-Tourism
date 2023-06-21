@@ -60,14 +60,14 @@ class ExperienceViewController: BaseViewController {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        fetch(route: .districtCategoriesApi, method: .post, model: DistrictCatModel.self)
+        fetch()
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch() {
+        URLSession.shared.request(route: .districtCategoriesApi, method: .post, parameters: nil, model: DistrictCatModel.self) { result in
             switch result {
             case .success(let category):
-                self.districtCategries = (category as! DistrictCatModel).districtCategorories
+                self.districtCategries = category.districtCategorories
                 self.collectionView.reloadData()
             case .failure(let error):
                 if error == .noInternet {

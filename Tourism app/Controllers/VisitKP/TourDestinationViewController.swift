@@ -60,17 +60,16 @@ class TourDestinationViewController: BaseViewController {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        fetchList(route: .districtListApi, method: .post, parameters: ["limit": 50, "district_category_id": experienceId ?? 0, "geoType": geoTypeId ?? ""], model: DistrictListModel.self)
+        fetchList(parameters: ["limit": 50, "district_category_id": experienceId ?? 0, "geoType": geoTypeId ?? ""])
     }
     
-    func fetchList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetchList(parameters: [String: Any]) {
+        URLSession.shared.request(route: .districtListApi, method: .post, parameters: parameters, model: DistrictListModel.self) { result in
             switch result {
-            case .success(let model):
+            case .success(let DistrictListM):
                 DispatchQueue.main.async {
-                    self.districtList = (model as! DistrictListModel).districts?.rows
+                    self.districtList = DistrictListM.districts?.rows
                     self.districtList?.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
-
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -109,11 +108,6 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
         districtID = districtList?[indexPath.row].id
         isSelected = true
         UserDefaults.standard.destination = districtList?[indexPath.row].title
-
-//        if let encoded = try? JSONEncoder().encode(districtList?[indexPath.row]) {
-//            UserDefaults.standard.set(encoded, forKey: "destination")
-//        }
-        
     }
 }
 

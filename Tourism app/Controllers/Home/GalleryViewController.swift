@@ -41,18 +41,18 @@ class GalleryViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        fetch(route: .fetchGallery, method: .post, model: GalleryModel.self)
+        fetch()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch() {
+        URLSession.shared.request(route: .fetchGallery, method: .post, parameters: nil, model: GalleryModel.self) { result in
             switch result {
             case .success(let gallery):
-                self.gallery = gallery as? GalleryModel
+                self.gallery = gallery
                 self.nameLabel.text = self.gallery?.attraction?.title
                 self.imageView.sd_setImage(with: URL(string: Route.baseUrl + (self.gallery?.attraction?.display_image ?? "")))
                 self.imageCollectionView.reloadData()

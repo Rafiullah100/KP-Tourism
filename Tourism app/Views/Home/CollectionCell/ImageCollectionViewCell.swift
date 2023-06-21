@@ -17,7 +17,7 @@ class ImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imgView: UIImageView!
     var images: GalleryRows?{
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (images?.image_url ?? ""))) { _,_,_,_  in
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (images?.image_url ?? "")), placeholderImage: UIImage(named: "thumbnail.jpg")) { _,_,_,_  in
                 self.typeImageView.isHidden = false
             }
         }

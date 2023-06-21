@@ -61,8 +61,8 @@ class SignupViewController: BaseViewController {
         validateSignupFields()
     }
     
-    func registerUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func registerUser(parameters: [String: Any]) {
+        URLSession.shared.request(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 DispatchQueue.main.async {
@@ -87,7 +87,7 @@ class SignupViewController: BaseViewController {
             self.view.makeToast("Password does not match")
             return }
         let parameters = ["username": email, "name": firstName, "password": password, "confirm_password": confirmPassword, "mobile_no": phone, "user_type": "user"]
-        registerUser(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self)
+        registerUser(parameters: parameters)
     }
     
     @IBAction func gotoLogin(_ sender: Any) {

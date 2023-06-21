@@ -74,7 +74,7 @@ class BlogDetailViewController: BaseViewController {
         likeCount = blogDetail?.likes.likesCount ?? 0
         likeLabel.text = "\(String(describing: likeCount)) Liked"
         viewCounterLabel.text = "\(blogDetail?.viewsCounter ?? 0) Views"
-        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
+        viewCounter(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"])
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         reloadComment()
     }
@@ -84,8 +84,8 @@ class BlogDetailViewController: BaseViewController {
         tableViewHeight.constant = tableView.contentSize.height
     }
     
-    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 print(viewCount)
@@ -96,7 +96,7 @@ class BlogDetailViewController: BaseViewController {
     }
 
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -108,11 +108,12 @@ class BlogDetailViewController: BaseViewController {
         self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func doComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -123,17 +124,14 @@ class BlogDetailViewController: BaseViewController {
         }
     }
     
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method,  showLoader: false, parameters: parameters, model: model) { result in
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post,  showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
-                print((comments as? CommentsModel)?.comments?.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = comments.comments?.count ?? 1
+                self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.tableView.reloadData()
                 self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
-//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
-               
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -142,21 +140,20 @@ class BlogDetailViewController: BaseViewController {
     
     @IBAction func loginTocomment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(route: .doComment, method: .post, parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text], model: SuccessModel.self)
+        doComment(parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text])
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        self.like(route: .likeApi, method: .post, parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"], model: SuccessModel.self)
+        self.like(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"])
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
-                let successDetail = like as? SuccessModel
-                self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-                self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                 self.likeLabel.text = "\(self.likeCount) Liked"
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -164,11 +161,11 @@ class BlogDetailViewController: BaseViewController {
         }
     }
     
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func commentReply(parameters: [String: Any], row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -202,7 +199,7 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
         }
         cell.actionBlock = { text in
             cell.textView.text = ""
-            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], model: SuccessModel.self, row: indexPath)
+            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], row: indexPath)
             self.allComments = []
         }
         return cell

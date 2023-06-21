@@ -58,14 +58,14 @@ class TourAccomodationViewController: BaseViewController {
         type = .visitKP
         viewControllerTitle = "Tour Planner"
         //id 2
-        fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": districtID ?? 0], model: AccomodationModel.self)
+        fetch(parameters: ["district_id": districtID ?? 0])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchDistrictAccomodation, method: .post, parameters: parameters, model: AccomodationModel.self) { result in
             switch result {
             case .success(let accomodation):
-                self.accomodationDetail = accomodation as? AccomodationModel
+                self.accomodationDetail = accomodation
                 self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

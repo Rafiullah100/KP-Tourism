@@ -23,20 +23,19 @@ class ForgotPasswordViewController: BaseViewController {
             self.view.makeToast("Fill all fields.")
             SVProgressHUD.setDefaultMaskType(.none)
             return  }
-        fetch(route: .resetPassword, method: .post, parameters: ["password": new, "confirm_password":confirm, "otp": otp], model: SuccessModel.self)
+        fetch(parameters: ["password": new, "confirm_password":confirm, "otp": otp])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .resetPassword, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let success):
-                let res = success as? SuccessModel
-                if res?.success == true{
-                    self.view.makeToast(res?.message)
+                if success.success == true{
+                    self.view.makeToast(success.message)
                     Switcher.goToLoginVC(delegate: self)
                 }
                 else{
-                    self.view.makeToast(res?.message)
+                    self.view.makeToast(success.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

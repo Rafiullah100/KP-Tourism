@@ -80,30 +80,18 @@ class ThemeSelectionViewController: BaseViewController {
         }
     }
     @IBAction func facebookBtnAction(_ sender: Any) {
-        let facebookURL = URL(string: "fb://page/519462064824979")!
-        if UIApplication.shared.canOpenURL(facebookURL) {
-            UIApplication.shared.open(facebookURL, options: [:], completionHandler: nil)
+        let appURL = URL(string: "fb://profile/519462064824979")!
+        let browserURL = URL(string: "https://www.facebook.com/519462064824979/")!
+        if UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL)
         } else {
-            let browserURL = URL(string: "https://www.facebook.com/kptourism/")!
-            UIApplication.shared.open(browserURL, options: [:], completionHandler: nil)
+            UIApplication.shared.open(browserURL)
         }
     }
     @IBAction func logoutBtnAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signOut()
         Helper.shared.logoutUser(self: self)
     }
-    
-//    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
-//        let tabBarIndex = tabBarController.selectedIndex
-//        guard tabBarIndex == 4 else {
-//            return
-//        }
-//        if let navigationController = viewController as? UINavigationController {
-//            if navigationController.viewControllers.count > 1 {
-//                navigationController.popToRootViewController(animated: false)
-//            }
-//        }
-//    }
 }
 
 

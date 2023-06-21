@@ -356,7 +356,6 @@ class Switcher {
 //        delegate.present(vc, animated: true)
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
-
     }
     
     static func gotoVisitKP(delegate: UIViewController){

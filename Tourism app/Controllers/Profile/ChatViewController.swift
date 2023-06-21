@@ -37,11 +37,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var otherUser: Sender = Sender(senderId: "other", displayName: "")
     var messages = [MessageType]()
     
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var topBarView: UIView!
-    @IBOutlet weak var recieverProfileImage: UIImageView!
-    
-    @IBOutlet weak var typingLabel: UILabel!
     var chatUser: ChatUserRow?
     var conversation: [OnetoOneConversationRow]?
     var chatUser1: LoadedConversation?
@@ -56,10 +51,12 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     var isLoadingData = false
     var userID: Int?
     
+    var chatTopView = ChatTopView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         messageInputBar.inputTextView.delegate = self
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
@@ -67,7 +64,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
 //        self.collecttionView.collectionViewLayout = InvertedCollectionViewFlowLayout.init()
         self.messageInputBar.delegate = self
         messagesCollectionView.keyboardDismissMode = .onDrag
-        topBarView.addBottomShadow()
+        chatTopView.backButtonHandler = {
+            self.navigationController?.popViewController(animated: true)
+        }
         registerSocketEvent()
     }
     
@@ -76,7 +75,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         SocketHelper.shared.typeListening { typing in
             if typing?.lowercased() == "typing..."{
                 DispatchQueue.main.async {
-                    self.typingLabel.isHidden = false
+                    self.chatTopView.typingLabel.isHidden = false
                     self.typingTimer?.invalidate()
                     self.typingTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.stopTyping), userInfo: nil, repeats: false)
                 }
@@ -93,7 +92,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     }
     
     @objc func stopTyping() {
-        typingLabel.isHidden = true
+        chatTopView.typingLabel.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -113,19 +112,39 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        addCustomView()
         if chatUser != nil {
-            nameLabel.text = chatUser?.name?.capitalized
+            chatTopView.nameLabel.text = chatUser?.name?.capitalized
             profileImage = chatUser?.profileImage ?? ""
             uuid = chatUser?.uuid
             userID = chatUser?.id
         }else{
-            nameLabel.text = chatUser1?.user?.name?.capitalized
+            chatTopView.nameLabel.text = chatUser1?.user?.name?.capitalized
             profileImage = chatUser1?.user?.profileImage ?? ""
             uuid = chatUser1?.user?.uuid
             userID = chatUser1?.user?.id
         }
-        recieverProfileImage.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+        chatTopView.imageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         loadMessages()
+    }
+    
+    private func addCustomView(){
+        let topView = UIView(frame: CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.view.frame.size.width, height: 90)))
+        view.addSubview(topView)
+        chatTopView = Bundle.main.loadNibNamed("ChatTopView", owner: self, options: nil)![0] as! ChatTopView
+        topView.addSubview(chatTopView)
+        topView.addBottomShadow()
+        chatTopView.delegate = self
+        chatTopView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            chatTopView.topAnchor.constraint(equalTo: topView.topAnchor),
+            chatTopView.leadingAnchor.constraint(equalTo: topView.leadingAnchor),
+            chatTopView.trailingAnchor.constraint(equalTo: topView.trailingAnchor),
+            chatTopView.bottomAnchor.constraint(equalTo: topView.bottomAnchor)
+        ])
+        chatTopView.frame = topView.bounds
+        chatTopView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        messagesCollectionView.contentInset.top = 30
     }
     
     private func loadMessages(){
@@ -142,7 +161,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 self.conversation = conversationModel?.chats?.rows ?? []
                 if !(self.conversation?.isEmpty ?? true) && self.currentPage == 1{
                     self.conversationID = self.conversation?[0].conversationID
-                    self.conversation?.removeLast()
+                    self.conversation?.removeFirst()
                 }
                 self.conversation?.forEach({ item in
                     if item.sender?.id == UserDefaults.standard.userID {
@@ -274,3 +293,9 @@ extension ChatViewController{
     //    }
 }
 
+
+extension ChatViewController: ChatProtocol{
+    func popView() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}

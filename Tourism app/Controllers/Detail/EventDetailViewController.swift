@@ -110,19 +110,19 @@ class EventDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event", "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(route: .doComment, method: .post, parameters: ["section_id": eventDetail?.id ?? "", "section": "social_event", "comment": text], model: SuccessModel.self)
+        doComment(parameters: ["section_id": eventDetail?.id ?? "", "section": "social_event", "comment": text])
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func doComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -139,16 +139,15 @@ class EventDetailViewController: BaseViewController {
     
     @IBAction func likeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        self.interest(route: .doEventInterest, method: .post, parameters: ["event_id": eventDetail?.id ?? 0], model: SuccessModel.self)
+        self.interest(parameters: ["event_id": eventDetail?.id ?? 0])
     }
     
-    func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func interest(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doEventInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
-                let successDetail = like as? SuccessModel
-                self.favoriteBtn.setImage(UIImage(named: successDetail?.message == "Interest Added" ? "interested-red" : "interested"), for: .normal)
-                self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                self.favoriteBtn.setImage(UIImage(named: like.message == "Interest Added" ? "interested-red" : "interested"), for: .normal)
+                self.interestCount = like.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.interestGoingLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -156,11 +155,11 @@ class EventDetailViewController: BaseViewController {
         }
     }
     
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func commentReply(parameters: [String: Any]? = nil, row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -170,15 +169,13 @@ class EventDetailViewController: BaseViewController {
         }
     }
     
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
-                print((comments as? CommentsModel)?.comments?.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = comments.comments?.count ?? 1
+                self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.tableView.reloadData()
-//                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -236,7 +233,7 @@ extension EventDetailViewController: UITableViewDelegate, UITableViewDataSource{
         }
         cell.actionBlock = { text in
             cell.textView.text = ""
-            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "social_event"], model: SuccessModel.self, row: indexPath)
+            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "social_event"], row: indexPath)
             self.allComments = []
         }
         return cell

@@ -20,20 +20,19 @@ class EmailViewController: BaseViewController {
     
     @IBAction func continueBtnAction(_ sender: Any) {
         guard let email = emailTextField.text, !email.isEmpty else { return }
-        fetch(route: .forgotPasswordApi, method: .post, parameters: ["email": email], model: SuccessModel.self)
+        fetch(parameters: ["email": email])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .forgotPasswordApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let success):
-                let res = success as? SuccessModel
-                if res?.success == true{
-                    self.view.makeToast(res?.message)
+                if success.success == true{
+                    self.view.makeToast(success.message)
                     Switcher.gotoForgotPassword(delegate: self)
                 }
                 else{
-                    self.view.makeToast(res?.message)
+                    self.view.makeToast(success.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

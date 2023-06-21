@@ -124,8 +124,8 @@ import UIKit
     }
     
     public func setParallaxImageOffset(_ parallaxImageOffset: CGPoint) {
-        parallaxImageViewCenterXConstraint.constant = parallaxImageOffset.x
-        parallaxImageViewCenterYConstraint.constant = parallaxImageOffset.y
+        parallaxImageViewCenterXConstraint.constant = parallaxImageOffset.x + 10.0
+        parallaxImageViewCenterYConstraint.constant = parallaxImageOffset.y + 10.0
     }
     
     public func setMaxParallaxOffset(_ maxParallaxOffset: CGFloat) {

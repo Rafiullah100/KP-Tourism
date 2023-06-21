@@ -152,7 +152,7 @@ class PackageDetailViewController: BaseViewController {
             interestCount = tourDetail?.usersInterestCount ?? 0
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(tourDetail?.views_counter ?? 0) Views"
-            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+            viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
             tableView.isHidden = tourDetail?.activities?.count == 0 ? true : false
         }
         else if detailType == .wishlist{
@@ -172,7 +172,7 @@ class PackageDetailViewController: BaseViewController {
             interestCount = wishlistTourPackage?.usersInterestCount ?? 0
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) Views"
-            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"], model: SuccessModel.self)
+            viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
             tableView.isHidden = wishlistTourPackage?.activities.count == 0 ? true : false
         }
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
@@ -191,20 +191,14 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
-        if detailType == .list{
-            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else {
-                return }
-            self.interest(route: .doInterest, method: .post, parameters: ["package_id": tourDetail?.id ?? 0], model: SuccessModel.self)
-        }
-        else if detailType == .wishlist{
-            guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-            self.interest(route: .doInterest, method: .post, parameters: ["package_id": wishlistTourPackage?.id ?? 0], model: SuccessModel.self)
-        }
-        
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else {return}
+        let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
+        self.interest(parameters: ["package_id": packageId ?? 0])
     }
     
-    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 print(viewCount)
@@ -214,13 +208,13 @@ class PackageDetailViewController: BaseViewController {
         }
     }
     
-    func interest<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+
+    func interest(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                self.favoriteIcon.image = successDetail?.message == "Interest Added" ? UIImage(named: "interested-red") : UIImage(named: "interested")
-                self.interestCount = successDetail?.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                self.favoriteIcon.image = wish.message == "Interest Added" ? UIImage(named: "interested-red") : UIImage(named: "interested")
+                self.interestCount = wish.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.likeLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -238,31 +232,21 @@ class PackageDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        if detailType == .list{
-            fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package", "page": currentPage, "limit": limit], model: CommentsModel.self)
-        }
-        else{
-            fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": wishlistTourPackage?.id ?? 0, "section": "tour_package", "page": currentPage, "limit": limit], model: CommentsModel.self)
-        }
+        let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
+        fetchComment(parameters: ["section_id": packageId ?? 0, "section": "tour_package", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
-        if detailType == .list{
-            guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-            doComment(route: .doComment, method: .post, parameters: ["section_id": tourDetail?.id ?? "", "section": "tour_package", "comment": text], model: SuccessModel.self)
-        }
-        else{
-            guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-            doComment(route: .doComment, method: .post, parameters: ["section_id": wishlistTourPackage?.id ?? "", "section": "tour_package", "comment": text], model: SuccessModel.self)
-        }
-       
+        guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
+        let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
+        doComment(parameters: ["section_id": tourDetail?.id ?? "", "section": "tour_package", "comment": text])
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func doComment(parameters: [String: Any]? = nil) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -272,12 +256,12 @@ class PackageDetailViewController: BaseViewController {
             }
         }
     }
-    
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func commentReply(parameters: [String: Any], row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.commenTableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -287,12 +271,12 @@ class PackageDetailViewController: BaseViewController {
         }
     }
     
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = comments.comments?.count ?? 1
+                self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.commenTableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -355,7 +339,7 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
             }
             cell.actionBlock = { text in
                 cell.textView.text = ""
-                self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "tour_package"], model: SuccessModel.self, row: indexPath)
+                self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "tour_package"], row: indexPath)
                 self.allComments = []
             }
             return cell
@@ -373,10 +357,6 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
         }
         
     }
-
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        tableViewHeight.constant = tableView.contentSize.height
-//    }
 }
 
 

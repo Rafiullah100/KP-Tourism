@@ -19,18 +19,18 @@ class NotificationViewController: BaseViewController {
     }
     
     @IBAction func yesnotifyBtn(_ sender: Any) {
-        changeNotificationStatus(route: .notificationSwitchApi, method: .post, parameters: ["status": 1], model: SuccessModel.self)
+        changeNotificationStatus(parameters: ["status": 1])
     }
     
     @IBAction func skipBtn(_ sender: Any) {
-        changeNotificationStatus(route: .notificationSwitchApi, method: .post, parameters: ["status": 0], model: SuccessModel.self)
+        changeNotificationStatus(parameters: ["status": 0])
     }
     
-    func changeNotificationStatus<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func changeNotificationStatus(parameters: [String: Any]) {
+        URLSession.shared.request(route: .notificationSwitchApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let success):
-                let model = success as! SuccessModel
+                let model = success
                 self.view.makeToast(model.message)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

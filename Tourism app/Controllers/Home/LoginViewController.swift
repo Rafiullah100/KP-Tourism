@@ -46,7 +46,7 @@ class LoginViewController: BaseViewController {
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             if error == nil{
                 let parameters = ["username": result?.user.profile?.email ?? "", "user_type": "user", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
-                self.loginUser(route: .googleLoginApi, method: .post, parameters: parameters, model: LoginModel.self)
+                self.loginUser(route: .googleLoginApi, parameters: parameters)
             }
         }
     }
@@ -74,7 +74,7 @@ class LoginViewController: BaseViewController {
             if error == nil{
                 guard let json = result as? NSDictionary else { return }
                 if let email = json["email"] as? String, let picture = json["picture"] as? NSDictionary, let data = picture["data"] as? NSDictionary, let url = data["url"] as? String{
-                    self.loginUser(route: .facebookLoginApi, method: .post, parameters: ["username": email, "profile_image": url, "user_type": "user"], model: LoginModel.self)
+                    self.loginUser(route: .facebookLoginApi, parameters: ["username": email, "profile_image": url, "user_type": "user"])
                 }
             }
         }
@@ -94,14 +94,14 @@ class LoginViewController: BaseViewController {
             self.view.makeToast("Enter all fields.")
             return }
         let parameters = ["username": email, "password": password]
-        loginUser(route: .login, method: .post, parameters: parameters, model: LoginModel.self)
+        loginUser(route: .login, parameters: parameters)
     }
     
-    func loginUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func loginUser(route: Route, parameters: [String: Any]? = nil) {
+        URLSession.shared.request(route: route, method: .post, parameters: parameters, model: LoginModel.self) { result in
             switch result {
             case .success(let login):
-                self.login = login as? LoginModel
+                self.login = login
                 if self.login?.success == true{
                     UserDefaults.standard.isLoginned = true
                     UserDefaults.standard.accessToken = self.login?.token
@@ -112,7 +112,6 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.uuid = self.login?.uuID
                     UserDefaults.standard.userBio = self.login?.about
                     UserDefaults.standard.loadFirstTime = true
-                    print(self.login?.uuID)
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{
