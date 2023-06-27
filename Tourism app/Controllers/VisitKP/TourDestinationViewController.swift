@@ -82,6 +82,9 @@ class TourDestinationViewController: BaseViewController {
         if isSelected == true{
             Switcher.gotoTourInformationVC(delegate: self, districtID: districtID ?? 0)
         }
+        else{
+            self.view.makeToast("Please select destination")
+        }
     }
     
     @IBAction func backBtnAction(_ sender: Any) {

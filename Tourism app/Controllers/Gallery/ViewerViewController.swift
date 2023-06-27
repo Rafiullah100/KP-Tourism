@@ -8,6 +8,8 @@
 import UIKit
 import AVFoundation
 import AVKit
+import SwiftGifOrigin
+import SDWebImage
 class ViewerCell: UICollectionViewCell, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgView: UIImageView!
@@ -77,7 +79,22 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch galleryType {
         case .gallery:
             cell.value = indexPath.row
-            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? "")))
+//            cell.imgView.loadGif(name: "image_loader")
+            let url = URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? ""))
+            cell.imgView.sd_setImage(with: url)
+            SDWebImageManager.shared.loadImage(
+                with: url,
+                options: .retryFailed,
+                progress: nil,
+                completed: { [weak image = cell.imgView.image] (image, _, error, _, _, _) in
+                    if error != nil {
+                        cell.imgView.loadGif(name: "image_loader")
+                    } else {
+                        // Image loaded successfully
+                        cell.imgView.image = image
+                    }
+                })
+            
         case .poi:
             cell.value = indexPath.row
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiGallery?[indexPath.row].imageURL ?? "")))

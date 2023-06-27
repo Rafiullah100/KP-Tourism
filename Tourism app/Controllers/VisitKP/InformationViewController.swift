@@ -50,6 +50,9 @@ class InformationViewController: BaseViewController {
             UserDefaults.standard.information = selectedInformation.map({$0}).joined(separator: ",")
             Switcher.gotoTourAccomodationVC(delegate: self, districtID: districtID ?? 0)
         }
+        else{
+            self.view.makeToast("Please select travel information")
+        }
     }
 }
 

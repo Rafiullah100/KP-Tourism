@@ -28,8 +28,8 @@ struct EventListModel: Codable {
     let durationDays: String?
     let socialEventUsers: [SocialEventUser]?
     let userLike: Int?
-    let userInterest: Int?
-    let usersInterestCount: Int?
+    var userInterest: Int?
+    var usersInterestCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case id, uuid

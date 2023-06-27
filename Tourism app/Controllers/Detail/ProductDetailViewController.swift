@@ -71,6 +71,7 @@ class ProductDetailViewController: BaseViewController {
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         if detailType == .list{
+            DataManager.shared.productModelObject = productDetail
             type = .backWithTitle
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
@@ -171,11 +172,21 @@ class ProductDetailViewController: BaseViewController {
                     self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                     self.productDetail?.userLike = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
+                    self.changeObject()
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
+    }
+    
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.productModelObject else {
+            return
+        }
+        modelObject.likes[0].likesCount = self.likeCount
+        modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
+        DataManager.shared.productModelObject = modelObject
     }
     
     private func reloadComment(){

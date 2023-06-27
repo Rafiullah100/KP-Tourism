@@ -66,13 +66,12 @@ class SignupViewController: BaseViewController {
             switch result {
             case .success(let result):
                 DispatchQueue.main.async {
-                    let res = result as! SuccessModel
-                    if res.success == true{
+                    if result.success == true{
                         UserDefaults.standard.otpEmail = self.emailTextField.text
                         Switcher.goToOTPVC(delegate: self)
                     }
                     else{
-                        SVProgressHUD.showError(withStatus: res.message)
+                        SVProgressHUD.showError(withStatus: result.message)
                     }
                 }
             case .failure(let error):

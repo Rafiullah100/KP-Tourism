@@ -134,6 +134,7 @@ class PackageDetailViewController: BaseViewController {
     private func updateUI(){
         
         if detailType == .list {
+            DataManager.shared.packageModelObject = tourDetail
             viewControllerTitle = "\(tourDetail?.title ?? "") | Tour Packages"
 
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
@@ -216,18 +217,29 @@ class PackageDetailViewController: BaseViewController {
                 self.favoriteIcon.image = wish.message == "Interest Added" ? UIImage(named: "interested-red") : UIImage(named: "interested")
                 self.interestCount = wish.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
                 self.likeLabel.text = "\(self.interestCount) Interested"
+                self.changeObject()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
     }
     
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.packageModelObject else {
+            return
+        }
+        modelObject.usersInterestCount = self.interestCount
+        modelObject.userInterest = modelObject.userInterest == 1 ? 0 : 1
+        DataManager.shared.packageModelObject = modelObject
+    }
+    
     @IBAction func shareBtnAction(_ sender: Any) {
         if detailType == .list{
-            self.share(text: tourDetail?.description ?? "", image: imageView.image ?? UIImage())
+            print(tourDetail?.description ?? "")
+            self.share(text: tourDetail?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
         }
         else if detailType == .wishlist{
-            self.share(text: wishlistTourPackage?.description ?? "", image: imageView.image ?? UIImage())
+            self.share(text: wishlistTourPackage?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
         }
     }
     
@@ -239,7 +251,7 @@ class PackageDetailViewController: BaseViewController {
     @IBAction func loginToComment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
-        doComment(parameters: ["section_id": tourDetail?.id ?? "", "section": "tour_package", "comment": text])
+        doComment(parameters: ["section_id": packageId ?? "", "section": "tour_package", "comment": text])
     }
     
     func doComment(parameters: [String: Any]? = nil) {

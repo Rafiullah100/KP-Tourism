@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 class Utility {
-    static func showAlert(title:String = "", message:String, buttonTitles:[String], completion: @escaping (_ responce: String) -> Void) {
+    static func showAlert(title: String = "", message:String, buttonTitles:[String], completion: @escaping (_ responce: String) -> Void) {
 
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
 
@@ -41,3 +41,6 @@ class Utility {
         UIApplication.topViewController()?.present(actionSheet, animated: true)
     }
 }
+
+
+

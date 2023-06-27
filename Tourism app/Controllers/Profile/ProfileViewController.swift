@@ -56,6 +56,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var favoriteButton: UIButton!
     @IBOutlet weak var addButton: UIView!
     
+    @IBOutlet weak var suggestedView: UIView!
     @IBOutlet weak var contentCollectionView: UICollectionView!{
         didSet{
             contentCollectionView.dataSource = self
@@ -119,11 +120,13 @@ class ProfileViewController: UIViewController {
             settingButton.setImage(UIImage(named: "arrow-back"), for: .normal)
             favoriteButton.isHidden = true
             editPhotoButton.isHidden = false
+            suggestedView.isHidden = true
         }
         else{
             settingButton.setImage(UIImage(named: "setting-btn-icon"), for: .normal)
             favoriteButton.isHidden = false
             editPhotoButton.isHidden = true
+            suggestedView.isHidden = false
         }
     }
     
@@ -240,7 +243,8 @@ class ProfileViewController: UIViewController {
                         self.profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
                     }
                     else{
-                        self.profileImageView.sd_setImage(with: URL(string: Route.baseUrl + Helper.shared.getOtherProfileImage(urlString: self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+                        print(self.userProfile?.userDetails.profileImage ?? "")
+                        self.profileImageView.sd_setImage(with: URL(string:  Helper.shared.getOtherProfileImage(urlString: self.userProfile?.userDetails.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
                     }
                     self.bioLabel.text = self.userProfile?.userDetails.about
                     self.nameLabel.attributedText = Helper.shared.attributedString(text1: self.userProfile?.userDetails.name?.capitalized ?? "", text2: "(\(self.userProfile?.userDetails.userType ?? ""))")

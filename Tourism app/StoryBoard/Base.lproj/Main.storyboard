@@ -188,25 +188,10 @@
                                                         <rect key="frame" x="0.0" y="60" width="393" height="545"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="or2-eg-dWQ">
-                                                                <rect key="frame" x="0.0" y="0.0" width="393" height="545"/>
+                                                                <rect key="frame" x="8" y="0.0" width="377" height="545"/>
                                                                 <subviews>
-                                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cda-ix-eKV">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="393" height="272.66666666666669"/>
-                                                                        <subviews>
-                                                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="VLn-4E-u4t">
-                                                                                <rect key="frame" x="8" y="0.0" width="377" height="272.66666666666669"/>
-                                                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                                            </tableView>
-                                                                        </subviews>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="trailing" secondItem="VLn-4E-u4t" secondAttribute="trailing" constant="8" id="Gtb-DB-1J6"/>
-                                                                            <constraint firstItem="VLn-4E-u4t" firstAttribute="leading" secondItem="cda-ix-eKV" secondAttribute="leading" constant="8" id="P8F-DP-rXi"/>
-                                                                            <constraint firstItem="VLn-4E-u4t" firstAttribute="top" secondItem="cda-ix-eKV" secondAttribute="top" id="c46-S9-Fe3"/>
-                                                                            <constraint firstAttribute="bottom" secondItem="VLn-4E-u4t" secondAttribute="bottom" id="dyu-cL-cfF"/>
-                                                                        </constraints>
-                                                                    </view>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ig8-jM-a1Z">
-                                                                        <rect key="frame" x="0.0" y="272.66666666666674" width="393" height="272.33333333333326"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="377" height="545"/>
                                                                     </view>
                                                                 </subviews>
                                                             </stackView>
@@ -214,8 +199,8 @@
                                                         <constraints>
                                                             <constraint firstAttribute="bottom" secondItem="or2-eg-dWQ" secondAttribute="bottom" id="2vY-pL-qcj"/>
                                                             <constraint firstItem="or2-eg-dWQ" firstAttribute="top" secondItem="zYz-3i-brr" secondAttribute="top" id="odN-YQ-zX5"/>
-                                                            <constraint firstAttribute="trailing" secondItem="or2-eg-dWQ" secondAttribute="trailing" id="sck-PF-1tn"/>
-                                                            <constraint firstItem="or2-eg-dWQ" firstAttribute="leading" secondItem="zYz-3i-brr" secondAttribute="leading" id="xX0-jR-kwX"/>
+                                                            <constraint firstAttribute="trailing" secondItem="or2-eg-dWQ" secondAttribute="trailing" constant="8" id="sck-PF-1tn"/>
+                                                            <constraint firstItem="or2-eg-dWQ" firstAttribute="leading" secondItem="zYz-3i-brr" secondAttribute="leading" constant="8" id="xX0-jR-kwX"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -499,8 +484,6 @@
                         <outlet property="searchBgView" destination="2TG-Pn-xWm" id="Vhg-Kg-xCJ"/>
                         <outlet property="siteLabel" destination="HTz-8w-9KU" id="0XW-0v-lkP"/>
                         <outlet property="tabbarView" destination="mei-F8-eiC" id="R1h-E3-reO"/>
-                        <outlet property="tableView" destination="VLn-4E-u4t" id="bJF-qw-fCg"/>
-                        <outlet property="tableViewContainer" destination="cda-ix-eKV" id="KBb-oE-Hld"/>
                         <outlet property="textField" destination="bo7-jM-sla" id="1ux-Es-RgF"/>
                         <outlet property="topView" destination="laQ-RI-Ejm" id="AjG-Ca-V0P"/>
                     </connections>
@@ -2912,7 +2895,7 @@ details, account, weather and account activity</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vl3-fc-Dgg">
-                                <rect key="frame" x="30" y="301" width="354" height="260"/>
+                                <rect key="frame" x="30" y="301" width="333" height="260"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Klw-Wq-mCh">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="260"/>
@@ -3164,7 +3147,7 @@ details, account, weather and account activity</string>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="55q-kT-z6c">
-                                <rect key="frame" x="0.0" y="59" width="414" height="1"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="1"/>
                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="0WC-8U-g8v"/>

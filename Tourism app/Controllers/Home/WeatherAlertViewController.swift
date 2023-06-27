@@ -217,7 +217,3 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
         dropDownLabel.text = self.districtList?[row].title
     }
 }
-
-extension WeatherAlertViewController: UITextFieldDelegate{
-    
-}

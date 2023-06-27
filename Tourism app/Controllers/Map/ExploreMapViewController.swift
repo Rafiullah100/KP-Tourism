@@ -14,7 +14,11 @@ import Mapbox
 import SVProgressHUD
 class ExploreMapViewController: UIViewController {
     
-    var exploreDistrict: [ExploreDistrict]?
+    public var exploreDistrict: [ExploreDistrict]?{
+        didSet{
+            loadMap()
+        }
+    }
     
     var mapView = MGLMapView()
     //    @IBOutlet weak var markerView: MarkerView!
@@ -25,7 +29,6 @@ class ExploreMapViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadMap()
     }
     
     override func viewWillAppear(_ animated: Bool) {

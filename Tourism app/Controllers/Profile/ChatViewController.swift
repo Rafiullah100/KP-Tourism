@@ -60,6 +60,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
+        self.messagesCollectionView.showsVerticalScrollIndicator = false
 //        self.messagesCollectionView.transform3D = CATransform3DMakeScale(1, -1, 1)
 //        self.collecttionView.collectionViewLayout = InvertedCollectionViewFlowLayout.init()
         self.messageInputBar.delegate = self

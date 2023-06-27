@@ -62,28 +62,29 @@ class WishlistViewController: UIViewController {
                 if type == .post {
                     let wishlist = model as? PostSectionModel
                     self.postWishlist = wishlist?.wishlist
-                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+//                    self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                 }
                 else if type == .attraction{
                     let wishlist = model as? AttractionSectionModel
                     self.attractionWishlist = wishlist?.wishlist
-                    self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
+//                    self.tableView.reloadRows(at: [IndexPath(row: 1, section: 0)], with: .automatic)
                 }
                 else if type == .district{
                     let wishlist = model as? DistrictSectionModel
                     self.districtWishlist = wishlist?.wishlist
-                    self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
+//                    self.tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .automatic)
                 }
                 else if type == .package{
                     let wishlist = model as? PackageSectionModel
                     self.packageWishlist = wishlist?.wishlist
-                    self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
+//                    self.tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .automatic)
                 }
                 else if type == .product{
                     let wishlist = model as? ProductSectionModel
                     self.productWishlist = wishlist?.wishlist
-                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
+//                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
                 }
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -97,6 +98,7 @@ class WishlistViewController: UIViewController {
 
 extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return wishlistTypeArray?.count ?? 0
     }
     

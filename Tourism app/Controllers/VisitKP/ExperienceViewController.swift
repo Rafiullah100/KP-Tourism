@@ -81,6 +81,9 @@ class ExperienceViewController: BaseViewController {
         if isSelected == true{
             Switcher.gotoTourDestinationVC(delegate: self, experienceID: experienceId ?? 0, geoTypeID: geoTypeId ?? "")
         }
+        else{
+            self.view.makeToast("Please select what would you like to experience")
+        }
     }
     
     @IBAction func backBtnAction(_ sender: Any) {

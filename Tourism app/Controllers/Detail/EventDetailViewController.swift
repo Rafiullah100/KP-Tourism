@@ -43,6 +43,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     var eventDetail: EventListModel?
+    
     internal var mapView: MapView!
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
@@ -58,7 +59,7 @@ class EventDetailViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
-        
+        DataManager.shared.eventModelObject = eventDetail
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         commentTextView.isScrollEnabled = false
@@ -148,11 +149,21 @@ class EventDetailViewController: BaseViewController {
             case .success(let like):
                 self.favoriteBtn.setImage(UIImage(named: like.message == "Interest Added" ? "interested-red" : "interested"), for: .normal)
                 self.interestCount = like.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                self.changeObject()
                 self.interestGoingLabel.text = "\(self.interestCount) Interested"
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
+    }
+    
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.eventModelObject else {
+            return
+        }
+        modelObject.usersInterestCount = self.interestCount
+        modelObject.userInterest = modelObject.userInterest == 1 ? 0 : 1
+        DataManager.shared.eventModelObject = modelObject
     }
     
     func commentReply(parameters: [String: Any]? = nil, row: IndexPath) {

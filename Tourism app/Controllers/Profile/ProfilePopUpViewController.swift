@@ -48,7 +48,7 @@ class ProfilePopUpViewController: UIViewController {
             fetch(route: .follower, method: .post, parameters: ["page": currentPage, "limit": limit], model: FollowerModel.self)
         }
         else{
-            headerLabel.text = "Followings"
+            headerLabel.text = "Following"
             fetch(route: .following, method: .post, parameters: ["page": currentPage, "limit": limit], model: FollowingModel.self)
         }
     }
@@ -136,7 +136,7 @@ extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 65.0
+        return 60.0
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){

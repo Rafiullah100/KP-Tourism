@@ -23,7 +23,6 @@ class AdventureDetailViewController: BaseViewController {
         super.viewDidLoad()
         
         
-        
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
         viewControllerTitle = "Polo Games"

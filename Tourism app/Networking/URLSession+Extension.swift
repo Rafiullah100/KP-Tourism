@@ -34,11 +34,6 @@ extension URLSession{
                         completion(.failure(.serverError))
                     }
                 }
-                else{
-                    DispatchQueue.main.async {
-                        completion(.failure(AppError.serverError))
-                    }
-                }
                 return
             }
             do {

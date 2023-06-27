@@ -38,7 +38,7 @@ class ProductTableViewCell: UITableViewCell {
         thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (product.previewImage)), placeholderImage: UIImage(named: "placeholder"))
         productNameLabel.text = "\(product.title)"
         ownerImageView.sd_setImage(with: URL(string: Route.baseUrl + (product.users.profileImage)))
-        ownerNameLAbel.text = "\(product.users.name)"
+        ownerNameLAbel.text = "\(product.users.name)".capitalized
         locationLabel.text = "\(product.districts.title)"
         uploadedTimeLabel.text =  "\(product.createdAt ?? "")"
     }

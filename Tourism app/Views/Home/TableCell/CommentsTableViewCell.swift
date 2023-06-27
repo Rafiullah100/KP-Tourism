@@ -39,7 +39,7 @@ class CommentsTableViewCell: UITableViewCell {
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
             commentLabel.text = "\(comment?.comment ?? "")".removeSpaces()
-            nameLabel.text = "\(comment?.users?.name ?? "")"
+            nameLabel.text = "\(comment?.users?.name ?? "")".capitalized
             print(comment?.users?.profileImage ?? "")
             print(Helper.shared.getProfileImage())
             userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))

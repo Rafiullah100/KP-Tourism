@@ -7,7 +7,7 @@
 
 import Foundation
 import UIKit
-extension HomeViewController{
+extension HomeViewController: UIScrollViewDelegate{
     
     func configureTabbar(){
         var tag = 0
@@ -20,9 +20,7 @@ extension HomeViewController{
         tabbarView.tabBarDelegate = self
         tabbarView.delegate = self
         Helper.shared.customTab(tabbar: tabbarView, items: tabbarItems)
-        
-        self.add(mapVC, in: mapContainerView)
-        galleryContainer.isHidden = true
+        show(mapVC, sender: self)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -55,17 +53,15 @@ extension HomeViewController{
         var fractionComplete = translation.y / contentView.frame.height
         fractionComplete = cardVisible ? fractionComplete : -fractionComplete
         print("fractionComplete: \(translation.y)")
-        if cellType == .explore {
-            switch recognizer.state {
-            case .began:
-                startInteractiveTransition(state: nextState, duration: 0.9)
-            case .changed:
-                updateInteractiveTransition(fractionCompleted: fractionComplete)
-            case .ended:
-                continueInteractiveTransition()
-            default:
-                break
-            }
+        switch recognizer.state {
+        case .began:
+            startInteractiveTransition(state: nextState, duration: 0.9)
+        case .changed:
+            updateInteractiveTransition(fractionCompleted: fractionComplete)
+        case .ended:
+            continueInteractiveTransition()
+        default:
+            break
         }
     }
     
@@ -132,6 +128,7 @@ extension HomeViewController{
     }
     
     @IBAction func mapBtnAction(_ sender: Any) {
+        mapVC.exploreDistrict = exploreVC.exploreDistrict
         switch nextState {
         case .expanded:
             mapButton.isHidden = false

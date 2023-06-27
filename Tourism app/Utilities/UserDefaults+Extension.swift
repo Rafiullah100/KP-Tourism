@@ -229,3 +229,9 @@ extension UserDefaults {
         standard.synchronize()
     }
 }
+//
+//
+//class SharedDataModel {
+//    static let shared = SharedDataModel()
+//    var sharedData: [ExploreDistrict]?
+//}

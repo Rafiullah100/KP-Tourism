@@ -51,6 +51,7 @@ class BlogDetailViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.shared.blogModelObject = blogDetail
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
@@ -155,10 +156,20 @@ class BlogDetailViewController: BaseViewController {
                 self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
                 self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                 self.likeLabel.text = "\(self.likeCount) Liked"
+                self.changeObject()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
+    }
+    
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.blogModelObject else {
+            return
+        }
+        modelObject.likes.likesCount = self.likeCount
+        modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
+        DataManager.shared.blogModelObject = modelObject
     }
     
     func commentReply(parameters: [String: Any], row: IndexPath) {

@@ -104,30 +104,38 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtL-jM-wYj">
-                                <rect key="frame" x="10" y="118" width="126" height="20"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kko-oQ-JbB">
+                                <rect key="frame" x="0.0" y="116" width="146" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtL-jM-wYj">
+                                        <rect key="frame" x="53" y="4.6666666666666714" width="40.333333333333343" height="21"/>
+                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                        <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="shadowOffset" width="0.0" height="0.0"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.40000000000000002" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="20" id="lgT-o0-xXT"/>
+                                    <constraint firstItem="jtL-jM-wYj" firstAttribute="centerX" secondItem="Kko-oQ-JbB" secondAttribute="centerX" id="El9-Ei-jeR"/>
+                                    <constraint firstItem="jtL-jM-wYj" firstAttribute="centerY" secondItem="Kko-oQ-JbB" secondAttribute="centerY" id="Nwb-rY-5Ob"/>
+                                    <constraint firstAttribute="height" constant="30" id="W3Q-Fd-a2X"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="15"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <color key="shadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <size key="shadowOffset" width="3" height="3"/>
-                            </label>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" name="incomingMessageBackground"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Kko-oQ-JbB" secondAttribute="bottom" id="0OM-3r-iSa"/>
                             <constraint firstAttribute="trailing" secondItem="sqf-GN-X2T" secondAttribute="trailing" id="3FC-Ou-no0"/>
-                            <constraint firstAttribute="trailing" secondItem="jtL-jM-wYj" secondAttribute="trailing" constant="10" id="5eM-B7-Bzy"/>
                             <constraint firstItem="sqf-GN-X2T" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" id="Est-UC-BUr"/>
-                            <constraint firstAttribute="bottom" secondItem="jtL-jM-wYj" secondAttribute="bottom" constant="8" id="Lz1-jR-tMk"/>
                             <constraint firstItem="gxR-T3-z6S" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" constant="10" id="NmM-tP-HQI"/>
                             <constraint firstAttribute="trailing" secondItem="gxR-T3-z6S" secondAttribute="trailing" constant="10" id="Sut-tm-D8r"/>
                             <constraint firstItem="xej-By-l83" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" constant="10" id="dPR-EJ-ANv"/>
-                            <constraint firstItem="jtL-jM-wYj" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" constant="10" id="h7c-qm-P6r"/>
                             <constraint firstItem="xej-By-l83" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" constant="10" id="qpW-YO-YKe"/>
                             <constraint firstItem="sqf-GN-X2T" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" id="t0w-zP-DZY"/>
+                            <constraint firstItem="Kko-oQ-JbB" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" id="tbL-Vp-rMO"/>
+                            <constraint firstAttribute="trailing" secondItem="Kko-oQ-JbB" secondAttribute="trailing" id="y0y-pp-x6F"/>
                             <constraint firstAttribute="bottom" secondItem="sqf-GN-X2T" secondAttribute="bottom" id="zIb-cp-HdK"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>

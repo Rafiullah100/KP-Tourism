@@ -518,6 +518,7 @@ extension UIViewController {
     }
     
     public func share(text: String, image: UIImage){
+        print(text)
         let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
 
         DispatchQueue.main.async {

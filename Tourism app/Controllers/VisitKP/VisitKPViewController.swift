@@ -63,6 +63,9 @@ class VisitKPViewController: BaseViewController {
         if isSelected == true{
             Switcher.gotoVisitExpVC(delegate: self, geoTypeId: geoTypeId ?? "")
         }
+        else{
+            self.view.makeToast("Please select part of kp you would like to visit")
+        }
     }
 }
 

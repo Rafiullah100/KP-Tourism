@@ -29,8 +29,8 @@ struct Blog: Codable {
     let users: BlogUsers
     let districts, attractions, pois: BlogAttractions
     let comments: BlogComments
-    let likes: BlogLikes
-    let userLike: Int?
+    var likes: BlogLikes
+    var userLike: Int?
 
     enum CodingKeys: String, CodingKey {
         case id, uuid
@@ -64,7 +64,7 @@ struct BlogComments: Codable {
 
 // MARK: - Likes
 struct BlogLikes: Codable {
-    let likesCount: Int
+    var likesCount: Int
 }
 
 // MARK: - Users

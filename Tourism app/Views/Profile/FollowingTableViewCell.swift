@@ -19,7 +19,7 @@ class FollowingTableViewCell: UITableViewCell {
     
     var following: FollowingRow? {
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (following?.followerUser.profileImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (following?.followerUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             nameLabel.text = following?.followerUser.name?.capitalized
             followButton.setTitle("UNFollow", for: .normal)
         }
@@ -27,7 +27,7 @@ class FollowingTableViewCell: UITableViewCell {
     
     var follower: FollowerRow? {
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (follower?.followerUser.profileImage ?? "")))
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (follower?.followerUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             nameLabel.text = follower?.followerUser.name?.capitalized
             followButton.setTitle(follower?.isFollowing == 1 ? "UNFollow" : "Follow", for: .normal)
         }

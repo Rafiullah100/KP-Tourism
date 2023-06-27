@@ -291,7 +291,7 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ChatListViewController") as! ChatListViewController
         vc.modalPresentationStyle = .fullScreen
 //        delegate.present(vc, animated: true)
-        delegate.navigationController?.pushViewController(vc, animated: false)
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
     static func goToProfileVC(delegate: UIViewController, profileType:ProfileType, uuid: String){

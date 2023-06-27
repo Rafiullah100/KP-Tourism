@@ -30,7 +30,7 @@ class CommentReplyTableViewCell: UITableViewCell {
         didSet{
             timeLabel.text = "\(commentReply?.createdAt ?? "")"
             commentLabel.text = "\(commentReply?.reply ?? "")".removeSpaces()
-            nameLabel.text = "\(commentReply?.users?.name ?? "")"
+            nameLabel.text = "\(commentReply?.users?.name ?? "")".capitalized
             userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: commentReply?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         }
     }

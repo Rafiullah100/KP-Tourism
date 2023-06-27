@@ -78,6 +78,9 @@ class TourAccomodationViewController: BaseViewController {
         if isSelected == true{
             Switcher.gotoTourpdfVC(delegate: self)
         }
+        else{
+            self.view.makeToast("Please select accomodation")
+        }
     }
     
     @IBAction func backBtnAction(_ sender: Any) {

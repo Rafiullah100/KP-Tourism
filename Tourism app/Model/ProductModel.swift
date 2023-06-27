@@ -67,7 +67,7 @@ struct ProductDistricts: Codable {
 
 // MARK: - Like
 struct ProductLike: Codable {
-    let likesCount: Int
+    var likesCount: Int
 }
 
 // MARK: - Users
