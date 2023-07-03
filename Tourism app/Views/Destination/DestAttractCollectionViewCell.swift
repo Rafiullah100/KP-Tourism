@@ -34,15 +34,14 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
         // Initialization code
     }
     @IBAction func likeBtnActio(_ sender: Any) {
-        self.like(route: .doWishApi, method: .post, parameters: ["section_id": self.attraction?.id ?? 0, "section": "attraction"], model: SuccessModel.self)
+        self.like(parameters: ["section_id": self.attraction?.id ?? 0, "section": "attraction"])
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doWishApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                self.favoriteBtn.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
+                self.favoriteBtn.setImage(wish.message == "Wishlist Added" ? UIImage(named: "fav") : UIImage(named: "unfavorite-gray"), for: .normal)
                 self.likeButtonTappedHandler?()
             case .failure(let error):
                 print(error)

@@ -146,7 +146,6 @@ struct FeedPost : Codable {
     let users : FeedUsers?
 
     enum CodingKeys: String, CodingKey {
-
         case updatedAt = "updatedAt"
         case description = "description"
         case type = "type"
@@ -178,6 +177,7 @@ struct FeedPost : Codable {
 //}
 
 struct FeedUsers : Codable {
+    let uuid: String?
     let id : Int?
     let name : String?
     let profile_image : String?
@@ -186,7 +186,7 @@ struct FeedUsers : Codable {
     let profile_image_thumb : String?
 
     enum CodingKeys: String, CodingKey {
-
+        case uuid = "uuid"
         case id = "id"
         case name = "name"
         case profile_image = "profile_image"
@@ -230,13 +230,14 @@ struct PostImageModel : Codable {
 }
 
 struct FeedUser : Codable {
+    let uuid: String?
     let id : Int?
     let name : String?
     let profile_image : String?
     let profile_image_thumb : String?
 
     enum CodingKeys: String, CodingKey {
-
+        case uuid = "uuid"
         case id = "id"
         case name = "name"
         case profile_image = "profile_image"
@@ -245,6 +246,7 @@ struct FeedUser : Codable {
 
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
+        uuid = try values.decodeIfPresent(String.self, forKey: .uuid)
         id = try values.decodeIfPresent(Int.self, forKey: .id)
         name = try values.decodeIfPresent(String.self, forKey: .name)
         profile_image = try values.decodeIfPresent(String.self, forKey: .profile_image)

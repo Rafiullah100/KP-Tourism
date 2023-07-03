@@ -28,6 +28,7 @@ class FeedTableViewCell: UITableViewCell {
     var shareActionBlock: (() -> Void)? = nil
     var saveActionBlock: (() -> Void)? = nil
     var commentActionBlock: (() -> Void)? = nil
+    var profileImageActionBlock: (() -> Void)? = nil
 
     
     private var feed: FeedModel?
@@ -35,6 +36,7 @@ class FeedTableViewCell: UITableViewCell {
     var wishlistButtonTappedHandler: (() -> Void)?
 
     func configure(feed: FeedModel) {
+        print(feed.user)
         self.feed = feed
         likeButton.setImage(feed.isLiked == 1 ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
         saveButton.setImage(feed.isWished == 1 ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
@@ -48,12 +50,13 @@ class FeedTableViewCell: UITableViewCell {
             imgbgView.isHidden = true
         }
         nameLabel.text = feed.post?.users?.name?.capitalized
-        if let url = feed.post?.users?.profile_image, url.contains("https://") {
-            userImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
-        }
-        else{
-            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
-        }
+        userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: feed.post?.users?.profile_image ?? "")))
+//        if let url = feed.post?.users?.profile_image, url.contains("https://") {
+//            userImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
+//        }
+//        else{
+//            userImageView.sd_setImage(with: URL(string: Route.baseUrl + (feed.post?.users?.profile_image ?? "")), placeholderImage: UIImage(named: "user"))
+//        }
         
         verfiedIcon.isHidden = true
         
@@ -156,6 +159,10 @@ class FeedTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBAction func gotoProfileBtn(_ sender: Any) {
+        profileImageActionBlock?()
+    }
+    
     @IBAction func shareBTnAction(_ sender: Any) {
         shareActionBlock?()
     }
@@ -163,21 +170,20 @@ class FeedTableViewCell: UITableViewCell {
         actionBlock?()
     }
     @IBAction func saveBtnAction(_ sender: Any) {
-        self.wishList(route: .doWishApi, method: .post, parameters: ["section_id": self.feed?.id ?? 0, "section": "post"], model: SuccessModel.self)
+        self.wishList(parameters: ["section_id": self.feed?.id ?? 0, "section": "post"])
     }
     
     @IBAction func likeBtnAAction(_ sender: Any) {
-        self.like(route: .likeApi, method: .post, parameters: ["section_id": self.feed?.id ?? 0, "section": "post"], model: SuccessModel.self)
+        self.like(parameters: ["section_id": self.feed?.id ?? 0, "section": "post"])
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
-            case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                self.likeButton.setImage(successDetail?.message == "Liked" ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
+            case .success(let like):
+                self.likeButton.setImage(like.message == "Liked" ? UIImage(named: "post-like") : UIImage(named: "like-black"), for: .normal)
                 var count = self.feed?.likesCount ?? 0
-                if successDetail?.message == "Liked"{
+                if like.message == "Liked"{
                     count = count + 1
                 }
                 else{
@@ -191,12 +197,11 @@ class FeedTableViewCell: UITableViewCell {
         }
     }
     
-    func wishList<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func wishList(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doWishApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
-                let successDetail = wish as? SuccessModel
-                self.saveButton.setImage(successDetail?.message == "Wishlist Added" ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
+                self.saveButton.setImage(wish.message == "Wishlist Added" ? UIImage(named: "save-icon-red") : UIImage(named: "save-icon"), for: .normal)
                 self.wishlistButtonTappedHandler?()
             case .failure(let error):
                 print(error.localizedDescription)

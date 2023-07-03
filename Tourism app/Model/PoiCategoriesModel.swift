@@ -14,6 +14,7 @@ struct PoiCategoriesModel: Codable {
 
 // MARK: - Poicategory
 struct Poicategory: Codable {
+    let count: Int?
     let id: Int?
     let title, slug, icon: String?
     let status, isDeleted: Int?

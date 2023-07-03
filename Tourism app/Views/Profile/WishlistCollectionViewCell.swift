@@ -48,6 +48,20 @@ class WishlistCollectionViewCell: UICollectionViewCell {
         }
     }
     
+    var eventWishlist: EventWishlistModel?{
+        didSet{
+            label.text = eventWishlist?.socialEvent?.title
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (eventWishlist?.socialEvent?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        }
+    }
+    
+    var blogWishlist: BlogWishlistModel?{
+        didSet{
+            label.text = blogWishlist?.blog?.title
+            imgView.sd_setImage(with: URL(string: Route.baseUrl + (blogWishlist?.blog?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         print(self.tag)

@@ -34,12 +34,12 @@ class ItinraryDetailViewController: BaseViewController {
         textView.text = itinraryDetail?.description?.stripOutHtml()
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
-        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"], model: SuccessModel.self)
+        viewCounter(parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"])
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
     }
     
-    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 print(viewCount)

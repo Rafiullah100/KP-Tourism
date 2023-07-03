@@ -9,6 +9,7 @@ import Foundation
 
 struct AttractionModel: Codable {
     let attractions: HomeAttractions?
+    let categories: [Category]
 }
 
 // MARK: - Attractions
@@ -75,4 +76,10 @@ struct AttractionGallery: Codable {
         case virtualURL = "virtual_url"
         case status, isDeleted, createdAt, updatedAt
     }
+}
+
+struct Category: Codable {
+    let id: Int
+    let title, slug, icon: String
+    let count: Int
 }

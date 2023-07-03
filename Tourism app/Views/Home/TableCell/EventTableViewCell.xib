@@ -228,17 +228,32 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Trd-dq-V9O">
+                        <rect key="frame" x="333" y="15" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="58o-x2-D0P"/>
+                            <constraint firstAttribute="height" constant="30" id="uzZ-UP-ipy"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" backgroundImage="unfavorite-gray"/>
+                        <connections>
+                            <action selector="favoriteBtnAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="c0z-1J-e9G"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Trd-dq-V9O" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="Grn-lV-I7Q"/>
                     <constraint firstItem="CRx-ma-fLm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="P3R-DI-rgC"/>
                     <constraint firstAttribute="bottom" secondItem="CRx-ma-fLm" secondAttribute="bottom" constant="20" id="YTQ-Ej-RMc"/>
                     <constraint firstAttribute="trailing" secondItem="CRx-ma-fLm" secondAttribute="trailing" constant="2" id="gRE-F5-xRK"/>
+                    <constraint firstAttribute="trailing" secondItem="Trd-dq-V9O" secondAttribute="trailing" constant="15" id="nDe-uG-ffc"/>
                     <constraint firstItem="CRx-ma-fLm" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="2" id="tGb-fI-ftz"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="counterView" destination="VJ3-Q6-Hb0" id="ddQ-Ku-OCy"/>
+                <outlet property="favoriteButton" destination="Trd-dq-V9O" id="FMo-4O-k9U"/>
                 <outlet property="imgView" destination="9Zd-p7-dnF" id="bNI-wC-V7g"/>
                 <outlet property="interestGoingLabel" destination="QmJ-MX-GBS" id="UiJ-Fd-um3"/>
                 <outlet property="opendateLabel" destination="nmi-GA-MLq" id="6aq-JF-HWH"/>
@@ -252,6 +267,7 @@
     <resources>
         <image name="Mask Group 15" width="1077" height="843"/>
         <image name="registration" width="11" height="11"/>
+        <image name="unfavorite-gray" width="21" height="20"/>
         <namedColor name="cellBGColor">
             <color red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

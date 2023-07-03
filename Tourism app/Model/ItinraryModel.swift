@@ -13,7 +13,7 @@ struct ItinraryModel: Codable {
 
 struct Itineraries: Codable {
     let count: Int?
-    let rows: [ItinraryRow]
+    let rows: [ItinraryRow]?
 }
 
 struct ItinraryRow: Codable {

@@ -25,12 +25,13 @@ struct Blog: Codable {
     let blogDescription: String
     let isFeatured: Int
     let approvedBy: String?
-    let viewsCounter: Int
+    var viewsCounter: Int
     let users: BlogUsers
     let districts, attractions, pois: BlogAttractions
     let comments: BlogComments
     var likes: BlogLikes
     var userLike: Int?
+    var isWished: Int?
 
     enum CodingKeys: String, CodingKey {
         case id, uuid
@@ -47,6 +48,7 @@ struct Blog: Codable {
         case viewsCounter = "views_counter"
         case users, districts, attractions, pois, comments, likes
         case userLike
+        case isWished
     }
 }
 

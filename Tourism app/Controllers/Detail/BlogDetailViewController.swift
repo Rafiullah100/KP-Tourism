@@ -48,6 +48,10 @@ class BlogDetailViewController: BaseViewController {
     var limit = 1000
     var commentText = "Write a comment"
     var likeCount = 0
+    var viewsCount = 0
+
+    var wishlistEventDetail: WishlistBlog?
+    var detailType: DetailType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,18 +68,36 @@ class BlogDetailViewController: BaseViewController {
         commentTextView.isScrollEnabled = false
         navigationController?.navigationBar.isHidden = false
         type = .backWithTitle
-        viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
+        
+        if detailType == .list {
+            viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
+            textView.text = blogDetail?.blogDescription.stripOutHtml()
+            blogTitleLabel.text = blogDetail?.title.stripOutHtml()
+            autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
+            likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
+            favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+            likeCount = blogDetail?.likes.likesCount ?? 0
+            viewsCount = blogDetail?.viewsCounter ?? 0
+            likeLabel.text = "\(String(describing: likeCount)) Liked"
+            viewCounterLabel.text = "\(blogDetail?.viewsCounter ?? 0) Views"
+            viewCounter(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"])
+        }
+        else{
+            viewControllerTitle = "\(wishlistEventDetail?.title ?? "") | Blogs"
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistEventDetail?.previewImage ?? "")))
+            textView.text = wishlistEventDetail?.description?.stripOutHtml()
+            blogTitleLabel.text = wishlistEventDetail?.title?.stripOutHtml()
+            autherLabel.text = "Author: \(wishlistEventDetail?.users?.name ?? "")"
+            likeLabel.text = "\(wishlistEventDetail?.likesCount ?? 0) Liked"
+            favoriteBtn.setImage(wishlistEventDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+            likeCount = wishlistEventDetail?.likesCount ?? 0
+            viewsCount = wishlistEventDetail?.viewsCounter ?? 0
+            likeLabel.text = "\(String(describing: likeCount)) Liked"
+            viewCounterLabel.text = "\(wishlistEventDetail?.viewsCounter ?? 0) Views"
+            viewCounter(parameters: ["section_id": wishlistEventDetail?.id ?? 0, "section": "blog"])
+        }
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
-        textView.text = blogDetail?.blogDescription.stripOutHtml()
-        blogTitleLabel.text = blogDetail?.title.stripOutHtml()
-        autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
-        likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
-        favoriteBtn.setImage(blogDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-        likeCount = blogDetail?.likes.likesCount ?? 0
-        likeLabel.text = "\(String(describing: likeCount)) Liked"
-        viewCounterLabel.text = "\(blogDetail?.viewsCounter ?? 0) Views"
-        viewCounter(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"])
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         reloadComment()
     }
@@ -89,7 +111,13 @@ class BlogDetailViewController: BaseViewController {
         URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
-                print(viewCount)
+                if viewCount.success == true {
+                    guard var modelObject = DataManager.shared.blogModelObject else {
+                        return
+                    }
+                    modelObject.viewsCounter = self.viewsCount + 1
+                    DataManager.shared.blogModelObject = modelObject
+                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -97,7 +125,8 @@ class BlogDetailViewController: BaseViewController {
     }
 
     private func reloadComment(){
-        fetchComment(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog", "page": currentPage, "limit": limit])
+        let blogID = detailType == .list ? blogDetail?.id : wishlistEventDetail?.id
+        fetchComment(parameters: ["section_id": blogID ?? 0, "section": "blog", "page": currentPage, "limit": limit])
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,12 +170,14 @@ class BlogDetailViewController: BaseViewController {
     
     @IBAction func loginTocomment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(parameters: ["section_id": blogDetail?.id ?? "", "section": "blog", "comment": text])
+        let blogID = detailType == .list ? blogDetail?.id : wishlistEventDetail?.id
+        doComment(parameters: ["section_id": blogID ?? 0, "section": "blog", "comment": text])
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        self.like(parameters: ["section_id": blogDetail?.id ?? 0, "section": "blog"])
+        let blogID = detailType == .list ? blogDetail?.id : wishlistEventDetail?.id
+        self.like(parameters: ["section_id": blogID ?? 0, "section": "blog"])
     }
     
     func like(parameters: [String: Any]) {

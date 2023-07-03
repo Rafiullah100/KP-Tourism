@@ -26,7 +26,8 @@ class ChatListTableViewCell: UITableViewCell {
             unreadView.isHidden = unread == 0 ? true : false
         }
     }
-    
+    var deleteHandler: (() -> Void)?
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -36,5 +37,9 @@ class ChatListTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    @IBAction func deleteConversation(_ sender: Any) {
+        deleteHandler?()
     }
 }

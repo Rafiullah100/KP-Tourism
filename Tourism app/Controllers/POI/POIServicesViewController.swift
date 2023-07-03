@@ -25,7 +25,11 @@ class POIServicesViewController: BaseViewController {
     var poiName: String?
 
     var POISubCatories: POISubCatoriesModel?
-    
+    var POIarray: [POIRow] = [POIRow]()
+
+    var totalCount = 0
+    var currentPage = 1
+    var limit = 5
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +45,13 @@ class POIServicesViewController: BaseViewController {
     private func fetch() {
         var parameters = [String: Any]()
         if exploreDistrict != nil{
-            parameters = ["district_id": exploreDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
+            parameters = ["district_id": exploreDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
         }
         else if attractionDistrict != nil{
-            parameters = ["attraction_id": attractionDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
+            parameters = ["attraction_id": attractionDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
         }
         else if archeology != nil{
-            parameters = ["attraction_id": archeology?.attractionID ?? 0, "poi_category_id":  poiCategoriId ?? 0] as [String : Any]
+            parameters = ["attraction_id": archeology?.attractionID ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
         }
         print(parameters)
         URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
@@ -55,7 +59,9 @@ class POIServicesViewController: BaseViewController {
             case .success(let poiSubCategory):
                 DispatchQueue.main.async {
                     self.POISubCatories = poiSubCategory
-                    self.POISubCatories?.pois.count == 0 ? self.tableView.setEmptyView("No Record Found!") : self.tableView.reloadData()
+                    self.POIarray.append(contentsOf: poiSubCategory.pois.rows)
+                    self.totalCount = self.POISubCatories?.pois.count ?? 0
+                    self.totalCount == 0 ? self.tableView.setEmptyView("No Record Found!") : self.tableView.reloadData()
                 }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
@@ -85,29 +91,27 @@ class POIServicesViewController: BaseViewController {
     }
 }
 
-
 extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
-   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return POISubCatories?.pois.rows.count ?? 0
+        return POIarray.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: POIServiceTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell_identifier", for: indexPath) as! POIServiceTableViewCell
-        cell.poiSubCategory = POISubCatories?.pois.rows[indexPath.row]
+        cell.poiSubCategory = POIarray[indexPath.row]
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
-//
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return tableView.estimatedRowHeight
-//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }
         Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail, exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict, archeology: archeology)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        print(self.totalCount)
+        if POIarray.count != totalCount && indexPath.row == POIarray.count - 1  {
+            currentPage = currentPage + 1
+            fetch()
+        }
     }
 }

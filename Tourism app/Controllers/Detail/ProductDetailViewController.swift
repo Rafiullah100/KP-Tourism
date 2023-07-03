@@ -47,7 +47,8 @@ class ProductDetailViewController: BaseViewController {
     
     var likeCount = 0
     var detailType: DetailType?
-    
+    var viewsCount = 0
+
     var commentText = "Write a comment"
     var limit = 1000
     var currentPage = 1
@@ -77,17 +78,18 @@ class ProductDetailViewController: BaseViewController {
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = productDetail?.title
             descriptionTextView.text = productDetail?.localProductDescription.stripOutHtml().removeSpaces()
-            onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            onwerImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = productDetail?.createdAt
             locationLabel.text = productDetail?.districts.title
             favoriteBtn.setImage(productDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
             ownerNameLabel.text = "\(productDetail?.users.name ?? "")"
             viewsCounterLabel.text = "\(productDetail?.viewsCounter ?? 0) Views"
-            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
+            viewCounter(parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"])
             if productDetail?.likes.count ?? 0 > 0{
                 likeCount = productDetail?.likes.count ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
             }
+            viewsCount = productDetail?.viewsCounter ?? 0
         }
         else{
             type = .backWithTitle
@@ -95,17 +97,18 @@ class ProductDetailViewController: BaseViewController {
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = wishListProductDetail?.title
             descriptionTextView.text = wishListProductDetail?.description?.stripOutHtml().removeSpaces()
-            onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = wishListProductDetail?.createdAt
             locationLabel.text = wishListProductDetail?.districts.title
             favoriteBtn.setImage(wishListProductDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-            ownerNameLabel.text = "\(wishListProductDetail?.users.name ?? "")"
+            ownerNameLabel.text = "\(wishListProductDetail?.users?.name ?? "")"
             viewsCounterLabel.text = "\(wishListProductDetail?.viewsCounter ?? 0) Views"
-            viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
-            if wishListProductDetail?.likes.count ?? 0 > 0{
-                likeCount = wishListProductDetail?.likes.count ?? 0
+            viewCounter(parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"])
+            if wishListProductDetail?.likes?.count ?? 0 > 0{
+                likeCount = wishListProductDetail?.likes?.count ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
             }
+            viewsCount = wishListProductDetail?.viewsCounter ?? 0
         }
     }
     
@@ -114,11 +117,17 @@ class ProductDetailViewController: BaseViewController {
         tableViewHeight.constant = tableView.contentSize.height
     }
     
-    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
-                print(viewCount)
+                if viewCount.success == true {
+                    guard var modelObject = DataManager.shared.productModelObject else {
+                        return
+                    }
+                    modelObject.viewsCounter = self.viewsCount + 1
+                    DataManager.shared.productModelObject = modelObject
+                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -137,7 +146,7 @@ class ProductDetailViewController: BaseViewController {
             Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
         }
         else if detailType == .wishlist{
-            guard let uuid = wishListProductDetail?.users.uuid else { return  }
+            guard let uuid = wishListProductDetail?.users?.uuid else { return  }
             Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
         }
         
@@ -154,23 +163,22 @@ class ProductDetailViewController: BaseViewController {
     @IBAction func likeBtnAction(_ sender: Any) {
         if detailType == .list{
             guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-            self.like(route: .likeApi, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
+            self.like(parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"])
         }
         else if detailType == .wishlist{
             guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-            self.like(route: .likeApi, method: .post, parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"], model: SuccessModel.self)
+            self.like(parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"])
         }
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
-                let successDetail = like as? SuccessModel
-                DispatchQueue.main.async {
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-                    self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
-                    self.productDetail?.userLike = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                if like.success == true {
+                    self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                    self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    self.productDetail?.userLike = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                     self.changeObject()
                 }
@@ -190,19 +198,19 @@ class ProductDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product", "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(route: .doComment, method: .post, parameters: ["section_id": productDetail?.id ?? "", "section": "local_product", "comment": text], model: SuccessModel.self)
+        doComment(parameters: ["section_id": productDetail?.id ?? "", "section": "local_product", "comment": text])
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func doComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -212,12 +220,12 @@ class ProductDetailViewController: BaseViewController {
             }
         }
     }
-    
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func commentReply(parameters: [String: Any], row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -226,14 +234,13 @@ class ProductDetailViewController: BaseViewController {
             }
         }
     }
-    
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method,  showLoader: false, parameters: parameters, model: model) { result in
+
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post,  showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
-                print((comments as? CommentsModel)?.comments?.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+                self.totalCount = comments.comments?.count ?? 1
+                self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.tableView.reloadData()
                 self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
 //                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
@@ -289,7 +296,7 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
         }
         cell.actionBlock = { text in
             cell.textView.text = ""
-            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "local_product"], model: SuccessModel.self, row: indexPath)
+            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "local_product"], row: indexPath)
             self.allComments = []
         }
         return cell

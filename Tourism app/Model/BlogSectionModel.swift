@@ -1,30 +1,28 @@
 //
-//  ProductSectionModel.swift
+//  BlogSectionModel.swift
 //  Tourism app
 //
-//  Created by MacBook Pro on 4/10/23.
+//  Created by MacBook Pro on 7/3/23.
 //
 
 import Foundation
-//
 
-
-struct ProductSectionModel: Codable {
-    let success: Bool
-    let wishlist: [ProductWishlistModel]
+struct BlogSectionModel: Codable {
+    let success: Bool?
+    let wishlist: [BlogWishlistModel]?
 }
 
 // MARK: - Wishlist
-struct ProductWishlistModel: Codable {
+struct BlogWishlistModel: Codable {
     let createdAt, updatedAt: String?
     let id, userID: Int?
     let districtID, attractionID, poiID, socialEventID: Int?
-    let blogID, bookStayID, postPivotID, tourPackageID: Int?
-    let itineraryID: Int?
+    let blogID: Int?
+    let bookStayID, postPivotID, tourPackageID, itineraryID: Int?
     let localProductID: Int?
     let sourceType: String?
     let status, isDeleted: Int?
-    let localProduct: WishlistLocalProduct
+    let blog: WishlistBlog?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, updatedAt, id
@@ -40,57 +38,51 @@ struct ProductWishlistModel: Codable {
         case itineraryID = "itinerary_id"
         case localProductID = "local_product_id"
         case sourceType = "source_type"
-        case status, isDeleted
-        case localProduct = "local_product"
+        case status, isDeleted, blog
     }
 }
 
-// MARK: - LocalProduct
-struct WishlistLocalProduct: Codable {
+// MARK: - Blog
+struct WishlistBlog: Codable {
     let createdAt: String?
     let id: Int?
     let uuid: String?
-    let userID, districtID: Int?
-    let title, slug: String?
-    let price: Int?
-    let previewImage, thumbnailImage, description: String?
+    let userID, districtID, attractionID, poiID: Int?
+    let title, slug, previewImage, thumbnailImage: String?
+    let description: String?
     let isFeatured: Bool?
-    let approvedBy: Int?
+    let approvedBy: String?
     let viewsCounter: Int?
     let updatedAt: String?
-    let userLike, isWished: Int?
-    let districts: ProductWishlistDistricts
-    let users: ProductWishlistUsers?
-    let likes: [ProductWishlistLike]?
+    let userLike, likesCount, isWished: Int?
+    let districts: WishlistBlogDistricts?
+    let users: WishlistBlogUsers?
 
     enum CodingKeys: String, CodingKey {
         case createdAt, id, uuid
         case userID = "user_id"
         case districtID = "district_id"
-        case title, slug, price
+        case attractionID = "attraction_id"
+        case poiID = "poi_id"
+        case title, slug
         case previewImage = "preview_image"
         case thumbnailImage = "thumbnail_image"
         case description
         case isFeatured = "is_featured"
         case approvedBy = "approved_by"
         case viewsCounter = "views_counter"
-        case updatedAt, userLike, isWished, districts, users, likes
+        case updatedAt, userLike, likesCount, isWished, districts, users
     }
 }
 
 // MARK: - Districts
-struct ProductWishlistDistricts: Codable {
+struct WishlistBlogDistricts: Codable {
     let id: Int?
     let title, slug: String?
 }
 
-// MARK: - Like
-struct ProductWishlistLike: Codable {
-    let likesCount: Int?
-}
-
 // MARK: - Users
-struct ProductWishlistUsers: Codable {
+struct WishlistBlogUsers: Codable {
     let id: Int?
     let name, uuid, mobileNo, profileImageThumb: String?
     let profileImage: String?

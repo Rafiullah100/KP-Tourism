@@ -83,9 +83,13 @@ class PackageDetailViewController: BaseViewController {
     @IBOutlet weak var favoriteIcon: UIImageView!
     @IBOutlet weak var statusBarView: UIView!
     
+    @IBOutlet weak var likeImageView: UIImageView!
     @IBOutlet weak var viewCounterLabel: UILabel!
     var interestCount = 0
-    
+    var viewsCount = 0
+    var likeCount = 0
+
+    @IBOutlet weak var thumbCountLaabel: UILabel!
     var commentText = "Write a comment"
     var limit = 1000
     var currentPage = 1
@@ -135,28 +139,31 @@ class PackageDetailViewController: BaseViewController {
         
         if detailType == .list {
             DataManager.shared.packageModelObject = tourDetail
+            likeCount = tourDetail?.like_count ?? 0
             viewControllerTitle = "\(tourDetail?.title ?? "") | Tour Packages"
-
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.preview_image ?? "")), placeholderImage: UIImage(named: "placeholder"))
             packageNameLabel.text = tourDetail?.title
             descriptionLabel.text = tourDetail?.description?.stripOutHtml()
             daysLabel.text = tourDetail?.duration_days
-            
             eventTypeLabel.text = tourDetail?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
             amountLabel.text = tourDetail?.price == 0 ? "FREE" : "RS. \(tourDetail?.price ?? 0)"
             favoriteIcon.image = tourDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested")
+            likeImageView.image = tourDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
+            thumbCountLaabel.text = "\(String(describing: likeCount)) Liked"
             durationDateLabel.text = "\(tourDetail?.startDate ?? "") TO \(tourDetail?.endDate ?? "")"
             viewsLabel.text = "\(tourDetail?.views_counter ?? 0) VIEWS"
             counterLabel.text = "\(tourDetail?.number_of_people ?? 0) Seats"
             districtNameLabel.text = tourDetail?.to_districts?.title
             registrationLabel.text = "Last registration date \(tourDetail?.startDate ?? "")"
             interestCount = tourDetail?.usersInterestCount ?? 0
+            viewsCount = tourDetail?.views_counter ?? 0
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(tourDetail?.views_counter ?? 0) Views"
             viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
             tableView.isHidden = tourDetail?.activities?.count == 0 ? true : false
         }
         else if detailType == .wishlist{
+            likeCount = wishlistTourPackage?.likeCount ?? 0
             viewControllerTitle = "\(wishlistTourPackage?.title ?? "") | Tour Packages"
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistTourPackage?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             packageNameLabel.text = wishlistTourPackage?.title
@@ -165,12 +172,15 @@ class PackageDetailViewController: BaseViewController {
             eventTypeLabel.text = wishlistTourPackage?.family == true ? "EVENT TYPE: FAMILY" : "EVENT TYPE: ADULTS"
             amountLabel.text = wishlistTourPackage?.price == 0 ? "FREE" : "RS. \(wishlistTourPackage?.price ?? 0)"
             favoriteIcon.image = wishlistTourPackage?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested")
+            likeImageView.image = wishlistTourPackage?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked")
+            thumbCountLaabel.text = "\(String(describing: likeCount)) Liked"
             durationDateLabel.text = "\(wishlistTourPackage?.startDate ?? "") TO \(wishlistTourPackage?.endDate ?? "")"
             viewsLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) VIEWS"
             counterLabel.text = "\(wishlistTourPackage?.numberOfPeople ?? 0) Seats"
             districtNameLabel.text = wishlistTourPackage?.toDistricts.title
             registrationLabel.text = "Last registration date \(wishlistTourPackage?.startDate ?? "")"
             interestCount = wishlistTourPackage?.usersInterestCount ?? 0
+//            viewsCount = wishlistTourPackage?.views_counter ?? 0
             likeLabel.text = "\(String(describing: interestCount)) Interested"
             viewCounterLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) Views"
             viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
@@ -191,33 +201,60 @@ class PackageDetailViewController: BaseViewController {
         self.tableViewHeight.constant = self.tableView.contentSize.height
     }
     
-    @IBAction func likeBtnAction(_ sender: Any) {
+    @IBAction func ThumbBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else {return}
         let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
-        self.interest(parameters: ["package_id": packageId ?? 0])
+        self.like(parameters: ["section_id": packageId ?? 0, "section": "tour_package"])
     }
     
-
-    func viewCounter(parameters: [String: Any]) {
-        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
-            case .success(let viewCount):
-                print(viewCount)
+            case .success(let like):
+                self.likeImageView.image = UIImage(named: like.message == "Liked" ? "liked-red" : "liked")
+                self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                self.thumbCountLaabel.text = "\(self.likeCount) Liked"
+                self.changeUserlikeAttribute()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
     }
+
     
+    @IBAction func likeBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else {return}
+        let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
+        self.interest(parameters: ["package_id": packageId ?? 0])
+    }
+
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+            switch result {
+            case .success(let viewCount):
+                if viewCount.success == true {
+                    guard var modelObject = DataManager.shared.packageModelObject else {
+                        return
+                    }
+                    modelObject.views_counter = self.viewsCount + 1
+                    DataManager.shared.packageModelObject = modelObject
+                }
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
+    }
 
     func interest(parameters: [String: Any]) {
         URLSession.shared.request(route: .doInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
-                self.favoriteIcon.image = wish.message == "Interest Added" ? UIImage(named: "interested-red") : UIImage(named: "interested")
-                self.interestCount = wish.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
-                self.likeLabel.text = "\(self.interestCount) Interested"
-                self.changeObject()
+                if wish.success == true {
+                    self.favoriteIcon.image = wish.message == "Interest Added" ? UIImage(named: "interested-red") : UIImage(named: "interested")
+                    self.interestCount = wish.message == "Interest Added" ? self.interestCount + 1 : self.interestCount - 1
+                    self.likeLabel.text = "\(self.interestCount) Interested"
+                    self.changeObject()
+                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -230,6 +267,15 @@ class PackageDetailViewController: BaseViewController {
         }
         modelObject.usersInterestCount = self.interestCount
         modelObject.userInterest = modelObject.userInterest == 1 ? 0 : 1
+        DataManager.shared.packageModelObject = modelObject
+    }
+    
+    private func changeUserlikeAttribute(){
+        guard var modelObject = DataManager.shared.packageModelObject else {
+            return
+        }
+        modelObject.like_count = self.likeCount
+        modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
         DataManager.shared.packageModelObject = modelObject
     }
     

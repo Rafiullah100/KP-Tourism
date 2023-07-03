@@ -91,14 +91,14 @@ class FeedsViewController: UIViewController {
     }
     
     func loadNewsFeed(){
-        fetchFeeds(route: .fetchFeeds, method: .post, parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""], model: NewsFeedModel.self)
+        fetchFeeds(parameters: ["page": currentPage, "limit": limit, "token": UserDefaults.standard.accessToken ?? ""])
     }
     
     @objc func reloadStories(){
         stories = []
         storyTotalCount = 0
         storyCurrentPage = 1
-        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""], model: FeedStoriesModel.self)
+        fetchFeedsStories(parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""])
     }
     
     @objc func reloadNewsFeed(){
@@ -110,15 +110,15 @@ class FeedsViewController: UIViewController {
     }
     
     @objc func storyApiCall(){
-        fetchFeedsStories(route: .feedStories, method: .post, parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""], model: FeedStoriesModel.self)
+        fetchFeedsStories(parameters: ["page": currentPage, "limit": storyLimit, "token": UserDefaults.standard.accessToken ?? ""])
     }
     
-    func fetchFeeds<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func fetchFeeds(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchFeeds, method: .post, showLoader: false, parameters: parameters, model: NewsFeedModel.self) { result in
             switch result {
-            case .success(let feeds):
-                self.newsFeed.append(contentsOf: (feeds as? NewsFeedModel)?.feeds ?? [])
-                self.totalCount = (feeds as! NewsFeedModel).count ?? 0
+            case .success(let feedsModel):
+                self.newsFeed.append(contentsOf: feedsModel.feeds ?? [])
+                self.totalCount = feedsModel.count ?? 0
                 self.numberOfCells = self.totalCount
                 self.states = [Bool](repeating: true, count: self.numberOfCells)
                 self.newsFeed.count == 0 ? self.tableView.setEmptyView("No Feeds to show!") : self.tableView.setEmptyView("")
@@ -129,13 +129,12 @@ class FeedsViewController: UIViewController {
         }
     }
     
-    func fetchFeedsStories<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetchFeedsStories(parameters: [String: Any]) {
+        URLSession.shared.request(route: .feedStories, method: .post, parameters: parameters, model: FeedStoriesModel.self) { result in
             switch result {
             case .success(let feedStories):
-                let model = feedStories as? FeedStoriesModel
-                self.stories.append(contentsOf: model?.stories?.rows ?? [])
-                self.storyTotalCount = model?.stories?.count ?? 0
+                self.stories.append(contentsOf: feedStories.stories?.rows ?? [])
+                self.storyTotalCount = feedStories.stories?.count ?? 0
                 print(self.storyTotalCount)
                 self.storyTotalCount == 0 ? self.collectionView.setEmptyView("") : self.collectionView.reloadData()
             case .failure(let error):
@@ -143,6 +142,7 @@ class FeedsViewController: UIViewController {
             }
         }
     }
+    
     
     private func actionSheet(row: Int){
         var buttonTitles: [String]?
@@ -159,42 +159,39 @@ class FeedsViewController: UIViewController {
             else if responce == "Delete"{
                 Utility.showAlert(message: "Are you sure you want to delete?", buttonTitles: ["No", "Yes"]) { responce in
                     if responce == "Yes"{
-                        self.deletePost(route: .deletePost, method: .post, parameters: ["id": self.newsFeed[row].id ?? 0], model: SuccessModel.self, row: row)
+                        self.deletePost(parameters: ["id": self.newsFeed[row].id ?? 0], row: row)
                     }
                 }
             }
         }
     }
     
-    func deletePost<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: Int) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func deletePost(parameters: [String: Any]? = nil, row: Int) {
+        URLSession.shared.request(route: .deletePost, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let delete):
-                let successDetail = delete as? SuccessModel
-                if successDetail?.success == true{
+                if delete.success == true{
                     self.newsFeed.remove(at: row)
                     self.tableView.reloadData()
-                    self.view.makeToast(successDetail?.message)
+                    self.view.makeToast(delete.message)
                 }
                 else{
-                    self.view.makeToast(successDetail?.message)
+                    self.view.makeToast(delete.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
     }
-
-    func share<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func share(parameters: [String: Any]) {
+        URLSession.shared.request(route: .shareApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
-            case .success(let success):
-                let successDetail = success as? SuccessModel
-                if successDetail?.success == true{
+            case .success(let share):
+                if share.success == true{
                     self.view.makeToast("Post shared successfully.")
                 }
                 else{
-                    self.view.makeToast(successDetail?.message)
+                    self.view.makeToast(share.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -282,12 +279,17 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         cell.shareActionBlock = {
             Utility.showAlert(message: "Do you want to share the post?", buttonTitles: ["No", "Yes"]) { responce in
                 if responce == "Yes"{
-                    self.share(route: .shareApi, method: .post, parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0], model: SuccessModel.self)
+                    self.share(parameters: ["post_id": self.newsFeed[indexPath.row].post_id ?? 0])
                 }
             }
         }
         cell.commentActionBlock = {
             Switcher.gotoPostCommentVC(delegate: self, postId: self.newsFeed[indexPath.row].id ?? 0)
+        }
+        cell.profileImageActionBlock = {
+            guard let uuid = self.newsFeed[indexPath.row].post?.users?.uuid else { return }
+            print(uuid)
+            Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
         }
         return cell
     }

@@ -39,18 +39,17 @@ class SettingViewController: UIViewController {
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
-    
-    func deleteAccount<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func deleteAccount() {
+        URLSession.shared.request(route: .deleteProfile, method: .post, parameters: nil, model: SuccessModel.self) { result in
             switch result {
-            case .success(let change):
-                let res = change as? SuccessModel
-                if res?.success == true {
-                    self.view.makeToast(res?.message)
+            case .success(let delete):
+                if delete.success == true {
+                    self.view.makeToast(delete.message)
                     Helper.shared.logoutUser(self: self)
                 }
                 else{
-                    self.view.makeToast(res?.message)
+                    self.view.makeToast(delete.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -91,7 +90,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
         case 6:
             Utility.showAlert(message: "Are you sure you want to delete you account?", buttonTitles: ["cancel", "Yes"]) { response in
                 if response == "Yes"{
-                    self.deleteAccount(route: .deleteProfile, method: .post, model: SuccessModel.self)
+                    self.deleteAccount()
                 }
             }
         default:

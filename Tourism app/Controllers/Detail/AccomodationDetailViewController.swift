@@ -89,15 +89,15 @@ class AccomodationDetailViewController: BaseViewController {
         parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         viewCounterLabel.text = "\(accomodationDetail?.viewsCounter ?? 0) Views"
-        viewCounter(route: .viewCounter, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"], model: SuccessModel.self)
+        viewCounter(parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"])
         favoriteBtn.setImage(accomodationDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         likeCount = accomodationDetail?.likeCount ?? 0
         likeCountLabel.text = "\(accomodationDetail?.likeCount ?? 0) Liked"
         reloadComment()
     }
     
-    func viewCounter<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func viewCounter(parameters: [String: Any]) {
+        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 print(viewCount)
@@ -137,20 +137,17 @@ class AccomodationDetailViewController: BaseViewController {
         }
     }
     @IBAction func likeBtnAction(_ sender: Any) {
-        self.like(route: .likeApi, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"], model: SuccessModel.self)
+        self.like(parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"])
     }
     
-    func like<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
-                let successDetail = like as? SuccessModel
-                DispatchQueue.main.async {
-                    print(successDetail?.message ?? "")
-                    self.favoriteBtn.setImage(successDetail?.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
-                    self.likeCount = successDetail?.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
-                    print(successDetail?.message ?? "", self.likeCount)
-
+                if like.success == true {
+                    self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                    self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                    print(like.message ?? "", self.likeCount)
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
                 }
             case .failure(let error):
@@ -167,19 +164,19 @@ class AccomodationDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay", "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(route: .doComment, method: .post, parameters: ["section_id": accomodationDetail?.id ?? "", "section": "book_stay", "comment": text], model: SuccessModel.self)
+        doComment(parameters: ["section_id": accomodationDetail?.id ?? "", "section": "book_stay", "comment": text])
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func doComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -190,11 +187,11 @@ class AccomodationDetailViewController: BaseViewController {
         }
     }
     
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func commentReply(parameters: [String: Any], row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -204,13 +201,12 @@ class AccomodationDetailViewController: BaseViewController {
         }
     }
     
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
-            case .success(let comments):
-                print((comments as? CommentsModel)?.comments?.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+            case .success(let result):
+                self.totalCount = result.comments?.count ?? 1
+                self.allComments.append(contentsOf: result.comments?.rows ?? [])
                 self.tableView.reloadData()
 //                Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
             case .failure(let error):
@@ -271,7 +267,7 @@ extension AccomodationDetailViewController: UITableViewDelegate, UITableViewData
         }
         cell.actionBlock = { text in
             cell.textView.text = ""
-            self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "book_stay"], model: SuccessModel.self, row: indexPath)
+            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "book_stay"], row: indexPath)
             self.allComments = []
         }
         return cell

@@ -30,19 +30,19 @@ class SecurityViewController: UIViewController {
         guard newPassword == confirmPassword else {
             self.view.makeToast("Passwords doesn't match.", duration: 3.0, position: .center)
             return }
-        changePassword(route: .changePassword, method: .post, parameters: ["old_password": oldPassword, "password": newPassword, "confirm_password": confirmPassword], model: SuccessModel.self)
+        changePassword(parameters: ["old_password": oldPassword, "password": newPassword, "confirm_password": confirmPassword])
     }
     
-    func changePassword<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func changePassword(parameters: [String: Any]) {
+        URLSession.shared.request(route: .changePassword, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let change):
-                if (change as! SuccessModel).success == true{
+                if change.success == true{
                     self.oldPasswordTF.text = ""
                     self.newPasswordTF.text = ""
                     self.confirmPasswordTF.text = ""
                 }
-                self.view.makeToast((change as! SuccessModel).message)
+                self.view.makeToast(change.message)
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

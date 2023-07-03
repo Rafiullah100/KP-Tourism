@@ -29,9 +29,10 @@ struct Message: MessageType {
     var messageId: String
     var sentDate: Date
     var kind: MessageKind
+    var uuid: String
 }
 
-class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate, InputBarAccessoryViewDelegate {
+class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLayoutDelegate, MessagesDisplayDelegate, InputBarAccessoryViewDelegate, MessageCellDelegate {
     
     var currentUser: Sender?
     var otherUser: Sender = Sender(senderId: "other", displayName: "")
@@ -60,6 +61,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         self.messagesCollectionView.messagesDataSource = self
         self.messagesCollectionView.messagesLayoutDelegate = self
         self.messagesCollectionView.messagesDisplayDelegate = self
+        self.messagesCollectionView.messageCellDelegate = self
         self.messagesCollectionView.showsVerticalScrollIndicator = false
 //        self.messagesCollectionView.transform3D = CATransform3DMakeScale(1, -1, 1)
 //        self.collecttionView.collectionViewLayout = InvertedCollectionViewFlowLayout.init()
@@ -70,7 +72,6 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
         registerSocketEvent()
     }
-    
     
     private func registerSocketEvent(){
         SocketHelper.shared.typeListening { typing in
@@ -86,7 +87,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         DispatchQueue.main.async {
             SocketHelper.shared.getMessage { message, from in
                 if from == self.uuid{
-                    self.appendMessage(sender: self.otherUser, message: message ?? "", date: "")
+                    self.appendMessage(sender: self.otherUser, message: message ?? "", date: "", messageID: String(0), uuid: "")
                 }
             }
         }
@@ -145,7 +146,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         ])
         chatTopView.frame = topView.bounds
         chatTopView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        messagesCollectionView.contentInset.top = 30
+        messagesCollectionView.contentInset.top = 50
     }
     
     private func loadMessages(){
@@ -168,11 +169,11 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     if item.sender?.id == UserDefaults.standard.userID {
                         self.currentUser = Sender(senderId: "self", displayName: item.sender?.name ?? "")
                         guard let currentUser = self.currentUser else { return }
-                        self.appendMessage(sender: currentUser, message: item.content ?? "", date: item.createdAt ?? "")
+                        self.appendMessage(sender: currentUser, message: item.content ?? "", date: item.createdAt ?? "", messageID: String(item.id ?? 0), uuid: UserDefaults.standard.uuid ?? "")
                     }
                     else{
                         self.otherUser = Sender(senderId: "other", displayName: item.sender?.name ?? "")
-                        self.appendMessage(sender: self.otherUser, message: item.content ?? "", date: item.createdAt ?? "")
+                        self.appendMessage(sender: self.otherUser, message: item.content ?? "", date: item.createdAt ?? "", messageID: String(item.id ?? 0), uuid: "")
                     }
                 })
                 self.messages.count == 0 ? self.messagesCollectionView.setEmptyView("No previous conversation exist!") : self.messagesCollectionView.reloadData()
@@ -195,7 +196,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                 if success?.success == true {
                     guard let currentUser = self.currentUser else { return }
                     SocketHelper.shared.sendMessage(uuid: self.uuid ?? "", conversationID: self.conversationID ?? 0, message: text)
-                    self.appendMessage(sender: currentUser, message: text, date: "")
+                    self.appendMessage(sender: currentUser, message: text, date: "", messageID: String(0), uuid: UserDefaults.standard.uuid ?? "")
                     self.messageInputBar.inputTextView.text = ""
                     self.messageInputBar.inputTextView.resignFirstResponder()
                 }
@@ -205,11 +206,39 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
     }
     
-    
-    func appendMessage(sender: SenderType, message: String, date: String)  {
-        self.messages.append(Message(sender: sender, messageId: "000", sentDate: Helper.shared.dateFromString(date), kind: .text(message)))
+    func appendMessage(sender: SenderType, message: String, date: String, messageID: String, uuid: String)  {
+        self.messages.append(Message(sender: sender, messageId: messageID, sentDate: Helper.shared.dateFromString(date), kind: .text(message), uuid: uuid))
+        print(self.messages)
         self.messagesCollectionView.reloadData()
         self.messagesCollectionView.scrollToBottom()
+    }
+    
+    func didTapMessage(in cell: MessageCollectionViewCell) {
+        guard let indexPath = messagesCollectionView.indexPath(for: cell) else { return }
+        let section = indexPath.section
+        let messageID = self.messages[section].messageId
+        let uuid = self.messages[section].uuid
+        guard uuid == UserDefaults.standard.uuid else {return}
+        Utility.showAlert(message: "Are you sure you want to delete this message?", buttonTitles: ["No", "Yes"]) { responce in
+            if responce == "Yes"{
+                self.deleteMessage(parameters: ["conversation_id": self.conversationID ?? 0, "message_id": messageID], index: section)
+            }
+        }
+    }
+    
+    func deleteMessage(parameters: [String: Any], index: Int) {
+        URLSession.shared.request(route: .deleteMessage, method: .post, showLoader: true, parameters: parameters, model: SuccessModel.self) { result in
+            switch result {
+            case .success(let res):
+                if res.success == true{
+                    self.messages.remove(at: index)
+                    self.messagesCollectionView.reloadData()
+                }
+                self.view.makeToast(res.message)
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
     }
 }
 
@@ -257,7 +286,6 @@ extension ChatViewController: UITextViewDelegate{
         SocketHelper.shared.typeEmiting(to: uuid ?? "")
         return true
     }
-    
 }
 
 extension ChatViewController{
@@ -300,3 +328,4 @@ extension ChatViewController: ChatProtocol{
         self.navigationController?.popViewController(animated: true)
     }
 }
+

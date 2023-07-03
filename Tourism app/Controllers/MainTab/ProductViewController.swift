@@ -39,7 +39,6 @@ class ProductViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(DataManager.shared.productModelObject)
         if let modelObject = DataManager.shared.productModelObject,
            let index = localProducts.firstIndex(where: { $0.id == modelObject.id }) {
             localProducts[index] = modelObject

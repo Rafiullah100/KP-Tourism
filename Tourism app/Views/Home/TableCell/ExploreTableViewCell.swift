@@ -24,6 +24,7 @@ class ExploreTableViewCell: UITableViewCell {
 
     func configure(district: ExploreDistrict) {
         self.district = district
+        kpLabel.text = district.geographicalArea
         favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
         if district.isWished == 0 {
             favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)

@@ -30,6 +30,7 @@ class BaseViewController: UIViewController {
     var categoryId = ""
     var titleLabel: UILabel?
         
+    
     var viewControllerTitle: String? {
         didSet {
             titleLabel?.text = viewControllerTitle ?? ""
@@ -233,9 +234,12 @@ class BaseViewController: UIViewController {
 
     func addBackButton() {
         let backButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(backButtonAction))
+        let rightButton = UIBarButtonItem(title: "", style: .plain, target: self, action: #selector(filterAction))
+        rightButton.image = UIImage(named: "filter")
         backButton.image = UIImage(named: "Back")
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = backButton
+        self.navigationItem.rightBarButtonItem = rightButton
     }
     
     func addCrossButton() {
@@ -271,7 +275,7 @@ class BaseViewController: UIViewController {
         filterButton.setImage(UIImage(named: "filter"), for: .normal)
         filterButton.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let shareItem = UIBarButtonItem()
-        filterButton.addTarget(self, action: #selector(showFilter), for: .touchUpInside)
+        filterButton.addTarget(self, action: #selector(filterAction), for: .touchUpInside)
         shareItem.customView = filterButton
         
         let likeButton = UIButton()
@@ -282,16 +286,16 @@ class BaseViewController: UIViewController {
         self.navigationItem.rightBarButtonItems = [shareItem, likeItem]
     }
     
-    @objc func showFilter(){
-//        delegate?.showPopup()
-    }
-    
     @objc func backButtonAction() {
         if let _ = navigationController?.popViewController(animated: true) {
         } else {
             navigationController?.tabBarController?.selectedIndex = 0
             dismiss(animated: true, completion: nil)
         }
+    }
+    
+    @objc func filterAction() {
+        print("")
     }
     
     @objc func pop() {

@@ -63,12 +63,12 @@ class BlogViewController: UIViewController {
         }
     }
     
-//    func toggleArcheologyWishlistStatus(for indexPath: IndexPath) {
-//        var arch = archeology[indexPath.row]
-//        arch.attractions.isWished = arch.attractions.isWished == 1 ? 0 : 1
-//        archeology[indexPath.row] = arch
-//        tableView.reloadRows(at: [indexPath], with: .none)
-//    }
+    func toggleWishlistStatus(for indexPath: IndexPath) {
+        var blogObject = blogs[indexPath.row]
+        blogObject.isWished = blogObject.isWished == 1 ? 0 : 1
+        blogs[indexPath.row] = blogObject
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
 }
 
 
@@ -79,6 +79,9 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: BlogTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! BlogTableViewCell
+        cell.wishlistButtonTappedHandler = {
+            self.toggleWishlistStatus(for: indexPath)
+        }
         cell.blog = blogs[indexPath.row]
         return cell
     }
@@ -95,6 +98,6 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoBlogDetail(delegate: self, blogDetail: blogs[indexPath.row])
+        Switcher.gotoBlogDetail(delegate: self, blogDetail: blogs[indexPath.row], type: .list)
     }
 }

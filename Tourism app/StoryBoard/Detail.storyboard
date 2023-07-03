@@ -525,7 +525,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="50"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zP2-nL-ZrX">
-                                                        <rect key="frame" x="0.0" y="0.0" width="121.66666666666667" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Xwl-4I-nSL">
                                                                 <rect key="frame" x="12" y="7.3333333333333144" width="34" height="35.333333333333336"/>
@@ -542,7 +542,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LsI-8m-hMH">
-                                                                <rect key="frame" x="0.0" y="0.0" width="121.66666666666667" height="50"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="87.666666666666671" height="50"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <connections>
                                                                     <action selector="likeBtnAction:" destination="Ojy-yZ-a9C" eventType="touchUpInside" id="00L-RL-Z8s"/>
@@ -559,14 +559,49 @@
                                                             <constraint firstItem="LsI-8m-hMH" firstAttribute="top" secondItem="zP2-nL-ZrX" secondAttribute="top" id="y9R-2R-FU6"/>
                                                         </constraints>
                                                     </view>
+                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7YS-h1-My2">
+                                                        <rect key="frame" x="101.66666666666669" y="0.0" width="88" height="50"/>
+                                                        <subviews>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="n1D-r5-bg2">
+                                                                <rect key="frame" x="30.333333333333329" y="6.3333333333333144" width="27.333333333333329" height="37.333333333333336"/>
+                                                                <subviews>
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="liked" translatesAutoresizingMaskIntoConstraints="NO" id="dQz-LR-329">
+                                                                        <rect key="frame" x="3" y="0.0" width="21.333333333333332" height="21.333333333333332"/>
+                                                                    </imageView>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Like" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fk5-Ek-gUg">
+                                                                        <rect key="frame" x="0.0" y="23.333333333333371" width="27.333333333333332" height="14"/>
+                                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <nil key="highlightedColor"/>
+                                                                    </label>
+                                                                </subviews>
+                                                            </stackView>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHV-HY-Q4P">
+                                                                <rect key="frame" x="0.0" y="0.0" width="88" height="50"/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <connections>
+                                                                    <action selector="ThumbBtnAction:" destination="Ojy-yZ-a9C" eventType="touchUpInside" id="Mcp-kB-nJQ"/>
+                                                                </connections>
+                                                            </button>
+                                                        </subviews>
+                                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <constraints>
+                                                            <constraint firstItem="n1D-r5-bg2" firstAttribute="centerY" secondItem="7YS-h1-My2" secondAttribute="centerY" id="82j-nG-57h"/>
+                                                            <constraint firstItem="n1D-r5-bg2" firstAttribute="centerX" secondItem="7YS-h1-My2" secondAttribute="centerX" id="8DQ-a8-ydH"/>
+                                                            <constraint firstItem="PHV-HY-Q4P" firstAttribute="top" secondItem="7YS-h1-My2" secondAttribute="top" id="Bxq-0m-HFv"/>
+                                                            <constraint firstItem="PHV-HY-Q4P" firstAttribute="leading" secondItem="7YS-h1-My2" secondAttribute="leading" id="Cif-SS-7IH"/>
+                                                            <constraint firstAttribute="trailing" secondItem="PHV-HY-Q4P" secondAttribute="trailing" id="bBH-dK-xCE"/>
+                                                            <constraint firstAttribute="bottom" secondItem="PHV-HY-Q4P" secondAttribute="bottom" id="ogh-zT-Dns"/>
+                                                        </constraints>
+                                                    </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FoS-8j-cfb">
-                                                        <rect key="frame" x="135.66666666666666" y="0.0" width="121.66666666666666" height="50"/>
+                                                        <rect key="frame" x="203.66666666666666" y="0.0" width="87.666666666666657" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Cjh-Cn-6cc">
-                                                                <rect key="frame" x="42" y="7" width="38" height="36.333333333333336"/>
+                                                                <rect key="frame" x="24.666666666666686" y="7" width="38" height="36.333333333333336"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="views-icon" translatesAutoresizingMaskIntoConstraints="NO" id="X30-v9-43X">
-                                                                        <rect key="frame" x="8.6666666666666838" y="0.0" width="20.333333333333329" height="20.333333333333332"/>
+                                                                        <rect key="frame" x="8.9999999999999982" y="0.0" width="20.333333333333329" height="20.333333333333332"/>
                                                                     </imageView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0 Views" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ogs-XB-OhO">
                                                                         <rect key="frame" x="0.0" y="22.333333333333314" width="38" height="14"/>
@@ -584,10 +619,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f25-Gr-OhP">
-                                                        <rect key="frame" x="271.33333333333331" y="0.0" width="121.66666666666669" height="50"/>
+                                                        <rect key="frame" x="305.33333333333331" y="0.0" width="87.666666666666686" height="50"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="1gI-yA-pF3">
-                                                                <rect key="frame" x="80.666666666666686" y="10" width="29" height="30"/>
+                                                                <rect key="frame" x="46.666666666666686" y="10" width="29" height="30"/>
                                                                 <subviews>
                                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="event-share" translatesAutoresizingMaskIntoConstraints="NO" id="AkT-6d-c3e">
                                                                         <rect key="frame" x="8" y="0.0" width="13" height="16"/>
@@ -601,7 +636,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YSp-OY-zzm">
-                                                                <rect key="frame" x="79.666666666666686" y="7" width="30" height="36"/>
+                                                                <rect key="frame" x="45.666666666666686" y="7" width="30" height="36"/>
                                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                                                 <connections>
                                                                     <action selector="shareBtnAction:" destination="Ojy-yZ-a9C" eventType="touchUpInside" id="Jv2-Yo-CkJ"/>
@@ -1583,6 +1618,7 @@ na aliqua. Ut enim ad minim veniam, quis nostrud exe
                         <outlet property="eventTypeLabel" destination="I0L-an-1ej" id="zRi-60-zoc"/>
                         <outlet property="favoriteIcon" destination="JuX-3p-QCA" id="PKU-JS-TV6"/>
                         <outlet property="imageView" destination="LXF-Pt-U80" id="bX9-wa-29p"/>
+                        <outlet property="likeImageView" destination="dQz-LR-329" id="TKh-fQ-Kxb"/>
                         <outlet property="likeLabel" destination="tfm-3u-eb2" id="fhY-aW-qH8"/>
                         <outlet property="packageNameLabel" destination="CyK-g5-OOS" id="fTN-hU-78C"/>
                         <outlet property="profileImageView" destination="vp0-No-xI7" id="ilx-Ts-j5p"/>
@@ -1592,6 +1628,7 @@ na aliqua. Ut enim ad minim veniam, quis nostrud exe
                         <outlet property="tableView" destination="cnP-La-pbD" id="Rpr-Uq-eei"/>
                         <outlet property="tableViewHeight" destination="etg-Qh-XVM" id="POO-lW-CIG"/>
                         <outlet property="textView" destination="B9h-4J-FUP" id="sti-lB-6Xc"/>
+                        <outlet property="thumbCountLaabel" destination="fk5-Ek-gUg" id="9do-g7-JYP"/>
                         <outlet property="viewCounterLabel" destination="ogs-XB-OhO" id="C6R-xV-Evd"/>
                         <outlet property="viewsLabel" destination="yJS-64-JpT" id="u9u-U4-5g9"/>
                     </connections>
@@ -1742,7 +1779,7 @@ na aliqua. Ut enim ad minim veniam, quis nostrud exe
                                                         <rect key="frame" x="0.0" y="0.0" width="393" height="534"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="mFc-wR-LVH">
-                                                                <rect key="frame" x="8" y="19.999999999999972" width="377" height="474.33333333333326"/>
+                                                                <rect key="frame" x="8" y="20" width="377" height="474.33333333333337"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="N9G-QD-adm">
                                                                         <rect key="frame" x="0.0" y="0.0" width="377" height="60"/>
@@ -2350,7 +2387,7 @@ na aliqua. Ut enim ad minim </string>
                                                                                         </constraints>
                                                                                     </imageView>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Comments" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qkk-8Z-vlZ">
-                                                                                        <rect key="frame" x="23" y="6" width="73.666666666666671" height="18.333333333333332"/>
+                                                                                        <rect key="frame" x="23" y="6" width="73.666666666666671" height="18.333333333333336"/>
                                                                                         <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="13"/>
                                                                                         <color key="textColor" name="tabbar-tint"/>
                                                                                         <nil key="highlightedColor"/>

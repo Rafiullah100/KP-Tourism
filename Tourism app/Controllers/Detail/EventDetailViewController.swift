@@ -43,7 +43,9 @@ class EventDetailViewController: BaseViewController {
     }
     
     var eventDetail: EventListModel?
-    
+    var wishlistEventDetail: WishlistSocialEvent?
+    var detailType: DetailType?
+
     internal var mapView: MapView!
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
@@ -64,28 +66,47 @@ class EventDetailViewController: BaseViewController {
         tableView.estimatedRowHeight = 44.0
         commentTextView.isScrollEnabled = false
         commentTextView.inputAccessoryView = UIView()
-
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
+        view.bringSubviewToFront(statusView)
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         type = .backWithTitle
         viewControllerTitle = ""
-        viewControllerTitle = "\(eventDetail?.title ?? "") | Events"
-        titLabel.text = eventDetail?.title
-        eventTypeLabel.text = eventDetail?.locationTitle
-        descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
-        imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.previewImage ?? "")))
-        openDateLabel.text = "\(eventDetail?.startDate ?? "") | \(eventDetail?.isExpired ?? "")"
-        if eventDetail?.isExpired == "Closed" {
-            statusView.backgroundColor = .red
-        }else{
-            statusView.backgroundColor = Constants.appColor
-        }
-        interestCount = eventDetail?.usersInterestCount ?? 0
-        interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
-        favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
-        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
-        view.bringSubviewToFront(statusView)
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
+
+        if detailType == .list {
+            viewControllerTitle = "\(eventDetail?.title ?? "") | Events"
+            titLabel.text = eventDetail?.title
+            eventTypeLabel.text = eventDetail?.locationTitle
+            descriptionLabel.text = eventDetail?.eventDescription?.stripOutHtml()
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.previewImage ?? "")))
+            openDateLabel.text = "\(eventDetail?.startDate ?? "") | \(eventDetail?.isExpired ?? "")"
+            if eventDetail?.isExpired == "Closed" {
+                statusView.backgroundColor = .red
+            }else{
+                statusView.backgroundColor = Constants.appColor
+            }
+            interestCount = eventDetail?.usersInterestCount ?? 0
+            interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
+            favoriteBtn.setImage(eventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
+        }
+        else{
+            viewControllerTitle = "\(wishlistEventDetail?.title ?? "") | Events"
+            titLabel.text = wishlistEventDetail?.title
+            eventTypeLabel.text = wishlistEventDetail?.locationTitle
+            descriptionLabel.text = wishlistEventDetail?.description?.stripOutHtml()
+            imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistEventDetail?.previewImage ?? "")))
+            openDateLabel.text = "\(wishlistEventDetail?.startDate ?? "") | \(wishlistEventDetail?.isExpired ?? "")"
+            if wishlistEventDetail?.isExpired == "Closed" {
+                statusView.backgroundColor = .red
+            }else{
+                statusView.backgroundColor = Constants.appColor
+            }
+            interestCount = wishlistEventDetail?.usersInterestCount ?? 0
+            interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
+            favoriteBtn.setImage(wishlistEventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
+        }
+        
         reloadComment()
     }
     
@@ -111,7 +132,8 @@ class EventDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(parameters: ["section_id": eventDetail?.id ?? 0, "section": "social_event", "page": currentPage, "limit": limit])
+        let eventID = detailType == .list ? eventDetail?.id : wishlistEventDetail?.id
+        fetchComment(parameters: ["section_id": eventID ?? 0, "section": "social_event", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
@@ -140,7 +162,8 @@ class EventDetailViewController: BaseViewController {
     
     @IBAction func likeBtnAction(_ sender: Any) {
         guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { return }
-        self.interest(parameters: ["event_id": eventDetail?.id ?? 0])
+        let eventID = detailType == .list ? eventDetail?.id : wishlistEventDetail?.id
+        self.interest(parameters: ["event_id": eventID ?? 0])
     }
     
     func interest(parameters: [String: Any]) {

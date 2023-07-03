@@ -204,16 +204,20 @@ class Switcher {
         delegate.present(vc, animated: true, completion: nil)
     }
     
-    static func gotoEventDetail(delegate: UIViewController, event: EventListModel){
+    static func gotoEventDetail(delegate: UIViewController, event: EventListModel? = nil, wishlistEvent: WishlistSocialEvent? = nil, type: DetailType){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "EventDetailViewController") as! EventDetailViewController
         vc.eventDetail = event
+        vc.wishlistEventDetail = wishlistEvent
+        vc.detailType = type
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoBlogDetail(delegate: UIViewController, blogDetail: Blog){
+    static func gotoBlogDetail(delegate: UIViewController, blogDetail: Blog? = nil, wishlistBlogDetail: WishlistBlog? = nil, type: DetailType){
         let vc = UIStoryboard(name: Storyboard.detail.rawValue, bundle: nil).instantiateViewController(withIdentifier: "BlogDetailViewController") as! BlogDetailViewController
         vc.blogDetail = blogDetail
+        vc.wishlistEventDetail = wishlistBlogDetail
+        vc.detailType = type
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

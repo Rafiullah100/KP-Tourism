@@ -93,7 +93,7 @@ class ProfileViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         print(uuid ?? "")
         dispatchGroup?.enter()
-        fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? ""], model: ProfileModel.self, apiType: .profile)
+        fetch(route: .fetchProfile, method: .post, parameters: ["uuid": uuid ?? "", "token": UserDefaults.standard.accessToken ?? ""], model: ProfileModel.self, apiType: .profile)
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         storyApiCall()

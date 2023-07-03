@@ -44,20 +44,18 @@ class SellerViewController: UIViewController {
         else if userType == .tourist{
             type = switchView.isOn == true ? "tourist" : UserDefaults.standard.userType ?? ""
         }
-        print(type)
-        changeUserType(route: .userTypeAPI, method: .post, parameters: ["type": type], model: SuccessModel.self)
+        changeUserType(parameters: ["type": type])
     }
     
-    func changeUserType<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func changeUserType(parameters: [String: Any]) {
+        URLSession.shared.request(route: .userTypeAPI, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
-            case .success(let change):
-                let res = change as? SuccessModel
-                if res?.success == true{
-                    self.view.makeToast(res?.message)
+            case .success(let res):
+                if res.success == true{
+                    self.view.makeToast(res.message)
                 }
                 else{
-                    self.view.makeToast(res?.message)
+                    self.view.makeToast(res.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

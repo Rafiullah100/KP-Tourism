@@ -37,7 +37,7 @@ class ExploreDistrictViewController: UIViewController {
     }
     
     public func reloadData(){
-        fetchDistrict(parameters: ["geoType": "northern,southern", "search": searchText ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage])
+        fetchDistrict(parameters: ["search": searchText ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage])
     }
     
     func fetchDistrict(parameters: [String: Any]) {

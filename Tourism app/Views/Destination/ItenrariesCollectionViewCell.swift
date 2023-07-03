@@ -16,6 +16,7 @@ class ItenrariesCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     
+    @IBOutlet weak var viewLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
     @IBOutlet weak var daysLabel: UILabel!
     var itinrary: ItinraryRow? {
@@ -24,8 +25,9 @@ class ItenrariesCollectionViewCell: UICollectionViewCell {
             nameLabel.text = itinrary?.title
             descriptionLabel.text = itinrary?.description?.stripOutHtml()
             dateLabel.text = itinrary?.activities[0].departureDate
-            locationLabel.text = itinrary?.activities[0].fromPlace
+            locationLabel.text = itinrary?.activities[0].toPlace
             daysLabel.text = "\(itinrary?.activities.count ?? 0) days"
+            viewLabel.text = "\(itinrary?.viewsCounter ?? 0)"
         }
     }
     

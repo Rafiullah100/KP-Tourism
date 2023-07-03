@@ -37,17 +37,32 @@ class ChatListViewController: UIViewController {
     }
     
     private func load(){
-        fetch(route: .conversationUser, method: .post, parameters: ["search": searchField.text ?? ""], model: LoadedConversationModel.self)
+        fetch(parameters: ["search": searchField.text ?? ""])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .conversationUser, method: .post, showLoader: false, model: LoadedConversationModel.self) { result in
             switch result {
             case .success(let users):
-                self.conversationUsers.append(contentsOf: (users as? LoadedConversationModel)?.userConversations ?? [])
+                self.conversationUsers.append(contentsOf: (users.userConversations ?? []))
                 self.conversationUsers = self.conversationUsers.reversed()
                 self.conversationUsers.count == 0 ? self.tableView.setEmptyView("No Record found!") : nil
                 self.tableView.reloadData()
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
+    }
+    
+    func deleteConversation(parameters: [String: Any], index: Int) {
+        URLSession.shared.request(route: .deleteConversation, method: .post, showLoader: true, parameters: parameters, model: SuccessModel.self) { result in
+            switch result {
+            case .success(let res):
+                if res.success == true{
+                    self.conversationUsers.remove(at: index)
+                    self.tableView.reloadData()
+                }
+                self.view.makeToast(res.message ?? "")
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -70,6 +85,14 @@ extension ChatListViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: ChatListTableViewCell = tableView.dequeueReusableCell(withIdentifier: ChatListTableViewCell.cellReuseIdentifier()) as! ChatListTableViewCell
+        cell.deleteHandler = {
+            Utility.showAlert(message: "Do you want to delete conversation?", buttonTitles: ["No", "Yes"]) { responce in
+                if responce == "Yes"{
+                    guard let conversationID = self.conversationUsers[indexPath.row].conversationID else { return }
+                    self.deleteConversation(parameters: ["conversation_id": conversationID], index: indexPath.row)
+                }
+            }
+        }
         cell.user = conversationUsers[indexPath.row].user
         return cell
     }

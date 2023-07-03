@@ -40,19 +40,18 @@ class NotificationListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topView.viewShadow()
-        fetchNotification(route: .notificationList, method: .post, model: NotificationListModel.self)
+        fetchNotification()
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
     
-    func fetchNotification<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetchNotification() {
+        URLSession.shared.request(route: .notificationList, method: .post, parameters: nil, model: NotificationListModel.self) { result in
             switch result {
-            case .success(let notifications):
-                let notificationModel = notifications as? NotificationListModel
-                self.notifications = notificationModel?.notifications.rows ?? []
+            case .success(let notificationsModel):
+                self.notifications = notificationsModel.notifications.rows ?? []
                 self.notifications.count == 0 ? self.tableView.setEmptyView("No Notification Found!") : self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

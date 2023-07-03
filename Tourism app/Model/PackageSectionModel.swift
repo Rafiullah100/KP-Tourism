@@ -217,7 +217,7 @@ struct WishlistTourPackage: Codable {
     let usersInterestCount, userLike, userWishlist: Int?
     let toDistricts: WishlistToDistricts
     let activities: [WishlistTourPackageActivity]
-
+    
     enum CodingKeys: String, CodingKey {
         case startDate, endDate
         case isExpired = "is_expired"

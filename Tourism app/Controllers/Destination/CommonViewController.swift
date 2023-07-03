@@ -30,7 +30,7 @@ class CommonViewController: BaseViewController {
             collectionView.dataSource = self
         }
     }
-    var delegate: PopupDelegate?
+
     var locationCategory: LocationCategory?
     var destinationArray: [Destination]?
     var explore: ExploreDistrict?

@@ -38,17 +38,15 @@ class SuggestedUserViewController: UIViewController {
     }
     
     private func loadData(){
-        fetch(route: .suggestedUser, method: .post, parameters: ["page": currentPage, "limit": limit, "search": searchTF.text ?? ""], model: SuggestedUserModel.self)
+        fetch(parameters: ["page": currentPage, "limit": limit, "search": searchTF.text ?? ""])
     }
 
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .suggestedUser, method: .post, parameters: parameters, model: SuggestedUserModel.self) { result in
             switch result {
-            case .success(let model):
-                let suggestedModel = model as? SuggestedUserModel
-                self.suggestedUsers.append(contentsOf: suggestedModel?.suggestedUsers ?? [])
-                self.totalCount = suggestedModel?.suggestedUsersCount ?? 0
-                print(self.suggestedUsers.count)
+            case .success(let user):
+                self.suggestedUsers.append(contentsOf: user.suggestedUsers)
+                self.totalCount = user.suggestedUsersCount ?? 0
                 self.totalCount == 0 ? self.collectionView.setEmptyView("No user found!") : nil
                 self.collectionView.reloadData()
             case .failure(let error):

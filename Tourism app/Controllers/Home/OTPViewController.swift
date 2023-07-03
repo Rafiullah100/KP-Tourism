@@ -98,20 +98,19 @@ class OTPViewController: BaseViewController {
     
     @IBAction func continueBtnAction(_ sender: Any) {
         guard let otp1 = firstTF.text,  let otp2 = secondTF.text,  let otp3 = thirdTF.text,  let otp4 = forthTF.text else { return  }
-        fetch(route: .verifyOtp, method: .post, parameters: ["otp": otp1 + otp2 + otp3 + otp4], model: OTPModel.self)
+        fetch(parameters: ["otp": otp1 + otp2 + otp3 + otp4])
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .verifyOtp, method: .post, parameters: parameters, model: OTPModel.self) { result in
             switch result {
-            case .success(let otp):
-                let res = otp as? OTPModel
-                if res?.success == true{
-                    self.view.makeToast(res?.message)
+            case .success(let res):
+                if res.success == true{
+                    self.view.makeToast(res.message)
                     Switcher.goToLoginVC(delegate: self)
                 }
                 else{
-                    self.view.makeToast(res?.message)
+                    self.view.makeToast(res.message)
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

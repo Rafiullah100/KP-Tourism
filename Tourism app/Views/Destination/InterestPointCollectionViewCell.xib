@@ -31,7 +31,7 @@
                                 <rect key="frame" x="5" y="5" width="86" height="86"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="M2y-4c-hfi">
-                                        <rect key="frame" x="0.0" y="-7" width="86" height="100"/>
+                                        <rect key="frame" x="0.0" y="-17" width="86" height="120"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="G5H-NY-sPU">
                                                 <rect key="frame" x="0.0" y="0.0" width="86" height="50"/>
@@ -109,6 +109,25 @@
                                                     <constraint firstAttribute="trailing" secondItem="U1h-H9-j8Y" secondAttribute="trailing" constant="4" id="qGV-gY-yTM"/>
                                                 </constraints>
                                             </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YIn-Kk-RO8">
+                                                <rect key="frame" x="0.0" y="100" width="86" height="20"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J9C-6q-1pv">
+                                                        <rect key="frame" x="4" y="3" width="78" height="17"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="10"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="0ng-h0-D2D"/>
+                                                    <constraint firstItem="J9C-6q-1pv" firstAttribute="top" secondItem="YIn-Kk-RO8" secondAttribute="top" constant="3" id="9gb-De-pAX"/>
+                                                    <constraint firstAttribute="bottom" secondItem="J9C-6q-1pv" secondAttribute="bottom" id="ZTE-0f-FRA"/>
+                                                    <constraint firstAttribute="trailing" secondItem="J9C-6q-1pv" secondAttribute="trailing" constant="4" id="kht-2f-Rd1"/>
+                                                    <constraint firstItem="J9C-6q-1pv" firstAttribute="leading" secondItem="YIn-Kk-RO8" secondAttribute="leading" constant="4" id="ndl-vX-cJV"/>
+                                                </constraints>
+                                            </view>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="height" priority="250" constant="100" id="Jju-sI-umQ"/>
@@ -152,6 +171,7 @@
             <size key="customSize" width="84" height="79"/>
             <connections>
                 <outlet property="bgView" destination="IUZ-ry-JhD" id="Qfp-RQ-c5D"/>
+                <outlet property="countLabel" destination="J9C-6q-1pv" id="lhT-vg-h9w"/>
                 <outlet property="imageView" destination="eBE-WB-l9N" id="6m5-i3-vZY"/>
                 <outlet property="poiLabel" destination="U1h-H9-j8Y" id="57e-mL-LlD"/>
             </connections>

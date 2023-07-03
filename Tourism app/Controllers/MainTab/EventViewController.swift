@@ -63,12 +63,12 @@ class EventViewController: UIViewController {
         }
     }
     
-//    func toggleArcheologyWishlistStatus(for indexPath: IndexPath) {
-//        var arch = archeology[indexPath.row]
-//        arch.attractions.isWished = arch.attractions.isWished == 1 ? 0 : 1
-//        archeology[indexPath.row] = arch
-//        tableView.reloadRows(at: [indexPath], with: .none)
-//    }
+    func toggleEventWishlistStatus(for indexPath: IndexPath) {
+        var eventObject = event[indexPath.row]
+        eventObject.userWishlist = eventObject.userWishlist == 1 ? 0 : 1
+        event[indexPath.row] = eventObject
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
 }
 
 
@@ -80,6 +80,9 @@ extension EventViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellType?.getClass().cellReuseIdentifier() ?? "") as! EventTableViewCell
         cell.event = event[indexPath.row]
+        cell.wishlistButtonTappedHandler = {
+            self.toggleEventWishlistStatus(for: indexPath)
+        }
         return cell
     }
     
@@ -95,6 +98,6 @@ extension EventViewController: UITableViewDelegate, UITableViewDataSource{
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row])
+        Switcher.gotoEventDetail(delegate: self, event: event[indexPath.row], type: .list)
     }
 }

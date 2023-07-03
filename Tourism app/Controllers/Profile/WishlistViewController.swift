@@ -24,6 +24,8 @@ class WishlistViewController: UIViewController {
     var districtWishlist: [DistrictWishlistModel]?
     var packageWishlist: [PackageWishlistModel]?
     var productWishlist: [ProductWishlistModel]?
+    var eventWishlist: [EventWishlistModel]?
+    var blogWishlist: [BlogWishlistModel]?
 
     var type: wishlistSection?
     var wishlistTypeArray: [wishlistSection]?
@@ -47,6 +49,12 @@ class WishlistViewController: UIViewController {
         dispatchGroup?.leave()
         dispatchGroup?.enter()
         fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.product.rawValue], model: ProductSectionModel.self, type: .product)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.event.rawValue], model: EventSectionModel.self, type: .event)
+        dispatchGroup?.leave()
+        dispatchGroup?.enter()
+        fetch(route: .wishlist, method: .post, parameters: ["section": wishlistSection.blog.rawValue], model: BlogSectionModel.self, type: .blog)
         dispatchGroup?.leave()
     }
     
@@ -84,6 +92,16 @@ class WishlistViewController: UIViewController {
                     self.productWishlist = wishlist?.wishlist
 //                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
                 }
+                else if type == .event{
+                    let wishlist = model as? EventSectionModel
+                    self.eventWishlist = wishlist?.wishlist
+//                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
+                }
+                else if type == .blog{
+                    let wishlist = model as? BlogSectionModel
+                    self.blogWishlist = wishlist?.wishlist
+//                    self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
+                }
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -98,26 +116,38 @@ class WishlistViewController: UIViewController {
 
 extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         return wishlistTypeArray?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: WishlistTableViewCell = tableView.dequeueReusableCell(withIdentifier: WishlistTableViewCell.cellReuseIdentifier()) as! WishlistTableViewCell
         if indexPath.row == 0{
+            cell.wishlistType = .post
             cell.postWishlist = postWishlist
         }
         else if indexPath.row == 1{
+            cell.wishlistType = .attraction
             cell.attractionWishlist = attractionWishlist
         }
         else if indexPath.row == 2{
+            cell.wishlistType = .district
             cell.districtWishlist = districtWishlist
         }
         else if indexPath.row == 3{
+            cell.wishlistType = .package
             cell.packageWishlist = packageWishlist
         }
         else if indexPath.row == 4{
+            cell.wishlistType = .product
             cell.productWishlist = productWishlist
+        }
+        else if indexPath.row == 5{
+            cell.wishlistType = .event
+            cell.eventWishlist = eventWishlist
+        }
+        else if indexPath.row == 6{
+            cell.wishlistType = .blog
+            cell.blogWishlist = blogWishlist
         }
         
         cell.wishlistCallback = { type, index in
@@ -135,6 +165,12 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
             }
             else if type == .district{
                 Switcher.goToDestination(delegate: self, type: .district, wishlistDistrict: self.districtWishlist?[index].district)
+            }
+            else if type == .event{
+                Switcher.gotoEventDetail(delegate: self, wishlistEvent: self.eventWishlist?[index].socialEvent, type: .wishlist)
+            }
+            else if type == .blog{
+                Switcher.gotoBlogDetail(delegate: self, wishlistBlogDetail: self.blogWishlist?[index].blog, type: .wishlist)
             }
         }
         
@@ -174,6 +210,20 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
                     }
                 }
             }
+            else if type == .event{
+                Utility.showAlert(message: "Do you want to delete event from wishlist?", buttonTitles: ["cancel", "ok"]) { responce in
+                    if responce == "ok"{
+                        self.deleteFromWishlist(route: .doWishApi, method: .post, parameters: ["section_id": self.eventWishlist?[index].socialEventID ?? 0, "section": "social_event"], model: SuccessModel.self, section: type, index: index)
+                    }
+                }
+            }
+            else if type == .blog{
+                Utility.showAlert(message: "Do you want to delete blog from wishlist?", buttonTitles: ["cancel", "ok"]) { responce in
+                    if responce == "ok"{
+                        self.deleteFromWishlist(route: .doWishApi, method: .post, parameters: ["section_id": self.blogWishlist?[index].blogID ?? 0, "section": "blog"], model: SuccessModel.self, section: type, index: index)
+                    }
+                }
+            }
         }
         return cell
     }
@@ -191,17 +241,23 @@ extension WishlistViewController: UITableViewDelegate, UITableViewDataSource{
                     if section == .post{
                         self.postWishlist?.remove(at: index)
                     }
-                    else if self.type == .product{
+                    else if section == .product{
                         self.productWishlist?.remove(at: index)
                     }
-                    else if self.type == .attraction{
+                    else if section == .attraction{
                         self.attractionWishlist?.remove(at: index)
                     }
-                    else if self.type == .district{
+                    else if section == .district{
                         self.districtWishlist?.remove(at: index)
                     }
-                    else if self.type == .package{
+                    else if section == .package{
                         self.packageWishlist?.remove(at: index)
+                    }
+                    else if section == .event{
+                        self.eventWishlist?.remove(at: index)
+                    }
+                    else if section == .blog{
+                        self.blogWishlist?.remove(at: index)
                     }
                     self.tableView.reloadData()
                 }
