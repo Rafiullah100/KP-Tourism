@@ -32,6 +32,7 @@ class ArcheologyViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .arch
         reloadData()
     }

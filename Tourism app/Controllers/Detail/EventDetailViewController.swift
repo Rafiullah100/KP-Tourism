@@ -73,7 +73,6 @@ class EventDetailViewController: BaseViewController {
         type = .backWithTitle
         viewControllerTitle = ""
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
-
         if detailType == .list {
             viewControllerTitle = "\(eventDetail?.title ?? "") | Events"
             titLabel.text = eventDetail?.title

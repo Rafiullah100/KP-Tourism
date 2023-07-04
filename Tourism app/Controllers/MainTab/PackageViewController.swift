@@ -33,6 +33,7 @@ class PackageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .tour
         reloadData()
     }

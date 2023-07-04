@@ -32,6 +32,7 @@ class InvestKpViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .investment
         reloadData()
     }

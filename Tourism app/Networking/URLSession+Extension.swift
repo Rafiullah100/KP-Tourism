@@ -11,7 +11,8 @@ import SVProgressHUD
 import Toast_Swift
 extension URLSession{
     func request<T: Codable>(route: Route, method: Method, showLoader: Bool? = true, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) {
-        
+        var showPrgoesshud: Bool?
+        showPrgoesshud = showLoader
         if !Reachability.isConnectedToNetwork() {
             completion(.failure(.noInternet))
         }
@@ -20,7 +21,11 @@ extension URLSession{
             return
         }
         
-        if showLoader == true {
+        if let value = parameters?["page"], value as? Int != 1 {
+            showPrgoesshud = false
+        }
+        
+        if showPrgoesshud == true {
             SVProgressHUD.show(withStatus: "Please Wait...")
             SVProgressHUD.setDefaultMaskType(.clear)
             SVProgressHUD.setBackgroundColor(.lightGray)

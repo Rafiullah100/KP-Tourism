@@ -44,36 +44,45 @@ class AccomodationViewController: BaseViewController {
         reloadAccomodation(type: hotelTypes[0])
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let modelObject = DataManager.shared.accomodationModelObject,
+           let index = accomodationDetail?.accomodations.firstIndex(where: { $0.id == modelObject.id }) {
+            accomodationDetail?.accomodations[index] = modelObject
+            tableView.reloadData()
+        }
+    }
+    
     private func reloadAccomodation(type: String){
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], model: AccomodationModel.self)
+            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": attractionDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(parameters: ["attraction_id": attractionDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if wishlistAttraction != nil{
             thumbnailTopLabel.text = wishlistAttraction?.title
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
-            fetch(route: .fetchAttrctionAccomodation, method: .post, parameters: ["attraction_id": wishlistAttraction?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(parameters: ["attraction_id": wishlistAttraction?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
         }
         if wishlistDistrict != nil {
             thumbnailTopLabel.text = wishlistDistrict?.title
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
-            fetch(route: .fetchDistrictAccomodation, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0, "bookStayType": type], model: AccomodationModel.self)
+            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
         }
     }
     
@@ -95,21 +104,18 @@ class AccomodationViewController: BaseViewController {
         }
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchDistrictAccomodation, method: .post, parameters: parameters, model: AccomodationModel.self) { result in
             switch result {
             case .success(let accomodation):
-                DispatchQueue.main.async {
-                    self.accomodationDetail = accomodation as? AccomodationModel
-                    
-                    if self.accomodationDetail?.accomodations.count == 0{
-                        self.tableView.setEmptyView("No Accomodation found!")
-                    }
-                    else{
-                        self.tableView.setEmptyView("")
-                    }
-                    self.tableView.reloadData()
+                self.accomodationDetail = accomodation
+                if self.accomodationDetail?.accomodations.count == 0{
+                    self.tableView.setEmptyView("No Accomodation found!")
                 }
+                else{
+                    self.tableView.setEmptyView("")
+                }
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

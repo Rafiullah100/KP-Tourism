@@ -515,7 +515,7 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XN8-k2-YSp">
                                                                 <rect key="frame" x="0.0" y="0.0" width="377" height="100"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="noti" translatesAutoresizingMaskIntoConstraints="NO" id="k1L-dB-hz2">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="notification-icon" translatesAutoresizingMaskIntoConstraints="NO" id="k1L-dB-hz2">
                                                                         <rect key="frame" x="148.66666666666666" y="10" width="80" height="80"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="80" id="1fZ-US-FsU"/>
@@ -583,60 +583,27 @@ details, account, weather and account activity</string>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uWO-IV-Env">
                                                 <rect key="frame" x="0.0" y="215" width="377" height="128"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Msk-nz-pKf">
-                                                        <rect key="frame" x="20" y="10" width="160" height="50"/>
-                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="160" id="i31-Jk-Cdi"/>
-                                                            <constraint firstAttribute="height" constant="50" id="ufP-e0-3fp"/>
-                                                        </constraints>
-                                                        <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="20"/>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Yes, Notify Me">
-                                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
-                                                                <real key="value" value="7"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notification Status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SIZ-Y2-1bO">
+                                                        <rect key="frame" x="136.99999999999997" y="10" width="146.00000000000003" height="31"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ulk-CB-8Lf">
+                                                        <rect key="frame" x="303" y="10" width="51" height="31"/>
                                                         <connections>
-                                                            <action selector="yesnotifyBtn:" destination="KUi-c5-4hm" eventType="touchUpInside" id="0il-e6-7Hi"/>
+                                                            <action selector="switchAction:" destination="KUi-c5-4hm" eventType="valueChanged" id="4pb-BP-X5K"/>
                                                         </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X6b-KN-vSJ">
-                                                        <rect key="frame" x="20" y="70" width="114" height="50"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="114" id="Uc0-Xe-9Oq"/>
-                                                            <constraint firstAttribute="height" constant="50" id="n7c-xh-y8n"/>
-                                                        </constraints>
-                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Skip">
-                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                        </state>
-                                                        <userDefinedRuntimeAttributes>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
-                                                                <real key="value" value="7"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                <real key="value" value="1"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
-                                                                <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                            </userDefinedRuntimeAttribute>
-                                                        </userDefinedRuntimeAttributes>
-                                                        <connections>
-                                                            <action selector="skipBtn:" destination="KUi-c5-4hm" eventType="touchUpInside" id="S5U-4I-JW2"/>
-                                                        </connections>
-                                                    </button>
+                                                    </switch>
                                                 </subviews>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
-                                                    <constraint firstItem="Msk-nz-pKf" firstAttribute="top" secondItem="uWO-IV-Env" secondAttribute="top" constant="10" id="7KE-ld-hma"/>
-                                                    <constraint firstItem="X6b-KN-vSJ" firstAttribute="top" secondItem="Msk-nz-pKf" secondAttribute="bottom" constant="10" id="8jw-os-GFa"/>
-                                                    <constraint firstItem="X6b-KN-vSJ" firstAttribute="leading" secondItem="uWO-IV-Env" secondAttribute="leading" constant="20" id="9TZ-aG-F29"/>
+                                                    <constraint firstAttribute="trailing" secondItem="ulk-CB-8Lf" secondAttribute="trailing" constant="25" id="Gby-mV-KDF"/>
+                                                    <constraint firstItem="ulk-CB-8Lf" firstAttribute="leading" secondItem="SIZ-Y2-1bO" secondAttribute="trailing" constant="20" id="Gc0-Sn-v5v"/>
+                                                    <constraint firstItem="SIZ-Y2-1bO" firstAttribute="top" secondItem="uWO-IV-Env" secondAttribute="top" constant="10" id="UAs-Ew-daG"/>
                                                     <constraint firstAttribute="height" constant="128" id="VWO-dA-cQQ"/>
-                                                    <constraint firstItem="Msk-nz-pKf" firstAttribute="leading" secondItem="uWO-IV-Env" secondAttribute="leading" constant="20" id="ch8-cC-2OB"/>
+                                                    <constraint firstItem="SIZ-Y2-1bO" firstAttribute="centerY" secondItem="ulk-CB-8Lf" secondAttribute="centerY" id="kLB-dB-Q19"/>
+                                                    <constraint firstItem="ulk-CB-8Lf" firstAttribute="top" secondItem="uWO-IV-Env" secondAttribute="top" constant="10" id="r29-de-VDo"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
@@ -664,7 +631,7 @@ details, account, weather and account activity</string>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="yesButton" destination="X6b-KN-vSJ" id="ZY2-zH-1cm"/>
+                        <outlet property="switchView" destination="ulk-CB-8Lf" id="aKz-eC-PEC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aCe-YJ-SYg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -3201,8 +3168,7 @@ details, account, weather and account activity</string>
         <image name="logo.gif" width="1280" height="720"/>
         <image name="logout-icon" width="30" height="30"/>
         <image name="map-btn-icon" width="101" height="43"/>
-        <image name="noti" width="96.333335876464844" height="101"/>
-        <image name="notification-icon" width="18" height="22"/>
+        <image name="notification-icon" width="89" height="89"/>
         <image name="profile" width="21" height="21"/>
         <image name="profile-s" width="20" height="20"/>
         <image name="search1" width="17.666666030883789" height="17.666666030883789"/>

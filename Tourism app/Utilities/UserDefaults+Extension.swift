@@ -30,6 +30,7 @@ extension UserDefaults {
         case isSeller
         case isTourist
         case loadFirstTime
+        case notificationStatus
     }
         
     var accessToken: String? {
@@ -218,6 +219,15 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.otpEmail.rawValue)
+        }
+    }
+    
+    var notificationStatus: Bool? {
+        get {
+            bool(forKey: UserDefaultsKeys.notificationStatus.rawValue)
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.notificationStatus.rawValue)
         }
     }
 }

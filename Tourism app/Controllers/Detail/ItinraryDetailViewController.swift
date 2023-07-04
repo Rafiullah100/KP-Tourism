@@ -9,6 +9,7 @@ import UIKit
 
 class ItinraryDetailViewController: BaseViewController {
 
+    @IBOutlet weak var likeLabel: UILabel!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var favoriteBtn: UIButton!
     @IBOutlet weak var textView: UITextView!
@@ -25,13 +26,21 @@ class ItinraryDetailViewController: BaseViewController {
     @IBOutlet weak var viewCounterLabel: UILabel!
     
     var itinraryDetail: ItinraryRow?
+    var likeCount = 0
+    var viewsCount = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        DataManager.shared.itinraryModelObject = itinraryDetail
         type = .back1
         placeLabel.text = "\(itinraryDetail?.fromDistricts.title ?? "") - \(itinraryDetail?.toDistricts.title ?? "")"
-        viewCounterLabel.text = "\(itinraryDetail?.viewsCounter ?? 0) Views"
+        viewsCount = itinraryDetail?.viewsCounter ?? 0
+        likeCount = itinraryDetail?.likesCount ?? 0
+        print(likeCount)
+        likeLabel.text = "\(self.likeCount) Liked"
+        viewCounterLabel.text = "\(viewsCount) Views"
         textView.text = itinraryDetail?.description?.stripOutHtml()
+        favoriteBtn.setImage(itinraryDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
         viewCounter(parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"])
@@ -42,7 +51,13 @@ class ItinraryDetailViewController: BaseViewController {
         URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
-                print(viewCount)
+                if viewCount.success == true {
+                    guard var modelObject = DataManager.shared.itinraryModelObject else {
+                        return
+                    }
+                    modelObject.viewsCounter = self.viewsCount + 1
+                    DataManager.shared.itinraryModelObject = modelObject
+                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -59,6 +74,30 @@ class ItinraryDetailViewController: BaseViewController {
         self.tableviewHeight.constant = self.tableView.contentSize.height
     }
     @IBAction func likeBtnAction(_ sender: Any) {
+        like(parameters: ["section_id": itinraryDetail?.id ?? 0, "section": "itinerary"])
+    }
+    
+    func like(parameters: [String: Any]) {
+        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+            switch result {
+            case .success(let like):
+                self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
+                self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
+                self.likeLabel.text = "\(self.likeCount) Liked"
+                self.changeObject()
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.itinraryModelObject else {
+            return
+        }
+        modelObject.likesCount = self.likeCount
+        modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
+        DataManager.shared.itinraryModelObject = modelObject
     }
 }
 

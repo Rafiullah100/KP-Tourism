@@ -61,10 +61,12 @@ class AccomodationDetailViewController: BaseViewController {
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
     var likeCount = 0
-
+    var viewsCount = 0
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        DataManager.shared.accomodationModelObject = accomodationDetail
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         commentTextView.text = commentText
@@ -88,11 +90,12 @@ class AccomodationDetailViewController: BaseViewController {
         bedLabel.text = "\(accomodationDetail?.noRoom ?? 0) Rooms"
         parkingLabel.text = accomodationDetail?.parking == true ? "Avialable" : "No Parking"
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
-        viewCounterLabel.text = "\(accomodationDetail?.viewsCounter ?? 0) Views"
-        viewCounter(parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"])
         favoriteBtn.setImage(accomodationDetail?.userLike == 1 ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)
         likeCount = accomodationDetail?.likeCount ?? 0
-        likeCountLabel.text = "\(accomodationDetail?.likeCount ?? 0) Liked"
+        viewsCount = accomodationDetail?.viewsCounter ?? 0
+        likeCountLabel.text = "\(likeCount) Liked"
+        viewCounterLabel.text = "\(viewsCount) Views"
+        viewCounter(parameters: ["section_id": accomodationDetail?.id ?? 0, "section": "book_stay"])
         reloadComment()
     }
     
@@ -100,7 +103,13 @@ class AccomodationDetailViewController: BaseViewController {
         URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
-                print(viewCount)
+                if viewCount.success == true {
+                    guard var modelObject = DataManager.shared.accomodationModelObject else {
+                        return
+                    }
+                    modelObject.viewsCounter = self.viewsCount + 1
+                    DataManager.shared.accomodationModelObject = modelObject
+                }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -149,11 +158,21 @@ class AccomodationDetailViewController: BaseViewController {
                     self.likeCount = like.message == "Liked" ? self.likeCount + 1 : self.likeCount - 1
                     print(like.message ?? "", self.likeCount)
                     self.likeCountLabel.text = "\(self.likeCount) Liked"
+                    self.changeObject()
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
         }
+    }
+    
+    private func changeObject(){
+        guard var modelObject = DataManager.shared.accomodationModelObject else {
+            return
+        }
+        modelObject.likeCount = self.likeCount
+        modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
+        DataManager.shared.accomodationModelObject = modelObject
     }
     
     @IBAction func directionBtnAction(_ sender: Any) {

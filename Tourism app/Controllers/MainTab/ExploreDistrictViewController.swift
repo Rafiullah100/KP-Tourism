@@ -33,6 +33,7 @@ class ExploreDistrictViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         cellType = .explore
+        tableView.keyboardDismissMode = .onDrag
         reloadData()
     }
     

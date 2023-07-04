@@ -31,7 +31,6 @@ class PointOfInterestViewController: BaseViewController {
         super.viewDidLoad()
         type = .back1
         updateUI()
-        fetch()
     }
     
     func updateUI() {        
@@ -39,31 +38,36 @@ class PointOfInterestViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
+            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0])
         }
         else if attractionsDistrict != nil{
             thumbnailTopLabel.text = attractionsDistrict?.title
             thumbnailBottomLabel.text = attractionsDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionsDistrict?.previewImage ?? "")))
+            fetch(parameters: ["attraction_id": attractionsDistrict?.id ?? 0])
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
+            fetch(parameters: ["attraction_id": archeology?.attractionID ?? 0])
         }
         else if wishlistAttraction != nil{
             thumbnailTopLabel.text = wishlistAttraction?.title
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
+            fetch(parameters: ["attraction_id": wishlistAttraction?.id ?? 0])
         }
         else if wishlistDistrict != nil{
             thumbnailTopLabel.text = wishlistDistrict?.title
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0])
         }
     }
     
-    private func fetch() {
-        URLSession.shared.request(route: .fetchPoiCategories, method: .post, model: PoiCategoriesModel.self) { result in
+    private func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchPoiCategories, method: .post, parameters: parameters, model: PoiCategoriesModel.self) { result in
             switch result {
             case .success(let poiCategory):
                 self.category = poiCategory
@@ -93,19 +97,21 @@ extension PointOfInterestViewController: UICollectionViewDataSource{
 
 extension PointOfInterestViewController: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title  else { return }
+        Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
+//        if exploreDistrict != nil{
+//            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title  else { return }
+//            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
+//        }
+//        else if attractionsDistrict != nil{
+//            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
+//            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
+//        }
+//        else if archeology != nil{
+//            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
+//            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, archeology: archeology, poiCategoryId: poiCategoryId, poiName: poiName)
+//        }
         
-        if exploreDistrict != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title  else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
-        }
-        else if attractionsDistrict != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, poiCategoryId: poiCategoryId, poiName: poiName)
-        }
-        else if archeology != nil{
-            guard let poiCategoryId = category?.poicategories[indexPath.row].id, let poiName: String =  category?.poicategories[indexPath.row].title else { return }
-            Switcher.goToPOIServices(delegate: self, locationCategory: locationCategory!, exploredistrict: exploreDistrict, attractionDistrict: attractionsDistrict, archeology: archeology, poiCategoryId: poiCategoryId, poiName: poiName)
-        }
     }
 }
 

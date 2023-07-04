@@ -19,7 +19,11 @@ class POIMapViewController: BaseViewController {
     var locationCategory: LocationCategory?
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
-    var POISubCatories: POISubCatoriesModel?
+    
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
+    
+    var POISubCatories: [POIRow]?
     var archeology: Archeology?
     var mapView = MGLMapView()
 
@@ -56,6 +60,14 @@ class POIMapViewController: BaseViewController {
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
         }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.previewImage ?? "")))
+        }
+        else if wishlistDistrict != nil{
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+        }
     }
 
     
@@ -72,10 +84,28 @@ class POIMapViewController: BaseViewController {
             }
             mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
         }
+        else if attractionDistrict != nil{
+            guard let latitude = Double(attractionDistrict?.latitude ?? ""), let longitude = Double(attractionDistrict?.longitude ?? "") else {
+                return
+            }
+            mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
+        }
+        else if wishlistAttraction != nil{
+            guard let latitude = Double(wishlistAttraction?.latitude ?? ""), let longitude = Double(wishlistAttraction?.longitude ?? "") else {
+                return
+            }
+            mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
+        }
+        else if wishlistDistrict != nil{
+            guard let latitude = Double(wishlistDistrict?.latitude ?? ""), let longitude = Double(wishlistDistrict?.longitude ?? "") else {
+                return
+            }
+            mapView = Helper.shared.showMap(view: mapViewContainer, latitude: latitude, longitude: longitude)
+        }
         mapViewContainer.addSubview(mapView)
         mapView.delegate = self
 
-        POISubCatories?.pois.rows.forEach({ point in
+        POISubCatories?.forEach({ point in
             guard let lat = Double(point.latitude ?? ""), let lon = Double(point.longitude ?? "")  else { return }
             let point = MGLPointAnnotation()
             point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
@@ -90,7 +120,7 @@ class POIMapViewController: BaseViewController {
 
 extension POIMapViewController: MGLMapViewDelegate{
     func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
-        POISubCatories?.pois.rows.forEach({ poi in
+        POISubCatories?.forEach({ poi in
             guard let lat = Double(poi.latitude ?? ""), let lon = Double(poi.longitude ?? "")  else { return }
             let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: poi.title, subtitle: poi.locationTitle , image: UIImage(named: "dummy") ?? UIImage())
             mapView.addAnnotation(point)

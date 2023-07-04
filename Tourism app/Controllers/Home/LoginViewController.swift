@@ -112,6 +112,7 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.uuid = self.login?.uuID
                     UserDefaults.standard.userBio = self.login?.about
                     UserDefaults.standard.loadFirstTime = true
+                    UserDefaults.standard.notificationStatus = self.login?.isNotification
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{

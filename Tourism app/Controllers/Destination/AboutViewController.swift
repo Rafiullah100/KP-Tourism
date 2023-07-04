@@ -20,7 +20,9 @@ class AboutViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var archeology: Archeology?
-
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
@@ -45,6 +47,20 @@ class AboutViewController: BaseViewController {
             welcomeLabel.text = "Welcome to \(archeology?.attractions.title ?? "")"
             textView.text = "\(archeology?.attractions.description?.stripOutHtml() ?? "")"
         }
+        else if wishlistDistrict != nil{
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+            thumbnailTopLabel.text = "\(wishlistDistrict?.title ?? "")"
+            thumbnailBottomLabel.text = "\(wishlistDistrict?.locationTitle ?? "")"
+            welcomeLabel.text = "Welcome to \(wishlistDistrict?.title ?? "")"
+            textView.text = "\(wishlistDistrict?.description?.stripOutHtml() ?? "")"
+        }
+        else if wishlistAttraction != nil{
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.previewImage ?? "")))
+            thumbnailTopLabel.text = "\(wishlistAttraction?.title ?? "")"
+            thumbnailBottomLabel.text = "\(wishlistAttraction?.locationTitle ?? "")"
+            welcomeLabel.text = "Welcome to \(wishlistAttraction?.title ?? "")"
+            textView.text = "\(wishlistAttraction?.description?.stripOutHtml() ?? "")"
+        }
     }
     
     
@@ -52,7 +68,6 @@ class AboutViewController: BaseViewController {
         let url: NSURL = URL(string: "TEL://1422")! as NSURL
             UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
     }
-
 }
 
 

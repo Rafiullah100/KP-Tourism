@@ -20,6 +20,8 @@ class POIServicesViewController: BaseViewController {
     var exploreDistrict: ExploreDistrict?
     var attractionDistrict: AttractionsDistrict?
     var archeology: Archeology?
+    var wishlistAttraction: WishlistAttraction?
+    var wishlistDistrict: WishlistDistrict?
     var poiCategoriId: Int?
     var districtId: Int?
     var poiName: String?
@@ -53,6 +55,15 @@ class POIServicesViewController: BaseViewController {
         else if archeology != nil{
             parameters = ["attraction_id": archeology?.attractionID ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
         }
+        else if archeology != nil{
+            parameters = ["attraction_id": archeology?.attractionID ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
+        }
+        else if wishlistDistrict != nil{
+            parameters = ["district_id": wishlistDistrict?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
+        }
+        else if wishlistAttraction != nil{
+            parameters = ["attraction_id": wishlistAttraction?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
+        }
         print(parameters)
         URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
             switch result {
@@ -60,6 +71,7 @@ class POIServicesViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.POISubCatories = poiSubCategory
                     self.POIarray.append(contentsOf: poiSubCategory.pois.rows)
+                    print(self.POIarray.count)
                     self.totalCount = self.POISubCatories?.pois.count ?? 0
                     self.totalCount == 0 ? self.tableView.setEmptyView("No Record Found!") : self.tableView.reloadData()
                 }
@@ -70,8 +82,8 @@ class POIServicesViewController: BaseViewController {
     }
     
     @IBAction func mapBtnAction(_ sender: Any) {
-        guard let POISubCatories = POISubCatories else { return  }
-        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POISubCatories, archeology: archeology)
+//        guard let POISubCatories = POISubCatories else { return  }
+        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POIarray, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
     }
     
     func updateUI() {
@@ -88,6 +100,14 @@ class POIServicesViewController: BaseViewController {
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
         }
+        else if wishlistDistrict != nil{
+            thumbnailTopLabel.text = wishlistDistrict?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
+        }
+        else if wishlistAttraction != nil{
+            thumbnailTopLabel.text = wishlistAttraction?.title
+            thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.previewImage ?? "")))
+        }
     }
 }
 
@@ -103,8 +123,7 @@ extension POIServicesViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let poiDetail = POISubCatories?.pois.rows[indexPath.row] else { return }
-        Switcher.goToPOIDetailVC(delegate: self, poiDetail: poiDetail, exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict, archeology: archeology)
+        Switcher.goToPOIDetailVC(delegate: self, poiDetail: POIarray[indexPath.row], exploredistrict: exploreDistrict, attractionDistrict: attractionDistrict, archeology: archeology)
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {

@@ -33,6 +33,7 @@ class ProductViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .product
         reloadData()
     }

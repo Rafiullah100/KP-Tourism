@@ -33,6 +33,7 @@ class BlogViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .blog
         reloadData()
     }

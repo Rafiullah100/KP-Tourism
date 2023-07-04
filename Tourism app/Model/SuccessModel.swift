@@ -42,6 +42,7 @@ struct LoginModel: Codable {
     let profileImage, profileImageThumb: String?
     let isActive: Bool?
     let lastLogin: String?
+    let isNotification: Bool?
     enum CodingKeys: String, CodingKey {
         case success, message, token
         case userID = "userId"
@@ -52,6 +53,7 @@ struct LoginModel: Codable {
         case profileImageThumb = "profile_image_thumb"
         case isActive
         case lastLogin = "last_login"
+        case isNotification = "is_notification"
     }
 }
 

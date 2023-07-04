@@ -28,6 +28,7 @@ class VisitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         cellType = .visitKP
         fetch()
     }

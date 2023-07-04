@@ -25,9 +25,9 @@ struct ItinraryRow: Codable {
     let family, adults, wheelchair: Bool?
     let transportType, transport, description, status: String?
     let isFeatured: Bool?
-    let approvedBy, viewsCounter, isDeleted: Int?
+    var approvedBy, viewsCounter, isDeleted: Int?
     let createdAt, updatedAt: String?
-    let userLike, isWished: Int?
+    var userLike, isWished, likesCount: Int?
     let fromDistricts: ItinraryDistricts
     let activities: [ItinraryActivity]
     let toDistricts: ItinraryDistricts
@@ -47,7 +47,7 @@ struct ItinraryRow: Codable {
         case isFeatured = "is_featured"
         case approvedBy = "approved_by"
         case viewsCounter = "views_counter"
-        case isDeleted, createdAt, updatedAt, userLike, isWished
+        case isDeleted, createdAt, updatedAt, userLike, isWished, likesCount
         case fromDistricts = "from_districts"
         case activities
         case toDistricts = "to_districts"

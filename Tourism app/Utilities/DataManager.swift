@@ -15,6 +15,8 @@ class DataManager {
     var eventModelObject: EventListModel?
     var packageModelObject: TourPackage?
     var blogModelObject: Blog?
+    var itinraryModelObject: ItinraryRow?
+    var accomodationModelObject: Accomodation?
 
     private init() {
         // Private initializer to enforce singleton pattern

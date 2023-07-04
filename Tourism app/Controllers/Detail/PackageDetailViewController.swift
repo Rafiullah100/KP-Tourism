@@ -388,6 +388,7 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
         else{
             let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
             cell.comment = allComments[indexPath.row]
+            
             cell.commentReplyBlock = {
                 tableView.performBatchUpdates {
                     UIView.animate(withDuration: 0.3) {

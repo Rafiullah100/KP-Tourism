@@ -9,7 +9,7 @@ import Foundation
 
 struct AccomodationModel: Codable {
     let count: Int
-    let accomodations: [Accomodation]
+    var accomodations: [Accomodation]
 }
 
 // MARK: - Accomodation
@@ -22,9 +22,9 @@ struct Accomodation: Codable {
     let noRoom: Int?
     let parking, covidSafe, family, adults: Bool?
     let type: String?
-    let viewsCounter: Int?
+    var viewsCounter: Int?
     let createdAt: String?
-    let commentCount, likeCount, priceFrom, userLike: Int?
+    var commentCount, likeCount, priceFrom, userLike: Int?
     let isWished: Int?
 
     enum CodingKeys: String, CodingKey {

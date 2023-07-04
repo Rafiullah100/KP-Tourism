@@ -86,7 +86,7 @@ class ProductDetailViewController: BaseViewController {
             viewsCounterLabel.text = "\(productDetail?.viewsCounter ?? 0) Views"
             viewCounter(parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product"])
             if productDetail?.likes.count ?? 0 > 0{
-                likeCount = productDetail?.likes.count ?? 0
+                likeCount = productDetail?.likes[0].likesCount ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
             }
             viewsCount = productDetail?.viewsCounter ?? 0
@@ -105,7 +105,7 @@ class ProductDetailViewController: BaseViewController {
             viewsCounterLabel.text = "\(wishListProductDetail?.viewsCounter ?? 0) Views"
             viewCounter(parameters: ["section_id": wishListProductDetail?.id ?? 0, "section": "local_product"])
             if wishListProductDetail?.likes?.count ?? 0 > 0{
-                likeCount = wishListProductDetail?.likes?.count ?? 0
+                likeCount = wishListProductDetail?.likes?[0].likesCount ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
             }
             viewsCount = wishListProductDetail?.viewsCounter ?? 0

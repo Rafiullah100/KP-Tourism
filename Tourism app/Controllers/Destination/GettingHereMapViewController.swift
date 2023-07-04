@@ -45,7 +45,6 @@ class GettingHereMapViewController: BaseViewController, CLLocationManagerDelegat
     func loadMap() {
         mapView = Helper.shared.showMap(view: view)
         mapViewContainer.addSubview(mapView)
-        
         gettingArray?.forEach({ point in
             guard let lat = Double(point.districts.latitude), let lon = Double(point.districts.longitude)  else { return }
             let point = MGLPointAnnotation()

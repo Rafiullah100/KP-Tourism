@@ -17,11 +17,13 @@ class Switcher {
         delegate.present(vc, animated: true)
     }
     
-    static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil){
+    static func gotoAbout(delegate: UIViewController, exploreDetail: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.destination.rawValue, bundle: nil).instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
         vc.exploreDistrict = exploreDetail
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -46,12 +48,14 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, poiCategoryId: Int, poiName: String){
+    static func goToPOIServices(delegate: UIViewController, locationCategory: LocationCategory, exploredistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil, poiCategoryId: Int, poiName: String){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIServicesViewController") as! POIServicesViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploredistrict
         vc.attractionDistrict = attractionDistrict
         vc.archeology = archeology
+        vc.wishlistDistrict = wishlistDistrict
+        vc.wishlistAttraction = wishlistAttraction
         vc.poiCategoriId = poiCategoryId
         vc.poiName  = poiName
         print(poiCategoryId)
@@ -59,13 +63,15 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: POISubCatoriesModel, archeology: Archeology? = nil){
+    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: [POIRow], archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
         vc.attractionDistrict = attractionDistrict
         vc.POISubCatories = poiSubCategory
         vc.archeology = archeology
+        vc.wishlistAttraction = wishlistAttraction
+        vc.wishlistDistrict = wishlistDistrict
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

@@ -41,31 +41,40 @@ class LocalProductsViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "limit": limit, "page": currentPage])
+            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "user_id": UserDefaults.standard.userID ?? 0, "limit": limit, "page": currentPage])
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": attractionDistrict?.districtID ?? 0, "limit": limit, "page": currentPage])
+            fetch(parameters: ["district_id": attractionDistrict?.districtID ?? 0, "user_id": UserDefaults.standard.userID ?? 0, "limit": limit, "page": currentPage])
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(parameters: ["district_id": archeology?.attractions.districtID ?? 0, "limit": limit, "page": currentPage])
+            fetch(parameters: ["district_id": archeology?.attractions.districtID ?? 0, "user_id": UserDefaults.standard.userID ?? 0, "limit": limit, "page": currentPage])
         }
         else if wishlistAttraction != nil{
             thumbnailTopLabel.text = wishlistAttraction?.title
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
-            fetch(parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "limit": limit, "page": currentPage])
+            fetch(parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "user_id": UserDefaults.standard.userID ?? 0, "limit": limit, "page": currentPage])
         }
         if wishlistDistrict != nil {
             thumbnailTopLabel.text = wishlistDistrict?.title
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "limit": limit, "page": currentPage])
+            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "user_id": UserDefaults.standard.userID ?? 0, "limit": limit, "page": currentPage])
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let modelObject = DataManager.shared.productModelObject,
+           let index = productArray.firstIndex(where: { $0.id == modelObject.id }) {
+            productArray[index] = modelObject
+            collecttionView.reloadData()
         }
     }
     

@@ -62,7 +62,7 @@ class CommentsTableViewCell: UITableViewCell {
         textView.text = inputText
         textView.textColor = UIColor.lightGray
         
-        tableView.estimatedRowHeight = 44.0
+        tableView.estimatedRowHeight = 100.0
         tableView.rowHeight = UITableView.automaticDimension
     }
 
@@ -89,6 +89,10 @@ extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
 }

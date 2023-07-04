@@ -56,7 +56,7 @@ class CommonViewController: BaseViewController {
     
     
     @IBAction func gotoAbout(_ sender: Any) {
-        Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction, archeology: archeology)
+        Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
     }
     
     func updateUI() {
@@ -126,6 +126,7 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch indexPath.row {
         case 0:
             guard let locationCategory = locationCategory else { return }
+            print(locationCategory)
             Switcher.goToAttraction(delegate: self, locationCategory: locationCategory, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, districtID: districtID, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
 //        case 1:
 //            Switcher.goToGettingHere(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology)

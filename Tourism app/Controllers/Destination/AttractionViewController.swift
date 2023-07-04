@@ -64,14 +64,14 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": exploreDistrict?.id ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if attractionDistrict != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0,  "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(parameters: ["district_id": districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0,  "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
             print(attractionDistrict?.id ?? 0, districtID ?? 0)
            
         }
@@ -80,14 +80,14 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": archeology?.attractions.id ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(parameters: ["district_id": archeology?.attractions.districtID ?? 0, "attraction_id": archeology?.attractionID ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if wishlistAttraction != nil{
             sectionLabel.text = "What to see"
             thumbnailTopLabel.text = wishlistAttraction?.title
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(parameters: ["district_id": wishlistAttraction?.districtID ?? 0, "attraction_id": wishlistAttraction?.id ?? 0, "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
            
         }
         if wishlistDistrict != nil {
@@ -95,18 +95,18 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = wishlistDistrict?.title
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
-            fetch(route: .fetchAttractionByDistrict, method: .post, parameters: ["district_id": wishlistDistrict?.id ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0], model: AttractionModel.self)
+            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "isFilter": isFilter ?? "", "type": "attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
             
         }
     }
     
-    func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func fetch(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchAttractionByDistrict, method: .post, parameters: parameters, model: AttractionModel.self) { result in
             switch result {
-            case .success(let attractions):
-                self.attractionDetail = attractions as? AttractionModel
-                self.attractionDistrictsArray.append(contentsOf: (attractions as? AttractionModel)?.attractions?.rows ?? [])
-                self.totalPages = (attractions as? AttractionModel)?.attractions?.count ?? 1
+            case .success(let attractionDetail):
+                self.attractionDetail = attractionDetail
+                self.attractionDistrictsArray.append(contentsOf: attractionDetail.attractions?.rows ?? [])
+                self.totalPages = attractionDetail.attractions?.count ?? 1
                 self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

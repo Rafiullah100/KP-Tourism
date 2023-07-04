@@ -59,7 +59,7 @@ class BlogDetailViewController: BaseViewController {
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 44.0
+        tableView.estimatedRowHeight = 200.0
         commentTextView.inputAccessoryView = UIView()
         commentTextView.autocorrectionType = .no
 //        self.tableViewHeight.constant = self.tableView.contentSize.height
@@ -248,6 +248,10 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200.0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
 }
