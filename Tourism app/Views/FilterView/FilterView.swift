@@ -22,6 +22,7 @@ class FilterView: UIView {
         }
     }
     
+    @IBOutlet weak var collectionviewHeight: NSLayoutConstraint!
     @IBOutlet weak var containerView: UIView!
     var delegate: FilterDelegate?
     
@@ -49,6 +50,9 @@ class FilterView: UIView {
         containerView.roundCorners(corners: [.topLeft, .topRight], radius: 20)
         containerView.viewShadow()
         addSubview(customMarkerView)
+        
+//        collectionviewHeight.constant = collectionView.contentSize.height
+//        collectionView.reloadData()
     }
     
     @IBAction func refreshBtn(_ sender: Any) {
@@ -57,6 +61,10 @@ class FilterView: UIView {
     }
     
     @IBAction func applyFilter(_ sender: Any) {
+        guard selectedIndexPaths != [] else {
+            self.makeToast("please select any search category.")
+            return
+        }
         var arr = [Int]()
         selectedIndexPaths.forEach { index in
             print(index, categories?[index.row].id ?? 0)

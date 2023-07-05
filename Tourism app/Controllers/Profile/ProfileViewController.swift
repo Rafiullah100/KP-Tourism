@@ -88,7 +88,7 @@ class ProfileViewController: UIViewController {
         topProfileView.viewShadow()
         addButton.isHidden = profileType == .user ? false : true
         writeBlogButton.isHidden = profileType == .user ? false : true
-        buttonsView.isUserInteractionEnabled = profileType == .user ? true : false
+//        buttonsView.isUserInteractionEnabled = profileType == .user ? true : false
 
         navigationController?.navigationBar.isHidden = true
         print(uuid ?? "")
@@ -187,12 +187,12 @@ class ProfileViewController: UIViewController {
     
     @IBAction func followingBtnAction(_ sender: Any) {
         guard let profileType = profileType else { return }
-        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .following)
+        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .following, uuid: uuid ?? "")
     }
     
     @IBAction func followerBtnAction(_ sender: Any) {
         guard let profileType = profileType else { return }
-        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .follower)
+        Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .follower, uuid: uuid ?? "")
     }
     @IBAction func settingBtnAction(_ sender: Any) {
         if profileType == .otherUser{

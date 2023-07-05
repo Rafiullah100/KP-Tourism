@@ -36,8 +36,11 @@ class ProfilePopUpViewController: UIViewController {
     var currentPage = 1
     var limit = 5
     
+    var uuid: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(uuid ?? "")
         loadData()
     }
     
@@ -45,11 +48,11 @@ class ProfilePopUpViewController: UIViewController {
         apiType = .profile
         if connectionType == .follower {
             headerLabel.text = "Followers"
-            fetch(route: .follower, method: .post, parameters: ["page": currentPage, "limit": limit], model: FollowerModel.self)
+            fetch(route: .follower, method: .post, parameters: ["page": currentPage, "limit": limit, "uuid": uuid ?? ""], model: FollowerModel.self)
         }
         else{
             headerLabel.text = "Following"
-            fetch(route: .following, method: .post, parameters: ["page": currentPage, "limit": limit], model: FollowingModel.self)
+            fetch(route: .following, method: .post, parameters: ["page": currentPage, "limit": limit, "uuid": uuid ?? ""], model: FollowingModel.self)
         }
     }
     
@@ -66,8 +69,8 @@ class ProfilePopUpViewController: UIViewController {
                     }
                     else{
                         let followerModel = model as! FollowerModel
-                        self.follower.append(contentsOf: followerModel.followers.rows)
-                        self.totalCount = followerModel.followers.count ?? 0
+                        self.follower.append(contentsOf: followerModel.followers?.rows ?? [])
+                        self.totalCount = followerModel.followers?.count ?? 0
                         Helper.shared.tableViewHeight(tableView: self.tableView, tbHeight: self.tableViewHeight)
                     }
                 }
@@ -116,20 +119,14 @@ extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource
         else{
             cell.follower = follower[indexPath.row]
         }
-        
-        if profileType == .otherUser{
-            cell.followingButton.isHidden = true
-        }
-        else{
-            cell.followingButton.isHidden = false
-        }
+        cell.followingButton.isHidden = profileType == .otherUser ? true : false
         cell.unfollowAction = {
             self.apiType = .unFollow
             if self.connectionType == .following{
                 self.fetch(route: .doFollow, method: .post, parameters: ["uuid": self.following[indexPath.row].followerUser.uuid ?? ""], model: SuccessModel.self, cell: cell)
             }
             else{
-                self.fetch(route: .doFollow, method: .post, parameters: ["uuid": self.follower[indexPath.row].followerUser.uuid ?? ""], model: SuccessModel.self, cell: cell)
+                self.fetch(route: .doFollow, method: .post, parameters: ["uuid": self.follower[indexPath.row].followingUser.uuid ?? ""], model: SuccessModel.self, cell: cell)
             }
         }
         return cell
@@ -141,6 +138,7 @@ extension ProfilePopUpViewController: UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath){
         if connectionType == .follower {
+            print(follower.count, self.totalCount)
             if follower.count != totalCount && indexPath.row == follower.count - 1  {
                 currentPage = currentPage + 1
                 loadData()

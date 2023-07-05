@@ -282,10 +282,10 @@ class PackageDetailViewController: BaseViewController {
     @IBAction func shareBtnAction(_ sender: Any) {
         if detailType == .list{
             print(tourDetail?.description ?? "")
-            self.share(text: tourDetail?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
+            self.share(title: tourDetail?.title ?? "", text: tourDetail?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
         }
         else if detailType == .wishlist{
-            self.share(text: wishlistTourPackage?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
+            self.share(title: wishlistTourPackage?.title ?? "", text: wishlistTourPackage?.description?.stripOutHtml() ?? "", image: imageView.image ?? UIImage())
         }
     }
     

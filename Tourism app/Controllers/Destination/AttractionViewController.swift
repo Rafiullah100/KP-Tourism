@@ -51,11 +51,17 @@ class AttractionViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        showfilterButton = false
         filterView.layer.cornerRadius = 10.0
         type = .back1
         switchBtn(travel: .textual)
         loadData(currentPage: currentPage)
         filterView.viewShadow()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        filterView.collectionviewHeight.constant = filterView.collectionView.contentSize.height
     }
     
     private func loadData(currentPage: Int){

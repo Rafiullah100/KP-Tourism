@@ -91,6 +91,7 @@ class HomeViewController: BaseViewController {
         configureTabbar()
         cellType = .explore
         show(exploreVC, sender: self)
+        print(UserDefaults.standard.uuid ?? "")
     }
     
     override func viewWillAppear(_ animated: Bool) {

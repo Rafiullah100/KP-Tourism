@@ -517,10 +517,10 @@ extension UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
-    public func share(text: String, image: UIImage){
+    public func share(title: String, text: String, image: UIImage){
         print(text)
-        let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
-
+        let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, title, text], applicationActivities: nil)
+        
         DispatchQueue.main.async {
             self.present(activityViewController, animated: true, completion: nil)
         }

@@ -29,7 +29,7 @@ class BaseViewController: UIViewController {
     var type: ViewControllerType = .back1
     var categoryId = ""
     var titleLabel: UILabel?
-        
+    var showfilterButton = true
     
     var viewControllerTitle: String? {
         didSet {
@@ -240,6 +240,11 @@ class BaseViewController: UIViewController {
         self.navigationController?.navigationItem.hidesBackButton = true
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.rightBarButtonItem = rightButton
+        if #available(iOS 16.0, *) {
+            self.navigationItem.rightBarButtonItem?.isHidden = showfilterButton
+        } else {
+            // Fallback on earlier versions
+        }
     }
     
     func addCrossButton() {

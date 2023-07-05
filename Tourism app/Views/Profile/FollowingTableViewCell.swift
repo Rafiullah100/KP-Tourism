@@ -19,16 +19,17 @@ class FollowingTableViewCell: UITableViewCell {
     
     var following: FollowingRow? {
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (following?.followerUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            imgView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: following?.followerUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
             nameLabel.text = following?.followerUser.name?.capitalized
             followButton.setTitle("UNFollow", for: .normal)
+//            followButton.setTitle(following?.isFollowing == 1 ? "UNFollow" : "Follow", for: .normal)
         }
     }
     
     var follower: FollowerRow? {
         didSet{
-            imgView.sd_setImage(with: URL(string: Route.baseUrl + (follower?.followerUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
-            nameLabel.text = follower?.followerUser.name?.capitalized
+            imgView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: follower?.followingUser.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
+            nameLabel.text = follower?.followingUser.name?.capitalized
             followButton.setTitle(follower?.isFollowing == 1 ? "UNFollow" : "Follow", for: .normal)
         }
     }

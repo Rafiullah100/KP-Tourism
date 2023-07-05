@@ -14,6 +14,8 @@ import MapboxMaps
 import SVProgressHUD
 class EventDetailViewController: BaseViewController {
 
+    @IBOutlet weak var olderCommentView: UIStackView!
+    @IBOutlet weak var olderCommentsLabel: UILabel!
     @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var statusBarView: UIView!
     @IBOutlet weak var statusView: UIView!
@@ -105,7 +107,6 @@ class EventDetailViewController: BaseViewController {
             interestGoingLabel.text = "\(String(describing: interestCount)) Interested"
             favoriteBtn.setImage(wishlistEventDetail?.userInterest == 1 ? UIImage(named: "interested-red") : UIImage(named: "interested"), for: .normal)
         }
-        
         reloadComment()
     }
     
@@ -156,7 +157,9 @@ class EventDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.share(text: eventDetail?.eventDescription ?? "", image: imageView.image ?? UIImage())
+        let description = detailType == .list ? eventDetail?.eventDescription : eventDetail?.eventDescription
+        let title = detailType == .list ? eventDetail?.title: eventDetail?.title
+        self.share(title: title ?? "", text: description ?? "", image: imageView.image ?? UIImage())
     }
     
     @IBAction func likeBtnAction(_ sender: Any) {
@@ -209,6 +212,7 @@ class EventDetailViewController: BaseViewController {
                 self.totalCount = comments.comments?.count ?? 1
                 self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.tableView.reloadData()
+                self.olderCommentView.isHidden = self.allComments.count == 0 ? true : false
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

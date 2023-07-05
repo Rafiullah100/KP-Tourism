@@ -9,7 +9,7 @@ import Foundation
 
 struct FollowerModel: Codable {
     let success: Bool?
-    let followers: Followers
+    let followers: Followers?
     let message: String?
 }
 
@@ -23,21 +23,23 @@ struct Followers: Codable {
 struct FollowerRow: Codable {
     let createdAt: String?
     let id, followerID, followingID, isFollowing: Int?
-    let followerUser: FollowerUser
+    let followingUser: FollowerUser
 
     enum CodingKeys: String, CodingKey {
         case createdAt, id
         case followerID = "follower_id"
         case followingID = "following_id"
         case isFollowing
-        case followerUser = "following_user"
+        case followingUser = "following_user"
     }
 }
 
 // MARK: - FollowingUser
 struct FollowerUser: Codable {
     let id: Int?
-    let name, profileImage, profileImageThumb, uuid: String?
+    let name: String?
+    let profileImage, profileImageThumb: String?
+    let uuid: String?
     let country: String?
     let city: String?
 

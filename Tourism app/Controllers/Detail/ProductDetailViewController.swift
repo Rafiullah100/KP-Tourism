@@ -154,10 +154,10 @@ class ProductDetailViewController: BaseViewController {
 
     @IBAction func shareBtnAction(_ sender: Any) {
         if detailType == .list{
-            self.share(text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
+            self.share(title: productDetail?.title ?? "", text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
         }
         else if detailType == .wishlist{
-            self.share(text: wishListProductDetail?.description ?? "", image: thumbnailImageView.image ?? UIImage())
+            self.share(title: wishListProductDetail?.title ?? "", text: wishListProductDetail?.description ?? "", image: thumbnailImageView.image ?? UIImage())
         }
     }
     @IBAction func likeBtnAction(_ sender: Any) {
@@ -198,12 +198,14 @@ class ProductDetailViewController: BaseViewController {
     }
     
     private func reloadComment(){
-        fetchComment(parameters: ["section_id": productDetail?.id ?? 0, "section": "local_product", "page": currentPage, "limit": limit])
+        let productID = detailType == .list ? productDetail?.id : wishListProductDetail?.id
+        fetchComment(parameters: ["section_id": productID ?? 0, "section": "local_product", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
+        let productID = detailType == .list ? productDetail?.id : wishListProductDetail?.id
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(parameters: ["section_id": productDetail?.id ?? "", "section": "local_product", "comment": text])
+        doComment(parameters: ["section_id": productID ?? "", "section": "local_product", "comment": text])
     }
     
     func doComment(parameters: [String: Any]) {

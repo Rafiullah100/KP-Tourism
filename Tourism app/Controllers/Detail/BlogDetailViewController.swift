@@ -135,7 +135,9 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.share(text: blogDetail?.blogDescription ?? "", image: imageView.image ?? UIImage())
+        let description = detailType == .list ? blogDetail?.blogDescription : wishlistEventDetail?.description
+        let title = detailType == .list ? blogDetail?.title : wishlistEventDetail?.title
+        self.share(title: title ?? "", text: description ?? "", image: imageView.image ?? UIImage())
     }
     
 

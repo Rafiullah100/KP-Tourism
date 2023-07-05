@@ -39,7 +39,7 @@ class AdventureDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        self.share(text: adventureDetail?.adventureDescription ?? "", image: imageView.image ?? UIImage())
+        self.share(title: adventureDetail?.title ?? "", text: adventureDetail?.adventureDescription ?? "", image: imageView.image ?? UIImage())
     }
     @IBAction func likeBtnAction(_ sender: Any) {
     }
