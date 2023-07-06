@@ -48,7 +48,7 @@ class ItinraryDetailViewController: BaseViewController {
     }
     
     func viewCounter(parameters: [String: Any]) {
-        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        URLSession.shared.request(route: .viewCounter, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 if viewCount.success == true {

@@ -9,11 +9,12 @@ import UIKit
 import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     @IBOutlet weak var bottomView: UIView!
     @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var commentLabel: UILabel!
+//    @IBOutlet weak var commentLabel: UILabel!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var userImageView: UIImageView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -38,7 +39,7 @@ class CommentsTableViewCell: UITableViewCell {
     var comment: CommentsRows?{
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
-            commentLabel.text = "\(comment?.comment ?? "")".removeSpaces()
+            commentTextView.text = "\(comment?.comment ?? "")".removeSpaces()
             nameLabel.text = "\(comment?.users?.name ?? "")".capitalized
             print(comment?.users?.profileImage ?? "")
             print(Helper.shared.getProfileImage())
@@ -62,7 +63,7 @@ class CommentsTableViewCell: UITableViewCell {
         textView.text = inputText
         textView.textColor = UIColor.lightGray
         
-        tableView.estimatedRowHeight = 100.0
+        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
     }
 

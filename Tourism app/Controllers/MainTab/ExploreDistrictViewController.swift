@@ -38,6 +38,7 @@ class ExploreDistrictViewController: UIViewController {
     }
     
     public func reloadData(){
+        print(searchText ?? "")
         fetchDistrict(parameters: ["search": searchText ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage])
     }
     
@@ -47,8 +48,9 @@ class ExploreDistrictViewController: UIViewController {
             case .success(let explore):
                 self.exploreDistrict.append(contentsOf: explore.attractions)
                 self.totalCount = explore.count ?? 0
-                print(self.totalCount)
-                self.totalCount == 0 ? self.tableView.setEmptyView("No District Found!") : self.tableView.reloadData()
+                print(self.exploreDistrict.count)
+                self.exploreDistrict.count == 0 ? self.tableView.setEmptyView("No District Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

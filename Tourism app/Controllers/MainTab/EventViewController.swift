@@ -57,7 +57,8 @@ class EventViewController: UIViewController {
             case .success(let event):
                 self.event.append(contentsOf: event.events)
                 self.totalCount = event.count
-                self.totalCount == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.reloadData()
+                self.event.count == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

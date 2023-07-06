@@ -47,7 +47,8 @@ class ArcheologyViewController: UIViewController {
             case .success(let archeology):
                 self.archeology.append(contentsOf: archeology.archeology)
                 self.totalCount = archeology.count ?? 0
-                self.totalCount == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.reloadData()
+                self.archeology.count == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

@@ -39,8 +39,10 @@ class TourTableViewCell: UITableViewCell {
         label.text = tour.title
         destinationLabel.text = tour.to_districts?.title
         viewsLabel.text = "\(tour.views_counter ?? 0)"
-        likesLabel.text = "\(tour.likes?.count ?? 0)"
-        commentsLabel.text = "\(tour.comments?.count ?? 0)"
+        likesLabel.text = "\(tour.like_count ?? 0)"
+        if tour.comments?.count ?? 0 > 0{
+            commentsLabel.text = "\(tour.comments?[0].commentsCount ?? 0)"
+        }
         doscountLabel.text = "\(tour.discount ?? "")"
         discountView.isHidden = tour.discount == "0" ? true : false
     }

@@ -57,7 +57,8 @@ class BlogViewController: UIViewController {
             case .success(let blogModel):
                 self.blogs.append(contentsOf: blogModel.blog)
                 self.totalCount = blogModel.count ?? 0
-                self.totalCount == 0 ? self.tableView.setEmptyView("No Blog Found!") : self.tableView.reloadData()
+                self.blogs.count == 0 ? self.tableView.setEmptyView("No Blog Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

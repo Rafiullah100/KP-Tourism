@@ -58,7 +58,8 @@ class PackageViewController: UIViewController {
                 self.tourPackage.append(contentsOf: package.tour)
                 self.totalCount = package.count ?? 0
                 print(self.tourPackage.count)
-                self.totalCount == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.reloadData()
+                self.tourPackage.count == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

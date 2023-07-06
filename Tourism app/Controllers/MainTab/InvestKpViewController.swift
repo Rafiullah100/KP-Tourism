@@ -47,7 +47,8 @@ class InvestKpViewController: UIViewController {
             case .success(let investment):
                 self.investment.append(contentsOf: investment.investments?.rows ?? [])
                 self.totalCount = investment.investments?.count ?? 0
-                self.totalCount == 0 ? self.tableView.setEmptyView("No investment in KP Found!") : self.tableView.reloadData()
+                self.investment.count == 0 ? self.tableView.setEmptyView("No investment in KP Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

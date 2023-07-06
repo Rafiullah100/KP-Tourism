@@ -24,7 +24,6 @@ extension URLSession{
         if let value = parameters?["page"], value as? Int != 1 {
             showPrgoesshud = false
         }
-        
         if showPrgoesshud == true {
             SVProgressHUD.show(withStatus: "Please Wait...")
             SVProgressHUD.setDefaultMaskType(.clear)

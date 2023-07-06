@@ -57,7 +57,8 @@ class ProductViewController: UIViewController {
             case .success(let product):
                 self.localProducts.append(contentsOf: product.localProducts)
                 self.totalCount = product.count
-                self.totalCount == 0 ? self.tableView.setEmptyView("No Product Found!") : self.tableView.reloadData()
+                self.localProducts.count == 0 ? self.tableView.setEmptyView("No Product Found!") : self.tableView.setEmptyView("")
+                self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
