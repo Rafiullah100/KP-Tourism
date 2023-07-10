@@ -78,6 +78,7 @@ class HomeViewController: BaseViewController {
     var section = [Sections]()
     var tabbarItems = [UITabBarItem]()
     var exploreDistricts: [ExploreDistrict]?
+    var panGestureRecognizer: UIPanGestureRecognizer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,13 +86,17 @@ class HomeViewController: BaseViewController {
         notificationView.viewShadow()
         textField.inputAccessoryView = UIView()
         textField.delegate = self
+        cellType = .explore
         shadow()
         type = .back1
         setupCard()
         configureTabbar()
-        cellType = .explore
         show(exploreVC, sender: self)
         print(UserDefaults.standard.uuid ?? "")
+        
+        exploreVC.districtCount = { count in
+            self.siteLabel.text = "\(count) District sites"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {

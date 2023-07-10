@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 extension HomeViewController: UIScrollViewDelegate{
-    
     func configureTabbar(){
         var tag = 0
         for item in Constants.section {
@@ -37,13 +36,13 @@ extension HomeViewController: UIScrollViewDelegate{
     }
     
     func setupCard() {
-        let panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCardPan(recognizer:)))
-//        if cellType == .explore{
-            contentView.addGestureRecognizer(panGestureRecognizer)
-//        }
-//        else{
-//            contentView.removeGestureRecognizer(panGestureRecognizer)
-//        }
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleCardPan(recognizer:)))
+        if cellType == .explore{
+            contentView.addGestureRecognizer(panGestureRecognizer ?? UIPanGestureRecognizer())
+        }
+        else{
+            contentView.gestureRecognizers?.removeAll()
+        }
         self.view.bringSubviewToFront(topView)
     }
     
@@ -73,7 +72,8 @@ extension HomeViewController: UIScrollViewDelegate{
                     self.mapButton.isHidden = false
                     self.contentView.frame.origin.y = 0
                 case .collapsed:
-                    self.show(self.mapVC, sender: self)
+                    self.mapVC.exploreDistrict = self.exploreVC.exploreDistrict
+//                    self.show(self.mapVC, sender: self)
                     self.mapButton.isHidden = true
                     self.contentView.frame.origin.y = self.contentView.frame.height - self.cardHandleAreaHeight
                 }

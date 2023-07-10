@@ -7,6 +7,7 @@
 
 import UIKit
 class ExploreDistrictViewController: UIViewController {
+    var districtCount: ((Int) -> Void)?
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -48,7 +49,7 @@ class ExploreDistrictViewController: UIViewController {
             case .success(let explore):
                 self.exploreDistrict.append(contentsOf: explore.attractions)
                 self.totalCount = explore.count ?? 0
-                print(self.exploreDistrict.count)
+                self.districtCount?(self.exploreDistrict.count)
                 self.exploreDistrict.count == 0 ? self.tableView.setEmptyView("No District Found!") : self.tableView.setEmptyView("")
                 self.tableView.reloadData()
             case .failure(let error):

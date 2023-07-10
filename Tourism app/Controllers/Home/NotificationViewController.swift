@@ -18,10 +18,11 @@ class NotificationViewController: BaseViewController {
     }
     
     @IBAction func switchAction(_ sender: Any) {
-        changeNotificationStatus(parameters: ["status": switchView.isOn ? 0 : 1])
+        changeNotificationStatus(parameters: ["status": switchView.isOn ? 1 : 0])
     }
     
     func changeNotificationStatus(parameters: [String: Any]) {
+        print(parameters)
         URLSession.shared.request(route: .notificationSwitchApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let res):
