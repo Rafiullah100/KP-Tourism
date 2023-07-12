@@ -45,7 +45,7 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 0
-    var limit = 5
+    var limit = 1000
     var commentText = "Write a comment"
     var likeCount = 0
     var viewsCount = 0
@@ -59,7 +59,7 @@ class BlogDetailViewController: BaseViewController {
         scrollView.delegate = self
         scrollView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
-        tableView.estimatedRowHeight = 200.0
+//        tableView.estimatedRowHeight = 40.0
         commentTextView.inputAccessoryView = UIView()
         commentTextView.autocorrectionType = .no
 //        self.tableViewHeight.constant = self.tableView.contentSize.height
@@ -164,6 +164,8 @@ class BlogDetailViewController: BaseViewController {
                 self.allComments.append(contentsOf: comments.comments?.rows ?? [])
                 self.tableView.reloadData()
                 self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
+                self.tableView.layoutIfNeeded() // Add this line
+                self.tableViewHeight.constant = self.tableView.contentSize.height
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -232,6 +234,7 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+
         cell.comment = allComments[indexPath.row]
      
         cell.commentReplyBlock = {
@@ -246,15 +249,24 @@ extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
             self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], row: indexPath)
             self.allComments = []
         }
+        cell.textViewCellDidChangeHeight = {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         return cell
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200.0
-    }
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 40.0
+//    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        let cell: CommentsTableViewCell = tableView.cellForRow(at: indexPath) as! CommentsTableViewCell
+        cell.bottomView.isHidden.toggle()
     }
 }
 
@@ -284,13 +296,13 @@ extension BlogDetailViewController: UITextViewDelegate{
 }
 
 extension BlogDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
 }

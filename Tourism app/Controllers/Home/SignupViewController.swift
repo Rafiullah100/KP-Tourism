@@ -54,7 +54,6 @@ class SignupViewController: BaseViewController {
         userTypeTextField.text = Constants.userType[0]
         pickerView.delegate = self
         pickerView.dataSource = self
-        signupButton.isEnabled = false
     }
     
     @IBAction func signupBtnAction(_ sender: Any) {
@@ -114,7 +113,7 @@ extension SignupViewController: UIPickerViewDelegate, UIPickerViewDataSource {
 
 extension SignupViewController: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let allTextFieldsFilled = !emailTextField.text!.isEmpty && !phoneTextField.text!.isEmpty && !firstNameTextFeild.text!.isEmpty && !passwordTextField.text!.isEmpty && !confirmTextField.text!.isEmpty
-        signupButton.isEnabled = allTextFieldsFilled
+//        let allTextFieldsFilled = !emailTextField.text!.isEmpty && !phoneTextField.text!.isEmpty && !firstNameTextFeild.text!.isEmpty && !passwordTextField.text!.isEmpty && !confirmTextField.text!.isEmpty
+//        signupButton.isEnabled = allTextFieldsFilled
     }
 }

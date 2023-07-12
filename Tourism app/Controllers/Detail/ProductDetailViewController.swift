@@ -301,6 +301,10 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
             self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "local_product"], row: indexPath)
             self.allComments = []
         }
+        cell.textViewCellDidChangeHeight = {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         return cell
     }
     

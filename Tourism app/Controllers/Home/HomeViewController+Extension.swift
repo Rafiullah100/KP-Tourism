@@ -51,7 +51,12 @@ extension HomeViewController: UIScrollViewDelegate{
         let translation = recognizer.translation(in: contentView)
         var fractionComplete = translation.y / contentView.frame.height
         fractionComplete = cardVisible ? fractionComplete : -fractionComplete
-        print("fractionComplete: \(translation.y)")
+        print("fractionComplete: \(translation.y), \(translation.x)")
+        if nextState == .collapsed{
+            guard translation.y > 0 else {
+                return
+            }
+        }
         switch recognizer.state {
         case .began:
             startInteractiveTransition(state: nextState, duration: 0.9)

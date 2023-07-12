@@ -243,7 +243,7 @@ class BaseViewController: UIViewController {
         if #available(iOS 16.0, *) {
             self.navigationItem.rightBarButtonItem?.isHidden = showfilterButton
         } else {
-            // Fallback on earlier versions
+            self.navigationItem.rightBarButtonItem = showfilterButton ? rightButton : nil
         }
     }
     

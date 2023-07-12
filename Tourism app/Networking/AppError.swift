@@ -22,9 +22,9 @@ enum AppError: LocalizedError, Equatable {
         case .unknownError:
             return "Bruhhh!!! I have no idea what go on"
         case .invalidUrl:
-            return "HEYYY!!! Give me a valid URL"
+            return "Invalid URL"
         case .serverError:
-            return "Couldn't connect to server."
+            return "Something went wrong."
         case .noInternet:
             return "You're currently offline. Please connect with Wifi and try again later."
         }

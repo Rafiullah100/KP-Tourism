@@ -273,6 +273,11 @@ extension EventDetailViewController: UITableViewDelegate, UITableViewDataSource{
             self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "social_event"], row: indexPath)
             self.allComments = []
         }
+        
+        cell.textViewCellDidChangeHeight = {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         return cell
     }
     

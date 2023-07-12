@@ -289,6 +289,11 @@ extension AccomodationDetailViewController: UITableViewDelegate, UITableViewData
             self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "book_stay"], row: indexPath)
             self.allComments = []
         }
+        
+        cell.textViewCellDidChangeHeight = {
+            tableView.beginUpdates()
+            tableView.endUpdates()
+        }
         return cell
     }
     

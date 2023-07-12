@@ -37,7 +37,7 @@ class ExploreDistrictViewController: UIViewController {
         tableView.keyboardDismissMode = .onDrag
         reloadData()
     }
-    
+        
     public func reloadData(){
         print(searchText ?? "")
         fetchDistrict(parameters: ["search": searchText ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage])
@@ -64,6 +64,10 @@ class ExploreDistrictViewController: UIViewController {
         exploreDistrict[indexPath.row] = district
         tableView.reloadRows(at: [indexPath], with: .none)
     }
+    
+    private func moveToDetail(index: Int){
+        Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[index])
+    }
 }
 
 
@@ -79,6 +83,9 @@ extension ExploreDistrictViewController: UITableViewDelegate, UITableViewDataSou
             self.toggleDistrictWishlistStatus(for: indexPath)
         }
         cell.configure(district: exploreDistrict[indexPath.row])
+        cell.tappedHandler = {
+            self.moveToDetail(index: indexPath.row)
+        }
         return cell
     }
     
@@ -94,7 +101,7 @@ extension ExploreDistrictViewController: UITableViewDelegate, UITableViewDataSou
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        Switcher.goToDestination(delegate: self, type: .district, exploreDistrict: exploreDistrict[indexPath.row])
+        moveToDetail(index: indexPath.row)
     }
 }
     

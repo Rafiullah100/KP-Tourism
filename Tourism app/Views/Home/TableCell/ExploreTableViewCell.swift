@@ -21,8 +21,11 @@ class ExploreTableViewCell: UITableViewCell {
     
     private var district: ExploreDistrict?
     var wishlistButtonTappedHandler: (() -> Void)?
+    var tappedHandler: (() -> Void)?
 
     func configure(district: ExploreDistrict) {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(imageTapped(_:)))
+        slideShow.addGestureRecognizer(tapGesture)
         self.district = district
         kpLabel.text = district.geographicalArea
         favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
@@ -47,13 +50,17 @@ class ExploreTableViewCell: UITableViewCell {
                 let imageUrl = SDWebImageSource(urlString: Route.baseUrl + self.slideArray[i])
                 if let sdURL = imageUrl{
                     self.imageSDWebImageSrc.append(sdURL)
-                    self.slideShow.slideshowInterval = 2.0
+                    self.slideShow.slideshowInterval = 0.0
                     self.slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
-                    self.slideShow.isUserInteractionEnabled = false
+                    self.slideShow.isUserInteractionEnabled = true
                     self.slideShow.setImageInputs(self.imageSDWebImageSrc)
                 }
             }
         }
+    }
+    
+    @objc func imageTapped(_ gestureRecognizer: UITapGestureRecognizer) {
+        tappedHandler?()
     }
     
     override func prepareForReuse() {

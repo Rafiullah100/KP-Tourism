@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var tableContainerView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
@@ -34,8 +35,9 @@ class CommentsTableViewCell: UITableViewCell {
     
     var actionBlock: ((String) -> Void)? = nil
     var commentReplyBlock: (() -> Void)? = nil
+    var textViewCellDidChangeHeight: (() -> Void)? = nil
     var inputText = "Reply"
-    
+
     var comment: CommentsRows?{
         didSet{
             timeLabel.text = "\(comment?.createdAt ?? "")"
@@ -46,13 +48,18 @@ class CommentsTableViewCell: UITableViewCell {
             userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
 //            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
             tableView.reloadData()
-//            tableViewHeight.constant = self.tableView.contentSize.height
-            self.layoutIfNeeded()
+            tableView.layoutIfNeeded()
+            tableViewHeight.constant = self.tableView.contentSize.height
         }
     }
     
-    override func prepareForReuse() {
-        super.prepareForReuse()
+//    override func prepareForReuse() {
+//        super.prepareForReuse()
+//        tableViewHeight.constant = self.tableView.contentSize.height
+//    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
         tableViewHeight.constant = self.tableView.contentSize.height
     }
     
@@ -62,8 +69,6 @@ class CommentsTableViewCell: UITableViewCell {
         textView.isScrollEnabled = false
         textView.text = inputText
         textView.textColor = UIColor.lightGray
-        
-        tableView.estimatedRowHeight = UITableView.automaticDimension
         tableView.rowHeight = UITableView.automaticDimension
     }
 
@@ -92,10 +97,6 @@ extension CommentsTableViewCell: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
 }
 
 extension CommentsTableViewCell: UITextViewDelegate{
@@ -117,6 +118,7 @@ extension CommentsTableViewCell: UITextViewDelegate{
         let fixedWidth = textView.frame.size.width
         let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
         commentTextViewHeight.constant = newSize.height
+        textViewCellDidChangeHeight?()
         self.layoutIfNeeded()
     }
 }
@@ -138,3 +140,4 @@ class DynamicHeightTableView: UITableView {
         self.invalidateIntrinsicContentSize()
     }
 }
+

@@ -92,6 +92,13 @@ class EventsViewController: BaseViewController {
             }
         }
     }
+    
+    func toggleEventWishlistStatus(for indexPath: IndexPath) {
+        var eventObject = eventsArray[indexPath.row]
+        eventObject.userWishlist = eventObject.userWishlist == 1 ? 0 : 1
+        eventsArray[indexPath.row] = eventObject
+        tableView.reloadRows(at: [indexPath], with: .none)
+    }
 }
 
 extension EventsViewController: UITableViewDataSource{
@@ -102,6 +109,9 @@ extension EventsViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: EventTableViewCell = tableView.dequeueReusableCell(withIdentifier: "EventTableViewCell") as! EventTableViewCell
         cell.event = eventsArray[indexPath.row]
+        cell.wishlistButtonTappedHandler = {
+            self.toggleEventWishlistStatus(for: indexPath)
+        }
         return cell
     }
 }
