@@ -9,6 +9,7 @@ import UIKit
 import Alamofire
 import SDWebImage
 import SVProgressHUD
+import Toast_Swift
 class PostViewController: UIViewController, UINavigationControllerDelegate {
 
     var postType: PostType?
@@ -77,12 +78,20 @@ class PostViewController: UIViewController, UINavigationControllerDelegate {
     @IBAction func postBtnAction(_ sender: Any) {
         switch postType {
         case .post:
-            guard let text = textView.text else { return }
+            guard let text = textView.text, !text.isEmpty else {
+                self.view.makeToast("caption is empty!")
+                return }
             createPost(route: .postApi, params: ["description": text, "type": "image"])
         case .edit:
-            guard let text = textView.text else { return }
+            guard let text = textView.text , !text.isEmpty else {
+                self.view.makeToast("caption is empty!")
+                return }
             createPost(route: .editPost, params: ["description": text, "id": feed?.post_id ?? 0, "type": "image"])
         case .story:
+            guard imageView.image != nil else {
+                self.view.makeToast("No photo added!")
+                return
+            }
             createPost(route: .createStory, params: [:])
         default:
             print("")

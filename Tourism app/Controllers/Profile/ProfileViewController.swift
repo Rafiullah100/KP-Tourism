@@ -309,7 +309,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView {
         case statusCollectionView:
-            return stories.count + 1
+            return stories.count
         case contentCollectionView:
             return noOfRows()
         default:
@@ -321,13 +321,8 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
         switch collectionView {
         case statusCollectionView:
             let cell: StatusCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: StatusCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! StatusCollectionViewCell
-            cell.cellType = indexPath.row == 0 ? .userSelf : .other
-            if indexPath.row == 0 {
-                cell.imgView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
-            }
-            else{
-                cell.stories = stories[indexPath.row - 1]
-            }
+            cell.stories = stories[indexPath.row]
+            cell.cellType = .other
             return cell
         case contentCollectionView:
             let cell: ProfileCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: ProfileCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! ProfileCollectionViewCell
@@ -413,7 +408,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == statusCollectionView{
-            if stories.count != storyTotalCount && indexPath.row == stories.count {
+            if stories.count != storyTotalCount && indexPath.row == stories.count - 1 {
                 storyCurrentPage = storyCurrentPage + 1
                 storyApiCall()
             }
@@ -430,9 +425,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == statusCollectionView {
-            if indexPath.row != 0{
-                Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row - 1].postFiles?[0].imageURL)
-            }
+            Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row].postFiles?[0].imageURL)
         }
     }
 }

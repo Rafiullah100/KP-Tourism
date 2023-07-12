@@ -65,9 +65,8 @@ class AboutViewController: BaseViewController {
     
     
     @IBAction func callBtnAction(_ sender: Any) {
-        let url: NSURL = URL(string: "TEL://1422")! as NSURL
-            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)
-    }
+        let url: NSURL = URL(string: Constants.helpline)! as NSURL
+            UIApplication.shared.open(url as URL, options: [:], completionHandler: nil)    }
 }
 
 
