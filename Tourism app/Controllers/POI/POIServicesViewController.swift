@@ -87,7 +87,7 @@ class POIServicesViewController: BaseViewController {
     }
     
     func updateUI() {
-        nameLabel.text = (poiName ?? "") + " | Point Of Interest"
+        nameLabel.attributedText = Helper.shared.attributedString(text1:poiName ?? "", text2: "| Point Of Interest")
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))

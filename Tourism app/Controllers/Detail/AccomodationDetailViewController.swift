@@ -40,6 +40,7 @@ class AccomodationDetailViewController: BaseViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
+            tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
     
@@ -56,7 +57,7 @@ class AccomodationDetailViewController: BaseViewController {
     var locationManager = CLLocationManager()
     
     var commentText = "Write a comment"
-    var limit = 1000
+    var limit = 5
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -270,34 +271,58 @@ extension AccomodationDetailViewController: UITextViewDelegate{
 
 extension AccomodationDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return allComments.count
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (allComments[section].replies?.count ?? 0) + 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-        cell.comment = allComments[indexPath.row]
-        cell.commentReplyBlock = {
-            tableView.performBatchUpdates {
-                UIView.animate(withDuration: 0.3) {
-                    cell.bottomView.isHidden.toggle()
+        let comment = allComments[indexPath.section]
+        if indexPath.row == 0 {
+            let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+            cell.comment = allComments[indexPath.row]
+            cell.commentReplyBlock = {
+                tableView.performBatchUpdates {
+                    UIView.animate(withDuration: 0.3) {
+                        cell.bottomView.isHidden.toggle()
+                    }
                 }
             }
+            cell.actionBlock = { text in
+                cell.textView.text = ""
+                self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "book_stay"], row: indexPath)
+                self.allComments = []
+            }
+            
+            cell.textViewCellDidChangeHeight = {
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            return cell
         }
-        cell.actionBlock = { text in
-            cell.textView.text = ""
-            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "book_stay"], row: indexPath)
-            self.allComments = []
+        else{
+            let cell: CommentReplyTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())  as! CommentReplyTableViewCell
+            cell.commentReply = comment.replies?[indexPath.row - 1]
+            return cell
         }
-        
-        cell.textViewCellDidChangeHeight = {
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        }
-        return cell
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+}
+
+extension AccomodationDetailViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            print(allComments.count, totalCount)
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
+        }
     }
 }

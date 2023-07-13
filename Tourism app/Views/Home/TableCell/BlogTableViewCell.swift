@@ -25,6 +25,7 @@ class BlogTableViewCell: UITableViewCell {
     var wishlistButtonTappedHandler: (() -> Void)?
     
     var blog: Blog?{
+        
         didSet{
             if blog?.isWished == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)

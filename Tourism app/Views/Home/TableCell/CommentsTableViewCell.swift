@@ -9,7 +9,6 @@ import UIKit
 import SDWebImage
 class CommentsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var tableContainerView: UIView!
     @IBOutlet weak var commentTextView: UITextView!
     @IBOutlet weak var commentTextViewHeight: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
@@ -28,7 +27,7 @@ class CommentsTableViewCell: UITableViewCell {
         didSet{
             tableView.delegate = self
             tableView.dataSource = self
-            tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
+//            tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
     @IBOutlet weak var replyButton: UIButton!
@@ -47,9 +46,9 @@ class CommentsTableViewCell: UITableViewCell {
             print(Helper.shared.getProfileImage())
             userImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: comment?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "user"))
 //            Helper.shared.tableViewHeight(tableView: tableView, tbHeight: tableViewHeight)
-            tableView.reloadData()
-            tableView.layoutIfNeeded()
-            tableViewHeight.constant = self.tableView.contentSize.height
+//            tableView.reloadData()
+//            tableView.layoutIfNeeded()
+//            tableViewHeight.constant = self.tableView.contentSize.height
         }
     }
     
@@ -60,7 +59,7 @@ class CommentsTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        tableViewHeight.constant = self.tableView.contentSize.height
+//        tableViewHeight.constant = self.tableView.contentSize.height
     }
     
     override func awakeFromNib() {
@@ -69,7 +68,7 @@ class CommentsTableViewCell: UITableViewCell {
         textView.isScrollEnabled = false
         textView.text = inputText
         textView.textColor = UIColor.lightGray
-        tableView.rowHeight = UITableView.automaticDimension
+//        tableView.rowHeight = UITableView.automaticDimension
     }
 
     @IBAction func hideShowBtnAction(_ sender: Any) {

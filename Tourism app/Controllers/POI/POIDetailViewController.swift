@@ -50,12 +50,7 @@ class POIDetailViewController: BaseViewController {
         descriptionLabel.text = poiDetail?.description.stripOutHtml()
         placeLabel.text = poiDetail?.locationTitle
         categoryLabel.text = poiDetail?.poiCategories.title
-        let firstAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Medium", size: 16) ?? UIFont()]
-        let secondAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Poppins-Light", size: 12) ?? UIFont()]
-        let name = NSMutableAttributedString(string: "\(poiDetail?.title ?? "") | ", attributes: firstAttributes)
-        let poi = NSMutableAttributedString(string: "Point Of Interest", attributes: secondAttributes)
-        name.append(poi)
-        nameLabel.attributedText = name
+        nameLabel.attributedText = Helper.shared.attributedString(text1: poiDetail?.title ?? "", text2: "| Point Of Interest")
         updateUI()
     }
     

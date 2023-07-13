@@ -38,6 +38,7 @@ class BlogDetailViewController: BaseViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
+            tableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
     @IBOutlet weak var contentView: UIView!
@@ -45,14 +46,15 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 0
-    var limit = 1000
+    var limit = 5
     var commentText = "Write a comment"
     var likeCount = 0
     var viewsCount = 0
 
     var wishlistEventDetail: WishlistBlog?
     var detailType: DetailType?
-    
+    var isAllDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         DataManager.shared.blogModelObject = blogDetail
@@ -162,6 +164,7 @@ class BlogDetailViewController: BaseViewController {
             case .success(let comments):
                 self.totalCount = comments.comments?.count ?? 1
                 self.allComments.append(contentsOf: comments.comments?.rows ?? [])
+                print(self.allComments)
                 self.tableView.reloadData()
                 self.olderCommentLabel.isHidden = self.totalCount == 0 ? true : false
                 self.tableView.layoutIfNeeded() // Add this line
@@ -225,49 +228,48 @@ class BlogDetailViewController: BaseViewController {
 extension BlogDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allComments.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-
-        cell.comment = allComments[indexPath.row]
-     
-        cell.commentReplyBlock = {
-            tableView.performBatchUpdates {
-                UIView.animate(withDuration: 0.3) {
-                    cell.bottomView.isHidden.toggle()
-                }
-            }
-        }
-        cell.actionBlock = { text in
-            cell.textView.text = ""
-            self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "blog"], row: indexPath)
-            self.allComments = []
-        }
-        cell.textViewCellDidChangeHeight = {
-            tableView.beginUpdates()
-            tableView.endUpdates()
-        }
-        return cell
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return (allComments[section].replies?.count ?? 0) + 1
     }
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 40.0
-//    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         let comment = allComments[indexPath.section]
+        if indexPath.row == 0 {
+            let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+            cell.comment = comment
+         
+            cell.commentReplyBlock = {
+                tableView.performBatchUpdates {
+                    UIView.animate(withDuration: 0.3) {
+                        cell.bottomView.isHidden.toggle()
+                    }
+                }
+            }
+            cell.actionBlock = { text in
+                cell.textView.text = ""
+                self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.section].id ?? "", "section": "blog"], row: indexPath)
+                self.allComments = []
+            }
+            cell.textViewCellDidChangeHeight = {
+                tableView.beginUpdates()
+                tableView.endUpdates()
+            }
+            return cell
+        }
+        else{
+            let cell: CommentReplyTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())  as! CommentReplyTableViewCell
+            cell.commentReply = comment.replies?[indexPath.row - 1]
+            return cell
+        }
+    }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
-    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        let cell: CommentsTableViewCell = tableView.cellForRow(at: indexPath) as! CommentsTableViewCell
-        cell.bottomView.isHidden.toggle()
-    }
+
 }
 
 extension BlogDetailViewController: UITextViewDelegate{
@@ -296,13 +298,13 @@ extension BlogDetailViewController: UITextViewDelegate{
 }
 
 extension BlogDetailViewController: UIScrollViewDelegate{
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-//            print(allComments.count, totalCount)
-//            if allComments.count != totalCount{
-//                currentPage = currentPage + 1
-//                reloadComment()
-//            }
-//        }
-//    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            print(allComments.count, totalCount)
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
+        }
+    }
 }

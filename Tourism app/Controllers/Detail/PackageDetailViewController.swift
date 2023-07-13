@@ -91,7 +91,7 @@ class PackageDetailViewController: BaseViewController {
 
     @IBOutlet weak var thumbCountLaabel: UILabel!
     var commentText = "Write a comment"
-    var limit = 1000
+    var limit = 5
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -101,6 +101,7 @@ class PackageDetailViewController: BaseViewController {
             commenTableView.delegate = self
             commenTableView.dataSource = self
             commenTableView.register(UINib(nibName: "CommentsTableViewCell", bundle: nil), forCellReuseIdentifier: CommentsTableViewCell.cellReuseIdentifier())
+            commenTableView.register(UINib(nibName: "CommentReplyTableViewCell", bundle: nil), forCellReuseIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())
         }
     }
     
@@ -344,6 +345,13 @@ class PackageDetailViewController: BaseViewController {
 }
 
 extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSource{
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if tableView == commenTableView{
+            return allComments.count
+        }
+        return 0
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == self.tableView{
             if detailType == .list{
@@ -355,9 +363,10 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
         }
         else{
             print(allComments.count)
-            return allComments.count
+            return (allComments[section].replies?.count ?? 0) + 1
         }
     }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == self.tableView{
@@ -386,27 +395,35 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
             return cell
         }
         else{
-            let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-            cell.comment = allComments[indexPath.row]
-            
-            cell.commentReplyBlock = {
-                tableView.performBatchUpdates {
-                    UIView.animate(withDuration: 0.3) {
-                        cell.bottomView.isHidden.toggle()
+            let comment = allComments[indexPath.section]
+            if indexPath.row == 0 {
+                let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
+                cell.comment = allComments[indexPath.row]
+                
+                cell.commentReplyBlock = {
+                    tableView.performBatchUpdates {
+                        UIView.animate(withDuration: 0.3) {
+                            cell.bottomView.isHidden.toggle()
+                        }
                     }
                 }
+                cell.actionBlock = { text in
+                    cell.textView.text = ""
+                    self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "tour_package"], row: indexPath)
+                    self.allComments = []
+                }
+                
+                cell.textViewCellDidChangeHeight = {
+                    tableView.beginUpdates()
+                    tableView.endUpdates()
+                }
+                return cell
             }
-            cell.actionBlock = { text in
-                cell.textView.text = ""
-                self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "tour_package"], row: indexPath)
-                self.allComments = []
+            else{
+                let cell: CommentReplyTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentReplyTableViewCell.cellReuseIdentifier())  as! CommentReplyTableViewCell
+                cell.commentReply = comment.replies?[indexPath.row - 1]
+                return cell
             }
-            
-            cell.textViewCellDidChangeHeight = {
-                tableView.beginUpdates()
-                tableView.endUpdates()
-            }
-            return cell
         }
     }
     
@@ -445,6 +462,18 @@ extension PackageDetailViewController: UITextViewDelegate{
             let newSize = textView.sizeThatFits(CGSize(width: fixedWidth, height: CGFloat.greatestFiniteMagnitude))
             commentTextViewHeight.constant = newSize.height
             view.layoutIfNeeded()
+        }
+    }
+}
+
+extension PackageDetailViewController: UIScrollViewDelegate{
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+            print(allComments.count, totalCount)
+            if allComments.count != totalCount{
+                currentPage = currentPage + 1
+                reloadComment()
+            }
         }
     }
 }

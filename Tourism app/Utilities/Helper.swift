@@ -347,8 +347,23 @@ class Helper{
             return Date()
         }
     }
-    
-    
-  
 }
 
+//html text
+//var attrStr = NSMutableAttributedString()
+//if let data = eventDetail?.eventDescription?.data(using: String.Encoding(rawValue: String.Encoding.unicode.rawValue), allowLossyConversion: true) {
+//      do {
+//        attrStr = try NSMutableAttributedString(
+//          data: data,
+//          options: [
+//            NSAttributedString.DocumentReadingOptionKey.documentType:
+//              NSAttributedString.DocumentType.html,
+//            NSAttributedString.DocumentReadingOptionKey.characterEncoding:
+//              String.Encoding.utf8.rawValue],
+//          documentAttributes: nil)
+////                  attrStr.addAttribute(.font, value: UIFont(name: "Poppins", size: 15.0), range: NSRange(location: 0, length: attrStr.length))
+//          descriptionLabel.attributedText = attrStr
+//
+//      } catch {
+//      }
+//    }
