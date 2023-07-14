@@ -63,7 +63,7 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: [POIRow], archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil){
+    static func goToPOIMap(delegate: UIViewController, locationCategory: LocationCategory, exploreDistrict: ExploreDistrict? = nil, attractionDistrict: AttractionsDistrict? = nil, poiSubCategory: [POIRow], archeology: Archeology? = nil, wishlistAttraction: WishlistAttraction? = nil, wishlistDistrict: WishlistDistrict? = nil, poiName: String){
         let vc = UIStoryboard(name: Storyboard.POI.rawValue, bundle: nil).instantiateViewController(withIdentifier: "POIMapViewController") as! POIMapViewController
         vc.locationCategory = locationCategory
         vc.exploreDistrict = exploreDistrict
@@ -72,6 +72,7 @@ class Switcher {
         vc.archeology = archeology
         vc.wishlistAttraction = wishlistAttraction
         vc.wishlistDistrict = wishlistDistrict
+        vc.poiName = poiName
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

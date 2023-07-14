@@ -83,7 +83,7 @@ class POIServicesViewController: BaseViewController {
     
     @IBAction func mapBtnAction(_ sender: Any) {
 //        guard let POISubCatories = POISubCatories else { return  }
-        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POIarray, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
+        Switcher.goToPOIMap(delegate: self, locationCategory: locationCategory!, exploreDistrict: exploreDistrict, attractionDistrict: attractionDistrict, poiSubCategory: POIarray, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict, poiName: poiName ?? "")
     }
     
     func updateUI() {

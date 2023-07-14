@@ -21,6 +21,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var counterView: UIView!
     var wishlistButtonTappedHandler: (() -> Void)?
 
+    @IBOutlet weak var registrationLabel: UILabel!
     var event: EventListModel?{
         didSet{
             if event?.userWishlist == 0 {
@@ -29,6 +30,7 @@ class EventTableViewCell: UITableViewCell {
             else{
                 favoriteButton.setBackgroundImage(UIImage(named: "fav"), for: .normal)
             }
+            registrationLabel.text = "Registration \(event?.isExpired ?? "")"
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (event?.previewImage ?? "")))
             titleLabel.text = event?.title
             typeLabel.text = event?.locationTitle

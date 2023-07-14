@@ -45,19 +45,19 @@ class PostCommentViewController: UIViewController {
     }
     
     private func reloadComment(){
-        fetchComment(route: .fetchComment, method: .post, parameters: ["section_id": postId ?? 0, "section": "post", "page": currentPage, "limit": limit], model: CommentsModel.self)
+        fetchComment(parameters: ["section_id": postId ?? 0, "section": "post", "page": currentPage, "limit": limit])
     }
     
     @IBAction func loginToComment(_ sender: Any) {
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
-        doComment(route: .doComment, method: .post, parameters: ["section_id": postId ?? 0, "section": "post", "comment": text], model: SuccessModel.self)
+        doComment(parameters: ["section_id": postId ?? 0, "section": "post", "comment": text])
     }
     
-    func doComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+    func doComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.commentTextView.text = ""
                     self.allComments = []
                     self.reloadComment()
@@ -67,12 +67,12 @@ class PostCommentViewController: UIViewController {
             }
         }
     }
-    
-    func commentReply<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, row: IndexPath) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func commentReply(parameters: [String: Any], row: IndexPath) {
+        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
-                if (result as? SuccessModel)?.success == true{
+                if result.success == true{
                     self.reloadComment()
                     self.tableView.scrollToRow(at: row, at: .none, animated: false)
                 }
@@ -81,14 +81,13 @@ class PostCommentViewController: UIViewController {
             }
         }
     }
-    
-    func fetchComment<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+
+    func fetchComment(parameters: [String: Any]) {
+        URLSession.shared.request(route: .fetchComment, method: .post, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
-            case .success(let comments):
-                print((comments as? CommentsModel)?.comments?.rows ?? [])
-                self.totalCount = (comments as? CommentsModel)?.comments?.count ?? 1
-                self.allComments.append(contentsOf: (comments as? CommentsModel)?.comments?.rows ?? [])
+            case .success(let commentsDetail):
+                self.totalCount = commentsDetail.comments?.count ?? 1
+                self.allComments.append(contentsOf: commentsDetail.comments?.rows ?? [])
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -125,17 +124,6 @@ extension PostCommentViewController: UITextViewDelegate{
 
 extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
     
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if allComments.count > 0 {
-//            tableView.setEmptyView("")
-//            return allComments.count
-//        }
-//        else{
-//            tableView.setEmptyView("No comments found!")
-//            return 0
-//        }
-//    }
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return allComments.count
     }
@@ -150,13 +138,15 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
             let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
             cell.comment = allComments[indexPath.row]
             cell.commentReplyBlock = {
-                cell.bottomView.isHidden = !cell.bottomView.isHidden
-                tableView.beginUpdates()
-                tableView.endUpdates()
+                tableView.performBatchUpdates {
+                    UIView.animate(withDuration: 0.3) {
+                        cell.bottomView.isHidden.toggle()
+                    }
+                }
             }
             cell.actionBlock = { text in
                 cell.textView.text = ""
-                self.commentReply(route: .commentReply, method: .post, parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "post"], model: SuccessModel.self, row: indexPath)
+                self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "post"], row: indexPath)
                 self.allComments = []
             }
             return cell

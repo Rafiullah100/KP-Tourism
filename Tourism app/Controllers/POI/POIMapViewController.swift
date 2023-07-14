@@ -11,6 +11,7 @@ import CoreLocation
 
 class POIMapViewController: BaseViewController {
         
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var thumbnail: UIImageView!
     @IBOutlet public weak var thumbnailBottomLabel: UILabel!
     @IBOutlet weak var thumbnailTopLabel: UILabel!
@@ -26,6 +27,7 @@ class POIMapViewController: BaseViewController {
     var POISubCatories: [POIRow]?
     var archeology: Archeology?
     var mapView = MGLMapView()
+    var poiName: String?
 
     var destinationCoordinate: CLLocationCoordinate2D?
     var originCoordinate: CLLocationCoordinate2D?
@@ -48,6 +50,7 @@ class POIMapViewController: BaseViewController {
     }
     
     func updateUI() {
+        nameLabel.attributedText = Helper.shared.attributedString(text1:poiName ?? "", text2: "| Point Of Interest")
         if exploreDistrict != nil {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.thumbnailImage ?? "")))
