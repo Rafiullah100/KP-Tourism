@@ -15,13 +15,15 @@ class ProfileCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var deleteButton: UIButton!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var deleteView: UIView!
-    
+    var profileType: ProfileType?
+    var sectionType: ProfileSection?
     
     var post: UserPostRow? {
         didSet {
             label.text = post?.description
             if post?.postFiles?.count ?? 0 > 0{
                 imgView.sd_setImage(with: URL(string: Route.baseUrl + (post?.postFiles?[0].imageURL ?? "")))
+                hideButtons()
             }
         }
     }
@@ -35,12 +37,14 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         didSet {
             label.text = product?.title
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (product?.previewImage ?? "")))
+            hideButtons()
         }
     }
     var blog: UserBlogRow? {
         didSet {
             label.text = blog?.title
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (blog?.previewImage ?? "") ))
+            hideButtons()
         }
     }
     
@@ -48,34 +52,48 @@ class ProfileCollectionViewCell: UICollectionViewCell {
         didSet {
             label.text = tourPackage?.title
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (tourPackage?.preview_image ?? "")))
+            hideButtons()
         }
     }
     
-    var profileType: ProfileType? {
-        didSet{
-            if profileType == .user{
-                hideButtons(isHidden: false)
-            }
-            else if profileType == .otherUser{
-                hideButtons(isHidden: true)
-            }
-        }
-    }
+//    var profileType: ProfileType? {
+//        didSet{
+//            if profileType == .user{
+//                hideButtons(isHidden: false)
+//            }
+//            else if profileType == .otherUser{
+//                hideButtons(isHidden: true)
+//            }
+//        }
+//    }
+//
+//    var sectionType: ProfileSection? {
+//        didSet{
+//            if sectionType == .post{
+//                hideButtons(isHidden: true)
+//            }
+//            else{
+//                hideButtons(isHidden: false)
+//            }
+//        }
+//    }
     
-    var sectionType: ProfileSection? {
-        didSet{
-            if sectionType == .post{
-                hideButtons(isHidden: true)
+    func hideButtons() {
+        print(isHidden)
+        if profileType == .otherUser {
+            deleteView.isHidden = true
+            editView.isHidden = true
+        }
+        else{
+            if sectionType == .post {
+                deleteView.isHidden = true
+                editView.isHidden = true
             }
             else{
-                hideButtons(isHidden: false)
+                deleteView.isHidden = false
+                editView.isHidden = false
             }
         }
-    }
-    
-    func hideButtons(isHidden: Bool) {
-        deleteView.isHidden = isHidden
-        editView.isHidden = isHidden
     }
     
     

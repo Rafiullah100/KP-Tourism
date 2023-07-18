@@ -7,7 +7,7 @@
 
 import UIKit
 
-class VisitViewController: UIViewController {
+class VisitViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -25,12 +25,19 @@ class VisitViewController: UIViewController {
     var visit: [VisitKPRow] = [VisitKPRow]()
     var searchText: String?
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .visitKP
-        fetch()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            fetch()
+        }
     }
 
     func fetch() {
@@ -40,6 +47,7 @@ class VisitViewController: UIViewController {
                 self.visit = visit.attractions.rows
                 self.totalCount = visit.attractions.count
                 self.totalCount == 0 ? self.tableView.setEmptyView("No Record Found!") : self.tableView.reloadData()
+                self.isDataLoaded = true
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

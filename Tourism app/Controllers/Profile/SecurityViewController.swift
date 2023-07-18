@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class SecurityViewController: UIViewController {
+class SecurityViewController: BaseViewController {
     @IBOutlet weak var topBarView: UIView!
 
     @IBOutlet weak var oldPasswordTF: UITextField!

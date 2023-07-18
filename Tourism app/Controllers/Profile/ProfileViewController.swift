@@ -9,7 +9,7 @@ import UIKit
 import MaterialComponents.MaterialTabs_TabBarView
 import SDWebImage
 import SVProgressHUD
-class ProfileViewController: UIViewController {
+class ProfileViewController: BaseViewController {
 
     private enum ApiType {
         case profile
@@ -117,13 +117,11 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if profileType == .otherUser{
-            settingButton.setImage(UIImage(named: "arrow-back"), for: .normal)
             favoriteButton.isHidden = true
             editPhotoButton.isHidden = false
             suggestedView.isHidden = true
         }
         else{
-            settingButton.setImage(UIImage(named: "setting-btn-icon"), for: .normal)
             favoriteButton.isHidden = false
             editPhotoButton.isHidden = true
             suggestedView.isHidden = false
@@ -169,6 +167,9 @@ class ProfileViewController: UIViewController {
         super.viewDidLayoutSubviews()
     }
     
+    @IBAction func backBtnAction(_ sender: Any) {
+        navigationController?.popViewController(animated: true)
+    }
     @IBAction func followBtnAction(_ sender: Any) {
         followUser(route: .doFollow, method: .post, parameters: ["uuid": uuid ?? ""], model: SuccessModel.self)
     }
@@ -195,12 +196,7 @@ class ProfileViewController: UIViewController {
         Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .follower, uuid: uuid ?? "")
     }
     @IBAction func settingBtnAction(_ sender: Any) {
-        if profileType == .otherUser{
-            navigationController?.popViewController(animated: true)
-        }
-        else{
-            Switcher.goToSettingVC(delegate: self)
-        }
+        Switcher.goToSettingVC(delegate: self)
     }
     @IBAction func favoriteBtnAction(_ sender: Any) {
         Switcher.goToWishlistVC(delegate: self)

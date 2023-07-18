@@ -18,7 +18,7 @@ struct Settings {
     let title: String?
 }
 
-class SettingViewController: UIViewController {
+class SettingViewController: BaseViewController {
 
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView!{

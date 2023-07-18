@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class AddProductViewController: UIViewController, UINavigationControllerDelegate {
+class AddProductViewController: BaseViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var blogImageView: UIImageView!
     @IBOutlet weak var textView: UITextView!

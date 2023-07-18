@@ -7,7 +7,7 @@
 
 import UIKit
 import SwiftUI
-
+import SVProgressHUD
 enum ViewControllerType {
     case home
     case title
@@ -56,6 +56,11 @@ class BaseViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        SVProgressHUD.dismiss()
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -9,6 +9,7 @@ import UIKit
 import SDWebImage
 class WishlistCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var gradientView: UIView!
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var imgView: UIImageView!
     var deleteCallback : (() -> Void)?
@@ -65,6 +66,7 @@ class WishlistCollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         print(self.tag)
+//        gradientView.roundCorners(corners: [.bottomLeft, .bottomRight], radius: 10.0)
         // Initialization code
     }
 

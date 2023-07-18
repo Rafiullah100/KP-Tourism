@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DateTimeViewController: UIViewController {
+class DateTimeViewController: BaseViewController {
 
     
     

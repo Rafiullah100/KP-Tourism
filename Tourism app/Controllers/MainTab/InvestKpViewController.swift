@@ -7,7 +7,7 @@
 
 import UIKit
 
-class InvestKpViewController: UIViewController {
+class InvestKpViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -29,12 +29,19 @@ class InvestKpViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .investment
-        reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
     }
     
     private func reloadData(){
@@ -48,6 +55,7 @@ class InvestKpViewController: UIViewController {
                 self.investment.append(contentsOf: investment.investments?.rows ?? [])
                 self.totalCount = investment.investments?.count ?? 0
                 self.investment.count == 0 ? self.tableView.setEmptyView("No investment in KP Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

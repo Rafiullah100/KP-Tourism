@@ -8,7 +8,7 @@
 import UIKit
 import SVProgressHUD
 import SDWebImage
-class AddTourPackageViewController: UIViewController {
+class AddTourPackageViewController: BaseViewController {
   
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var fromDistrictTextField: UITextField!

@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class SuggestedUserViewController: UIViewController {
+class SuggestedUserViewController: BaseViewController {
 
         
     @IBOutlet weak var searchTF: UITextField!

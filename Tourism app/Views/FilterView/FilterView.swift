@@ -23,6 +23,7 @@ class FilterView: UIView {
     }
     
     @IBOutlet weak var collectionviewHeight: NSLayoutConstraint!
+    @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var containerView: UIView!
     var delegate: FilterDelegate?
     
@@ -51,8 +52,17 @@ class FilterView: UIView {
         containerView.viewShadow()
         addSubview(customMarkerView)
         
+        let overlayView = UIView(frame: self.bgView.bounds)
+        overlayView.backgroundColor = UIColor.clear
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+        overlayView.addGestureRecognizer(tapGesture)
+        bgView.addSubview(overlayView)
 //        collectionviewHeight.constant = collectionView.contentSize.height
 //        collectionView.reloadData()
+    }
+    
+    @objc func handleBackgroundTap() {
+        self.isHidden = true
     }
     
     @IBAction func refreshBtn(_ sender: Any) {

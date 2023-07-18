@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ArcheologyViewController: UIViewController {
+class ArcheologyViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -29,12 +29,19 @@ class ArcheologyViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .arch
-        reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
     }
 
     private func reloadData(){
@@ -48,6 +55,7 @@ class ArcheologyViewController: UIViewController {
                 self.archeology.append(contentsOf: archeology.archeology)
                 self.totalCount = archeology.count ?? 0
                 self.archeology.count == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

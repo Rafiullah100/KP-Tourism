@@ -25,7 +25,7 @@ class NotificationTableViewCell: UITableViewCell {
     }
 }
 
-class NotificationListViewController: UIViewController {
+class NotificationListViewController: BaseViewController {
 
     @IBOutlet weak var topView: UIView!
     @IBOutlet weak var tableView: UITableView!{

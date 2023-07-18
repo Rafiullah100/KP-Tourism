@@ -8,7 +8,7 @@
 import UIKit
 import SVProgressHUD
 import SDWebImage
-class ChatListViewController: UIViewController {
+class ChatListViewController: BaseViewController {
     @IBOutlet weak var topBarView: UIView!
 
     @IBOutlet weak var profileButton: UIButton!

@@ -9,7 +9,7 @@ import UIKit
 import ExpandableLabel
 import Toast_Swift
 import SVProgressHUD
-class FeedsViewController: UIViewController {
+class FeedsViewController: BaseViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -47,6 +47,7 @@ class FeedsViewController: UIViewController {
     var storyCurrentPage = 1
     var interestCount = 0
     let refreshControl = UIRefreshControl()
+    var profileType: ProfileType?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -288,8 +289,9 @@ extension FeedsViewController: UITableViewDelegate, UITableViewDataSource{
         }
         cell.profileImageActionBlock = {
             guard let uuid = self.newsFeed[indexPath.row].post?.users?.uuid else { return }
+            self.profileType = UserDefaults.standard.uuid == uuid ? .user : .otherUser
             print(uuid)
-            Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
+            Switcher.goToProfileVC(delegate: self, profileType: self.profileType ?? .user, uuid: uuid)
         }
         return cell
     }

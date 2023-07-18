@@ -29,7 +29,7 @@ class TourPdfViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .visitpdf, method: .post, parameters: parameters, model: PDFModel.self) { result in
+        URLSession.shared.request(route: .visitpdf, method: .post, showLoader: false, parameters: parameters, model: PDFModel.self) { result in
             switch result {
             case .success(let model):
                 let pdfModel = model

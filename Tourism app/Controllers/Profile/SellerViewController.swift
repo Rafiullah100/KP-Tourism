@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class SellerViewController: UIViewController {
+class SellerViewController: BaseViewController {
    
     @IBOutlet weak var switchView: UISwitch!
     @IBOutlet weak var topBarView: UIView!
@@ -15,7 +15,7 @@ class SellerViewController: UIViewController {
     @IBOutlet weak var switchLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     
-    var type = "user"
+    var loginUserType = "user"
     var userType: UserType?
     
     
@@ -39,12 +39,12 @@ class SellerViewController: UIViewController {
     
     @IBAction func switchUser(_ sender: Any) {
         if userType == .seller{
-            type = switchView.isOn == true ? "seller" : UserDefaults.standard.userType ?? ""
+            loginUserType = switchView.isOn == true ? "seller" : UserDefaults.standard.userType ?? ""
         }
         else if userType == .tourist{
-            type = switchView.isOn == true ? "tourist" : UserDefaults.standard.userType ?? ""
+            loginUserType = switchView.isOn == true ? "tourist" : UserDefaults.standard.userType ?? ""
         }
-        changeUserType(parameters: ["type": type])
+        changeUserType(parameters: ["type": loginUserType])
     }
     
     func changeUserType(parameters: [String: Any]) {

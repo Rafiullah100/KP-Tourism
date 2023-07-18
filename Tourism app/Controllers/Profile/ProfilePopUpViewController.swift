@@ -8,7 +8,7 @@
 import UIKit
 import SVProgressHUD
 
-class ProfilePopUpViewController: UIViewController {
+class ProfilePopUpViewController: BaseViewController {
 
    private enum ApiType {
         case profile
@@ -20,9 +20,13 @@ class ProfilePopUpViewController: UIViewController {
             tableView.delegate = self
             tableView.dataSource = self
             tableView.register(UINib(nibName: "FollowingTableViewCell", bundle: nil), forCellReuseIdentifier: FollowingTableViewCell.cellReuseIdentifier())
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                self.contentView.isHidden = false
+            }
         }
     }
     
+    @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var headerLabel: UILabel!
     
@@ -58,6 +62,7 @@ class ProfilePopUpViewController: UIViewController {
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, cell: FollowingTableViewCell? = nil) {
         URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+            
             switch result {
             case .success(let model):
                 if self.apiType == .profile{

@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class PostCommentViewController: UIViewController {
+class PostCommentViewController: BaseViewController {
 
 
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!

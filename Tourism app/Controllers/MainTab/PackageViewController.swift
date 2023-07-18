@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PackageViewController: UIViewController {
+class PackageViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -30,21 +30,26 @@ class PackageViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .tour
-        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
+        
         if let modelObject = DataManager.shared.packageModelObject,
            let index = tourPackage.firstIndex(where: { $0.id == modelObject.id }) {
             tourPackage[index] = modelObject
             tableView.reloadData()
         }
+
     }
     
     private func reloadData(){
@@ -59,6 +64,7 @@ class PackageViewController: UIViewController {
                 self.totalCount = package.count ?? 0
                 print(self.tourPackage.count)
                 self.tourPackage.count == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

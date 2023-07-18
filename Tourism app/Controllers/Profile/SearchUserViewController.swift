@@ -22,7 +22,7 @@ class SearchChatUserTableViewCell: UITableViewCell {
     }
 }
 
-class SearchUserViewController: UIViewController {
+class SearchUserViewController: BaseViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var searchTF: UITextField!

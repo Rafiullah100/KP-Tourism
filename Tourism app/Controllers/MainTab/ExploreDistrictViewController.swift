@@ -6,7 +6,7 @@
 //
 
 import UIKit
-class ExploreDistrictViewController: UIViewController {
+class ExploreDistrictViewController: BaseViewController {
     var districtCount: ((Int) -> Void)?
 
     @IBOutlet weak var tableView: UITableView!{
@@ -30,12 +30,19 @@ class ExploreDistrictViewController: UIViewController {
             reloadData()
         }
     }
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         cellType = .explore
         tableView.keyboardDismissMode = .onDrag
-        reloadData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
     }
         
     public func reloadData(){
@@ -51,6 +58,7 @@ class ExploreDistrictViewController: UIViewController {
                 self.totalCount = explore.count ?? 0
                 self.districtCount?(self.exploreDistrict.count)
                 self.exploreDistrict.count == 0 ? self.tableView.setEmptyView("No District Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

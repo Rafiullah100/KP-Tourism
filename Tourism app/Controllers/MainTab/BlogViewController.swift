@@ -7,7 +7,7 @@
 
 import UIKit
 
-class BlogViewController: UIViewController {
+class BlogViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -30,16 +30,20 @@ class BlogViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .blog
-        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
+        
         if let modelObject = DataManager.shared.blogModelObject,
            let index = blogs.firstIndex(where: { $0.id == modelObject.id }) {
             blogs[index] = modelObject
@@ -58,6 +62,7 @@ class BlogViewController: UIViewController {
                 self.blogs.append(contentsOf: blogModel.blog)
                 self.totalCount = blogModel.count ?? 0
                 self.blogs.count == 0 ? self.tableView.setEmptyView("No Blog Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

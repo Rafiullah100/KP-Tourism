@@ -10,7 +10,7 @@ import Alamofire
 import SDWebImage
 import SVProgressHUD
 import Toast_Swift
-class PostViewController: UIViewController, UINavigationControllerDelegate {
+class PostViewController: BaseViewController, UINavigationControllerDelegate {
 
     var postType: PostType?
     var feed: FeedModel?

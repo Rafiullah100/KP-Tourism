@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductViewController: UIViewController {
+class ProductViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -30,16 +30,20 @@ class ProductViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .product
-        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
+        
         if let modelObject = DataManager.shared.productModelObject,
            let index = localProducts.firstIndex(where: { $0.id == modelObject.id }) {
             localProducts[index] = modelObject
@@ -58,6 +62,7 @@ class ProductViewController: UIViewController {
                 self.localProducts.append(contentsOf: product.localProducts)
                 self.totalCount = product.count
                 self.localProducts.count == 0 ? self.tableView.setEmptyView("No Product Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

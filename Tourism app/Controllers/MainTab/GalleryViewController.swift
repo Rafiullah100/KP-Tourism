@@ -37,11 +37,18 @@ class GalleryViewController: BaseViewController {
     
     var gallery: GalleryModel?
     var mediaType: MediaType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .back1
-        fetch()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            fetch()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -58,6 +65,7 @@ class GalleryViewController: BaseViewController {
                 self.imageCollectionView.reloadData()
                 self.videoCollectionView.reloadData()
                 self.virtualCollectionView.reloadData()
+                self.isDataLoaded = true
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

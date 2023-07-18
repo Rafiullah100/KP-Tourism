@@ -487,6 +487,7 @@ extension UIViewController {
         container.addSubview(child.view)
         child.view.frame = container.bounds
         child.didMove(toParent: self)
+        child.viewWillAppear(false)
     }
     
     func add(_ child: UIViewController) {

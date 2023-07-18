@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EventViewController: UIViewController {
+class EventViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!{
         didSet{
@@ -30,16 +30,20 @@ class EventViewController: UIViewController {
         }
     }
     var cellType: CellType?
-    
+    var isDataLoaded = false
+
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.keyboardDismissMode = .onDrag
         cellType = .event
-        reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if isDataLoaded == false {
+            reloadData()
+        }
+        
         if let modelObject = DataManager.shared.eventModelObject,
            let index = event.firstIndex(where: { $0.id == modelObject.id }) {
             event[index] = modelObject
@@ -58,6 +62,7 @@ class EventViewController: UIViewController {
                 self.event.append(contentsOf: event.events)
                 self.totalCount = event.count
                 self.event.count == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.setEmptyView("")
+                self.isDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

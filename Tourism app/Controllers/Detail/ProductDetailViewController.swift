@@ -55,6 +55,7 @@ class ProductDetailViewController: BaseViewController {
     var currentPage = 1
     var totalCount = 0
     var allComments: [CommentsRows] = [CommentsRows]()
+    var profileType: ProfileType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,15 +143,15 @@ class ProductDetailViewController: BaseViewController {
     }
     
     @IBAction func socialButton(_ sender: Any) {
+        self.profileType = UserDefaults.standard.uuid == productDetail?.users.uuid ? .user : .otherUser
         if detailType == .list{
             guard let uuid = productDetail?.users.uuid else { return  }
-            Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
+            Switcher.goToProfileVC(delegate: self, profileType: self.profileType ?? .user, uuid: uuid)
         }
         else if detailType == .wishlist{
             guard let uuid = wishListProductDetail?.users?.uuid else { return  }
-            Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: uuid)
+            Switcher.goToProfileVC(delegate: self, profileType:  self.profileType ?? .user, uuid: uuid)
         }
-        
     }
 
     @IBAction func shareBtnAction(_ sender: Any) {

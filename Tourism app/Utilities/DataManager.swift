@@ -18,6 +18,9 @@ class DataManager {
     var itinraryModelObject: ItinraryRow?
     var accomodationModelObject: Accomodation?
 
+    var isExploreDataAvailable: Bool?
+    
+    
     private init() {
         // Private initializer to enforce singleton pattern
     }

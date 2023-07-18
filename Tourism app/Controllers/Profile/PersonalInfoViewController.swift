@@ -8,7 +8,7 @@
 import UIKit
 import SVProgressHUD
 import SDWebImage
-class PersonalInfoViewController: UIViewController, UINavigationControllerDelegate {
+class PersonalInfoViewController: BaseViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var bioTextField2: UITextField!
     @IBOutlet weak var bioTextField1: UITextField!

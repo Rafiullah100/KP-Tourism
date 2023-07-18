@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class WriteBlogViewController: UIViewController, UINavigationControllerDelegate {
+class WriteBlogViewController: BaseViewController, UINavigationControllerDelegate {
 
     enum BlogApiType {
         case district

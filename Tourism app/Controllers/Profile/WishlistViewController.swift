@@ -7,7 +7,7 @@
 
 import UIKit
 import SVProgressHUD
-class WishlistViewController: UIViewController {
+class WishlistViewController: BaseViewController {
 
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var tableView: UITableView!{
@@ -27,7 +27,7 @@ class WishlistViewController: UIViewController {
     var eventWishlist: [EventWishlistModel]?
     var blogWishlist: [BlogWishlistModel]?
 
-    var type: wishlistSection?
+    var sectionType: wishlistSection?
     var wishlistTypeArray: [wishlistSection]?
     
     override func viewDidLoad() {
