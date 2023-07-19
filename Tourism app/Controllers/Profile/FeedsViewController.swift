@@ -238,7 +238,7 @@ extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSou
             Switcher.gotoPostVC(delegate: self, postType: .story)
         }
         else{
-            Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row - 1].postFiles?[0].imageURL)
+            Switcher.gotoStatusVC(delegate: self, url: stories[indexPath.row - 1].postFiles?[0].imageURL ?? "")
         }
     }
     

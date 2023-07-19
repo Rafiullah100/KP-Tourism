@@ -92,7 +92,7 @@ class HomeViewController: BaseViewController {
         setupCard()
         configureTabbar()
         show(exploreVC, sender: self)
-        print(UserDefaults.standard.uuid ?? "")
+        print(UserDefaults.standard.accessToken ?? "")
         
         exploreVC.districtCount = { count in
             self.siteLabel.text = "\(count) District sites"

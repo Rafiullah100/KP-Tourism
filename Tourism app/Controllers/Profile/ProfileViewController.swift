@@ -120,11 +120,13 @@ class ProfileViewController: BaseViewController {
             favoriteButton.isHidden = true
             editPhotoButton.isHidden = false
             suggestedView.isHidden = true
+            buttonsView.isUserInteractionEnabled = false
         }
         else{
             favoriteButton.isHidden = false
             editPhotoButton.isHidden = true
             suggestedView.isHidden = false
+            buttonsView.isUserInteractionEnabled = true
         }
     }
     
@@ -421,7 +423,7 @@ extension ProfileViewController: UICollectionViewDelegate, UICollectionViewDataS
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == statusCollectionView {
-            Switcher.gotoViewerVC(delegate: self, position: 0, type: .image, imageUrl: stories[indexPath.row].postFiles?[0].imageURL)
+            Switcher.gotoStatusVC(delegate: self, url: stories[indexPath.row].postFiles?[0].imageURL ?? "")
         }
     }
 }

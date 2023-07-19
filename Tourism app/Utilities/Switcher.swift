@@ -326,7 +326,7 @@ class Switcher {
     static func showSuggestedUser(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SuggestedUserViewController") as! SuggestedUserViewController
         vc.modalPresentationStyle = .automatic
-        delegate.present(vc, animated: true)
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
     static func goToWishlistVC(delegate: UIViewController){
@@ -559,6 +559,13 @@ class Switcher {
         vc.alertType = type
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    static func gotoStatusVC(delegate: UIViewController, url: String){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ViewStatusViewController") as! ViewStatusViewController
+        vc.imageUrl = url
+        vc.modalPresentationStyle = .fullScreen
+        delegate.present(vc, animated: true)
     }
 }
 

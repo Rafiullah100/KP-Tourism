@@ -46,8 +46,7 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
-        view.addGestureRecognizer(panGesture)
+        
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -64,33 +63,6 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
         collectionView.layoutIfNeeded()
         collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.top], animated: false)
     }
-    
-    @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        let screenHeight = UIScreen.main.bounds.height
-        
-        switch gesture.state {
-        case .changed:
-            // Move the view vertically based on the gesture translation
-//            view.transform = CGAffineTransform(translationX: 0, y: max(translation.y, 0))
-            print("m")
-        case .ended:
-            // Dismiss the view controller if dragged beyond a certain threshold or animate it back to its original position
-            let velocity = gesture.velocity(in: view)
-            let dismissThreshold: CGFloat = screenHeight * 0.1
-            if translation.y > dismissThreshold || velocity.y > 200 {
-                dismiss(animated: true, completion: nil)
-            } else {
-                UIView.animate(withDuration: 0.3) {
-                    self.view.transform = .identity
-                }
-            }
-            
-        default:
-            break
-        }
-    }
-
 }
 
 extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSource{

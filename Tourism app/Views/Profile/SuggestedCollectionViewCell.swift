@@ -24,7 +24,7 @@ class SuggestedCollectionViewCell: UICollectionViewCell {
     var users: SuggestedUser? {
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (users?.profileImage ?? "")))
-            nameLabel.text = users?.name?.capitalized
+            nameLabel.text = users?.name?.capitalized.components(separatedBy: " ").first
         }
     }
 

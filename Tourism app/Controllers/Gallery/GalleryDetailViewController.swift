@@ -13,7 +13,8 @@ import AVKit
 import SVProgressHUD
 
 class GalleryDetailViewController: BaseViewController {
-
+    @IBOutlet weak var noDataLabel: UILabel!
+    
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var tabbarView: MDCTabBarView!
     
@@ -71,7 +72,13 @@ class GalleryDetailViewController: BaseViewController {
             switch result {
             case .success(let galleryDetail):
                 self.galleryDetail = galleryDetail as? GalleryModel
-                self.galleryDetail?.images?.count == 0 ? self.collectionView.setEmptyView("No image found!") : self.collectionView.reloadData()
+                if self.galleryDetail?.images?.count == 0 {
+                    self.noDataLabel.text = "No image found!"
+                }
+                else{
+                    self.noDataLabel.text = ""
+                }
+                self.collectionView.reloadData()
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -127,17 +134,29 @@ extension GalleryDetailViewController: MDCTabBarViewDelegate{
         case 0:
             mediaType = .image
             if self.galleryDetail?.images?.count == 0{
-                collectionView.setEmptyView("No image found!")
+                collectionView.setEmptyView("")
+                noDataLabel.text = "No image found!"
+            }
+            else{
+                self.noDataLabel.text = ""
             }
         case 1:
             mediaType = .video
             if self.galleryDetail?.videos?.count == 0{
-                collectionView.setEmptyView("No video found!")
+                collectionView.setEmptyView("")
+                noDataLabel.text = "No video found!"
+            }
+            else{
+                self.noDataLabel.text = ""
             }
         case 2:
             mediaType = .virtual
             if self.galleryDetail?.virtual_tours?.count == 0{
-                collectionView.setEmptyView("No virtual tour found!")
+                collectionView.setEmptyView("")
+                noDataLabel.text = "No virtual tour found!"
+            }
+            else{
+                self.noDataLabel.text = ""
             }
         default:
             mediaType = .image

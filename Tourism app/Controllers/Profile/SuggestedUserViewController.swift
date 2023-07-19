@@ -9,7 +9,8 @@ import UIKit
 import SVProgressHUD
 class SuggestedUserViewController: BaseViewController {
 
-        
+    @IBOutlet weak var topView: UIView!
+    
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -34,9 +35,13 @@ class SuggestedUserViewController: BaseViewController {
         super.viewDidLoad()
         searchTF.delegate = self
         collectionView.keyboardDismissMode = .onDrag
+        topView.viewShadow()
         loadData()
     }
     
+    @IBAction func backBtn(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
     private func loadData(){
         fetch(parameters: ["page": currentPage, "limit": limit, "search": searchTF.text ?? ""])
     }
@@ -83,6 +88,10 @@ extension SuggestedUserViewController: UICollectionViewDelegateFlowLayout{
             currentPage = currentPage + 1
             loadData()
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        Switcher.goToProfileVC(delegate: self, profileType: .otherUser, uuid: suggestedUsers[indexPath.row].uuid ?? "")
     }
 }
 
