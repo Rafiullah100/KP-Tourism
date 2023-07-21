@@ -47,7 +47,7 @@ class SuggestedUserViewController: BaseViewController {
     }
 
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .suggestedUser, method: .post, parameters: parameters, model: SuggestedUserModel.self) { result in
+        dataTask = URLSession.shared.request(route: .suggestedUser, method: .post, parameters: parameters, model: SuggestedUserModel.self) { result in
             switch result {
             case .success(let user):
                 self.suggestedUsers.append(contentsOf: user.suggestedUsers)

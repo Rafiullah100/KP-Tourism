@@ -148,7 +148,7 @@ class GettingHereViewController: BaseViewController {
 
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let gettingHere):
                 DispatchQueue.main.async {

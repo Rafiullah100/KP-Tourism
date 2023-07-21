@@ -209,7 +209,7 @@ class PackageDetailViewController: BaseViewController {
     }
     
     func like(parameters: [String: Any]) {
-        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
                 self.likeImageView.image = UIImage(named: like.message == "Liked" ? "liked-red" : "liked")
@@ -230,7 +230,7 @@ class PackageDetailViewController: BaseViewController {
     }
 
     func viewCounter(parameters: [String: Any]) {
-        URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .viewCounter, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 if viewCount.success == true {
@@ -247,7 +247,7 @@ class PackageDetailViewController: BaseViewController {
     }
 
     func interest(parameters: [String: Any]) {
-        URLSession.shared.request(route: .doInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let wish):
                 if wish.success == true {
@@ -302,7 +302,7 @@ class PackageDetailViewController: BaseViewController {
     }
     
     func doComment(parameters: [String: Any]? = nil) {
-        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -317,7 +317,7 @@ class PackageDetailViewController: BaseViewController {
     }
 
     func commentReply(parameters: [String: Any], row: IndexPath) {
-        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -331,7 +331,7 @@ class PackageDetailViewController: BaseViewController {
     }
     
     func fetchComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
                 self.totalCount = comments.comments?.count ?? 1

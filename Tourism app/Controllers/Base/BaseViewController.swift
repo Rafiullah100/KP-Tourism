@@ -26,6 +26,10 @@ enum RightButttonsType {
 
 
 class BaseViewController: UIViewController {
+    
+    var dataTask: URLSessionDataTask?
+
+    
     var type: ViewControllerType = .back1
     var categoryId = ""
     var titleLabel: UILabel?
@@ -61,6 +65,7 @@ class BaseViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         SVProgressHUD.dismiss()
+        dataTask?.cancel()
     }
     
     override func viewWillAppear(_ animated: Bool) {

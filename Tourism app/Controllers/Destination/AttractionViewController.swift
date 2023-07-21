@@ -107,7 +107,7 @@ class AttractionViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchAttractionByDistrict, method: .post, parameters: parameters, model: AttractionModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchAttractionByDistrict, method: .post, parameters: parameters, model: AttractionModel.self) { result in
             switch result {
             case .success(let attractionDetail):
                 self.attractionDetail = attractionDetail

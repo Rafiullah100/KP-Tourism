@@ -67,7 +67,7 @@ class PointOfInterestViewController: BaseViewController {
     }
     
     private func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchPoiCategories, method: .post, parameters: parameters, model: PoiCategoriesModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchPoiCategories, method: .post, parameters: parameters, model: PoiCategoriesModel.self) { result in
             switch result {
             case .success(let poiCategory):
                 self.category = poiCategory

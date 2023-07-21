@@ -48,7 +48,7 @@ class ItinraryDetailViewController: BaseViewController {
     }
     
     func viewCounter(parameters: [String: Any]) {
-        URLSession.shared.request(route: .viewCounter, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .viewCounter, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let viewCount):
                 if viewCount.success == true {
@@ -78,7 +78,7 @@ class ItinraryDetailViewController: BaseViewController {
     }
     
     func like(parameters: [String: Any]) {
-        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
                 self.favoriteBtn.setImage(like.message == "Liked" ? UIImage(named: "liked-red") : UIImage(named: "liked"), for: .normal)

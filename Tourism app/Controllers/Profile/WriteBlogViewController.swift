@@ -71,7 +71,7 @@ class WriteBlogViewController: BaseViewController, UINavigationControllerDelegat
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: BlogApiType) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 if apiType == .district{

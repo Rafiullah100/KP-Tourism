@@ -40,14 +40,15 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert-cell-bg" translatesAutoresizingMaskIntoConstraints="NO" id="eM4-l1-68k">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="euP-dV-C6C">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="195"/>
+                                <color key="backgroundColor" red="0.19607843137254902" green="0.45490196078431372" blue="0.14509803921568629" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
-                                        <real key="value" value="10"/>
+                                        <real key="value" value="5"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                            </imageView>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eUg-2R-hRS">
                                 <rect key="frame" x="13" y="15" width="389" height="175"/>
                                 <subviews>
@@ -278,18 +279,18 @@
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="euP-dV-C6C" firstAttribute="leading" secondItem="hPA-X5-R6g" secondAttribute="leading" id="6rZ-vg-f2a"/>
                             <constraint firstItem="hGs-IK-od6" firstAttribute="leading" secondItem="hPA-X5-R6g" secondAttribute="leading" id="At3-5Y-OwX"/>
+                            <constraint firstItem="euP-dV-C6C" firstAttribute="top" secondItem="hPA-X5-R6g" secondAttribute="top" id="AzE-rK-pZH"/>
                             <constraint firstItem="hGs-IK-od6" firstAttribute="top" secondItem="hPA-X5-R6g" secondAttribute="top" id="DH4-14-V2g"/>
-                            <constraint firstItem="eM4-l1-68k" firstAttribute="leading" secondItem="hPA-X5-R6g" secondAttribute="leading" id="Dus-Yb-iIy"/>
                             <constraint firstItem="eUg-2R-hRS" firstAttribute="leading" secondItem="hPA-X5-R6g" secondAttribute="leading" constant="13" id="IB2-ru-5yN"/>
                             <constraint firstAttribute="trailing" secondItem="hGs-IK-od6" secondAttribute="trailing" id="Mj2-Yp-A5x"/>
-                            <constraint firstAttribute="bottom" secondItem="eM4-l1-68k" secondAttribute="bottom" id="PcE-sx-xG0"/>
-                            <constraint firstAttribute="trailing" secondItem="eM4-l1-68k" secondAttribute="trailing" id="cWX-HF-z6k"/>
                             <constraint firstItem="eUg-2R-hRS" firstAttribute="top" secondItem="hPA-X5-R6g" secondAttribute="top" constant="15" id="dh5-PM-mO6"/>
                             <constraint firstAttribute="trailing" secondItem="eUg-2R-hRS" secondAttribute="trailing" constant="12" id="fxu-Kz-GlV"/>
+                            <constraint firstAttribute="trailing" secondItem="euP-dV-C6C" secondAttribute="trailing" id="qnO-es-nnd"/>
+                            <constraint firstAttribute="bottom" secondItem="euP-dV-C6C" secondAttribute="bottom" id="uSO-t2-zes"/>
                             <constraint firstAttribute="bottom" secondItem="hGs-IK-od6" secondAttribute="bottom" id="wIm-tW-KTV"/>
                             <constraint firstAttribute="bottom" secondItem="eUg-2R-hRS" secondAttribute="bottom" constant="5" id="woS-ch-0gB"/>
-                            <constraint firstItem="eM4-l1-68k" firstAttribute="top" secondItem="hPA-X5-R6g" secondAttribute="top" id="zdy-1L-YP7"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
@@ -321,7 +322,6 @@
     <resources>
         <image name="01-s" width="75" height="45"/>
         <image name="36-s" width="75" height="45"/>
-        <image name="alert-cell-bg" width="359.5" height="200"/>
         <image name="alert-cell-bg1" width="377.5" height="218"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

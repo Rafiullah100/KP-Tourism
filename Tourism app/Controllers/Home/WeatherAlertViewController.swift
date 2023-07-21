@@ -42,11 +42,16 @@ class WeatherAlertViewController: BaseViewController {
     var districtList: [DistrictsListRow]?
 
     var alertType: WeatherAlertType?
-    
+    var isDataLoaded = false
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         if alertType == .weather {
             type = .title
             viewControllerTitle = "Weather"
@@ -55,7 +60,9 @@ class WeatherAlertViewController: BaseViewController {
         else{
             type = .title1
             viewControllerTitle = "Alerts"
-            changeCell(type: .AlertTableViewCell)
+            if isDataLoaded == false {
+                changeCell(type: .AlertTableViewCell)
+            }
         }
     }
     
@@ -118,7 +125,7 @@ class WeatherAlertViewController: BaseViewController {
     }
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 switch self.cellType {
@@ -139,7 +146,7 @@ class WeatherAlertViewController: BaseViewController {
     }
     
     func fetchDistrictKeys<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 self.districtList = (model as! DistrictListModel).districts?.rows

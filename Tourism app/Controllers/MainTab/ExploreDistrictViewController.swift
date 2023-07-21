@@ -51,7 +51,7 @@ class ExploreDistrictViewController: BaseViewController {
     }
     
     func fetchDistrict(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchExpolreDistrict, method: .post, parameters: parameters, model: ExploreModel.self) { result in
+       dataTask = URLSession.shared.request(route: .fetchExpolreDistrict, method: .post, parameters: parameters, model: ExploreModel.self) { result in
             switch result {
             case .success(let explore):
                 self.exploreDistrict.append(contentsOf: explore.attractions)

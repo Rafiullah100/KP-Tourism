@@ -61,7 +61,7 @@ class SignupViewController: BaseViewController {
     }
     
     func registerUser(parameters: [String: Any]) {
-        URLSession.shared.request(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .registration, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 DispatchQueue.main.async {

@@ -156,7 +156,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     
     
     func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+       URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 let conversationModel = model as? OnetoOneConversationModel
@@ -189,7 +189,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     }
     
     func sendMessage<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, text: String, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
+       URLSession.shared.request(route: route, method: method, showLoader: false, parameters: parameters, model: model) { result in
             switch result {
             case .success(let message):
                 let success = message as? SuccessModel

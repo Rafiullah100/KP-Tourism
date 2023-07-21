@@ -41,7 +41,7 @@ class VisitViewController: BaseViewController {
     }
 
     func fetch() {
-        URLSession.shared.request(route: .fetchVisitKp, method: .post, parameters: nil, model: VisitKPModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchVisitKp, method: .post, parameters: nil, model: VisitKPModel.self) { result in
             switch result {
             case .success(let visit):
                 self.visit = visit.attractions.rows

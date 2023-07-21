@@ -174,7 +174,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     func like(parameters: [String: Any]) {
-        URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .likeApi, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
                 if like.success == true {
@@ -211,7 +211,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     func doComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -226,7 +226,7 @@ class ProductDetailViewController: BaseViewController {
     }
 
     func commentReply(parameters: [String: Any], row: IndexPath) {
-        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -240,7 +240,7 @@ class ProductDetailViewController: BaseViewController {
     }
 
     func fetchComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchComment, method: .post,  showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchComment, method: .post,  showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
                 self.totalCount = comments.comments?.count ?? 1

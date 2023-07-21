@@ -57,7 +57,7 @@ class PackageViewController: BaseViewController {
     }
 
     func fetchPackages(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchTourPackage, method: .post, parameters: parameters, model: TourModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchTourPackage, method: .post, parameters: parameters, model: TourModel.self) { result in
             switch result {
             case .success(let package):
                 self.tourPackage.append(contentsOf: package.tour)

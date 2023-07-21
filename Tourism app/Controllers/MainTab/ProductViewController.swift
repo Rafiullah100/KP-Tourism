@@ -56,7 +56,7 @@ class ProductViewController: BaseViewController {
     }
 
     func fetchProduct(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchProduct, method: .post, parameters: parameters, model: ProductModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchProduct, method: .post, parameters: parameters, model: ProductModel.self) { result in
             switch result {
             case .success(let product):
                 self.localProducts.append(contentsOf: product.localProducts)

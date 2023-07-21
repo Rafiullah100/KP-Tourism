@@ -41,7 +41,7 @@ class SettingViewController: BaseViewController {
     }
 
     func deleteAccount() {
-        URLSession.shared.request(route: .deleteProfile, method: .post, parameters: nil, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .deleteProfile, method: .post, parameters: nil, model: SuccessModel.self) { result in
             switch result {
             case .success(let delete):
                 if delete.success == true {

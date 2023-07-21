@@ -48,7 +48,7 @@ class NotificationListViewController: BaseViewController {
     }
     
     func fetchNotification() {
-        URLSession.shared.request(route: .notificationList, method: .post, parameters: nil, model: NotificationListModel.self) { result in
+        dataTask = URLSession.shared.request(route: .notificationList, method: .post, parameters: nil, model: NotificationListModel.self) { result in
             switch result {
             case .success(let notificationsModel):
                 self.notifications = notificationsModel.notifications.rows ?? []

@@ -36,6 +36,7 @@ class PostCommentViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.keyboardDismissMode = .onDrag
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
         commentTextView.text = commentText
@@ -43,6 +44,7 @@ class PostCommentViewController: BaseViewController {
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         reloadComment()
     }
+
     
     private func reloadComment(){
         fetchComment(parameters: ["section_id": postId ?? 0, "section": "post", "page": currentPage, "limit": limit])
@@ -54,7 +56,7 @@ class PostCommentViewController: BaseViewController {
     }
     
     func doComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -69,7 +71,7 @@ class PostCommentViewController: BaseViewController {
     }
 
     func commentReply(parameters: [String: Any], row: IndexPath) {
-        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -83,7 +85,7 @@ class PostCommentViewController: BaseViewController {
     }
 
     func fetchComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchComment, method: .post, parameters: parameters, model: CommentsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchComment, method: .post, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let commentsDetail):
                 self.totalCount = commentsDetail.comments?.count ?? 1

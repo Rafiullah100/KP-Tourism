@@ -98,7 +98,7 @@ class LoginViewController: BaseViewController {
     }
     
     func loginUser(route: Route, parameters: [String: Any]? = nil) {
-        URLSession.shared.request(route: route, method: .post, parameters: parameters, model: LoginModel.self) { result in
+        dataTask = URLSession.shared.request(route: route, method: .post, parameters: parameters, model: LoginModel.self) { result in
             switch result {
             case .success(let login):
                 self.login = login

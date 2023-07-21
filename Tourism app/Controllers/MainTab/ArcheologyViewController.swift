@@ -49,7 +49,7 @@ class ArcheologyViewController: BaseViewController {
     }
 
     func fetchPackages(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchArcheology, method: .post, parameters: parameters, model: ArcheologyModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchArcheology, method: .post, parameters: parameters, model: ArcheologyModel.self) { result in
             switch result {
             case .success(let archeology):
                 self.archeology.append(contentsOf: archeology.archeology)

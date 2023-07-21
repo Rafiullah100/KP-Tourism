@@ -10,7 +10,8 @@ import UIKit
 import SVProgressHUD
 import Toast_Swift
 extension URLSession{
-    func request<T: Codable>(route: Route, method: Method, showLoader: Bool? = true, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) {
+    func request<T: Codable>(route: Route, method: Method, showLoader: Bool? = true, parameters: [String: Any]? = nil, model: T.Type, completion: @escaping (Result<T, AppError>) -> Void) -> URLSessionDataTask?  {
+        var task: URLSessionDataTask?
         var showPrgoesshud: Bool?
         showPrgoesshud = showLoader
         if !Reachability.isConnectedToNetwork() {
@@ -18,7 +19,7 @@ extension URLSession{
         }
         guard let request = createRequest(route: route, method: method, parameters: parameters) else {
             completion(.failure(AppError.unknownError))
-            return
+            return task
         }
         
         if let value = parameters?["page"], value as? Int != 1 {
@@ -29,7 +30,7 @@ extension URLSession{
             SVProgressHUD.setDefaultMaskType(.none)
             SVProgressHUD.setBackgroundColor(.lightGray)
         }
-        let task = dataTask(with: request) { data, response, error in
+        task = dataTask(with: request) { data, response, error in
             SVProgressHUD.dismiss()
             guard let data = data else {
                 if let error = error{
@@ -53,7 +54,8 @@ extension URLSession{
                 }
             }
         }
-        task.resume()
+        task?.resume()
+        return task
     }
     
     func createRequest(route: Route,

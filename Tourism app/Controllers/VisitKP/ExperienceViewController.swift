@@ -64,7 +64,7 @@ class ExperienceViewController: BaseViewController {
     }
     
     func fetch() {
-        URLSession.shared.request(route: .districtCategoriesApi, method: .post, parameters: nil, model: DistrictCatModel.self) { result in
+        dataTask = URLSession.shared.request(route: .districtCategoriesApi, method: .post, parameters: nil, model: DistrictCatModel.self) { result in
             switch result {
             case .success(let category):
                 self.districtCategries = category.districtCategorories

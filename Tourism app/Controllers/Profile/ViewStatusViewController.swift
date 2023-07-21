@@ -15,26 +15,11 @@ class ViewStatusViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imageView.sd_setImage(with: URL(string: Route.baseUrl + (imageUrl ?? "")))
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
+        let panGesture = UITapGestureRecognizer(target: self, action: #selector(handlePanGesture(_:)))
         view.addGestureRecognizer(panGesture)
     }
     
     @objc private func handlePanGesture(_ gesture: UIPanGestureRecognizer) {
-        let translation = gesture.translation(in: view)
-        let screenHeight = UIScreen.main.bounds.height
-        switch gesture.state {
-        case .ended:
-            let dismissThreshold: CGFloat = screenHeight * 0.1
-            if translation.y > dismissThreshold  {
-                dismiss(animated: true, completion: nil)
-            } else {
-                UIView.animate(withDuration: 0.3) {
-                    self.view.transform = .identity
-                }
-            }
-            
-        default:
-            break
-        }
+        dismiss(animated: true, completion: nil)
     }
 }

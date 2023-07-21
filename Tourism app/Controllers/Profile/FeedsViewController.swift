@@ -115,7 +115,7 @@ class FeedsViewController: BaseViewController {
     }
     
     func fetchFeeds(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchFeeds, method: .post, showLoader: false, parameters: parameters, model: NewsFeedModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchFeeds, method: .post, showLoader: false, parameters: parameters, model: NewsFeedModel.self) { result in
             switch result {
             case .success(let feedsModel):
                 self.newsFeed.append(contentsOf: feedsModel.feeds ?? [])
@@ -131,7 +131,7 @@ class FeedsViewController: BaseViewController {
     }
     
     func fetchFeedsStories(parameters: [String: Any]) {
-        URLSession.shared.request(route: .feedStories, method: .post, parameters: parameters, model: FeedStoriesModel.self) { result in
+        dataTask = URLSession.shared.request(route: .feedStories, method: .post, parameters: parameters, model: FeedStoriesModel.self) { result in
             switch result {
             case .success(let feedStories):
                 self.stories.append(contentsOf: feedStories.stories?.rows ?? [])
@@ -168,7 +168,7 @@ class FeedsViewController: BaseViewController {
     }
     
     func deletePost(parameters: [String: Any]? = nil, row: Int) {
-        URLSession.shared.request(route: .deletePost, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .deletePost, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let delete):
                 if delete.success == true{
@@ -185,7 +185,7 @@ class FeedsViewController: BaseViewController {
         }
     }
     func share(parameters: [String: Any]) {
-        URLSession.shared.request(route: .shareApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .shareApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let share):
                 if share.success == true{

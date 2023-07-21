@@ -41,7 +41,7 @@ class ChatListViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .conversationUser, method: .post, showLoader: false, model: LoadedConversationModel.self) { result in
+        dataTask = URLSession.shared.request(route: .conversationUser, method: .post, showLoader: false, model: LoadedConversationModel.self) { result in
             switch result {
             case .success(let users):
                 self.conversationUsers.append(contentsOf: (users.userConversations ?? []))
@@ -55,7 +55,7 @@ class ChatListViewController: BaseViewController {
     }
     
     func deleteConversation(parameters: [String: Any], index: Int) {
-        URLSession.shared.request(route: .deleteConversation, method: .post, showLoader: true, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .deleteConversation, method: .post, showLoader: true, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let res):
                 if res.success == true{

@@ -56,7 +56,7 @@ class GalleryViewController: BaseViewController {
     }
     
     func fetch() {
-        URLSession.shared.request(route: .fetchGallery, method: .post, parameters: nil, model: GalleryModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchGallery, method: .post, parameters: nil, model: GalleryModel.self) { result in
             switch result {
             case .success(let gallery):
                 self.gallery = gallery

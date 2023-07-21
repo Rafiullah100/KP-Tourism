@@ -10,6 +10,7 @@ import AVFoundation
 import AVKit
 import SwiftGifOrigin
 import SDWebImage
+import SVProgressHUD
 class ViewerCell: UICollectionViewCell, UIScrollViewDelegate {
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imgView: UIImageView!
@@ -46,7 +47,6 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -57,11 +57,12 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillAppear(animated)
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        collectionView.reloadData()
-        collectionView.layoutIfNeeded()
-        collectionView.scrollToItem(at: IndexPath(row: position ?? 0, section: 0), at: [.top], animated: false)
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        DispatchQueue.main.async {
+            guard let position = self.position else { return }
+            self.collectionView.scrollToItem(at: IndexPath(row: position, section: 0), at: [.left], animated: false)
+        }
     }
 }
 
@@ -88,13 +89,15 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
 //            cell.imgView.loadGif(name: "image_loader")
             let url = URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? ""))
             cell.imgView.sd_setImage(with: url)
+            SVProgressHUD.show()
             SDWebImageManager.shared.loadImage(
                 with: url,
                 options: .retryFailed,
                 progress: nil,
                 completed: { [weak image = cell.imgView.image] (image, _, error, _, _, _) in
+                    SVProgressHUD.dismiss()
                     if error != nil {
-                        cell.imgView.loadGif(name: "image_loader")
+                        cell.imgView.image = UIImage(named: "placeholder")
                     } else {
                         // Image loaded successfully
                         cell.imgView.image = image

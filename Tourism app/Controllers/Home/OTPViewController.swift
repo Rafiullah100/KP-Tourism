@@ -85,7 +85,7 @@ class OTPViewController: BaseViewController {
     
     @IBAction func resendBtnAction(_ sender: Any) {
         print(UserDefaults.standard.otpEmail ?? "")
-        URLSession.shared.request(route: .resendOtp, method: .post, parameters: ["username": UserDefaults.standard.otpEmail ?? ""], model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .resendOtp, method: .post, parameters: ["username": UserDefaults.standard.otpEmail ?? ""], model: SuccessModel.self) { result in
             switch result {
             case .success(let otp):
                 SVProgressHUD.showSuccess(withStatus: otp.message)
@@ -102,7 +102,7 @@ class OTPViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .verifyOtp, method: .post, parameters: parameters, model: OTPModel.self) { result in
+        dataTask = URLSession.shared.request(route: .verifyOtp, method: .post, parameters: parameters, model: OTPModel.self) { result in
             switch result {
             case .success(let res):
                 if res.success == true{

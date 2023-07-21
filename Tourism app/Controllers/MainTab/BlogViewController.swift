@@ -56,7 +56,7 @@ class BlogViewController: BaseViewController {
     }
 
     func fetchBlog(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchBlogs, method: .post, parameters: parameters, model: BlogsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchBlogs, method: .post, parameters: parameters, model: BlogsModel.self) { result in
             switch result {
             case .success(let blogModel):
                 self.blogs.append(contentsOf: blogModel.blog)

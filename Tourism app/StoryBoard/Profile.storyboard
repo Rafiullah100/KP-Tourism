@@ -1394,6 +1394,7 @@
                                                                                                 <subviews>
                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select District" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tNR-L6-ssW">
                                                                                                         <rect key="frame" x="5" y="0.0" width="323" height="44"/>
+                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                         <userDefinedRuntimeAttributes>
@@ -1507,6 +1508,7 @@
                                                                                                 <subviews>
                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select Attraction" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gkl-tW-67O">
                                                                                                         <rect key="frame" x="5" y="0.0" width="323" height="44"/>
+                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                         <userDefinedRuntimeAttributes>
@@ -1620,6 +1622,7 @@
                                                                                                 <subviews>
                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select POI" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pdc-rA-Ik8">
                                                                                                         <rect key="frame" x="5" y="0.0" width="323" height="44"/>
+                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                         <userDefinedRuntimeAttributes>
@@ -3826,20 +3829,32 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dor-qG-EYp">
                                 <rect key="frame" x="10" y="79" width="373" height="739"/>
                                 <subviews>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1z8-LV-Bcb">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lLv-mn-qEl">
                                         <rect key="frame" x="0.0" y="0.0" width="373" height="639"/>
+                                        <subviews>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="1z8-LV-Bcb">
+                                                <rect key="frame" x="0.0" y="0.0" width="373" height="639"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell_identifier" id="ODv-0A-LSI">
+                                                        <rect key="frame" x="0.0" y="50" width="373" height="44"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ODv-0A-LSI" id="fFL-EV-vkS">
+                                                            <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
+                                        </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell_identifier" id="ODv-0A-LSI">
-                                                <rect key="frame" x="0.0" y="50" width="373" height="44"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ODv-0A-LSI" id="fFL-EV-vkS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="373" height="44"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                </tableViewCellContentView>
-                                            </tableViewCell>
-                                        </prototypes>
-                                    </tableView>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="1z8-LV-Bcb" secondAttribute="trailing" id="8q1-sD-lEN"/>
+                                            <constraint firstItem="1z8-LV-Bcb" firstAttribute="top" secondItem="lLv-mn-qEl" secondAttribute="top" id="98q-ce-yaF"/>
+                                            <constraint firstItem="1z8-LV-Bcb" firstAttribute="leading" secondItem="lLv-mn-qEl" secondAttribute="leading" id="Uf2-Fr-EDf"/>
+                                            <constraint firstAttribute="bottom" secondItem="1z8-LV-Bcb" secondAttribute="bottom" id="rwF-iJ-Xcp"/>
+                                        </constraints>
+                                    </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="EBv-Wc-GYK">
                                         <rect key="frame" x="0.0" y="639" width="373" height="100"/>
                                         <subviews>
@@ -4294,6 +4309,7 @@
                                                                                                 <subviews>
                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select District" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="izf-Yg-ki7">
                                                                                                         <rect key="frame" x="5" y="0.0" width="333" height="44"/>
+                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                         <userDefinedRuntimeAttributes>
@@ -5055,6 +5071,7 @@
                                                                                                                 <subviews>
                                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select district" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AEf-RS-FI6">
                                                                                                                         <rect key="frame" x="5" y="0.0" width="136.66666666666666" height="44"/>
+                                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                                         <userDefinedRuntimeAttributes>
@@ -5167,6 +5184,7 @@
                                                                                                                 <subviews>
                                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select district" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6t8-dR-c6o">
                                                                                                                         <rect key="frame" x="5" y="0.0" width="136.33333333333334" height="44"/>
+                                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                                         <userDefinedRuntimeAttributes>
@@ -6160,6 +6178,7 @@
                                                                                                                 <subviews>
                                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="kWP-DN-x4a">
                                                                                                                         <rect key="frame" x="5" y="0.0" width="136.33333333333334" height="44"/>
+                                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                                         <userDefinedRuntimeAttributes>
@@ -6380,6 +6399,7 @@
                                                                                                                 <subviews>
                                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select type" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="prS-4e-BWR">
                                                                                                                         <rect key="frame" x="5" y="0.0" width="136.66666666666666" height="44"/>
+                                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                                         <userDefinedRuntimeAttributes>
@@ -6492,6 +6512,7 @@
                                                                                                                 <subviews>
                                                                                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Select transport" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="74u-pq-Oxm">
                                                                                                                         <rect key="frame" x="5" y="0.0" width="136.33333333333334" height="44"/>
+                                                                                                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                         <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                                                                                         <textInputTraits key="textInputTraits"/>
                                                                                                                         <userDefinedRuntimeAttributes>

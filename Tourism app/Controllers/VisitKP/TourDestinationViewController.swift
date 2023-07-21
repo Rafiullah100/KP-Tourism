@@ -64,7 +64,7 @@ class TourDestinationViewController: BaseViewController {
     }
     
     func fetchList(parameters: [String: Any]) {
-        URLSession.shared.request(route: .districtListApi, method: .post, parameters: parameters, model: DistrictListModel.self) { result in
+        dataTask = URLSession.shared.request(route: .districtListApi, method: .post, parameters: parameters, model: DistrictListModel.self) { result in
             switch result {
             case .success(let DistrictListM):
                 DispatchQueue.main.async {

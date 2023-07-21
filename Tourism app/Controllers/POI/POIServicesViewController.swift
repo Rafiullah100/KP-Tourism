@@ -65,7 +65,7 @@ class POIServicesViewController: BaseViewController {
             parameters = ["attraction_id": wishlistAttraction?.id ?? 0, "poi_category_id":  poiCategoriId ?? 0, "limit": limit, "page": currentPage] as [String : Any]
         }
         print(parameters)
-        URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchPoiSubCategories, method: .post, parameters: parameters, model: POISubCatoriesModel.self) { result in
             switch result {
             case .success(let poiSubCategory):
                 DispatchQueue.main.async {

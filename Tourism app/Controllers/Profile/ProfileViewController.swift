@@ -177,7 +177,7 @@ class ProfileViewController: BaseViewController {
     }
     
     func followUser<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let success):
                 let res = success as? SuccessModel
@@ -232,7 +232,7 @@ class ProfileViewController: BaseViewController {
     }
     
     private func fetch<T: Codable>(route: Route, method: Method, parameters: [String: Any]? = nil, model: T.Type, apiType: ApiType, index: Int? = nil) {
-        URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
+        dataTask = URLSession.shared.request(route: route, method: method, parameters: parameters, model: model) { result in
             switch result {
             case .success(let model):
                 if apiType == .profile{

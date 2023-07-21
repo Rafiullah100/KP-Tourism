@@ -81,7 +81,7 @@ class EventsViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchEventsByDistrict, method: .post, parameters: parameters, model: EventsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchEventsByDistrict, method: .post, parameters: parameters, model: EventsModel.self) { result in
             switch result {
             case .success(let eventDetail):
                 self.eventsArray.append(contentsOf: eventDetail.events)

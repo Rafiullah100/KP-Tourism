@@ -143,7 +143,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     func doComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doComment, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -170,7 +170,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     func interest(parameters: [String: Any]) {
-        URLSession.shared.request(route: .doEventInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .doEventInterest, method: .post, showLoader: false, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let like):
                 self.favoriteBtn.setImage(UIImage(named: like.message == "Interest Added" ? "interested-red" : "interested"), for: .normal)
@@ -193,7 +193,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     func commentReply(parameters: [String: Any]? = nil, row: IndexPath) {
-        URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .commentReply, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let result):
                 if result.success == true{
@@ -207,7 +207,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     func fetchComment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchComment, method: .post, showLoader: false, parameters: parameters, model: CommentsModel.self) { result in
             switch result {
             case .success(let comments):
                 self.totalCount = comments.comments?.count ?? 1

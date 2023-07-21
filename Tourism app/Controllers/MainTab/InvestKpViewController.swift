@@ -49,7 +49,7 @@ class InvestKpViewController: BaseViewController {
     }
     
     func fetchInvestment(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchInvestment, method: .post, parameters: parameters, model: InvestmentModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchInvestment, method: .post, parameters: parameters, model: InvestmentModel.self) { result in
             switch result {
             case .success(let investment):
                 self.investment.append(contentsOf: investment.investments?.rows ?? [])

@@ -83,7 +83,7 @@ class ItenrariesViewController: BaseViewController {
     }
     
     func fetch(parameters: [String: Any]) {
-        URLSession.shared.request(route: .fetchItinraries, method: .post, parameters: parameters, model: ItinraryModel.self) { result in
+        dataTask = URLSession.shared.request(route: .fetchItinraries, method: .post, parameters: parameters, model: ItinraryModel.self) { result in
             switch result {
             case .success(let itinraryDetail):
                 self.itinraryArray.append(contentsOf: itinraryDetail.itineraries?.rows ?? [])

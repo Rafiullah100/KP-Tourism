@@ -23,7 +23,7 @@ class NotificationViewController: BaseViewController {
     
     func changeNotificationStatus(parameters: [String: Any]) {
         print(parameters)
-        URLSession.shared.request(route: .notificationSwitchApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
+        dataTask = URLSession.shared.request(route: .notificationSwitchApi, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let res):
                 if res.success == true {
