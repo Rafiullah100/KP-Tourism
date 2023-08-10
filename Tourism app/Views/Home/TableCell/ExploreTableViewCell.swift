@@ -41,6 +41,7 @@ class ExploreTableViewCell: UITableViewCell {
         self.district?.attractions.forEach({ attration in
             self.slideArray.append(attration.previewImage ?? "")
         })
+        print(self.district?.attractions ?? [])
         imageSDWebImageSrc = []
         DispatchQueue.main.async {
             for i in 0..<self.slideArray.count{

@@ -36,5 +36,6 @@ pod 'MessageKit', '~> 3.3.0'
 #pod 'UIAlertDateTimePicker', '~> 1.0'
 pod 'Firebase/Crashlytics'
 pod 'Firebase/Analytics'
+pod 'TagListView', '~> 1.0'
 
 end

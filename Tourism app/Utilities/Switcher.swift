@@ -376,17 +376,17 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoVisitExpVC(delegate: UIViewController, geoTypeId: String){
-        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "ExperienceViewController") as! ExperienceViewController
-        vc.geoTypeId = geoTypeId
+    static func gotoVisitAttractionVC(delegate: UIViewController, districtId: Int){
+        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "TourAttractionViewController") as! TourAttractionViewController
+        vc.districtId = districtId
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
-    static func gotoTourDestinationVC(delegate: UIViewController, experienceID: Int, geoTypeID: String){
+    static func gotoTourDestinationVC(delegate: UIViewController, geoTypeID: String){
         let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "TourDestinationViewController") as! TourDestinationViewController
         vc.geoTypeId = geoTypeID
-        vc.experienceId = experienceID
+//        vc.experienceId = experienceID
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }

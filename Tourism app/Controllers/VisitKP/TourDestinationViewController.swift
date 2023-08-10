@@ -31,7 +31,7 @@ class TourAccomodatioCell: UITableViewCell {
         }
     }
     
-    var experienceID: Int?
+//    var experienceID: Int?
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -60,7 +60,7 @@ class TourDestinationViewController: BaseViewController {
         super.viewDidLoad()
         type = .visitKP
         viewControllerTitle = "Tour Planner"
-        fetchList(parameters: ["limit": 50, "district_category_id": experienceId ?? 0, "geoType": geoTypeId ?? ""])
+        fetchList(parameters: ["limit": 50, "geoType": geoTypeId ?? ""])
     }
     
     func fetchList(parameters: [String: Any]) {
@@ -80,7 +80,7 @@ class TourDestinationViewController: BaseViewController {
     
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
-            Switcher.gotoTourInformationVC(delegate: self, districtID: districtID ?? 0)
+            Switcher.gotoVisitAttractionVC(delegate: self, districtId: districtID ?? 0)
         }
         else{
             self.view.makeToast("Please select destination")
