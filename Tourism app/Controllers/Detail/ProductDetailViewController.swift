@@ -156,6 +156,7 @@ class ProductDetailViewController: BaseViewController {
 
     @IBAction func shareBtnAction(_ sender: Any) {
         if detailType == .list{
+            print(productDetail?.title ?? "")
             self.share(title: productDetail?.title ?? "", text: productDetail?.localProductDescription ?? "", image: thumbnailImageView.image ?? UIImage())
         }
         else if detailType == .wishlist{
@@ -295,7 +296,8 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
         let comment = allComments[indexPath.section]
         if indexPath.row == 0 {
             let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-            cell.comment = allComments[indexPath.row]
+            print(allComments)
+            cell.comment = comment
             
             cell.commentReplyBlock = {
                 tableView.performBatchUpdates {

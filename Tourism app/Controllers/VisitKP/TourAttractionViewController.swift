@@ -16,8 +16,12 @@ class VisitAttractionTableViewCell: UITableViewCell {
     @IBOutlet weak var bottomView: UIView!
     
     @IBOutlet weak var tagView: TagListView!
+    
+    var tagsArray = [String]()
+    
     var attraction: TourAttractionsRow? {
         didSet {
+            tagView.isUserInteractionEnabled = false
             label.text = attraction?.title
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")))
             
@@ -29,17 +33,20 @@ class VisitAttractionTableViewCell: UITableViewCell {
             imageBGView.layer.cornerRadius = 10
             imageBGView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             bottomView.viewShadow()
-            tagView.addTags(["tag1", "tag2", "tag1", "tag2", "tag1", "tag2", "tag1", "tag2", "tag1", "tag2"])
+            tagsArray = []
+            attraction?.attractionCategoryPivots?.forEach({ pivot in
+                tagsArray.append(pivot.attractionCategories?.title ?? "")
+            })
+            tagView.removeAllTags()
+            tagView.addTags(tagsArray)
             tagView.alignment = .center
         }
     }
-    override var isSelected: Bool{
-        didSet{
-            selectedImgView.isHidden = isSelected ? false : true
-        }
+
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        selectedImgView.isHidden = selected ? false : true
     }
-    
-    
 }
 
 class TourAttractionViewController: BaseViewController {
@@ -57,7 +64,8 @@ class TourAttractionViewController: BaseViewController {
     var isSelected: Bool?
     var districtId: Int?
 //    var geoTypeId: String?
-    
+    var attractionId: Int?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .visitKP
@@ -84,6 +92,7 @@ class TourAttractionViewController: BaseViewController {
     @IBAction func forwardBtnAction(_ sender: Any) {
         if isSelected == true{
 //            Switcher.gotoTourDestinationVC(delegate: self, experienceID: experienceId ?? 0, geoTypeID: geoTypeId ?? "")
+            Switcher.gotoTourInformationVC(delegate: self, districtID: districtId ?? 0)
         }
         else{
             self.view.makeToast("Please select what would you like to experience")
@@ -105,11 +114,12 @@ extension TourAttractionViewController: UITableViewDelegate, UITableViewDataSour
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        experienceId = districtCategries?[indexPath.row].id
-//        isSelected = true
-//        guard let district = districtCategries?[indexPath.row] else { return }
-//        UserDefaults.standard.experience = district.title
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        attractionId = attractions?[indexPath.row].id
+        isSelected = true
+        guard let attraction = attractions?[indexPath.row] else { return }
+        UserDefaults.standard.attraction = attraction.title
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

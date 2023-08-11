@@ -354,6 +354,12 @@ class Switcher {
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
+    static func goToPlannerVC(delegate: UIViewController){
+        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PlannerListViewController") as! PlannerListViewController
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     static func goToPersonalInfoVC(delegate: UIViewController){
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PersonalInfoViewController") as! PersonalInfoViewController
         vc.modalPresentationStyle = .fullScreen

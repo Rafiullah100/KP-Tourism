@@ -520,8 +520,13 @@ extension UIViewController {
     
     public func share(title: String, text: String, image: UIImage){
         print(text)
-        let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, title, text], applicationActivities: nil)
-        
+        let activityViewController: UIActivityViewController = UIActivityViewController(activityItems: [image, text], applicationActivities: nil)
+        activityViewController.excludedActivityTypes = [
+                    .addToReadingList,
+                    .assignToContact,
+                    .print
+                ]
+        activityViewController.title = title
         DispatchQueue.main.async {
             self.present(activityViewController, animated: true, completion: nil)
         }

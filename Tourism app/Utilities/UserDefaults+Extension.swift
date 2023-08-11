@@ -16,7 +16,7 @@ extension UserDefaults {
         case name
         case districtKey
         case area
-        case experience
+        case attraction
         case destination
         case information
         case accomodation
@@ -105,12 +105,12 @@ extension UserDefaults {
         }
     }
     
-    var experience: String? {
+    var attraction: String? {
         get {
-            string(forKey: UserDefaultsKeys.experience.rawValue)
+            string(forKey: UserDefaultsKeys.attraction.rawValue)
         }
         set {
-            set(newValue, forKey: UserDefaultsKeys.experience.rawValue)
+            set(newValue, forKey: UserDefaultsKeys.attraction.rawValue)
         }
     }
     

@@ -33,7 +33,7 @@ class SettingViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"), Settings(image: "setting-tourist", title: "Become a Tourist"), Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "delete-account", title: "Deactivate Account")]
+        settings = [Settings(image: "setting-personal", title: "Personal Information"), Settings(image: "setting-seller", title: "Become a Seller"), Settings(image: "setting-tourist", title: "Become a Tourist"), Settings(image: "planner-gray", title: "Tour Planner"), Settings(image: "setting-notification", title: "Notification"), Settings(image: "setting-security", title: "Security"), Settings(image: "setting-help", title: "Help"), Settings(image: "delete-account", title: "Deactivate Account")]
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
@@ -77,7 +77,7 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch indexPath.row {
-        case 4:
+        case 5:
             Switcher.goToSecurityVC(delegate: self)
         case 1:
             Switcher.goToSellerVC(delegate: self, userType: .seller)
@@ -86,9 +86,11 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
         case 0:
             Switcher.goToPersonalInfoVC(delegate: self)
         case 3:
+            Switcher.goToPlannerVC(delegate: self)
+        case 4:
             Switcher.gotoNotificationListVC(delegate: self)
-        case 6:
-            Utility.showAlert(message: "Are you sure you want to delete you account?", buttonTitles: ["cancel", "Yes"]) { response in
+        case 7:
+            Utility.showAlert(message: "Are you sure you want to delete your account?", buttonTitles: ["cancel", "Yes"]) { response in
                 if response == "Yes"{
                     self.deleteAccount()
                 }

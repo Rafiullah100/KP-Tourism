@@ -21,11 +21,11 @@ class TourPdfViewController: BaseViewController {
     @IBAction func pdfBtnAction(_ sender: Any) {
 //        Switcher.gotoPdfDownloadVC(delegate: self)
         let area = UserDefaults.standard.area
-        let experience = UserDefaults.standard.experience
+        let attraction = UserDefaults.standard.attraction
         let destination = UserDefaults.standard.destination
         let information = UserDefaults.standard.information
         let accomodation = UserDefaults.standard.accomodation
-        fetch(parameters: ["name": UserDefaults.standard.name ?? "No name", "email": UserDefaults.standard.userEmail ?? "No Email", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": experience ?? "", "type": "pdf", "accomudation": accomodation ?? ""])
+        fetch(parameters: ["name": UserDefaults.standard.name ?? "No name", "email": UserDefaults.standard.userEmail ?? "No Email", "informations": information ?? "", "visits": area ?? "", "destination": destination ?? "", "experience": attraction ?? "", "type": "pdf", "accomudation": accomodation ?? ""])
     }
     
     func fetch(parameters: [String: Any]) {
@@ -48,7 +48,7 @@ class TourPdfViewController: BaseViewController {
     }
     
     @IBAction func emailBtnAction(_ sender: Any) {
-        let items = "\(UserDefaults.standard.area ?? "") \n \(UserDefaults.standard.experience ?? "") \n  \(UserDefaults.standard.destination ?? "") \n  \(UserDefaults.standard.information ?? "") \n \(UserDefaults.standard.accomodation ?? "")"
+        let items = "\(UserDefaults.standard.area ?? "") \n \(UserDefaults.standard.attraction ?? "") \n  \(UserDefaults.standard.destination ?? "") \n  \(UserDefaults.standard.information ?? "") \n \(UserDefaults.standard.accomodation ?? "")"
         print(items)
         let ac = UIActivityViewController(activityItems: [items], applicationActivities: nil)
         present(ac, animated: true)

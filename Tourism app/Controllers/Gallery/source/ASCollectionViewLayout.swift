@@ -430,7 +430,7 @@ import UIKit
         self.previousBoundsSize = .zero
         self.gridCellSize = CGSize(width: 200, height: 100)
         self.parallaxCellSize = CGSize(width: 400, height: 200)
-        self.gridCellSpacing = CGSize(width: 10, height: 10)
+        self.gridCellSpacing = CGSize(width: 5, height: 5)
         self.headerSize = CGSize(width: 0, height: 0)
         self.moreLoaderSize = CGSize(width: 50, height: 50)
         self.gridPadding = 5.0

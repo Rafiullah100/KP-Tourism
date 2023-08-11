@@ -88,6 +88,7 @@ class ProfileViewController: BaseViewController {
         topProfileView.viewShadow()
         addButton.isHidden = profileType == .user ? false : true
         writeBlogButton.isHidden = profileType == .user ? false : true
+        settingButton.isHidden = profileType == .user ? false : true
 //        buttonsView.isUserInteractionEnabled = profileType == .user ? true : false
 
         navigationController?.navigationBar.isHidden = true

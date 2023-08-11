@@ -39,6 +39,7 @@ class CommentsTableViewCell: UITableViewCell {
 
     var comment: CommentsRows?{
         didSet{
+            print(comment?.comment ?? "")
             timeLabel.text = "\(comment?.createdAt ?? "")"
             commentTextView.text = "\(comment?.comment ?? "")".removeSpaces()
             nameLabel.text = "\(comment?.users?.name ?? "")".capitalized

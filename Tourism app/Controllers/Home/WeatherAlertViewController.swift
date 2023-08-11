@@ -48,18 +48,26 @@ class WeatherAlertViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
+        if alertType == .weather {
+            type = .title
+            viewControllerTitle = "Weather"
+        }
+        else{
+            type = .title1
+            viewControllerTitle = "Alerts"
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if alertType == .weather {
-            type = .title
-            viewControllerTitle = "Weather"
+//            type = .title
+//            viewControllerTitle = "Weather"
             update()
         }
         else{
-            type = .title1
-            viewControllerTitle = "Alerts"
+//            type = .title1
+//            viewControllerTitle = "Alerts"
             if isDataLoaded == false {
                 changeCell(type: .AlertTableViewCell)
             }

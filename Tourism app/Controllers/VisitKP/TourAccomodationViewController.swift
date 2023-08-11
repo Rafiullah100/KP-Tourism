@@ -58,6 +58,7 @@ class TourAccomodationViewController: BaseViewController {
         type = .visitKP
         viewControllerTitle = "Tour Planner"
         //id 2
+        print(districtID ?? 0)
         fetch(parameters: ["district_id": districtID ?? 0])
     }
     
