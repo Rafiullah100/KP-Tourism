@@ -26,7 +26,7 @@ class FilterView: UIView {
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var containerView: UIView!
     var delegate: FilterDelegate?
-    
+
     var selectedIndexPaths = Set<IndexPath>()
     var categories: [Category]?{
         didSet{
@@ -44,26 +44,23 @@ class FilterView: UIView {
         commoninit()
     }
     
+    @IBAction func backGroundTapped(_ sender: Any) {
+        self.isHidden = true
+    }
     private func commoninit(){
-        let customMarkerView = Bundle.main.loadNibNamed("FilterView", owner: self, options: nil)![0] as! UIView
-        customMarkerView.frame = self.bounds
-        customMarkerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        let filterView = Bundle.main.loadNibNamed("FilterView", owner: self, options: nil)![0] as! UIView
+        filterView.frame = self.bounds
+        filterView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.roundCorners(corners: [.topLeft, .topRight], radius: 20)
         containerView.viewShadow()
-        addSubview(customMarkerView)
         
-        let overlayView = UIView(frame: self.bgView.bounds)
-        overlayView.backgroundColor = UIColor.clear
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
-        overlayView.addGestureRecognizer(tapGesture)
-        bgView.addSubview(overlayView)
+        addSubview(filterView)
+
+        
 //        collectionviewHeight.constant = collectionView.contentSize.height
 //        collectionView.reloadData()
     }
     
-    @objc func handleBackgroundTap() {
-        self.isHidden = true
-    }
     
     @IBAction func refreshBtn(_ sender: Any) {
         selectedIndexPaths = []

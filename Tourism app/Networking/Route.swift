@@ -92,7 +92,9 @@ enum Route {
     case deleteConversation
     case deleteMessage
     case tourAttraction
-
+    case saveTour
+    case tourList
+    
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -239,10 +241,8 @@ enum Route {
             return "api/mobile/users/do_interest"
         case .notificationList:
             return "api/mobile/users/notifications"
-            
         case .createPackage:
             return "api/mobile/users/tourpackage_create"
-            
         case .deleteApi:
             return "api/mobile/users/delete_record"
         case .userTourPackage:
@@ -261,6 +261,10 @@ enum Route {
             return "api/mobile/users/delete_message"
         case .tourAttraction:
             return "api/mobile/tour_packages/get_attractions"
+        case .saveTour:
+            return "api/mobile/tour_packages/save_plan"
+        case .tourList:
+            return "api/mobile/users/tourplan_list"
         }
     }
 }

@@ -28,14 +28,21 @@
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="390" height="300"/>
+            <rect key="frame" x="0.0" y="0.0" width="390" height="900"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wbK-rN-tr5">
-                    <rect key="frame" x="0.0" y="0.0" width="390" height="300"/>
+                    <rect key="frame" x="0.0" y="0.0" width="390" height="866"/>
                     <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHn-gU-AUG">
+                            <rect key="frame" x="0.0" y="0.0" width="390" height="866"/>
+                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                            <connections>
+                                <action selector="backGroundTapped:" destination="-1" eventType="touchUpInside" id="nMY-pT-KRJ"/>
+                            </connections>
+                        </button>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oSF-i4-REv">
-                            <rect key="frame" x="0.0" y="0.0" width="390" height="300"/>
+                            <rect key="frame" x="0.0" y="566" width="390" height="300"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="OnE-6u-4vt">
                                     <rect key="frame" x="10" y="10" width="370" height="270"/>
@@ -177,9 +184,13 @@
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
+                        <constraint firstItem="xHn-gU-AUG" firstAttribute="top" secondItem="wbK-rN-tr5" secondAttribute="top" id="0UK-Cd-bud"/>
+                        <constraint firstItem="xHn-gU-AUG" firstAttribute="leading" secondItem="wbK-rN-tr5" secondAttribute="leading" id="4nc-ro-Yh0"/>
                         <constraint firstItem="oSF-i4-REv" firstAttribute="leading" secondItem="wbK-rN-tr5" secondAttribute="leading" id="hFT-d3-6MX"/>
                         <constraint firstAttribute="bottom" secondItem="oSF-i4-REv" secondAttribute="bottom" id="jCN-m0-4WA"/>
                         <constraint firstAttribute="trailing" secondItem="oSF-i4-REv" secondAttribute="trailing" id="o27-T5-V4V"/>
+                        <constraint firstAttribute="trailing" secondItem="xHn-gU-AUG" secondAttribute="trailing" id="thV-iW-1oA"/>
+                        <constraint firstAttribute="bottom" secondItem="xHn-gU-AUG" secondAttribute="bottom" id="vOI-oe-wm8"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
                         <userDefinedRuntimeAttribute type="color" keyPath="borderColor">

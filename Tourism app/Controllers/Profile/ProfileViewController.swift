@@ -121,13 +121,13 @@ class ProfileViewController: BaseViewController {
             favoriteButton.isHidden = true
             editPhotoButton.isHidden = false
             suggestedView.isHidden = true
-            buttonsView.isUserInteractionEnabled = false
+//            buttonsView.isUserInteractionEnabled = false
         }
         else{
             favoriteButton.isHidden = false
             editPhotoButton.isHidden = true
             suggestedView.isHidden = false
-            buttonsView.isUserInteractionEnabled = true
+//            buttonsView.isUserInteractionEnabled = true
         }
     }
     

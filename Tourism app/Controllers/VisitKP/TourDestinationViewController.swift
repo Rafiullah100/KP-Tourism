@@ -110,7 +110,7 @@ extension TourDestinationViewController: UITableViewDelegate, UITableViewDataSou
 //        Switcher.gotoTourInformationVC(delegate: self)
         districtID = districtList?[indexPath.row].id
         isSelected = true
-        UserDefaults.standard.destination = districtList?[indexPath.row].title
+        UserDefaults.standard.destination = districtList?[indexPath.row].id
     }
 }
 

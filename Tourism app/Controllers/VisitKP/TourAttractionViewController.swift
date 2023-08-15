@@ -119,7 +119,7 @@ extension TourAttractionViewController: UITableViewDelegate, UITableViewDataSour
         attractionId = attractions?[indexPath.row].id
         isSelected = true
         guard let attraction = attractions?[indexPath.row] else { return }
-        UserDefaults.standard.attraction = attraction.title
+        UserDefaults.standard.attraction = attraction.id
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

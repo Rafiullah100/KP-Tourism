@@ -105,18 +105,18 @@ extension UserDefaults {
         }
     }
     
-    var attraction: String? {
+    var attraction: Int? {
         get {
-            string(forKey: UserDefaultsKeys.attraction.rawValue)
+            integer(forKey: UserDefaultsKeys.attraction.rawValue)
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.attraction.rawValue)
         }
     }
     
-    var destination: String? {
+    var destination: Int? {
         get {
-            string(forKey: UserDefaultsKeys.destination.rawValue)
+            integer(forKey: UserDefaultsKeys.destination.rawValue)
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.destination.rawValue)
@@ -132,9 +132,9 @@ extension UserDefaults {
         }
     }
     
-    var accomodation: String? {
+    var accomodation: Int? {
         get {
-            string(forKey: UserDefaultsKeys.accomodation.rawValue)
+            integer(forKey: UserDefaultsKeys.accomodation.rawValue)
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.accomodation.rawValue)

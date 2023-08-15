@@ -355,7 +355,7 @@ class Switcher {
     }
     
     static func goToPlannerVC(delegate: UIViewController){
-        let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PlannerListViewController") as! PlannerListViewController
+        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PlannerListViewController") as! PlannerListViewController
         vc.modalPresentationStyle = .fullScreen
         delegate.navigationController?.pushViewController(vc, animated: true)
     }
@@ -572,6 +572,13 @@ class Switcher {
         vc.imageUrl = url
         vc.modalPresentationStyle = .fullScreen
         delegate.present(vc, animated: true)
+    }
+    
+    static func gotoTourPlannerDetailVC(delegate: UIViewController, tourPlan: UserTourPlanModel){
+        let vc = UIStoryboard(name: Storyboard.visitkp.rawValue, bundle: nil).instantiateViewController(withIdentifier: "PlannerDetailViewController") as! PlannerDetailViewController
+        vc.tourPlan = tourPlan
+        vc.modalPresentationStyle = .fullScreen
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
 }
 

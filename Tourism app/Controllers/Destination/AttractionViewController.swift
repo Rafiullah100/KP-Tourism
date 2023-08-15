@@ -49,6 +49,7 @@ class AttractionViewController: BaseViewController {
         filterView.isHidden = !filterView.isHidden
     }
     
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         showfilterButton = false

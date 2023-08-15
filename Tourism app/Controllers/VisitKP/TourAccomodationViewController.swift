@@ -107,7 +107,7 @@ extension TourAccomodationViewController: UITableViewDelegate, UITableViewDataSo
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         isSelected = true
-        UserDefaults.standard.accomodation = accomodationDetail?.accomodations[indexPath.row].title
+        UserDefaults.standard.accomodation = accomodationDetail?.accomodations[indexPath.row].id
 //        if let encoded = try? JSONEncoder().encode( accomodationDetail?.accomodations[indexPath.row]) {
 //            UserDefaults.standard.set(encoded, forKey: "accomodation")
 //        }
