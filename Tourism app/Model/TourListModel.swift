@@ -43,10 +43,13 @@ struct UserTourPlanModel: Codable {
 struct TourListAttraction: Codable {
     let title: String?
     let attractionCategoryPivots: [AttractionCategoryPivot]?
-
+    let latitude: String?
+    let longitude: String?
+    
     enum CodingKeys: String, CodingKey {
         case title
         case attractionCategoryPivots = "attraction_category_pivots"
+        case latitude, longitude
     }
 }
 
@@ -70,4 +73,6 @@ struct TourListAttractionCategories: Codable {
 // MARK: - BookStay
 struct TourListBookStay: Codable {
     let title: String?
+    let latitude: String?
+    let longitude: String?
 }

@@ -95,6 +95,10 @@ extension SettingViewController: UITableViewDelegate, UITableViewDataSource{
                     self.deleteAccount()
                 }
             }
+        case 6:
+            Utility.showAlert(message: "Not available yet!", buttonTitles: ["ok"]) { responce in
+                print(responce)
+            }
         default:
             break
         }

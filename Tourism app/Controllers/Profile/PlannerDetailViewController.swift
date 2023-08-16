@@ -22,7 +22,7 @@ class PlannerDetailTableViewCell: UITableViewCell {
     }
 }
 
-class PlannerDetailViewController: UIViewController {
+class PlannerDetailViewController: BaseViewController {
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var navigationLabel: UILabel!
     
@@ -33,6 +33,7 @@ class PlannerDetailViewController: UIViewController {
             tableView.dataSource = self
         }
     }
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var gradientView: UIView!
     var mapView = MGLMapView()
     var destinationCoordinate: CLLocationCoordinate2D?
@@ -45,6 +46,26 @@ class PlannerDetailViewController: UIViewController {
         topBarView.addBottomShadow()
         tableView.estimatedRowHeight = 44.0
         tableView.rowHeight = UITableView.automaticDimension
+        dateLabel.text = "Created: \(Helper.shared.dateFormate(dateString: tourPlan?.createdAt ?? ""))"
+    }
+    
+    @IBAction func deleteTourBtnAction(_ sender: Any) {
+        deleteTourPlan(parameters: ["id": tourPlan?.id ?? 0])
+    }
+    
+    func deleteTourPlan(parameters: [String: Any]) {
+        dataTask = URLSession.shared.request(route: .deleteTourPlan, method: .post, showLoader: true, parameters: parameters, model: SuccessModel.self) { result in
+            switch result {
+            case .success(let model):
+                self.view.makeToast(model.message)
+                if model.success == true{
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: Constants.tourPlan), object: nil)
+                    self.navigationController?.popViewController(animated: true)
+                }
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
     }
     
     private func loadMap(){
@@ -101,21 +122,18 @@ extension PlannerDetailViewController: UITableViewDelegate, UITableViewDataSourc
         }
         return cell
     }
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 40.0
-//    }
 }
 
 extension PlannerDetailViewController: MGLMapViewDelegate{
-//    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
-//        exploreDistrict?.forEach({ district in
-//            guard let lat = Double(district.latitude ?? ""), let lon = Double(district.longitude ?? "")  else { return }
-//            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: district.title ?? "", subtitle: district.locationTitle ?? "", image: UIImage(named: "dummy") ?? UIImage())
-//            //            point.coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-//            mapView.addAnnotation(point)
-//        })
-//    }
+    func mapViewDidFinishLoadingMap(_ mapView: MGLMapView) {
+        guard let districtLat = Double(tourPlan?.district?.latitude ?? "0"), let districtlon = Double(tourPlan?.district?.longitude ?? "0"), let attractionLat = Double(tourPlan?.attraction?.latitude ?? "0"), let attractionlon = Double(tourPlan?.attraction?.longitude ?? "0"), let bookStaylat = Double(tourPlan?.bookStay?.latitude ?? "0"), let bookStaylon = Double(tourPlan?.bookStay?.longitude ?? "0")  else { return }
+        let districtPoint = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: districtLat, longitude: districtlon), title: tourPlan?.district?.title ?? "", subtitle: tourPlan?.geoType ?? "", image: UIImage(named: "dummy") ?? UIImage())
+        let attractionPoint = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: attractionLat, longitude: attractionlon), title: tourPlan?.attraction?.title ?? "", subtitle: tourPlan?.district?.title ?? "", image: UIImage(named: "dummy") ?? UIImage())
+        let bookStayPoint = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: bookStaylat, longitude: bookStaylon), title: tourPlan?.bookStay?.title ?? "", subtitle: tourPlan?.attraction?.title ?? "", image: UIImage(named: "dummy") ?? UIImage())
+        mapView.addAnnotation(districtPoint)
+        mapView.addAnnotation(attractionPoint)
+        mapView.addAnnotation(bookStayPoint)
+    }
     
     
     func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
@@ -133,20 +151,20 @@ extension PlannerDetailViewController: MGLMapViewDelegate{
         getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
     }
     
-    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-            let routeCoordinates: [CLLocationCoordinate2D] = [
-                CLLocationCoordinate2D(latitude: originCoordinate?.latitude ?? 0.0, longitude: originCoordinate?.longitude ?? 0.0),
-                CLLocationCoordinate2D(latitude: 34.6138, longitude: 71.9283), // Example coordinates
-                CLLocationCoordinate2D(latitude: 34.827769, longitude: 71.842309)  // Example coordinates
-            ]
-            let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
-            let source = MGLShapeSource(identifier: "route-source", shape: polyline, options: nil)
-            style.addSource(source)
-            let layer = MGLLineStyleLayer(identifier: "route-layer", source: source)
-            layer.lineColor = NSExpression(forConstantValue: UIColor.blue)
-            layer.lineWidth = NSExpression(forConstantValue: 3)
-            style.addLayer(layer)
-        }
+//    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
+//            let routeCoordinates: [CLLocationCoordinate2D] = [
+//                CLLocationCoordinate2D(latitude: originCoordinate?.latitude ?? 0.0, longitude: originCoordinate?.longitude ?? 0.0),
+//                CLLocationCoordinate2D(latitude: 34.6138, longitude: 71.9283), // Example coordinates
+//                CLLocationCoordinate2D(latitude: 34.827769, longitude: 71.842309)  // Example coordinates
+//            ]
+//            let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
+//            let source = MGLShapeSource(identifier: "route-source", shape: polyline, options: nil)
+//            style.addSource(source)
+//            let layer = MGLLineStyleLayer(identifier: "route-layer", source: source)
+//            layer.lineColor = NSExpression(forConstantValue: UIColor.blue)
+//            layer.lineWidth = NSExpression(forConstantValue: 3)
+//            style.addLayer(layer)
+//        }
 }
 
 extension PlannerDetailViewController: CLLocationManagerDelegate{

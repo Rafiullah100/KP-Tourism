@@ -347,6 +347,22 @@ class Helper{
             return Date()
         }
     }
+    
+    func dateFormate(dateString: String) -> String {
+        let inputDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        let outputDateFormat = "dd MMM yyyy"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = inputDateFormat
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        if let inputDate = dateFormatter.date(from: dateString) {
+            dateFormatter.dateFormat = outputDateFormat
+            let outputDateString = dateFormatter.string(from: inputDate)
+            print(outputDateString)
+            return outputDateString
+        } else {
+            return ""
+        }
+    }
 }
 
 //html text

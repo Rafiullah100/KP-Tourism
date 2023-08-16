@@ -40,11 +40,12 @@ class PlannerListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        tourList(parameters: [:])
+        tourList()
+        NotificationCenter.default.addObserver(self, selector: #selector(tourList), name: NSNotification.Name(rawValue: Constants.tourPlan), object: nil)
     }
     
-    func tourList(parameters: [String: Any]) {
-        dataTask = URLSession.shared.request(route: .tourList, method: .post, showLoader: true, parameters: parameters, model: TourListModel.self) { result in
+    @objc func tourList() {
+        dataTask = URLSession.shared.request(route: .tourList, method: .post, showLoader: true, parameters: nil, model: TourListModel.self) { result in
             switch result {
             case .success(let model):
                 self.userTourPlans = model.userTourPlans ?? []
@@ -68,7 +69,7 @@ extension PlannerListViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PlannerTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! PlannerTableViewCell
         cell.titleLabel.text = "Tour Planner \(indexPath.row + 1)"
-        cell.dateLabel.text = "\(userTourPlans?[indexPath.row].createdAt ?? "")"
+        cell.dateLabel.text = "Created: \(Helper.shared.dateFormate(dateString: userTourPlans?[indexPath.row].createdAt ?? ""))"
         return cell
     }
     
