@@ -40,11 +40,15 @@ class PlannerListViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         topBarView.addBottomShadow()
-        tourList()
-        NotificationCenter.default.addObserver(self, selector: #selector(tourList), name: NSNotification.Name(rawValue: Constants.tourPlan), object: nil)
+        loadData()
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchTourList), name: NSNotification.Name(rawValue: Constants.tourPlan), object: nil)
     }
     
-    @objc func tourList() {
+    func loadData(){
+        fetchTourList()
+    }
+    
+    @objc func fetchTourList() {
         dataTask = URLSession.shared.request(route: .tourList, method: .post, showLoader: true, parameters: nil, model: TourListModel.self) { result in
             switch result {
             case .success(let model):
@@ -68,7 +72,7 @@ extension PlannerListViewController: UITableViewDelegate, UITableViewDataSource{
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PlannerTableViewCell = tableView.dequeueReusableCell(withIdentifier: "cellIdentifier") as! PlannerTableViewCell
-        cell.titleLabel.text = "Tour Planner \(indexPath.row + 1)"
+        cell.titleLabel.text = "\(userTourPlans?[indexPath.row].district?.title ?? "") - \(userTourPlans?[indexPath.row].attraction?.title ?? "")"
         cell.dateLabel.text = "Created: \(Helper.shared.dateFormate(dateString: userTourPlans?[indexPath.row].createdAt ?? ""))"
         return cell
     }

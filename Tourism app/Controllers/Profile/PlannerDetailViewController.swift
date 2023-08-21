@@ -40,6 +40,7 @@ class PlannerDetailViewController: BaseViewController {
     var originCoordinate: CLLocationCoordinate2D?
     var locationManager = CLLocationManager()
     var tourPlan: UserTourPlanModel?
+    var isMapLoaded: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,6 +72,7 @@ class PlannerDetailViewController: BaseViewController {
     private func loadMap(){
         mapView = Helper.shared.showMap(view: view, latitude: originCoordinate?.latitude, longitude: originCoordinate?.longitude)
         mapView.zoomLevel = 7
+        mapView.showsUserLocation = true
         mapContainerView.addSubview(mapView)
         mapView.delegate = self
     }
@@ -133,6 +135,11 @@ extension PlannerDetailViewController: MGLMapViewDelegate{
         mapView.addAnnotation(districtPoint)
         mapView.addAnnotation(attractionPoint)
         mapView.addAnnotation(bookStayPoint)
+        tourPlan?.attraction?.pois?.forEach({ attractionPoi in
+            guard let lat = Double(attractionPoi.latitude ?? ""), let lon = Double(attractionPoi.longitude ?? "")  else { return }
+            let point = CustomAnnotation(coordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon), title: attractionPoi.title ?? "", subtitle: attractionPoi.locationTitle ?? "", image: UIImage(named: "dummy") ?? UIImage())
+            mapView.addAnnotation(point)
+        })
     }
     
     
@@ -150,27 +157,15 @@ extension PlannerDetailViewController: MGLMapViewDelegate{
             return  }
         getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude))
     }
-    
-//    func mapView(_ mapView: MGLMapView, didFinishLoading style: MGLStyle) {
-//            let routeCoordinates: [CLLocationCoordinate2D] = [
-//                CLLocationCoordinate2D(latitude: originCoordinate?.latitude ?? 0.0, longitude: originCoordinate?.longitude ?? 0.0),
-//                CLLocationCoordinate2D(latitude: 34.6138, longitude: 71.9283), // Example coordinates
-//                CLLocationCoordinate2D(latitude: 34.827769, longitude: 71.842309)  // Example coordinates
-//            ]
-//            let polyline = MGLPolylineFeature(coordinates: routeCoordinates, count: UInt(routeCoordinates.count))
-//            let source = MGLShapeSource(identifier: "route-source", shape: polyline, options: nil)
-//            style.addSource(source)
-//            let layer = MGLLineStyleLayer(identifier: "route-layer", source: source)
-//            layer.lineColor = NSExpression(forConstantValue: UIColor.blue)
-//            layer.lineWidth = NSExpression(forConstantValue: 3)
-//            style.addLayer(layer)
-//        }
 }
 
 extension PlannerDetailViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
-        loadMap()
+        if isMapLoaded == false {
+            loadMap()
+            isMapLoaded = true
+        }
     }
 }

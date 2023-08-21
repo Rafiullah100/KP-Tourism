@@ -95,7 +95,8 @@ enum Route {
     case saveTour
     case tourList
     case deleteTourPlan
-    
+    case attractionAccomodation
+
     var description: String {
         switch self {
         case .fetchAllDistricts:
@@ -268,6 +269,8 @@ enum Route {
             return "api/mobile/users/tourplan_list"
         case .deleteTourPlan:
             return "api/mobile/users/tourplan_delete"
+        case .attractionAccomodation:
+            return "api/mobile/attractions/accomodations"
         }
     }
 }

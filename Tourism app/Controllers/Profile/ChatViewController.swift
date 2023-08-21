@@ -56,6 +56,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.currentUser = Sender(senderId: "self", displayName: UserDefaults.standard.name ?? "")
         messageInputBar.inputTextView.delegate = self
         self.navigationController?.navigationBar.isHidden = true
         self.messagesCollectionView.messagesDataSource = self

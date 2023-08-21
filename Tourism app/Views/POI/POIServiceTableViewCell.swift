@@ -29,6 +29,7 @@ class POIServiceTableViewCell: UITableViewCell {
     var poiSubCategory: POIRow?{
         didSet{
             imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiSubCategory?.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
+            phoneLabel.text = poiSubCategory?.contactNo
             titleLabel.text = poiSubCategory?.title
             addressLabel.text = poiSubCategory?.locationTitle
         }

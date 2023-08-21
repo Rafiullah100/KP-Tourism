@@ -28,6 +28,29 @@ extension NSMutableAttributedString {
 
 extension UIView {
     
+    func addRippleAnimation(withColor color: UIColor, duration: TimeInterval = 0.5) {
+            // Create the ripple layer
+            let rippleLayer = CAShapeLayer()
+            rippleLayer.fillColor = UIColor.clear.cgColor
+            rippleLayer.strokeColor = color.cgColor
+            rippleLayer.lineWidth = 2.0
+            rippleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
+            
+            // Add the ripple layer to the view's layer
+            layer.addSublayer(rippleLayer)
+            
+            // Create the ripple animation
+            let animation = CABasicAnimation(keyPath: "transform.scale")
+            animation.fromValue = 0.0
+            animation.toValue = 1.0
+            animation.duration = duration
+            animation.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            
+            // Add the animation to the ripple layer
+            rippleLayer.add(animation, forKey: nil)
+        }
+
+    
     func addGradient() {
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = self.bounds
@@ -487,7 +510,8 @@ extension UIViewController {
         container.addSubview(child.view)
         child.view.frame = container.bounds
         child.didMove(toParent: self)
-        child.viewWillAppear(false)
+//        child.viewWillAppear(false)
+        //due to this viewWillAppear call two time
     }
     
     func add(_ child: UIViewController) {

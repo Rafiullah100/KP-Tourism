@@ -175,25 +175,25 @@ extension HomeViewController: MDCTabBarViewDelegate{
 extension HomeViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if cellType == .explore {
-            exploreVC.searchText = textField.text
+            exploreVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .investment{
-            kpInvestmentVC.searchText = textField.text
+            kpInvestmentVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .tour{
-            packageVC.searchText = textField.text
+            packageVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .arch{
-            archeologyVC.searchText = textField.text
+            archeologyVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .event{
-            eventVC.searchText = textField.text
+            eventVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .blog{
-            blogVC.searchText = textField.text
+            blogVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         else if cellType == .product{
-            productVC.searchText = textField.text
+            productVC.searchText = textField.text?.trimmingCharacters(in: .whitespaces)
         }
         textField.resignFirstResponder()
         return true

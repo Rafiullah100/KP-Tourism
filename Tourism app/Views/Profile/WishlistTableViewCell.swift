@@ -101,11 +101,11 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             return packageWishlist?.count ?? 0
         }
         else if wishlistType == .product{
-            productWishlist?.count == 0 ? collectionView.setEmptyView("No added to wishlist") : collectionView.setEmptyView("")
+            productWishlist?.count == 0 ? collectionView.setEmptyView("No Local Product added to wishlist") : collectionView.setEmptyView("")
             return productWishlist?.count ?? 0
         }
         else if wishlistType == .event{
-            productWishlist?.count == 0 ? collectionView.setEmptyView("No event to wishlist") : collectionView.setEmptyView("")
+            eventWishlist?.count == 0 ? collectionView.setEmptyView("No event added to wishlist") : collectionView.setEmptyView("")
             return eventWishlist?.count ?? 0
         }
         else if wishlistType == .blog{

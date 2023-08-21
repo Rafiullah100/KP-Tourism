@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import IQKeyboardManager
 class WeatherAlertViewController: BaseViewController {
 
     @IBOutlet weak var descriptionLabel: UILabel!
@@ -47,6 +48,7 @@ class WeatherAlertViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        textField.delegate = self
         navigationController?.navigationBar.isHidden = false
         if alertType == .weather {
             type = .title
@@ -228,7 +230,12 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         UserDefaults.standard.districtKey = self.districtList?[row].mapbox_location_key
-        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
         dropDownLabel.text = self.districtList?[row].title
+    }
+}
+
+extension WeatherAlertViewController: UITextFieldDelegate{
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
     }
 }

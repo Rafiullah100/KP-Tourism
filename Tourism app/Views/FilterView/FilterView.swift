@@ -69,7 +69,7 @@ class FilterView: UIView {
     
     @IBAction func applyFilter(_ sender: Any) {
         guard selectedIndexPaths != [] else {
-            self.makeToast("please select any search category.")
+            self.makeToast("please select any category.")
             return
         }
         var arr = [Int]()

@@ -58,31 +58,31 @@ class AccomodationViewController: BaseViewController {
             thumbnailTopLabel.text = exploreDistrict?.title
             thumbnailBottomLabel.text = exploreDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (exploreDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
+            fetch(parameters: ["district_id": exploreDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], endPath: .fetchDistrictAccomodation)
         }
         else if attractionDistrict != nil{
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(parameters: ["attraction_id": attractionDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
+            fetch(parameters: ["attraction_id": attractionDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], endPath: .attractionAccomodation)
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")))
-            fetch(parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
+            fetch(parameters: ["attraction_id": archeology?.attractions.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], endPath: .attractionAccomodation)
         }
         else if wishlistAttraction != nil{
             thumbnailTopLabel.text = wishlistAttraction?.title
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")))
-            fetch(parameters: ["attraction_id": wishlistAttraction?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
+            fetch(parameters: ["attraction_id": wishlistAttraction?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], endPath: .attractionAccomodation)
         }
         if wishlistDistrict != nil {
             thumbnailTopLabel.text = wishlistDistrict?.title
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0])
+            fetch(parameters: ["district_id": wishlistDistrict?.id ?? 0, "bookStayType": type, "user_id": UserDefaults.standard.userID ?? 0], endPath: .fetchDistrictAccomodation)
         }
     }
     
@@ -104,8 +104,8 @@ class AccomodationViewController: BaseViewController {
         }
     }
     
-    func fetch(parameters: [String: Any]) {
-        dataTask = URLSession.shared.request(route: .fetchDistrictAccomodation, method: .post, parameters: parameters, model: AccomodationModel.self) { result in
+    func fetch(parameters: [String: Any], endPath: Route) {
+        dataTask = URLSession.shared.request(route: endPath, method: .post, parameters: parameters, model: AccomodationModel.self) { result in
             switch result {
             case .success(let accomodation):
                 self.accomodationDetail = accomodation

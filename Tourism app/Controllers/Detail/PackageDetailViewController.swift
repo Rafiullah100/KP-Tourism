@@ -126,7 +126,7 @@ class PackageDetailViewController: BaseViewController {
         
         commentTextView.text = commentText
         commentTextView.textColor = UIColor.lightGray
-        
+        scrollView.delegate = self
         updateUI()
         reloadComment()
     }

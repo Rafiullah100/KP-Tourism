@@ -41,15 +41,15 @@ struct UserTourPlanModel: Codable {
 
 // MARK: - Attraction
 struct TourListAttraction: Codable {
-    let title: String?
-    let attractionCategoryPivots: [AttractionCategoryPivot]?
-    let latitude: String?
-    let longitude: String?
-    
+    let title, latitude, longitude, displayImage: String?
+    let attractionCategoryPivots: [TourListAttractionCategoryPivot]?
+    let pois: [TourListPois]?
+
     enum CodingKeys: String, CodingKey {
-        case title
+        case title, latitude, longitude
+        case displayImage = "display_image"
         case attractionCategoryPivots = "attraction_category_pivots"
-        case latitude, longitude
+        case pois
     }
 }
 
@@ -70,9 +70,44 @@ struct TourListAttractionCategories: Codable {
     let title, icon: String?
 }
 
+// MARK: - Pois
+struct TourListPois: Codable {
+    let id: Int?
+    let title, slug, contactNo: String?
+    let districtID, attractionID, poiCategoryID: Int?
+    let family, adults: Bool?
+    let locationTitle, latitude, longitude, description: String?
+    let displayImage: String?
+    let authorID: Int?
+    let status: Bool?
+    let viewsCounter, isDeleted: Int?
+    let createdAt, updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id, title, slug
+        case contactNo = "contact_no"
+        case districtID = "district_id"
+        case attractionID = "attraction_id"
+        case poiCategoryID = "poi_category_id"
+        case family, adults
+        case locationTitle = "location_title"
+        case latitude, longitude, description
+        case displayImage = "display_image"
+        case authorID = "author_id"
+        case status
+        case viewsCounter = "views_counter"
+        case isDeleted, createdAt, updatedAt
+    }
+}
+
 // MARK: - BookStay
 struct TourListBookStay: Codable {
-    let title: String?
-    let latitude: String?
-    let longitude: String?
+    let title, latitude, longitude, thumbnailImage: String?
+    let pois: [TourListPois]?
+
+    enum CodingKeys: String, CodingKey {
+        case title, latitude, longitude
+        case thumbnailImage = "thumbnail_image"
+        case pois
+    }
 }

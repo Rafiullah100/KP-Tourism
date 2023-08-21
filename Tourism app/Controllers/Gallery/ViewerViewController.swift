@@ -55,14 +55,15 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         DispatchQueue.main.async {
             guard let position = self.position else { return }
             self.collectionView.scrollToItem(at: IndexPath(row: position, section: 0), at: [.left], animated: false)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+       
     }
 }
 
@@ -86,7 +87,7 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         switch galleryType {
         case .gallery:
             cell.value = indexPath.row
-//            cell.imgView.loadGif(name: "image_loader")
+            cell.imgView.image = UIImage(named: "placeholder")
             let url = URL(string: Route.baseUrl + (galleryDetail?.images?.rows?[indexPath.row].image_url ?? ""))
             cell.imgView.sd_setImage(with: url)
             SVProgressHUD.show()

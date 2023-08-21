@@ -190,12 +190,12 @@ class ProfileViewController: BaseViewController {
     }
     
     @IBAction func followingBtnAction(_ sender: Any) {
-        guard let profileType = profileType else { return }
+        guard let profileType = profileType, self.userProfile?.userDetails.userFollowings != 0 else { return }
         Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .following, uuid: uuid ?? "")
     }
     
     @IBAction func followerBtnAction(_ sender: Any) {
-        guard let profileType = profileType else { return }
+        guard let profileType = profileType, self.userProfile?.userDetails.userFollowers != 0 else { return }
         Switcher.showFollower(delegate: self, profileType: profileType, connectionType: .follower, uuid: uuid ?? "")
     }
     @IBAction func settingBtnAction(_ sender: Any) {

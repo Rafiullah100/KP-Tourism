@@ -158,8 +158,8 @@ class EventDetailViewController: BaseViewController {
     }
     
     @IBAction func shareBtnAction(_ sender: Any) {
-        let description = detailType == .list ? eventDetail?.eventDescription : eventDetail?.eventDescription
-        let title = detailType == .list ? eventDetail?.title: eventDetail?.title
+        let description = detailType == .list ? eventDetail?.eventDescription?.stripOutHtml() : eventDetail?.eventDescription?.stripOutHtml()
+        let title = detailType == .list ? eventDetail?.title?.stripOutHtml(): eventDetail?.title?.stripOutHtml()
         self.share(title: title ?? "", text: description ?? "", image: imageView.image ?? UIImage())
     }
     

@@ -73,8 +73,8 @@ class TourPdfViewController: BaseViewController {
     }
     
     @IBAction func backBtnAction(_ sender: Any) {
-        navigationController?.popToViewController(VisitViewController(), animated: true)
-//        navigationController?.popViewController(animated: true)
+//        navigationController?.popToViewController(VisitViewController(), animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 

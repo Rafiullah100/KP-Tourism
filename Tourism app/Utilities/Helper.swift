@@ -264,7 +264,6 @@ class Helper{
         mapView.setCenter(CLLocationCoordinate2D(latitude: latitude ?? Constants.kpkCoordinates.lat, longitude: longitude ?? Constants.kpkCoordinates.long), zoomLevel: 10, animated: false)
         mapView.styleURL = MGLStyle.streetsStyleURL
         mapView.tintColor = .darkGray
-        
         return mapView
     }
     
