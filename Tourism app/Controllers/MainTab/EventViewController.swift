@@ -25,12 +25,10 @@ class EventViewController: BaseViewController {
     var event: [EventListModel] = [EventListModel]()
     var searchText: String?{
         didSet{
-            event = []
-            reloadData()
+            reload()
         }
     }
     var cellType: CellType?
-    var isDataLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +38,8 @@ class EventViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isDataLoaded == false {
-            reloadData()
+        if DataManager.shared.isEventDataLoaded == false {
+            reload()
         }
         
         if let modelObject = DataManager.shared.eventModelObject,
@@ -50,8 +48,14 @@ class EventViewController: BaseViewController {
             tableView.reloadData()
         }
     }
+    
+    func reload() {
+        currentPage = 1
+        event.removeAll()
+        loadData()
+    }
 
-    private func reloadData(){
+    private func loadData(){
         fetchevents(parameters: ["limit": limit, "page": currentPage, "search": searchText ?? "", "user_id": UserDefaults.standard.userID ?? "", "uuid": UserDefaults.standard.uuid ?? ""])
     }
 
@@ -62,7 +66,7 @@ class EventViewController: BaseViewController {
                 self.event.append(contentsOf: event.events)
                 self.totalCount = event.count
                 self.event.count == 0 ? self.tableView.setEmptyView("No Event Found!") : self.tableView.setEmptyView("")
-                self.isDataLoaded = true
+                DataManager.shared.isEventDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -96,7 +100,7 @@ extension EventViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if event.count != totalCount && indexPath.row == event.count - 1  {
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

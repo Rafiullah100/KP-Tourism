@@ -25,12 +25,10 @@ class ProductViewController: BaseViewController {
     var localProducts: [LocalProduct] = [LocalProduct]()
     var searchText: String?{
         didSet{
-            localProducts = []
-            reloadData()
+            reload()
         }
     }
     var cellType: CellType?
-    var isDataLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +38,8 @@ class ProductViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isDataLoaded == false {
-            reloadData()
+        if DataManager.shared.isProductDataLoaded == false {
+            reload()
         }
         
         if let modelObject = DataManager.shared.productModelObject,
@@ -50,8 +48,14 @@ class ProductViewController: BaseViewController {
             tableView.reloadData()
         }
     }
+    
+    func reload() {
+        currentPage = 1
+        localProducts.removeAll()
+        loadData()
+    }
 
-    private func reloadData(){
+    private func loadData(){
         fetchProduct(parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": searchText ?? ""])
     }
 
@@ -62,7 +66,7 @@ class ProductViewController: BaseViewController {
                 self.localProducts.append(contentsOf: product.localProducts)
                 self.totalCount = product.count
                 self.localProducts.count == 0 ? self.tableView.setEmptyView("No Product Found!") : self.tableView.setEmptyView("")
-                self.isDataLoaded = true
+                DataManager.shared.isProductDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -96,7 +100,7 @@ extension ProductViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if localProducts.count != totalCount && indexPath.row == localProducts.count - 1  {
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

@@ -24,8 +24,7 @@ class InvestKpViewController: BaseViewController {
     var investment: [InvestmentRow] = [InvestmentRow]()
     var searchText: String?{
         didSet{
-            investment = []
-            reloadData()
+            reload()
         }
     }
     var cellType: CellType?
@@ -40,11 +39,17 @@ class InvestKpViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if isDataLoaded == false {
-            reloadData()
+            reload()
         }
     }
     
-    private func reloadData(){
+    func reload() {
+        currentPage = 1
+        investment.removeAll()
+        loadData()
+    }
+    
+    private func loadData(){
         fetchInvestment(parameters: ["limit": limit, "page": currentPage, "search": searchText ?? ""])
     }
     
@@ -79,7 +84,7 @@ extension InvestKpViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if investment.count != totalCount && indexPath.row == investment.count - 1  {
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

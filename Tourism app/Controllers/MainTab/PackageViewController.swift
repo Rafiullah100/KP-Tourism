@@ -25,12 +25,10 @@ class PackageViewController: BaseViewController {
     var tourPackage: [TourPackage] = [TourPackage]()
     var searchText: String?{
         didSet{
-            tourPackage = []
-            reloadData()
+            reload()
         }
     }
     var cellType: CellType?
-    var isDataLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +38,9 @@ class PackageViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isDataLoaded == false {
-            reloadData()
+        if DataManager.shared.isPackageDataLoaded == false {
+            tourPackage = []
+            reload()
         }
         
         if let modelObject = DataManager.shared.packageModelObject,
@@ -49,10 +48,15 @@ class PackageViewController: BaseViewController {
             tourPackage[index] = modelObject
             tableView.reloadData()
         }
-
     }
     
-    private func reloadData(){
+    func reload() {
+        currentPage = 1
+        tourPackage.removeAll()
+        loadData()
+    }
+    
+    private func loadData(){
         fetchPackages(parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "uuid": UserDefaults.standard.uuid ?? "", "search": searchText ?? ""])
     }
 
@@ -64,7 +68,7 @@ class PackageViewController: BaseViewController {
                 self.totalCount = package.count ?? 0
                 print(self.tourPackage.count)
                 self.tourPackage.count == 0 ? self.tableView.setEmptyView("No Tour Package Found!") : self.tableView.setEmptyView("")
-                self.isDataLoaded = true
+                DataManager.shared.isPackageDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -98,7 +102,7 @@ extension PackageViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if tourPackage.count != totalCount && indexPath.row == tourPackage.count - 1  {
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

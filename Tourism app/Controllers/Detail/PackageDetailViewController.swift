@@ -91,7 +91,7 @@ class PackageDetailViewController: BaseViewController {
 
     @IBOutlet weak var thumbCountLaabel: UILabel!
     var commentText = "Write a comment"
-    var limit = 5
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -296,6 +296,8 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
+            return  }
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
         doComment(parameters: ["section_id": packageId ?? "", "section": "tour_package", "comment": text])
@@ -466,14 +468,14 @@ extension PackageDetailViewController: UITextViewDelegate{
     }
 }
 
-extension PackageDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
-}
+//extension PackageDetailViewController: UIScrollViewDelegate{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
+//}

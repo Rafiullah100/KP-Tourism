@@ -78,6 +78,8 @@ class CommentsTableViewCell: UITableViewCell {
     }
     
     @IBAction func replyButtonAction(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else { self.superview?.makeToast("Login is required.", position: .center)
+            return  }
         guard let text = textView.text, !text.isEmpty, text != inputText else { return }
         actionBlock?(text)
     }

@@ -228,7 +228,9 @@ class Helper{
     func logoutUser(self: UIViewController) {
         UserDefaults.clean()
         UserDefaults.standard.loadFirstTime = true
+        Helper.shared.changeToDefaultValue()
         Switcher.goToLoginVC(delegate: self)
+        
     }
     
     func date(date: Date, formate: String) -> String {
@@ -280,7 +282,7 @@ class Helper{
     
     func loginned(_ view: UIView) {
         guard  UserDefaults.standard.isLoginned == true else {
-            view.makeToast("", point: .zero, title: "You're not loggin", image: nil, completion: nil)
+            view.makeToast("Login is required.")
             return  }
     }
     
@@ -312,6 +314,15 @@ class Helper{
         concatenatedString.append(thirdString)
         concatenatedString.append(secondString)
         return concatenatedString
+    }
+    
+    func changeToDefaultValue() {
+        DataManager.shared.isExploreDataLoaded = false
+        DataManager.shared.isBlogDataLoaded = false
+        DataManager.shared.isEventDataLoaded = false
+        DataManager.shared.isPackageDataLoaded = false
+        DataManager.shared.isInvestmentDataLoaded = false
+        DataManager.shared.isPackageDataLoaded = false
     }
     
 //    func getDirection(originCoordinate: CLLocationCoordinate2D? = nil, lat: Double? = nil, lon: Double? = nil) {

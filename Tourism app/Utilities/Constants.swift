@@ -65,7 +65,7 @@ struct Constants {
               Sections(title: "Invest in KP", image: "investment", selectedImage: "investment-s"),
               Sections(title: "Tour Packages", image: "tour", selectedImage: "tour-s"),
               Sections(title: "Gallery", image: "gallery", selectedImage: "gallery-s"),
-              Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
+//              Sections(title: "Archeology", image: "arch", selectedImage: "arch-s"),
               Sections(title: "Events", image: "event", selectedImage: "event-s"),
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
               Sections(title: "KP Local Products", image: "product", selectedImage: "product-s"),

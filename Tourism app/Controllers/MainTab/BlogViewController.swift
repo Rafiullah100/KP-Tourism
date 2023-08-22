@@ -25,12 +25,10 @@ class BlogViewController: BaseViewController {
     var blogs: [Blog] = [Blog]()
     var searchText: String?{
         didSet{
-            blogs = []
-            reloadData()
+            reload()
         }
     }
     var cellType: CellType?
-    var isDataLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +38,8 @@ class BlogViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if isDataLoaded == false {
-            reloadData()
+        if DataManager.shared.isBlogDataLoaded == false {
+            reload()
         }
         
         if let modelObject = DataManager.shared.blogModelObject,
@@ -50,8 +48,14 @@ class BlogViewController: BaseViewController {
             tableView.reloadData()
         }
     }
+    
+    func reload() {
+        currentPage = 1
+        blogs.removeAll()
+        loadData()
+    }
 
-    private func reloadData(){
+    private func loadData(){
         fetchBlog(parameters: ["limit": limit, "page": currentPage, "user_id": UserDefaults.standard.userID ?? "", "search": searchText ?? ""])
     }
 
@@ -62,7 +66,7 @@ class BlogViewController: BaseViewController {
                 self.blogs.append(contentsOf: blogModel.blog)
                 self.totalCount = blogModel.count ?? 0
                 self.blogs.count == 0 ? self.tableView.setEmptyView("No Blog Found!") : self.tableView.setEmptyView("")
-                self.isDataLoaded = true
+                DataManager.shared.isBlogDataLoaded = true
                 self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -96,7 +100,7 @@ extension BlogViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         if blogs.count != totalCount && indexPath.row == blogs.count - 1  {
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

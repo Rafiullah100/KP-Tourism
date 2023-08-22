@@ -56,7 +56,7 @@ class EventDetailViewController: BaseViewController {
     
     var interestCount = 0
     var commentText = "Write a comment"
-    var limit = 5
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -138,6 +138,8 @@ class EventDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
+            return  }
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(parameters: ["section_id": eventDetail?.id ?? "", "section": "social_event", "comment": text])
     }
@@ -299,14 +301,14 @@ extension EventDetailViewController: UITableViewDelegate, UITableViewDataSource{
     }
 }
 
-extension EventDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
-}
+//extension EventDetailViewController: UIScrollViewDelegate{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
+//}

@@ -148,23 +148,23 @@ extension HomeViewController: MDCTabBarViewDelegate{
             cellType = nil
             show(galleryVC, sender: self)
         }
+//        else if tag == 4{
+//            cellType = .arch
+//            show(archeologyVC, sender: self)
+//        }
         else if tag == 4{
-            cellType = .arch
-            show(archeologyVC, sender: self)
-        }
-        else if tag == 5{
             cellType = .event
             show(eventVC, sender: self)
         }
-        else if tag == 6{
+        else if tag == 5{
             cellType = .blog
             show(blogVC, sender: self)
         }
-        else if tag == 7{
+        else if tag == 6{
             cellType = .product
             show(productVC, sender: self)
         }
-        else if tag == 8{
+        else if tag == 7{
             cellType = nil
             show(visitVC, sender: self)
         }

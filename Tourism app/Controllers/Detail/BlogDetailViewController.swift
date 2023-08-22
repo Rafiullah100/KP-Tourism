@@ -46,7 +46,7 @@ class BlogDetailViewController: BaseViewController {
     
     var currentPage = 1
     var totalCount = 0
-    var limit = 5
+    var limit = 1000
     var commentText = "Write a comment"
     var likeCount = 0
     var viewsCount = 0
@@ -176,6 +176,8 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
+            return}
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         let blogID = detailType == .list ? blogDetail?.id : wishlistEventDetail?.id
         doComment(parameters: ["section_id": blogID ?? 0, "section": "blog", "comment": text])
@@ -297,14 +299,14 @@ extension BlogDetailViewController: UITextViewDelegate{
     }
 }
 
-extension BlogDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
-}
+//extension BlogDetailViewController: UIScrollViewDelegate{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
+//}

@@ -25,8 +25,8 @@ class BlogTableViewCell: UITableViewCell {
     var wishlistButtonTappedHandler: (() -> Void)?
     
     var blog: Blog?{
-        
         didSet{
+            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             if blog?.isWished == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }

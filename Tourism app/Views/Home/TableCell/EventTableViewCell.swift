@@ -24,6 +24,7 @@ class EventTableViewCell: UITableViewCell {
     @IBOutlet weak var registrationLabel: UILabel!
     var event: EventListModel?{
         didSet{
+            favoriteButton.isHidden = Helper.shared.hideWhenNotLogin()
             if event?.userWishlist == 0 {
                 favoriteButton.setBackgroundImage(UIImage(named: "unfavorite-gray"), for: .normal)
             }

@@ -51,7 +51,7 @@ class ProductDetailViewController: BaseViewController {
     var viewsCount = 0
 
     var commentText = "Write a comment"
-    var limit = 5
+    var limit = 1000
     var currentPage = 1
     var totalCount = 0
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -206,6 +206,9 @@ class ProductDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else {
+            self.view.makeToast("Login is required.")
+            return  }
         let productID = detailType == .list ? productDetail?.id : wishListProductDetail?.id
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(parameters: ["section_id": productID ?? "", "section": "local_product", "comment": text])
@@ -329,14 +332,14 @@ extension ProductDetailViewController: UITableViewDelegate, UITableViewDataSourc
     }
 }
 
-extension ProductDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
-}
+//extension ProductDetailViewController: UIScrollViewDelegate{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
+//}

@@ -89,7 +89,7 @@ extension FilterView: UICollectionViewDelegate, UICollectionViewDataSource, UICo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell: SearchTagCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: SearchTagCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! SearchTagCollectionViewCell
-        cell.label.text = (categories?[indexPath.row].title ?? "") + " (" + "\(categories?[indexPath.row].count ?? 0)" + " )"
+        cell.label.text = (categories?[indexPath.row].title ?? "") + " ( " + "\(categories?[indexPath.row].count ?? 0)" + " )"
         if selectedIndexPaths.contains(indexPath) {
             cell.imgView.image = UIImage(named: "selected-check")
         } else {

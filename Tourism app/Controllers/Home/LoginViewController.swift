@@ -113,7 +113,7 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.userBio = self.login?.about
                     UserDefaults.standard.loadFirstTime = true
                     UserDefaults.standard.notificationStatus = self.login?.isNotification
-                    print(self.login?.isNotification)
+                    Helper.shared.changeToDefaultValue()
                     Switcher.goToFeedsVC(delegate: self)
                 }
                 else{

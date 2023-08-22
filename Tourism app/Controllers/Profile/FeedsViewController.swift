@@ -61,8 +61,8 @@ class FeedsViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadStories), name: NSNotification.Name(rawValue: Constants.loadFeed), object: nil)
         
         loadData()
-        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
-        profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal)
+        profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "placeholder"))
+        profileButton.sd_setBackgroundImage(with: URL(string: Helper.shared.getProfileImage()), for: .normal, placeholderImage: UIImage(named: "placeholder"))
         
         refreshControl.addTarget(self, action: #selector(reloadNewsFeed), for: .valueChanged)
         tableView.addSubview(refreshControl)

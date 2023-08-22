@@ -26,12 +26,9 @@ class ExploreDistrictViewController: BaseViewController {
     var sendExoloreDistrict: ((_ district: [ExploreDistrict]) -> Void)?
     var searchText: String?{
         didSet{
-            print("erg ke rgkr4gt 4tg45h")
-            exploreDistrict = []
-            reloadData()
+            reload()
         }
     }
-    var isDataLoaded = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,13 +38,18 @@ class ExploreDistrictViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(isDataLoaded)
-        if isDataLoaded == false {
-            reloadData()
+        if DataManager.shared.isExploreDataLoaded == false {
+            reload()
         }
     }
+    
+    func reload() {
+        currentPage = 1
+        exploreDistrict.removeAll()
+        loadData()
+    }
         
-    func reloadData(){
+    func loadData(){
         print(searchText ?? "")
         fetchDistrict(parameters: ["search": searchText ?? "", "limit": limit, "user_id": UserDefaults.standard.userID ?? "", "page": currentPage])
     }
@@ -57,12 +59,12 @@ class ExploreDistrictViewController: BaseViewController {
             switch result {
             case .success(let explore):
                 self.exploreDistrict.append(contentsOf: explore.attractions)
+                print(self.exploreDistrict.count)
                 self.totalCount = explore.count ?? 0
                 self.districtCount?(self.exploreDistrict.count)
                 self.exploreDistrict.count == 0 ? self.tableView.setEmptyView("No District Found!") : self.tableView.setEmptyView("")
-                self.isDataLoaded = true
+                DataManager.shared.isExploreDataLoaded = true
                 self.tableView.reloadData()
-
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }
@@ -105,7 +107,7 @@ extension ExploreDistrictViewController: UITableViewDelegate, UITableViewDataSou
         if exploreDistrict.count != totalCount && indexPath.row == exploreDistrict.count - 1  {
             print(exploreDistrict.count, totalCount, indexPath.row)
             currentPage = currentPage + 1
-            reloadData()
+            loadData()
         }
     }
     

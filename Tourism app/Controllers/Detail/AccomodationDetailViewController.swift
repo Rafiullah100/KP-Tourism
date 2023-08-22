@@ -57,7 +57,7 @@ class AccomodationDetailViewController: BaseViewController {
     var locationManager = CLLocationManager()
     
     var commentText = "Write a comment"
-    var limit = 5
+    var limit = 1000
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -188,6 +188,8 @@ class AccomodationDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
+        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
+            return  }
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(parameters: ["section_id": accomodationDetail?.id ?? "", "section": "book_stay", "comment": text])
     }
@@ -315,14 +317,14 @@ extension AccomodationDetailViewController: UITableViewDelegate, UITableViewData
     }
 }
 
-extension AccomodationDetailViewController: UIScrollViewDelegate{
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
-            print(allComments.count, totalCount)
-            if allComments.count != totalCount{
-                currentPage = currentPage + 1
-                reloadComment()
-            }
-        }
-    }
-}
+//extension AccomodationDetailViewController: UIScrollViewDelegate{
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if (scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height)) {
+//            print(allComments.count, totalCount)
+//            if allComments.count != totalCount{
+//                currentPage = currentPage + 1
+//                reloadComment()
+//            }
+//        }
+//    }
+//}

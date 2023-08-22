@@ -210,6 +210,9 @@ extension AttractionViewController: FilterDelegate{
         filterView.isHidden = true
         attractionDistrictsArray = []
         isFilter = ids
+//        guard !ids.isEmpty else {
+//            return
+//        }
         loadData(currentPage: currentPage)
     }
 }
