@@ -480,7 +480,7 @@ class Switcher {
         let vc = UIStoryboard(name: Storyboard.profile.rawValue, bundle: nil).instantiateViewController(withIdentifier: "SearchUserViewController") as! SearchUserViewController
         vc.modalPresentationStyle = .automatic
 //        delegate.present(vc, animated: true, completion: nil)
-        delegate.navigationController?.pushViewController(vc, animated: false)
+        delegate.navigationController?.pushViewController(vc, animated: true)
     }
     
     static func gotoWriteBlogVC(delegate: UIViewController, blog: UserBlogRow? = nil, postType: PostType){

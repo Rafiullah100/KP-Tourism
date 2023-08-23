@@ -137,7 +137,7 @@ class PackageDetailViewController: BaseViewController {
     }
     
     private func updateUI(){
-        
+        print(tourDetail?.id)
         if detailType == .list {
             DataManager.shared.packageModelObject = tourDetail
             likeCount = tourDetail?.like_count ?? 0
@@ -338,6 +338,7 @@ class PackageDetailViewController: BaseViewController {
             case .success(let comments):
                 self.totalCount = comments.comments?.count ?? 1
                 self.allComments.append(contentsOf: comments.comments?.rows ?? [])
+                print(self.allComments)
                 self.commenTableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
@@ -348,10 +349,12 @@ class PackageDetailViewController: BaseViewController {
 
 extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        if tableView == commenTableView{
+        if tableView == self.tableView{
+            return 1
+        }else {
+            print(allComments.count)
             return allComments.count
         }
-        return 0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -364,7 +367,6 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
             return 0
         }
         else{
-            print(allComments.count)
             return (allComments[section].replies?.count ?? 0) + 1
         }
     }
@@ -398,9 +400,11 @@ extension PackageDetailViewController: UITableViewDelegate, UITableViewDataSourc
         }
         else{
             let comment = allComments[indexPath.section]
+            print(indexPath.section)
+            print(comment)
             if indexPath.row == 0 {
                 let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-                cell.comment = allComments[indexPath.row]
+                cell.comment = comment
                 
                 cell.commentReplyBlock = {
                     tableView.performBatchUpdates {
