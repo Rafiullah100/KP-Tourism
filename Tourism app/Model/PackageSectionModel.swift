@@ -217,7 +217,8 @@ struct WishlistTourPackage: Codable {
     let usersInterestCount, userLike, userWishlist: Int?
     let toDistricts: WishlistToDistricts
     let activities: [WishlistTourPackageActivity]
-    
+    let tourPackageGalleries: [TourPackageGallery]?
+
     enum CodingKeys: String, CodingKey {
         case startDate, endDate
         case isExpired = "is_expired"
@@ -257,6 +258,7 @@ struct WishlistTourPackage: Codable {
         case userLike = "user_like"
         case userWishlist = "user_wishlist"
         case toDistricts = "to_districts"
+        case tourPackageGalleries = "tour_package_galleries"
         case activities
     }
 }
@@ -287,4 +289,22 @@ struct WishlistTourPackageActivity: Codable {
 struct WishlistToDistricts: Codable {
     let id: Int?
     let title, slug: String?
+}
+
+struct WishlistTourPackageGallery: Codable {
+    let id, tourPackageID: Int?
+    let title, type, imageURL: String?
+    let videoURL, virtualURL: String?
+    let isDeleted: Int?
+    let createdAt, updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case tourPackageID = "tour_package_id"
+        case title, type
+        case imageURL = "image_url"
+        case videoURL = "video_url"
+        case virtualURL = "virtual_url"
+        case isDeleted, createdAt, updatedAt
+    }
 }

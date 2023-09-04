@@ -72,6 +72,7 @@ enum galleryType: CaseIterable {
     case gallery
     case poi
     case image
+    case tourPackage
 }
 //this is struct
 

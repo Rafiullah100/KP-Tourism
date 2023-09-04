@@ -59,6 +59,7 @@ struct TourPackage : Codable {
     let comments : [TourPackageComment]?
     let likes : [TourPackageLikes]?
     let activities : [TourActivities]?
+    let tourPackageGalleries: [TourPackageGallery]?
     var userLike: Int?
     var userInterest: Int?
     var userWishlist: Int?
@@ -112,6 +113,7 @@ struct TourPackage : Codable {
         case userWishlist = "user_wishlist"
         case usersInterestCount = "users_interest_count"
         case discount = "discount"
+        case tourPackageGalleries = "tour_package_galleries"
         case like_count = "like_count"
     }
 }
@@ -180,4 +182,22 @@ struct TourPackageComment: Codable {
 // MARK: - Likes
 struct TourPackageLikes: Codable {
     let likesCount: Int
+}
+
+struct TourPackageGallery: Codable {
+    let id, tourPackageID: Int?
+    let title, type, imageURL: String?
+    let videoURL, virtualURL: String?
+    let isDeleted: Int?
+    let createdAt, updatedAt: String?
+
+    enum CodingKeys: String, CodingKey {
+        case id
+        case tourPackageID = "tour_package_id"
+        case title, type
+        case imageURL = "image_url"
+        case videoURL = "video_url"
+        case virtualURL = "virtual_url"
+        case isDeleted, createdAt, updatedAt
+    }
 }

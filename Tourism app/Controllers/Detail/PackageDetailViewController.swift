@@ -68,6 +68,13 @@ class PackageDetailViewController: BaseViewController {
         }
     }
     
+    @IBOutlet weak var galleryCollectionView: UICollectionView!{
+        didSet{
+            galleryCollectionView.delegate = self
+            galleryCollectionView.dataSource = self
+        }
+    }
+    @IBOutlet weak var galleryView: UIView!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var eventTypeLabel: UILabel!
     
@@ -137,7 +144,6 @@ class PackageDetailViewController: BaseViewController {
     }
     
     private func updateUI(){
-        print(tourDetail?.id)
         if detailType == .list {
             DataManager.shared.packageModelObject = tourDetail
             likeCount = tourDetail?.like_count ?? 0
@@ -162,6 +168,7 @@ class PackageDetailViewController: BaseViewController {
             viewCounterLabel.text = "\(tourDetail?.views_counter ?? 0) Views"
             viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
             tableView.isHidden = tourDetail?.activities?.count == 0 ? true : false
+            galleryView.isHidden = tourDetail?.tourPackageGalleries?.count == 0 ? true : false
         }
         else if detailType == .wishlist{
             likeCount = wishlistTourPackage?.likeCount ?? 0
@@ -186,6 +193,7 @@ class PackageDetailViewController: BaseViewController {
             viewCounterLabel.text = "\(wishlistTourPackage?.viewsCounter ?? 0) Views"
             viewCounter(parameters: ["section_id": tourDetail?.id ?? 0, "section": "tour_package"])
             tableView.isHidden = wishlistTourPackage?.activities.count == 0 ? true : false
+            galleryView.isHidden = wishlistTourPackage?.tourPackageGalleries?.count == 0 ? true : false
         }
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
     }
@@ -483,3 +491,34 @@ extension PackageDetailViewController: UITextViewDelegate{
 //        }
 //    }
 //}
+
+extension PackageDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource{
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if  detailType == .list{
+            return tourDetail?.tourPackageGalleries?.count ?? 0
+        }
+        else{
+            return wishlistTourPackage?.tourPackageGalleries?.count ?? 0
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell: POIDedetailCell = collectionView.dequeueReusableCell(withReuseIdentifier: "cellIdentifier", for: indexPath) as! POIDedetailCell
+        if  detailType == .list{
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (tourDetail?.tourPackageGalleries?[indexPath.row].imageURL ?? "")))
+        }
+        else{
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistTourPackage?.tourPackageGalleries?[indexPath.row].imageURL ?? "")))
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if  detailType == .list{
+            Switcher.gotoViewerVC(delegate: self, position: indexPath.row, tourPackageGallery: tourDetail?.tourPackageGalleries, type: .tourPackage)
+        }
+        else{
+            Switcher.gotoViewerVC(delegate: self, position: indexPath.row, tourPackageGallery: wishlistTourPackage?.tourPackageGalleries, type: .tourPackage)
+        }
+    }
+}

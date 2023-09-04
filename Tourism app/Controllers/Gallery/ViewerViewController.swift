@@ -41,6 +41,7 @@ class ViewerViewController: UIViewController, UIScrollViewDelegate {
     
     var galleryDetail: GalleryModel?
     var poiGallery: [PoiGallery]?
+    var tourPackageGallery: [TourPackageGallery]?
     var position: Int?
     var imageUrl: String?
     var galleryType: galleryType?
@@ -76,6 +77,8 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return poiGallery?.count ?? 0
         case .image:
             return 1
+        case .tourPackage:
+            return tourPackageGallery?.count ?? 0
         default:
             return 0
         }
@@ -108,6 +111,9 @@ extension ViewerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         case .poi:
             cell.value = indexPath.row
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (poiGallery?[indexPath.row].imageURL ?? "")))
+        case .tourPackage:
+            cell.value = indexPath.row
+            cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (tourPackageGallery?[indexPath.row].imageURL ?? "")))
         case .image:
             cell.imgView.sd_setImage(with: URL(string: Route.baseUrl + (imageUrl ?? "")))
         default:

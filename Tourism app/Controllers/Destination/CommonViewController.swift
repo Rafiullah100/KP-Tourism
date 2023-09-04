@@ -7,6 +7,7 @@
 
 import UIKit
 import SwiftGifOrigin
+import CoreLocation
 protocol PopupDelegate {
     func showPopup()
 }
@@ -41,6 +42,12 @@ class CommonViewController: BaseViewController {
     var districtID = 0
     
     
+    var originCoordinate: CLLocationCoordinate2D?
+    var locationManager = CLLocationManager()
+    var latitude: String?
+    var longitude: String?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -54,6 +61,19 @@ class CommonViewController: BaseViewController {
         collectionViewHeight.constant = collectionView.contentSize.height
     }
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        DispatchQueue.global().async {
+            self.locationManager.requestAlwaysAuthorization()
+            self.locationManager.requestWhenInUseAuthorization()
+            if CLLocationManager.locationServicesEnabled() {
+                self.locationManager.delegate = self
+                self.locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+                self.locationManager.startUpdatingLocation()
+            }
+        }
+    }
     
     @IBAction func gotoAbout(_ sender: Any) {
         Switcher.gotoAbout(delegate: self, exploreDetail: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
@@ -76,6 +96,8 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
             descriptionLabel.text = explore?.description?.stripOutHtml()
             districtID = explore?.id ?? 0
+            latitude = explore?.latitude
+            longitude = explore?.longitude
         }
         else if attraction != nil{
             thumbnailTopLabel.text = attraction?.title
@@ -83,6 +105,8 @@ class CommonViewController: BaseViewController {
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(attraction?.title ?? "")"
             descriptionLabel.text = attraction?.description.stripOutHtml()
+            latitude = attraction?.latitude
+            longitude = attraction?.longitude
         }
         else if archeology != nil{
             thumbnailTopLabel.text = archeology?.attractions.title
@@ -91,6 +115,8 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to \(archeology?.attractions.title ?? "")"
             descriptionLabel.text = archeology?.attractions.description?.stripOutHtml()
             districtID = archeology?.attractions.id ?? 0
+            latitude = archeology?.attractions.latitude
+            longitude = archeology?.attractions.longitude
         }
         else if wishlistAttraction != nil{
             thumbnailTopLabel.text = wishlistAttraction?.title
@@ -99,6 +125,8 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to \(wishlistAttraction?.title ?? "")"
             descriptionLabel.text = wishlistAttraction?.description?.stripOutHtml()
             districtID = wishlistAttraction?.id ?? 0
+            latitude = wishlistAttraction?.latitude
+            longitude = wishlistAttraction?.longitude
         }
         else if wishlistDistrict != nil{
             thumbnailTopLabel.text = wishlistDistrict?.title
@@ -107,6 +135,8 @@ class CommonViewController: BaseViewController {
             welcomeLabel.text = "Welcome to \(wishlistDistrict?.title ?? "")"
             descriptionLabel.text = wishlistDistrict?.description?.stripOutHtml()
             districtID = wishlistDistrict?.id ?? 0
+            latitude = wishlistDistrict?.latitude
+            longitude = wishlistDistrict?.longitude
         }
     }
 }
@@ -142,6 +172,11 @@ extension CommonViewController: UICollectionViewDelegate, UICollectionViewDataSo
             Switcher.goToItinrary(delegate: self, locationCategory: .district, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
         case 6:
             Switcher.goToProducts(delegate: self, exploreDistrict: explore, attractionDistrict: attraction, archeology: archeology, wishlistAttraction: wishlistAttraction, wishlistDistrict: wishlistDistrict)
+        case 7:
+            guard let originCoordinate = originCoordinate, let lat: Double = Double(latitude ?? ""), let lon: Double = Double(longitude ?? "") else {
+                self.view.makeToast(Constants.noCoordinate)
+                return  }
+            getDirection(originCoordinate: originCoordinate, destinationCoordinate: CLLocationCoordinate2D(latitude: lat, longitude: lon))
         default:
             break
         }
@@ -157,3 +192,9 @@ extension CommonViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 
+extension CommonViewController: CLLocationManagerDelegate{
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let userLocation: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        originCoordinate = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
+    }
+}
