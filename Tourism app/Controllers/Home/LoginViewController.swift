@@ -12,31 +12,53 @@ import GoogleSignIn
 import Firebase
 import Toast_Swift
 import SVProgressHUD
+import AuthenticationServices
+
 class LoginViewController: BaseViewController {
     
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
-    
+    @IBOutlet weak var appleSignUpView: UIView!
+
     @IBOutlet weak var loginButton: UIButton!
     var login: LoginModel?
-    
-    
+    let appleIDProvider = ASAuthorizationAppleIDProvider()
+    private let appleSignInButton = ASAuthorizationAppleIDButton()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         type = .title1
         viewControllerTitle = "Login"
-        //tourist
-        emailTextField.text = "murtazakhan68@gmail.com"
-        passwordTextField.text = "12345678"
-        
-//        //seller
-        emailTextField.text = "rafiseller@gmail.com"
-        passwordTextField.text = "123"
+        //tour operator
+//        emailTextField.text = "murtazakhan68@gmail.com"
+//        passwordTextField.text = "1234"
+//        
+//        seller
+//        emailTextField.text = "rafiseller@gmail.com"
+//        passwordTextField.text = "123"
         navigationItem.hidesBackButton = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        appleSignUpView.addSubview(appleSignInButton)
+        appleSignInButton.frame = CGRect(x: 0, y: 0, width: appleSignUpView.frame.width, height: appleSignUpView.frame.height)
+        appleSignInButton.cornerRadius = appleSignUpView.frame.height * 0.5
+        appleSignInButton.addTarget(self, action: #selector(didTapButton), for: .touchUpInside)
+    }
+    
+    @objc func didTapButton(){
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
+        request.requestedScopes = [.email, .fullName]
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
     }
     
     @IBAction func googleSigninBtn(_ sender: Any) {
@@ -45,7 +67,8 @@ class LoginViewController: BaseViewController {
         GIDSignIn.sharedInstance.configuration = config
         GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
             if error == nil{
-                let parameters = ["username": result?.user.profile?.email ?? "", "user_type": "user", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? ""]
+                let parameters = ["username": result?.user.profile?.email ?? "", "user_type": "user", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? "", "name": result?.user.profile?.name ?? ""]
+                print(parameters)
                 self.loginUser(route: .googleLoginApi, parameters: parameters)
             }
         }
@@ -108,6 +131,7 @@ class LoginViewController: BaseViewController {
                     UserDefaults.standard.userID = self.login?.userID
                     UserDefaults.standard.userEmail = self.login?.email
                     UserDefaults.standard.profileImage = self.login?.profileImage
+//                    print(UserDefaults.standard.profileImage, self.login?.profileImage)
                     UserDefaults.standard.name = self.login?.name
                     UserDefaults.standard.uuid = self.login?.uuID
                     UserDefaults.standard.userBio = self.login?.about
@@ -125,3 +149,36 @@ class LoginViewController: BaseViewController {
         }
     }
 }
+
+
+extension LoginViewController: ASAuthorizationControllerDelegate{
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        print("failed")
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        switch authorization.credential {
+        case let credential as ASAuthorizationAppleIDCredential:
+            print("...")
+//            if UserDefaults.standard.appleSigninIdentifier == nil{
+//                UserDefaults.standard.appleSigninIdentifier = credential.user
+//                UserDefaults.standard.appleEmail = credential.email
+//                self.callLoginForApple(email: credential.email ?? "")
+//            }
+//            else{
+//                self.callLoginForApple(email: UserDefaults.standard.appleEmail ?? "")
+//            }
+            
+        default:
+            print("...")
+        }
+    }
+}
+
+extension LoginViewController: ASAuthorizationControllerPresentationContextProviding{
+    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return view.window!
+    }
+    
+}
+

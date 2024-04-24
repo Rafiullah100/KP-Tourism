@@ -138,8 +138,7 @@ class EventDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
-        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
-            return  }
+       
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(parameters: ["section_id": eventDetail?.id ?? "", "section": "social_event", "comment": text])
     }
@@ -236,12 +235,17 @@ extension EventDetailViewController: UITextViewDelegate{
             commentTextView.text = ""
             commentTextView.textColor = UIColor.black
         }
+        
+        guard  UserDefaults.standard.isLoginned == true else { 
+            textView.resignFirstResponder()
+            self.view.makeToast("Login is required.", position: .center)
+            return  }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if commentTextView.text == "" {
             commentTextView.text = commentText
-            commentTextView.textColor = UIColor.label
+            commentTextView.textColor = UIColor.lightGray
         }
     }
     

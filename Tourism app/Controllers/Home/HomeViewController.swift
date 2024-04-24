@@ -134,18 +134,22 @@ extension HomeViewController: MDCTabBarViewDelegate{
         if tag == 0 {
             cellType = .explore
             mapButton.isHidden = false
+            exploreVC.viewWillAppear(true)
             show(exploreVC, sender: self)
         }
         else if tag == 1{
             cellType = .investment
+            kpInvestmentVC.viewWillAppear(true)
             show(kpInvestmentVC, sender: self)
         }
         else if tag == 2{
             cellType = .tour
+            packageVC.viewWillAppear(true)
             show(packageVC, sender: self)
         }
         else if tag == 3{
             cellType = nil
+            galleryVC.viewWillAppear(true)
             show(galleryVC, sender: self)
         }
 //        else if tag == 4{
@@ -154,18 +158,22 @@ extension HomeViewController: MDCTabBarViewDelegate{
 //        }
         else if tag == 4{
             cellType = .event
+            eventVC.viewWillAppear(true)
             show(eventVC, sender: self)
         }
         else if tag == 5{
             cellType = .blog
+            blogVC.viewWillAppear(true)
             show(blogVC, sender: self)
         }
         else if tag == 6{
             cellType = .product
+            productVC.viewWillAppear(true)
             show(productVC, sender: self)
         }
         else if tag == 7{
             cellType = nil
+            visitVC.viewWillAppear(true)
             show(visitVC, sender: self)
         }
         setupCard()

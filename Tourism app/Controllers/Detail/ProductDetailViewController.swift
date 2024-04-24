@@ -206,9 +206,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
-        guard  UserDefaults.standard.isLoginned == true else {
-            self.view.makeToast("Login is required.")
-            return  }
+        
         let productID = detailType == .list ? productDetail?.id : wishListProductDetail?.id
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         doComment(parameters: ["section_id": productID ?? "", "section": "local_product", "comment": text])
@@ -265,6 +263,10 @@ extension ProductDetailViewController: UITextViewDelegate{
             commentTextView.text = ""
             commentTextView.textColor = UIColor.label
         }
+        guard  UserDefaults.standard.isLoginned == true else {
+            textView.resignFirstResponder()
+            self.view.makeToast("Login is required.", position: .center)
+            return  }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

@@ -46,6 +46,7 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
                     UserDefaults.standard.name = profile.data?.name
                     UserDefaults.standard.userEmail = profile.data?.email
                     UserDefaults.standard.profileImage = profile.data?.profileImage
+                    print(profile.data?.profileImage)
                     UserDefaults.standard.userBio = profile.data?.about
                     SVProgressHUD.showSuccess(withStatus: profile.message)
                 }

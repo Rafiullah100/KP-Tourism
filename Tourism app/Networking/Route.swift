@@ -8,8 +8,9 @@
 import Foundation
 
 enum Route {
+//    static let baseUrl = "https://prod-admin.kptourism.com/"
     static let baseUrl = "https://staging-admin.kptourism.com/"
-    
+
     case fetchAllDistricts
     case fetchExpolreDistrict
     case fetchPoiCategories

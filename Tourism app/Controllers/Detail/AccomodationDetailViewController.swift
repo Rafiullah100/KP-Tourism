@@ -139,11 +139,11 @@ class AccomodationDetailViewController: BaseViewController {
     @IBAction func showDetailBtn(_ sender: Any) {
         if detailView.isHidden == true {
             detailView.isHidden = false
-            dropDownImageView.image = UIImage(named: "collapse")
+            dropDownImageView.image = UIImage(named: "expand")
         }
         else{
             detailView.isHidden = true
-            dropDownImageView.image = UIImage(named: "expand")
+            dropDownImageView.image = UIImage(named: "collapse")
         }
     }
     @IBAction func likeBtnAction(_ sender: Any) {

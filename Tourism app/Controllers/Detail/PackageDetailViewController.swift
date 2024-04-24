@@ -304,8 +304,7 @@ class PackageDetailViewController: BaseViewController {
     }
     
     @IBAction func loginToComment(_ sender: Any) {
-        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
-            return  }
+        
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         let packageId = detailType == .list ? tourDetail?.id : wishlistTourPackage?.id
         doComment(parameters: ["section_id": packageId ?? "", "section": "tour_package", "comment": text])
@@ -461,6 +460,10 @@ extension PackageDetailViewController: UITextViewDelegate{
             commentTextView.text = ""
             commentTextView.textColor = UIColor.label
         }
+        guard  UserDefaults.standard.isLoginned == true else {
+            textView.resignFirstResponder()
+            self.view.makeToast("Login is required.", position: .center)
+            return  }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

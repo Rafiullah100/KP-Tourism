@@ -176,8 +176,7 @@ class BlogDetailViewController: BaseViewController {
     }
     
     @IBAction func loginTocomment(_ sender: Any) {
-        guard  UserDefaults.standard.isLoginned == true else { self.view.makeToast("Login is required.")
-            return}
+        
         guard let text = commentTextView.text, !text.isEmpty, text != commentText else { return }
         let blogID = detailType == .list ? blogDetail?.id : wishlistEventDetail?.id
         doComment(parameters: ["section_id": blogID ?? 0, "section": "blog", "comment": text])
@@ -280,6 +279,10 @@ extension BlogDetailViewController: UITextViewDelegate{
             commentTextView.text = ""
             commentTextView.textColor = UIColor.label
         }
+        guard  UserDefaults.standard.isLoginned == true else { 
+            textView.resignFirstResponder()
+            self.view.makeToast("Login is required.", position: .center)
+            return  }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {

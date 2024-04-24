@@ -36,6 +36,11 @@ class ProductViewController: BaseViewController {
         cellType = .product
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("recalled")
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if DataManager.shared.isProductDataLoaded == false {

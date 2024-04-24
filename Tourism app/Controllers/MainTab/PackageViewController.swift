@@ -20,7 +20,7 @@ class PackageViewController: BaseViewController {
     //pagination
     var totalCount = 0
     var currentPage = 1
-    var limit = 5
+    var limit = 20
     //explore
     var tourPackage: [TourPackage] = [TourPackage]()
     var searchText: String?{
@@ -100,6 +100,7 @@ extension PackageViewController: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        print(totalCount, tourPackage.count, indexPath.row)
         if tourPackage.count != totalCount && indexPath.row == tourPackage.count - 1  {
             currentPage = currentPage + 1
             loadData()

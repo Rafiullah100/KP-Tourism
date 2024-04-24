@@ -174,6 +174,9 @@ class ProfileViewController: BaseViewController {
         navigationController?.popViewController(animated: true)
     }
     @IBAction func followBtnAction(_ sender: Any) {
+        guard UserDefaults.standard.userID != 0, UserDefaults.standard.userID != nil else { 
+            SVProgressHUD.showError(withStatus: "Login is required!")
+            return }
         followUser(route: .doFollow, method: .post, parameters: ["uuid": uuid ?? ""], model: SuccessModel.self)
     }
     
@@ -218,7 +221,6 @@ class ProfileViewController: BaseViewController {
             }
         }
     }
-    
     
     @IBAction func suggestedUserBtn(_ sender: Any) {
         Switcher.showSuggestedUser(delegate: self)
