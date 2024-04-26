@@ -41,6 +41,7 @@ class LoginViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        self.tabBarController?.selectedIndex = 3
     }
     
     override func viewDidLayoutSubviews() {
@@ -160,14 +161,17 @@ extension LoginViewController: ASAuthorizationControllerDelegate{
         switch authorization.credential {
         case let credential as ASAuthorizationAppleIDCredential:
             print("...")
-//            if UserDefaults.standard.appleSigninIdentifier == nil{
-//                UserDefaults.standard.appleSigninIdentifier = credential.user
-//                UserDefaults.standard.appleEmail = credential.email
-//                self.callLoginForApple(email: credential.email ?? "")
-//            }
-//            else{
-//                self.callLoginForApple(email: UserDefaults.standard.appleEmail ?? "")
-//            }
+            if UserDefaults.standard.appleSigninIdentifier == nil{
+                UserDefaults.standard.appleSigninIdentifier = credential.user
+                UserDefaults.standard.appleEmail = credential.email
+                UserDefaults.standard.appleName = credential.fullName?.givenName
+                let parameters = ["username": credential.email ?? "", "user_type": "user", "profile_image": "", "name": credential.fullName?.givenName ?? ""] as [String : Any]
+                self.loginUser(route: .appleLogin, parameters: parameters)
+            }
+            else{
+                let parameters = ["username": UserDefaults.standard.appleEmail ?? "", "user_type": "user", "profile_image": "", "name": UserDefaults.standard.appleName ?? ""]
+                self.loginUser(route: .appleLogin, parameters: parameters)
+            }
             
         default:
             print("...")

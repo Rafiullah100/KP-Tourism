@@ -36,7 +36,7 @@ enum Route {
     case fetchDistrictAccomodation
     case fetchGettingHere
     case fetchVisitKp
-    case weatherApi
+    case weatherApi(Int)
     case likeApi
     case districtCategoriesApi
     case districtListApi
@@ -97,6 +97,7 @@ enum Route {
     case tourList
     case deleteTourPlan
     case attractionAccomodation
+    case appleLogin
 
     var description: String {
         switch self {
@@ -150,8 +151,8 @@ enum Route {
             return "api/mobile/districts/gettinghere"
         case .fetchVisitKp:
             return "api/mobile/visitkp/list"
-        case .weatherApi:
-            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/\(UserDefaults.standard.districtKey ?? 1771429)?apikey=\(Constants.weatherApiKey)"
+        case .weatherApi(let districtKey):
+            return "http://dataservice.accuweather.com//forecasts/v1/daily/5day/\(districtKey)?apikey=\(Constants.weatherApiKey)"
         case .likeApi:
             return "api/mobile/likes_comments/do_like"
         case .districtCategoriesApi:
@@ -272,6 +273,8 @@ enum Route {
             return "api/mobile/users/tourplan_delete"
         case .attractionAccomodation:
             return "api/mobile/attractions/accomodations"
+        case .appleLogin:
+            return "api/mobile/auth/apple-login"
         }
     }
 }

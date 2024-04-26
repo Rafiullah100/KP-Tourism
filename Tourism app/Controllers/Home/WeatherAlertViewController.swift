@@ -44,7 +44,8 @@ class WeatherAlertViewController: BaseViewController {
 
     var alertType: WeatherAlertType?
     var isDataLoaded = false
-
+    var districtKey = 0
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,7 +126,7 @@ class WeatherAlertViewController: BaseViewController {
         case .AlertTableViewCell:
             fetch(route: .fetchAlerts, method: .get, model: AlertModel.self)
         case .WeatherTableViewCell:
-            fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
+            fetch(route: .weatherApi(districtKey), method: .get, model: WeatherModel.self)
         }
     }
     
@@ -163,6 +164,7 @@ class WeatherAlertViewController: BaseViewController {
                 self.pickerView.reloadAllComponents()
                 self.districtList?.forEach({ district in
                     if district.title == "Peshawar" {
+                        self.districtKey = district.mapbox_location_key ?? 0
                         UserDefaults.standard.districtKey = district.mapbox_location_key
                         self.dropDownLabel.text = district.title
                     }
@@ -230,12 +232,13 @@ extension WeatherAlertViewController: UIPickerViewDelegate, UIPickerViewDataSour
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         UserDefaults.standard.districtKey = self.districtList?[row].mapbox_location_key
+        districtKey = self.districtList?[row].mapbox_location_key ?? 0
         dropDownLabel.text = self.districtList?[row].title
     }
 }
 
 extension WeatherAlertViewController: UITextFieldDelegate{
     func textFieldDidEndEditing(_ textField: UITextField) {
-        fetch(route: .weatherApi, method: .get, model: WeatherModel.self)
+        fetch(route: .weatherApi(districtKey), method: .get, model: WeatherModel.self)
     }
 }

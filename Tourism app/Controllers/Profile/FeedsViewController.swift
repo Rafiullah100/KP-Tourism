@@ -66,6 +66,13 @@ class FeedsViewController: BaseViewController {
         
         refreshControl.addTarget(self, action: #selector(reloadNewsFeed), for: .valueChanged)
         tableView.addSubview(refreshControl)
+        
+        let notificationName = Notification.Name("logoutUserNotification")
+        NotificationCenter.default.addObserver(self, selector: #selector(handleNotification), name: notificationName, object: nil)
+    }
+    
+    @objc func handleNotification() {
+        Helper.shared.logoutUser(self: self)
     }
     
     @IBAction func postBtnAction(_ sender: Any) {
@@ -214,6 +221,8 @@ class FeedsViewController: BaseViewController {
         newsFeed[indexPath.row] = feed
         tableView.reloadRows(at: [indexPath], with: .none)
     }
+    
+    
 }
 
 extension FeedsViewController: UICollectionViewDelegate, UICollectionViewDataSource{

@@ -31,6 +31,9 @@ extension UserDefaults {
         case isTourist
         case loadFirstTime
         case notificationStatus
+        case appleSigninIdentifier
+        case appleEmail
+        case appleName
     }
         
     var accessToken: String? {
@@ -228,6 +231,33 @@ extension UserDefaults {
         }
         set {
             set(newValue, forKey: UserDefaultsKeys.notificationStatus.rawValue)
+        }
+    }
+    
+    var appleSigninIdentifier: String?  {
+        get {
+            value(forKey: UserDefaultsKeys.appleSigninIdentifier.rawValue) as? String
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.appleSigninIdentifier.rawValue)
+        }
+    }
+    
+    var appleEmail: String?  {
+        get {
+            value(forKey: UserDefaultsKeys.appleEmail.rawValue) as? String
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.appleEmail.rawValue)
+        }
+    }
+    
+    var appleName: String?  {
+        get {
+            value(forKey: UserDefaultsKeys.appleName.rawValue) as? String
+        }
+        set {
+            set(newValue, forKey: UserDefaultsKeys.appleName.rawValue)
         }
     }
 }

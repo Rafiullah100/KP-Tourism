@@ -35,6 +35,8 @@ class TabbarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+//        self.viewControllers?[Constants.tab].title = UserDefaults.standard.isLoginned == true ? "Profile" : "Login"
+
         let tabBarIndex = tabBarController.selectedIndex
         
         if tabBarIndex == 4{

@@ -181,10 +181,10 @@ class Helper{
         if let url = UserDefaults.standard.profileImage, url.contains("https"){
             return url
         }
-//        else{
-//            return Route.baseUrl + (UserDefaults.standard.profileImage ?? "")
-//        }
-        return ""
+        else{
+            return Route.baseUrl + (UserDefaults.standard.profileImage ?? "")
+        }
+//        return ""
     }
     
     func getOtherProfileImage(urlString: String) -> String{
@@ -231,7 +231,6 @@ class Helper{
         UserDefaults.standard.loadFirstTime = true
         Helper.shared.changeToDefaultValue()
         Switcher.goToLoginVC(delegate: self)
-        
     }
     
     func date(date: Date, formate: String) -> String {

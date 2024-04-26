@@ -62,10 +62,10 @@ extension URLSession{
                                method: Method,
                                parameters: [String: Any]? = nil) -> URLRequest? {
         var urlString = ""
-        if route == .weatherApi  {
+        switch route {
+        case .weatherApi:
             urlString = route.description
-        }
-        else{
+        default:
             urlString = Route.baseUrl + route.description
         }
         print(urlString)

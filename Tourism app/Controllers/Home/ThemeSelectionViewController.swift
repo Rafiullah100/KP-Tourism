@@ -90,7 +90,10 @@ class ThemeSelectionViewController: BaseViewController {
     }
     @IBAction func logoutBtnAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signOut()
-        Helper.shared.logoutUser(self: self)
+//        Helper.shared.logoutUser(self: self)
+        let notificationName = Notification.Name("logoutUserNotification")
+        NotificationCenter.default.post(name: notificationName, object: nil)
+        self.tabBarController?.selectedIndex = 3
     }
 }
 
