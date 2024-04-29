@@ -740,3 +740,30 @@ extension UILabel {
         layer.shadowRadius = 4
     }
 }
+
+
+extension String {
+    var htmlToAttributedString: NSAttributedString? {
+        guard let data = data(using: .utf8) else { return nil }
+        do {
+            let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
+                .documentType: NSAttributedString.DocumentType.html,
+                .characterEncoding: String.Encoding.utf8.rawValue
+            ]
+            let attributedString = try NSAttributedString(data: data, options: options, documentAttributes: nil)
+            let mutableAttributedString = NSMutableAttributedString(attributedString: attributedString)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .justified
+            mutableAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: mutableAttributedString.length))
+            let font = UIFont(name: "Poppins", size: 14.0)
+            mutableAttributedString.addAttribute(.font, value: font ?? UIFont(), range: NSRange(location: 0, length: mutableAttributedString.length))
+            return mutableAttributedString
+        } catch {
+            return nil
+        }
+    }
+    
+    var htmlToString: String {
+        return htmlToAttributedString?.string ?? ""
+    }
+}

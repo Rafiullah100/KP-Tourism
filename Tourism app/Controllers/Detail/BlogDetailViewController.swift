@@ -74,7 +74,7 @@ class BlogDetailViewController: BaseViewController {
         if detailType == .list {
             viewControllerTitle = "\(blogDetail?.title ?? "") | Blogs"
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (blogDetail?.previewImage ?? "")))
-            textView.text = blogDetail?.blogDescription.stripOutHtml()
+            textView.attributedText = blogDetail?.blogDescription.htmlToAttributedString
             blogTitleLabel.text = blogDetail?.title.stripOutHtml()
             autherLabel.text = "Author: \(blogDetail?.users.name ?? "")"
             likeLabel.text = "\(blogDetail?.likes.likesCount ?? 0) Liked"
@@ -88,7 +88,7 @@ class BlogDetailViewController: BaseViewController {
         else{
             viewControllerTitle = "\(wishlistEventDetail?.title ?? "") | Blogs"
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistEventDetail?.previewImage ?? "")))
-            textView.text = wishlistEventDetail?.description?.stripOutHtml()
+            textView.attributedText = wishlistEventDetail?.description?.htmlToAttributedString
             blogTitleLabel.text = wishlistEventDetail?.title?.stripOutHtml()
             autherLabel.text = "Author: \(wishlistEventDetail?.users?.name ?? "")"
             likeLabel.text = "\(wishlistEventDetail?.likesCount ?? 0) Liked"
