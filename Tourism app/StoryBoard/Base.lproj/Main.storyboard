@@ -2268,13 +2268,13 @@
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TKf-8Y-Y4Z">
                                                                         <rect key="frame" x="0.0" y="61" width="373" height="61"/>
                                                                         <subviews>
-                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Phone #" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9GP-kz-8ob">
+                                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="+92 3XX XXXXXXX" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="9GP-kz-8ob">
                                                                                 <rect key="frame" x="10" y="0.0" width="363" height="60.666666666666664"/>
                                                                                 <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
                                                                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                                                                                 <userDefinedRuntimeAttributes>
                                                                                     <userDefinedRuntimeAttribute type="number" keyPath="maxLength">
-                                                                                        <integer key="value" value="11"/>
+                                                                                        <integer key="value" value="13"/>
                                                                                     </userDefinedRuntimeAttribute>
                                                                                 </userDefinedRuntimeAttributes>
                                                                             </textField>
@@ -3107,15 +3107,26 @@
                                     <constraint firstAttribute="height" constant="1" id="0WC-8U-g8v"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OTP has been sent to your email. check your email" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rkV-ew-ZI9">
+                                <rect key="frame" x="57" y="90" width="300" height="42"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="UVt-nc-bG4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                <color key="textColor" red="0.34901960780000002" green="0.47843137250000001" blue="0.47058823529999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="DCl-VH-sPC"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="rkV-ew-ZI9" firstAttribute="top" secondItem="55q-kT-z6c" secondAttribute="bottom" constant="30" id="Hed-Dh-5cQ"/>
                             <constraint firstItem="55q-kT-z6c" firstAttribute="top" secondItem="DCl-VH-sPC" secondAttribute="top" id="KAl-JG-Q89"/>
                             <constraint firstItem="Vl3-fc-Dgg" firstAttribute="centerX" secondItem="4Ot-vK-ulk" secondAttribute="centerX" id="NTK-P9-aHy"/>
                             <constraint firstItem="55q-kT-z6c" firstAttribute="leading" secondItem="DCl-VH-sPC" secondAttribute="leading" id="Ucj-xA-6gz"/>
                             <constraint firstItem="DCl-VH-sPC" firstAttribute="trailing" secondItem="55q-kT-z6c" secondAttribute="trailing" id="iDc-mh-ucM"/>
                             <constraint firstItem="Vl3-fc-Dgg" firstAttribute="leading" secondItem="DCl-VH-sPC" secondAttribute="leading" constant="30" id="mmv-xK-orC"/>
+                            <constraint firstItem="rkV-ew-ZI9" firstAttribute="centerX" secondItem="4Ot-vK-ulk" secondAttribute="centerX" id="qJH-A8-5aK"/>
                             <constraint firstItem="DCl-VH-sPC" firstAttribute="trailing" secondItem="Vl3-fc-Dgg" secondAttribute="trailing" constant="30" id="tzL-s2-vYw"/>
                             <constraint firstItem="Vl3-fc-Dgg" firstAttribute="centerY" secondItem="4Ot-vK-ulk" secondAttribute="centerY" constant="5" id="uXI-PE-nMg"/>
                         </constraints>

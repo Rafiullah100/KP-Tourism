@@ -49,6 +49,10 @@ class WeatherAlertViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableView.automaticDimension
+        
         textField.delegate = self
         navigationController?.navigationBar.isHidden = false
         if alertType == .weather {
@@ -206,14 +210,10 @@ extension WeatherAlertViewController: UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch cellType {
-        case .WeatherTableViewCell:
+        if cellType == .WeatherTableViewCell {
             return 200
-        case .AlertTableViewCell:
-            return 140.0
-        default:
-            return 0
         }
+        return UITableView.automaticDimension
     }
 }
 

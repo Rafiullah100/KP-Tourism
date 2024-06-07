@@ -79,7 +79,7 @@ class ProductDetailViewController: BaseViewController {
             viewControllerTitle = "\(productDetail?.title ?? "") | Local Products"
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (productDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = productDetail?.title
-            descriptionTextView.attributedText = productDetail?.localProductDescription.htmlToAttributedString
+            descriptionTextView.text = productDetail?.localProductDescription.htmlToAttributedString
             onwerImageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: productDetail?.users.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = productDetail?.createdAt
             locationLabel.text = productDetail?.districts.title
@@ -98,7 +98,7 @@ class ProductDetailViewController: BaseViewController {
             viewControllerTitle = "\(wishListProductDetail?.title ?? "") | Local Products"
             thumbnailImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             productNameLabel.text = wishListProductDetail?.title
-            descriptionTextView.attributedText = wishListProductDetail?.description?.htmlToAttributedString
+            descriptionTextView.text = wishListProductDetail?.description?.htmlToAttributedString
             onwerImageView.sd_setImage(with: URL(string: Route.baseUrl + (wishListProductDetail?.users?.profileImage ?? "")), placeholderImage: UIImage(named: "placeholder"))
             uploadTimeLabel.text = wishListProductDetail?.createdAt
             locationLabel.text = wishListProductDetail?.districts.title

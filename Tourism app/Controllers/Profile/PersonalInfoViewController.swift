@@ -29,12 +29,30 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
     }
 
     @IBAction func takePicture(_ sender: Any) {
-        imagePicker = UIImagePickerController()
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.delegate = self
-        imagePicker.modalPresentationStyle = .fullScreen
-        present(imagePicker, animated: true, completion: nil)
+        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
+            self.showImagePicker(sourceType: .camera)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
+            self.showImagePicker(sourceType: .photoLibrary)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        present(actionSheet, animated: true, completion: nil)
+    }
+    
+    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
+            imagePicker = UIImagePickerController()
+            imagePicker.allowsEditing = false
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            imagePicker.modalPresentationStyle = .fullScreen
+            present(imagePicker, animated: true, completion: nil)
+        } else {
+            let alert = UIAlertController(title: "Error", message: "Source type not available", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(alert, animated: true, completion: nil)
+        }
     }
     
     private func updateProfile(route: Route, params: [String: Any]){
@@ -46,7 +64,6 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
                     UserDefaults.standard.name = profile.data?.name
                     UserDefaults.standard.userEmail = profile.data?.email
                     UserDefaults.standard.profileImage = profile.data?.profileImage
-                    print(profile.data?.profileImage)
                     UserDefaults.standard.userBio = profile.data?.about
                     SVProgressHUD.showSuccess(withStatus: profile.message)
                 }

@@ -24,7 +24,7 @@ class PackageDetailCell: UITableViewCell{
             departureTimeLabel.text = activity?.departure_time
             departureDateLabel.text = activity?.departure_date
             stayinLabel.text = activity?.stay_in
-            descriptionLabel.attributedText = activity?.description?.htmlToAttributedString
+            descriptionLabel.text = activity?.description?.htmlToAttributedString
         }
     }
     

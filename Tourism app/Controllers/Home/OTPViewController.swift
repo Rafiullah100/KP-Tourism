@@ -39,7 +39,7 @@ class OTPViewController: BaseViewController {
         super.viewDidLoad()
         type = .title
         viewControllerTitle = "OTP"
-        
+        secondTF.deleteBackward()
         firstTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
         secondTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
         thirdTF.addTarget(self, action: #selector(OTPViewController.textFieldDidChange(_:)), for: .editingChanged)
@@ -66,18 +66,15 @@ class OTPViewController: BaseViewController {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.text?.count ?? 0 == 1{
             if textField == firstTF {
-                firstTF.resignFirstResponder()
                 secondTF.becomeFirstResponder()
             }
-            if textField == secondTF {
-                secondTF.resignFirstResponder()
+            else if textField == secondTF {
                 thirdTF.becomeFirstResponder()
             }
-            if textField == thirdTF {
-                thirdTF.resignFirstResponder()
+            else if textField == thirdTF {
                 forthTF.becomeFirstResponder()
             }
-            if textField == firstTF {
+            else if textField == forthTF {
                 forthTF.resignFirstResponder()
             }
         }
@@ -120,18 +117,35 @@ class OTPViewController: BaseViewController {
 }
 
 extension OTPViewController: UITextFieldDelegate{
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-//        if textField.text?.count == 1{
-//            if textField == firstTF {
-//                firstTF.resignFirstResponder()
-//                secondTF.becomeFirstResponder()
-//            }
-//        }
-    }
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        if textField == firstTF {
-//            firstTF.resignFirstResponder()
-//            secondTF.becomeFirstResponder()
-//        }
+    
+//    func textFieldDidBeginEditing(_ textField: UITextField) {
+//        textField.text = ""
 //    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+           if string.isEmpty, range.length == 1 {
+               if range.location == 0 {
+                   moveToPreviousTextField(from: textField)
+                   return false
+               }
+           }
+           return true
+       }
+
+    private func moveToPreviousTextField(from textField: UITextField) {
+        if textField == secondTF {
+            secondTF.text = ""
+            firstTF.becomeFirstResponder()
+        } else if textField == thirdTF {
+            thirdTF.text = ""
+            secondTF.becomeFirstResponder()
+        } else if textField == forthTF {
+            forthTF.text = ""
+            thirdTF.becomeFirstResponder()
+        }
+        else {
+            firstTF.text = ""
+        }
+    }
 }
+

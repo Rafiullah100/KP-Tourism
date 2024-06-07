@@ -18,13 +18,13 @@ enum AppError: LocalizedError, Equatable {
     var errorDescription: String? {
         switch self {
         case .errorDecoding:
-            return "Response could not be decoded"
+            return "Something went wrong. Please try again later."
         case .unknownError:
-            return "Bruhhh!!! I have no idea what go on"
+            return "Something went wrong. Please try again later."
         case .invalidUrl:
             return "Invalid URL"
         case .serverError:
-            return "Something went wrong."
+            return "Something went wrong. Please try again later."
         case .noInternet:
             return "You're currently offline. Please connect with Wifi and try again later."
         }

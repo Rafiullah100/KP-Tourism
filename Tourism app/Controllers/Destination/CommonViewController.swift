@@ -94,7 +94,7 @@ class CommonViewController: BaseViewController {
             thumbnailBottomLabel.text = explore?.geographicalArea
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (explore?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(explore?.title ?? "")"
-            descriptionLabel.attributedText = explore?.description?.htmlToAttributedString
+            descriptionLabel.text = explore?.description?.htmlToAttributedString
             districtID = explore?.id ?? 0
             latitude = explore?.latitude
             longitude = explore?.longitude
@@ -104,7 +104,7 @@ class CommonViewController: BaseViewController {
             thumbnailBottomLabel.text = attraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attraction?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(attraction?.title ?? "")"
-            descriptionLabel.attributedText = attraction?.description.htmlToAttributedString
+            descriptionLabel.text = attraction?.description.htmlToAttributedString
             latitude = attraction?.latitude
             longitude = attraction?.longitude
         }
@@ -113,7 +113,7 @@ class CommonViewController: BaseViewController {
             thumbnailBottomLabel.text = archeology?.attractions.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (archeology?.attractions.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(archeology?.attractions.title ?? "")"
-            descriptionLabel.attributedText = archeology?.attractions.description?.htmlToAttributedString
+            descriptionLabel.text = archeology?.attractions.description?.htmlToAttributedString
             districtID = archeology?.attractions.id ?? 0
             latitude = archeology?.attractions.latitude
             longitude = archeology?.attractions.longitude
@@ -123,7 +123,7 @@ class CommonViewController: BaseViewController {
             thumbnailBottomLabel.text = wishlistAttraction?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistAttraction?.displayImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(wishlistAttraction?.title ?? "")"
-            descriptionLabel.attributedText = wishlistAttraction?.description?.htmlToAttributedString
+            descriptionLabel.text = wishlistAttraction?.description?.htmlToAttributedString
             districtID = wishlistAttraction?.id ?? 0
             latitude = wishlistAttraction?.latitude
             longitude = wishlistAttraction?.longitude
@@ -133,7 +133,7 @@ class CommonViewController: BaseViewController {
             thumbnailBottomLabel.text = wishlistDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (wishlistDistrict?.previewImage ?? "")), placeholderImage: UIImage(named: "placeholder.png"))
             welcomeLabel.text = "Welcome to \(wishlistDistrict?.title ?? "")"
-            descriptionLabel.attributedText = wishlistDistrict?.description?.htmlToAttributedString
+            descriptionLabel.text = wishlistDistrict?.description?.htmlToAttributedString
             districtID = wishlistDistrict?.id ?? 0
             latitude = wishlistDistrict?.latitude
             longitude = wishlistDistrict?.longitude

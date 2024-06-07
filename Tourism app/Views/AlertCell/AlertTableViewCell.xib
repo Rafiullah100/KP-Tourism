@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -32,7 +32,7 @@
                                 <rect key="frame" x="1" y="0.0" width="398" height="116"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="5DH-qa-WCP">
-                                <rect key="frame" x="5" y="10" width="390" height="132"/>
+                                <rect key="frame" x="5" y="10" width="390" height="106"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tXY-qC-ilf">
                                         <rect key="frame" x="0.0" y="0.0" width="390" height="20"/>
@@ -41,15 +41,15 @@
                                                 <rect key="frame" x="5" y="0.0" width="385" height="20"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alert-fill" translatesAutoresizingMaskIntoConstraints="NO" id="Mdp-NC-AjT">
-                                                        <rect key="frame" x="0.0" y="0.0" width="25" height="21"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="25" height="22.5"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="25" id="5A9-xP-vkn"/>
                                                             <constraint firstAttribute="width" constant="25" id="w17-Fx-zkY"/>
                                                         </constraints>
                                                     </imageView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Heavy Rainfall Warning" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vws-bx-R42">
-                                                        <rect key="frame" x="33" y="0.0" width="352" height="21"/>
-                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
+                                                        <rect key="frame" x="33" y="0.0" width="352" height="22.5"/>
+                                                        <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="16"/>
                                                         <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -66,13 +66,13 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Sy-8F-hRY">
-                                        <rect key="frame" x="0.0" y="22" width="390" height="50"/>
+                                        <rect key="frame" x="0.0" y="22" width="390" height="25.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ed-2D-LXQ">
-                                                <rect key="frame" x="10" y="5" width="375" height="45"/>
+                                                <rect key="frame" x="10" y="5" width="375" height="15.5"/>
                                                 <string key="text">KP Tourism : Heavy Rainfall expected in Madyan, Swat
 today around 1PM - 7PM .</string>
-                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -81,13 +81,13 @@ today around 1PM - 7PM .</string>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="6ed-2D-LXQ" secondAttribute="trailing" constant="5" id="7QB-vW-fBu"/>
                                             <constraint firstItem="6ed-2D-LXQ" firstAttribute="top" secondItem="1Sy-8F-hRY" secondAttribute="top" constant="5" id="XxI-Bv-D9p"/>
-                                            <constraint firstAttribute="bottom" secondItem="6ed-2D-LXQ" secondAttribute="bottom" id="hRQ-Av-Wq9"/>
+                                            <constraint firstAttribute="bottom" secondItem="6ed-2D-LXQ" secondAttribute="bottom" constant="5" id="hRQ-Av-Wq9"/>
                                             <constraint firstItem="6ed-2D-LXQ" firstAttribute="leading" secondItem="1Sy-8F-hRY" secondAttribute="leading" constant="10" id="tRa-E7-Bga"/>
-                                            <constraint firstAttribute="height" constant="50" id="tez-2h-hv8"/>
+                                            <constraint firstAttribute="height" priority="250" constant="50" id="tez-2h-hv8"/>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hza-9i-8yf">
-                                        <rect key="frame" x="0.0" y="74" width="390" height="2"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="390" height="2"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6jO-a0-kiI">
                                                 <rect key="frame" x="10" y="0.0" width="370" height="1"/>
@@ -107,20 +107,22 @@ today around 1PM - 7PM .</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JF4-Y9-ryY">
-                                        <rect key="frame" x="0.0" y="78" width="390" height="54"/>
+                                        <rect key="frame" x="0.0" y="53.5" width="390" height="52.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Safe for Travelling " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wkf-g9-dpn">
-                                                <rect key="frame" x="10" y="3" width="134" height="17"/>
-                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not Safe for Travelling " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wkf-g9-dpn">
+                                                <rect key="frame" x="10" y="5" width="370" height="42.5"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="14"/>
                                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="Wkf-g9-dpn" secondAttribute="bottom" constant="5" id="E4l-4r-KTJ"/>
                                             <constraint firstItem="Wkf-g9-dpn" firstAttribute="leading" secondItem="JF4-Y9-ryY" secondAttribute="leading" constant="10" id="EIx-X8-h76"/>
-                                            <constraint firstAttribute="height" constant="54" id="iqe-OI-xzd"/>
-                                            <constraint firstItem="Wkf-g9-dpn" firstAttribute="top" secondItem="JF4-Y9-ryY" secondAttribute="top" constant="3" id="rps-DD-4V4"/>
+                                            <constraint firstAttribute="trailing" secondItem="Wkf-g9-dpn" secondAttribute="trailing" constant="10" id="QKK-A1-ocO"/>
+                                            <constraint firstAttribute="height" priority="250" constant="20" id="iqe-OI-xzd"/>
+                                            <constraint firstItem="Wkf-g9-dpn" firstAttribute="top" secondItem="JF4-Y9-ryY" secondAttribute="top" constant="5" id="rps-DD-4V4"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -131,6 +133,7 @@ today around 1PM - 7PM .</string>
                             <constraint firstAttribute="trailing" secondItem="fBa-5a-JPl" secondAttribute="trailing" constant="1" id="5Yx-wX-8JV"/>
                             <constraint firstItem="fBa-5a-JPl" firstAttribute="top" secondItem="HuX-gn-okD" secondAttribute="top" id="Vma-4c-Zkm"/>
                             <constraint firstItem="5DH-qa-WCP" firstAttribute="leading" secondItem="HuX-gn-okD" secondAttribute="leading" constant="5" id="kTN-D0-RJR"/>
+                            <constraint firstAttribute="bottom" secondItem="5DH-qa-WCP" secondAttribute="bottom" id="lc5-6f-riS"/>
                             <constraint firstAttribute="trailing" secondItem="5DH-qa-WCP" secondAttribute="trailing" constant="5" id="oGU-du-PtQ"/>
                             <constraint firstAttribute="bottom" secondItem="fBa-5a-JPl" secondAttribute="bottom" id="uKq-c6-NKs"/>
                             <constraint firstItem="fBa-5a-JPl" firstAttribute="leading" secondItem="HuX-gn-okD" secondAttribute="leading" constant="1" id="zcb-U7-SfO"/>

@@ -81,6 +81,10 @@ class SignupViewController: BaseViewController {
     
     private func validateSignupFields(){
         guard let email = emailTextField.text, let firstName = firstNameTextFeild.text, !firstName.isEmpty, let password = passwordTextField.text,  let confirmPassword = confirmTextField.text, let phone = phoneTextField.text else { return }
+        guard passwordTextField.text?.count ?? 0 >= 6 else {
+            self.view.makeToast("Password must be atleast 6 charactors")
+            return
+        }
         guard passwordTextField.text == confirmTextField.text else {
             self.view.makeToast("Password does not match")
             return }

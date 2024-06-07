@@ -17,7 +17,7 @@ class AlertTableViewCell: UITableViewCell {
     var warning: Warning? {
         didSet{
             titleLabel.text = warning?.title
-            descriptionLabel.text = warning?.description
+            descriptionLabel.text = warning?.description?.htmlToAttributedString
         }
     }
     

@@ -743,7 +743,7 @@ extension UILabel {
 
 
 extension String {
-    var htmlToAttributedString: NSAttributedString? {
+    var htmlToAttributedString: String? {
         guard let data = data(using: .utf8) else { return nil }
         do {
             let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
@@ -757,13 +757,15 @@ extension String {
             mutableAttributedString.addAttribute(.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: mutableAttributedString.length))
             let font = UIFont(name: "Poppins", size: 14.0)
             mutableAttributedString.addAttribute(.font, value: font ?? UIFont(), range: NSRange(location: 0, length: mutableAttributedString.length))
-            return mutableAttributedString
+            let string = mutableAttributedString.string
+            
+            return string.trimmingCharacters(in: .whitespacesAndNewlines)
         } catch {
             return nil
         }
     }
     
-    var htmlToString: String {
-        return htmlToAttributedString?.string ?? ""
-    }
+//    var htmlToString: String {
+//        return htmlToAttributedString?.string ?? ""
+//    }
 }

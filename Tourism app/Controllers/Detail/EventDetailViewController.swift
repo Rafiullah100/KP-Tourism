@@ -80,7 +80,7 @@ class EventDetailViewController: BaseViewController {
             viewControllerTitle = "\(eventDetail?.title ?? "") | Events"
             titLabel.text = eventDetail?.title
             eventTypeLabel.text = eventDetail?.locationTitle
-            descriptionLabel.attributedText = eventDetail?.eventDescription?.htmlToAttributedString
+            descriptionLabel.text = eventDetail?.eventDescription?.htmlToAttributedString
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (eventDetail?.previewImage ?? "")))
             openDateLabel.text = "\(eventDetail?.startDate ?? "") | \(eventDetail?.isExpired ?? "")"
             if eventDetail?.isExpired == "Closed" {
@@ -96,7 +96,7 @@ class EventDetailViewController: BaseViewController {
             viewControllerTitle = "\(wishlistEventDetail?.title ?? "") | Events"
             titLabel.text = wishlistEventDetail?.title
             eventTypeLabel.text = wishlistEventDetail?.locationTitle
-            descriptionLabel.attributedText = wishlistEventDetail?.description?.htmlToAttributedString
+            descriptionLabel.text = wishlistEventDetail?.description?.htmlToAttributedString
             imageView.sd_setImage(with: URL(string: Route.baseUrl + (wishlistEventDetail?.previewImage ?? "")))
             openDateLabel.text = "\(wishlistEventDetail?.startDate ?? "") | \(wishlistEventDetail?.isExpired ?? "")"
             if wishlistEventDetail?.isExpired == "Closed" {

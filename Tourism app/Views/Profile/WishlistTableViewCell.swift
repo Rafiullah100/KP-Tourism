@@ -109,7 +109,7 @@ extension WishlistTableViewCell: UICollectionViewDelegate, UICollectionViewDataS
             return eventWishlist?.count ?? 0
         }
         else if wishlistType == .blog{
-            blogWishlist?.count == 0 ? collectionView.setEmptyView("No blog to wishlist") : collectionView.setEmptyView("")
+            blogWishlist?.count == 0 ? collectionView.setEmptyView("No blog added to wishlist") : collectionView.setEmptyView("")
             return blogWishlist?.count ?? 0
         }
         return 0
