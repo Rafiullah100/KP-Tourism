@@ -166,7 +166,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
                     self.conversationID = self.conversation?[0].conversationID
                     self.conversation?.removeFirst()
                 }
-                self.conversation?.forEach({ item in
+                self.conversation?.reversed().forEach({ item in
                     if item.sender?.id == UserDefaults.standard.userID {
                         self.currentUser = Sender(senderId: "self", displayName: item.sender?.name ?? "")
                         guard let currentUser = self.currentUser else { return }

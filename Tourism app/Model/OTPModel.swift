@@ -9,7 +9,7 @@ import Foundation
 
 struct OTPModel: Codable {
     let success: Bool?
-    let user: OTPUser
+    let user: OTPUser?
     let message: String?
 }
 

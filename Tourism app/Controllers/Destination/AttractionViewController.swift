@@ -48,7 +48,6 @@ class AttractionViewController: BaseViewController {
         filterView.categories = attractionDetail?.categories
         filterView.isHidden = !filterView.isHidden
     }
-    
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,9 +77,7 @@ class AttractionViewController: BaseViewController {
             thumbnailTopLabel.text = attractionDistrict?.title
             thumbnailBottomLabel.text = attractionDistrict?.locationTitle
             thumbnail.sd_setImage(with: URL(string: Route.baseUrl + (attractionDistrict?.previewImage ?? "")))
-            fetch(parameters: ["district_id": districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0,  "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
-            print(attractionDistrict?.id ?? 0, districtID ?? 0)
-           
+            fetch(parameters: ["district_id": attractionDistrict?.districtID ?? 0, "attraction_id": attractionDistrict?.id ?? 0,  "isFilter": isFilter ?? "", "type": "sub_attraction", "limit": 5, "page": currentPage, "user_id": UserDefaults.standard.userID ?? 0])
         }
         else if archeology != nil{
             sectionLabel.text = "Attractions"
@@ -113,6 +110,7 @@ class AttractionViewController: BaseViewController {
             case .success(let attractionDetail):
                 self.attractionDetail = attractionDetail
                 self.attractionDistrictsArray.append(contentsOf: attractionDetail.attractions?.rows ?? [])
+                print(self.attractionDetail)
                 self.totalPages = attractionDetail.attractions?.count ?? 1
                 self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):

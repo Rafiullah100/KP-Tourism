@@ -23,7 +23,7 @@ class LoginViewController: BaseViewController {
     @IBOutlet weak var loginButton: UIButton!
     var login: LoginModel?
     let appleIDProvider = ASAuthorizationAppleIDProvider()
-    private let appleSignInButton = ASAuthorizationAppleIDButton()
+    private var appleSignInButton: ASAuthorizationAppleIDButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +42,7 @@ class LoginViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        self.tabBarController?.selectedIndex = 3
+        appleSignInButton = ASAuthorizationAppleIDButton(type: .signIn, style: UserDefaults.standard.theme == ThemeMode.dark.rawValue ? .white : .black)
     }
     
     override func viewDidLayoutSubviews() {

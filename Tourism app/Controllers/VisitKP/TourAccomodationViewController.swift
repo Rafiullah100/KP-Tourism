@@ -67,7 +67,7 @@ class TourAccomodationViewController: BaseViewController {
             switch result {
             case .success(let accomodation):
                 self.accomodationDetail = accomodation
-                self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView() : self.tableView.reloadData()
+                self.accomodationDetail?.accomodations.count == 0 ? self.tableView.setEmptyView("No accomodation found.") : self.tableView.reloadData()
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)
             }

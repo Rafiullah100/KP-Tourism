@@ -54,13 +54,18 @@ class CommonViewController: BaseViewController {
         type = .back1
         destinationArray = Constants.desintationArray
         updateUI()
+//        updateCollectionViewHeight()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        collectionViewHeight.constant = collectionView.contentSize.height
+//        updateCollectionViewHeight()
     }
     
+    func updateCollectionViewHeight() {
+//        collectionViewHeight.constant = collectionView.collectionViewLayout.collectionViewContentSize.height
+//        containerView.layoutIfNeeded()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

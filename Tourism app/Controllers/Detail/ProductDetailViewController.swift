@@ -71,6 +71,7 @@ class ProductDetailViewController: BaseViewController {
     }
     
     private func updateUI(){
+        print(productDetail)
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()), placeholderImage: UIImage(named: "user"))
         favoriteBtn.isUserInteractionEnabled = Helper.shared.disableWhenNotLogin()
         if detailType == .list{
@@ -90,6 +91,10 @@ class ProductDetailViewController: BaseViewController {
             if productDetail?.likes.count ?? 0 > 0{
                 likeCount = productDetail?.likes[0].likesCount ?? 0
                 likeCountLabel.text = "\(String(describing: likeCount)) Liked"
+            }
+            else{
+                likeCount = 0
+                likeCountLabel.text = "0 Liked"
             }
             viewsCount = productDetail?.viewsCounter ?? 0
         }
@@ -195,7 +200,9 @@ class ProductDetailViewController: BaseViewController {
         guard var modelObject = DataManager.shared.productModelObject else {
             return
         }
-        modelObject.likes[0].likesCount = self.likeCount
+        if productDetail?.likes.count ?? 0 > 0{
+            modelObject.likes[0].likesCount = self.likeCount
+        }
         modelObject.userLike = modelObject.userLike == 1 ? 0 : 1
         DataManager.shared.productModelObject = modelObject
     }

@@ -8,6 +8,8 @@
 import UIKit
 import SVProgressHUD
 import SDWebImage
+import PhotosUI
+
 class PersonalInfoViewController: BaseViewController, UINavigationControllerDelegate {
 
     @IBOutlet weak var bioTextField2: UITextField!
@@ -16,8 +18,6 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var topBarView: UIView!
-
-    var imagePicker: UIImagePickerController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,32 +29,37 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
     }
 
     @IBAction func takePicture(_ sender: Any) {
-        let actionSheet = UIAlertController(title: "", message: "", preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
-            self.showImagePicker(sourceType: .camera)
+        let actionSheet = UIAlertController(title: "Profile Picture", message: "Choose a source", preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { _ in
+            self.presentCamera()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action: UIAlertAction) in
-            self.showImagePicker(sourceType: .photoLibrary)
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { _ in
+            self.presentPhotoLibrary()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        present(actionSheet, animated: true, completion: nil)
+        present(actionSheet, animated: true)
     }
-    
-    func showImagePicker(sourceType: UIImagePickerController.SourceType) {
-        if UIImagePickerController.isSourceTypeAvailable(sourceType) {
-            imagePicker = UIImagePickerController()
-            imagePicker.allowsEditing = false
-            imagePicker.sourceType = .photoLibrary
-            imagePicker.delegate = self
-            imagePicker.modalPresentationStyle = .fullScreen
-            present(imagePicker, animated: true, completion: nil)
+
+    private func presentCamera() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera) {
+            let imagePickerController = UIImagePickerController()
+            imagePickerController.delegate = self
+            imagePickerController.sourceType = .camera
+            present(imagePickerController, animated: true)
         } else {
-            let alert = UIAlertController(title: "Error", message: "Source type not available", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            present(alert, animated: true, completion: nil)
+            self.view.makeToast("Camera is not available")
         }
     }
-    
+
+    private func presentPhotoLibrary() {
+        var configuration = PHPickerConfiguration()
+        configuration.filter = .images
+        configuration.selectionLimit = 1
+        let pickerViewController = PHPickerViewController(configuration: configuration)
+        pickerViewController.delegate = self
+        present(pickerViewController, animated: true)
+    }
+
     private func updateProfile(route: Route, params: [String: Any]){
         Networking.shared.updateProfile(route: route, imageParameter: "profile_image", image: profileImageView.image ?? UIImage(), parameters: params) { result in
             switch result {
@@ -75,32 +80,46 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
             }
         }
     }
-    
+
     @IBAction func updateProfileBtnAction(_ sender: Any) {
         guard let name = nameTextField.text, let email = emailTextField.text, let bio = bioTextField1.text, !name.isEmpty,!email.isEmpty, !bio.isEmpty else {
             self.view.makeToast("All fields are required.")
-            return  }
+            return
+        }
         updateProfile(route: .updateProfile, params: ["name": name, "email": email, "bio": bio])
     }
-    
-    
-    
+
     @IBAction func backBtnAction(_ sender: Any) {
         navigationController?.popViewController(animated: true)
     }
 }
 
-extension PersonalInfoViewController: UIImagePickerControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController,
-                               didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            profileImageView.contentMode = .scaleToFill
-            profileImageView.image = pickedImage
+extension PersonalInfoViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true)
+        if let itemprovider = results.first?.itemProvider {
+            if itemprovider.canLoadObject(ofClass: UIImage.self) {
+                itemprovider.loadObject(ofClass: UIImage.self) { image, error in
+                    if let selectedImage = image as? UIImage {
+                        DispatchQueue.main.async {
+                            self.profileImageView.image = selectedImage
+                        }
+                    }
+                }
+            }
         }
-        dismiss(animated: true, completion: nil)
     }
-    
+}
+
+extension PersonalInfoViewController: UIImagePickerControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        picker.dismiss(animated: true)
+        if let selectedImage = info[.originalImage] as? UIImage {
+            profileImageView.image = selectedImage
+        }
+    }
+
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        picker.dismiss(animated: true)
     }
 }

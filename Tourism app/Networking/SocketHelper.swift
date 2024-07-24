@@ -1,9 +1,8 @@
 //
 //  SocketHelper.swift
-//  Socket_demo
+//  Tourism app
 //
-//  Created by Krishna Soni on 06/12/19.
-//  Copyright © 2019 Krishna Soni. All rights reserved.
+//  Created by MacBook Pro on 3/27/23.
 //
 
 import UIKit

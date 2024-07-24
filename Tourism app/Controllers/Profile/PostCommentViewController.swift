@@ -27,7 +27,7 @@ class PostCommentViewController: BaseViewController {
     }
     
     var commentText = "Write a comment"
-    var limit = 5
+    var limit = 500
     var currentPage = 1
     var totalCount = 1
     var allComments: [CommentsRows] = [CommentsRows]()
@@ -138,11 +138,12 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
         let comment = allComments[indexPath.section]
         if indexPath.row == 0 {
             let cell: CommentsTableViewCell = tableView.dequeueReusableCell(withIdentifier: CommentsTableViewCell.cellReuseIdentifier()) as! CommentsTableViewCell
-            cell.comment = allComments[indexPath.row]
+            cell.comment = comment
             cell.commentReplyBlock = {
                 tableView.performBatchUpdates {
                     UIView.animate(withDuration: 0.3) {
                         cell.bottomView.isHidden.toggle()
+                        cell.layoutIfNeeded() // Ensure layout is updated
                     }
                 }
             }
@@ -150,6 +151,10 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
                 cell.textView.text = ""
                 self.commentReply(parameters: ["reply": text, "comment_id": self.allComments[indexPath.row].id ?? "", "section": "post"], row: indexPath)
                 self.allComments = []
+            }
+            cell.textViewCellDidChangeHeight = {
+                tableView.beginUpdates()
+                tableView.endUpdates()
             }
             return cell
         }
@@ -164,10 +169,10 @@ extension PostCommentViewController: UITableViewDelegate, UITableViewDataSource{
         return UITableView.automaticDimension
     }
     
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if allComments.count != totalCount && indexPath.row == allComments.count - 1  {
-            currentPage = currentPage + 1
-            reloadComment()
-        }
-    }
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if allComments.count != totalCount && indexPath.row == allComments.count - 1  {
+//            currentPage = currentPage + 1
+//            reloadComment()
+//        }
+//    }
 }

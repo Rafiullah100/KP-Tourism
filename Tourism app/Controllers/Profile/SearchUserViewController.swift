@@ -30,6 +30,7 @@ class SearchUserViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        searchTF.keyboardToolbar.isHidden = true
         topBarView.addBottomShadow()
         tableView.keyboardDismissMode = .onDrag
         searchTF.becomeFirstResponder()
