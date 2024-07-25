@@ -21,11 +21,25 @@ class PersonalInfoViewController: BaseViewController, UINavigationControllerDele
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        requestCameraPermission()
+            requestPhotoLibraryPermission()
         topBarView.addBottomShadow()
         emailTextField.text = UserDefaults.standard.userEmail
         nameTextField.text = UserDefaults.standard.name?.capitalized
         bioTextField1.text = UserDefaults.standard.userBio
         profileImageView.sd_setImage(with: URL(string: Helper.shared.getProfileImage()))
+    }
+    
+    func requestCameraPermission() {
+        AVCaptureDevice.requestAccess(for: .video) { _ in
+            
+        }
+    }
+    
+    func requestPhotoLibraryPermission() {
+        PHPhotoLibrary.requestAuthorization { _ in
+            
+        }
     }
 
     @IBAction func takePicture(_ sender: Any) {

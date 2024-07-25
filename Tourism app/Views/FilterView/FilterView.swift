@@ -85,6 +85,7 @@ class FilterView: UIView {
 
 extension FilterView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        self.categories?.count == 0 ? self.collectionView.setEmptyView("No Categories Found!") : self.collectionView.setEmptyView("")
         return categories?.count ?? 0
     }
     

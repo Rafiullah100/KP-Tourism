@@ -85,8 +85,10 @@ class OTPViewController: BaseViewController {
         dataTask = URLSession.shared.request(route: .resendOtp, method: .post, parameters: ["username": UserDefaults.standard.otpEmail ?? ""], model: SuccessModel.self) { result in
             switch result {
             case .success(let otp):
-                SVProgressHUD.showSuccess(withStatus: otp.message)
-                self.countDonwTimer()
+                DispatchQueue.main.async{
+                    SVProgressHUD.showSuccess(withStatus: otp.message)
+                    self.countDonwTimer()
+                }
             case .failure(let error):
                 SVProgressHUD.showError(withStatus: error.localizedDescription)
             }
@@ -102,12 +104,16 @@ class OTPViewController: BaseViewController {
         dataTask = URLSession.shared.request(route: .verifyOtp, method: .post, parameters: parameters, model: OTPModel.self) { result in
             switch result {
             case .success(let res):
-                if res.success == true{
-                    self.view.makeToast(res.message)
-                    Switcher.goToLoginVC(delegate: self)
-                }
-                else{
-                    self.view.makeToast(res.message)
+                DispatchQueue.main.async{
+                    if res.success == true{
+                        self.timer?.invalidate()
+                        Utility.showAlert(title: "", message: res.message ?? "", buttonTitles: ["ok"]) { _ in
+                            Switcher.goToLoginVC(delegate: self)
+                        }
+                    }
+                    else{
+                        self.view.makeToast(res.message)
+                    }
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

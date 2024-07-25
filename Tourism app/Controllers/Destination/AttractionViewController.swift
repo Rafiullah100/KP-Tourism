@@ -44,8 +44,13 @@ class AttractionViewController: BaseViewController {
     var isFilter: String?
     
     override func filterAction() {
+        if attractionDetail?.attractions?.rows?.count == 0 {
+            filterView.categories = []
+        }
+        else{
+            filterView.categories = attractionDetail?.categories
+        }
         filterView.delegate = self
-        filterView.categories = attractionDetail?.categories
         filterView.isHidden = !filterView.isHidden
     }
    
@@ -110,7 +115,6 @@ class AttractionViewController: BaseViewController {
             case .success(let attractionDetail):
                 self.attractionDetail = attractionDetail
                 self.attractionDistrictsArray.append(contentsOf: attractionDetail.attractions?.rows ?? [])
-                print(self.attractionDetail)
                 self.totalPages = attractionDetail.attractions?.count ?? 1
                 self.attractionDistrictsArray.count == 0 ? self.collectionView.setEmptyView("No Record found!") : self.collectionView.reloadData()
             case .failure(let error):

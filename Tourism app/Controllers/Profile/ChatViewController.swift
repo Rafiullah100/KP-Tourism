@@ -72,6 +72,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
             self.navigationController?.popViewController(animated: true)
         }
         registerSocketEvent()
+        
     }
     
     private func registerSocketEvent(){
@@ -129,6 +130,7 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
         }
         chatTopView.imageView.sd_setImage(with: URL(string: Helper.shared.getOtherProfileImage(urlString: profileImage ?? "")), placeholderImage: UIImage(named: "user"))
         loadMessages()
+        print(self.uuid)
     }
     
     private func addCustomView(){
@@ -208,8 +210,9 @@ class ChatViewController: MessagesViewController, MessagesDataSource, MessagesLa
     }
     
     func appendMessage(sender: SenderType, message: String, date: String, messageID: String, uuid: String)  {
+        print(self.messages.count)
         self.messages.append(Message(sender: sender, messageId: messageID, sentDate: Helper.shared.dateFromString(date), kind: .text(message), uuid: uuid))
-        print(self.messages)
+        print(self.messages.count)
         self.messagesCollectionView.reloadData()
         self.messagesCollectionView.scrollToBottom()
     }

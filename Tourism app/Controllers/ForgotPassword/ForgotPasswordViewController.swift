@@ -30,12 +30,15 @@ class ForgotPasswordViewController: BaseViewController {
         dataTask = URLSession.shared.request(route: .resetPassword, method: .post, parameters: parameters, model: SuccessModel.self) { result in
             switch result {
             case .success(let success):
-                if success.success == true{
-                    self.view.makeToast(success.message)
-                    Switcher.goToLoginVC(delegate: self)
-                }
-                else{
-                    self.view.makeToast(success.message)
+                DispatchQueue.main.async{
+                    if success.success == true{
+                        Utility.showAlert(title: "", message: success.message ?? "", buttonTitles: ["ok"]) { _ in
+                            Switcher.goToLoginVC(delegate: self)
+                        }
+                    }
+                    else{
+                        self.view.makeToast(success.message)
+                    }
                 }
             case .failure(let error):
                 self.view.makeToast(error.localizedDescription)

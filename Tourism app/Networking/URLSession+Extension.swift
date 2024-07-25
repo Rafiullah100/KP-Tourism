@@ -25,9 +25,11 @@ extension URLSession{
             showPrgoesshud = false
         }
         if showPrgoesshud == true {
-            SVProgressHUD.show(withStatus: "Please Wait...")
-            SVProgressHUD.setDefaultMaskType(.none)
-            SVProgressHUD.setBackgroundColor(.lightGray)
+            DispatchQueue.main.async {
+                SVProgressHUD.show(withStatus: "Please Wait...")
+                SVProgressHUD.setDefaultMaskType(.none)
+                SVProgressHUD.setBackgroundColor(.lightGray)
+            }
         }
         task = dataTask(with: request) { data, response, error in
             SVProgressHUD.dismiss()
