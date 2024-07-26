@@ -9,8 +9,8 @@ import Foundation
 //afzalsuleman@gmail.com
 //+923478297650
 enum Route {
-//    static let baseUrl = "https://prod-admin.kptourism.com/"
-    static let baseUrl = "https://staging-admin.kptourism.com/"
+    static let baseUrl = "https://prod-admin.kptourism.com/"
+//    static let baseUrl = "https://staging-admin.kptourism.com/"
 
     case fetchAllDistricts
     case fetchExpolreDistrict

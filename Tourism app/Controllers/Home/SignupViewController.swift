@@ -7,6 +7,8 @@
 
 import UIKit
 import SVProgressHUD
+import GoogleSignIn
+
 class SignupViewController: BaseViewController {
     
     let pickerView = UIPickerView()
@@ -45,6 +47,7 @@ class SignupViewController: BaseViewController {
     @IBOutlet weak var userTypeTextField: UITextField!
     
     @IBOutlet weak var signupButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationItem.hidesBackButton = true
@@ -94,6 +97,47 @@ class SignupViewController: BaseViewController {
     
     @IBAction func gotoLogin(_ sender: Any) {
         Switcher.goToLoginVC(delegate: self)
+    }
+    
+    @IBAction func googleSignInBtn(_ sender: Any) {
+        guard let clientID = Constants.clientID else { return }
+        let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
+        GIDSignIn.sharedInstance.signIn(withPresenting: self) { result, error in
+            if error == nil{
+                let parameters = ["username": result?.user.profile?.email ?? "", "user_type": "user", "profile_image": result?.user.profile?.imageURL(withDimension: 120)?.absoluteString ?? "", "name": result?.user.profile?.name ?? ""]
+                print(parameters)
+                self.loginUser(route: .googleLoginApi, parameters: parameters)
+            }
+        }
+    }
+    
+    func loginUser(route: Route, parameters: [String: Any]? = nil) {
+        dataTask = URLSession.shared.request(route: route, method: .post, parameters: parameters, model: LoginModel.self) { result in
+            switch result {
+            case .success(let login):
+                if login.success == true{
+                    UserDefaults.standard.isLoginned = true
+                    UserDefaults.standard.accessToken = login.token
+                    UserDefaults.standard.userID = login.userID
+                    UserDefaults.standard.userEmail = login.email
+                    UserDefaults.standard.profileImage = login.profileImage
+//                    print(UserDefaults.standard.profileImage, self.login?.profileImage)
+                    UserDefaults.standard.name = login.name
+                    UserDefaults.standard.uuid = login.uuID
+                    UserDefaults.standard.userBio = login.about
+                    UserDefaults.standard.loadFirstTime = true
+                    UserDefaults.standard.notificationStatus = login.isNotification
+                    Helper.shared.changeToDefaultValue()
+                    Switcher.goToFeedsVC(delegate: self)
+                }
+                else{
+                    self.view.makeToast(login.message)
+                }
+            case .failure(let error):
+                self.view.makeToast(error.localizedDescription)
+            }
+        }
     }
 }
 
