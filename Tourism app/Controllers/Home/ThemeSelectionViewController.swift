@@ -88,6 +88,18 @@ class ThemeSelectionViewController: BaseViewController {
             UIApplication.shared.open(browserURL)
         }
     }
+    
+    @IBAction func whatsappBtnAction(_ sender: Any) {
+        let appURL = URL(string: "whatsapp://channel/0029Va804gR4o7qTubXaER0G")!
+        let browserURL = URL(string: "https://whatsapp.com/channel/0029Va804gR4o7qTubXaER0G")!
+        if UIApplication.shared.canOpenURL(appURL) {
+            UIApplication.shared.open(appURL)
+        } else {
+            UIApplication.shared.open(browserURL)
+        }
+    }
+
+    
     @IBAction func logoutBtnAction(_ sender: Any) {
         GIDSignIn.sharedInstance.signOut()
 //        Helper.shared.logoutUser(self: self)
