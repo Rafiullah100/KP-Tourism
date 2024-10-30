@@ -54,6 +54,7 @@ class ExploreTableViewCell: UITableViewCell {
                     self.slideShow.slideshowInterval = 0.0
                     self.slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
                     self.slideShow.isUserInteractionEnabled = true
+                    self.slideShow.contentScaleMode = .scaleToFill
                     self.slideShow.setImageInputs(self.imageSDWebImageSrc)
                 }
             }

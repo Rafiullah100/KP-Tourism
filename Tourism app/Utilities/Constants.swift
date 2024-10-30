@@ -70,6 +70,7 @@ struct Constants {
               Sections(title: "Blogs", image: "blog", selectedImage: "blog-s"),
               Sections(title: "KP Local Products", image: "product", selectedImage: "product-s"),
               Sections(title: "Visit KP", image: "visit-kp", selectedImage: "visit-kp-s"),
+                           Sections(title: "Tourist Registration Form", image: "visit-kp", selectedImage: "visit-kp-s"),
    ]
     
     static let gallerySection =  [Sections(title: "Images", image: "", selectedImage: ""),

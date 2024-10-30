@@ -58,6 +58,10 @@ class HomeViewController: BaseViewController {
         UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "VisitViewController") as! VisitViewController
     }()
     
+    lazy var foreignRegistrationVC: ForeignTouristRegistrationViewController = {
+        UIStoryboard(name: "MainTab", bundle: nil).instantiateViewController(withIdentifier: "ForeignTouristRegistrationViewController") as! ForeignTouristRegistrationViewController
+    }()
+    
     var cellType: CellType?
     
     enum CardState {
@@ -175,6 +179,11 @@ extension HomeViewController: MDCTabBarViewDelegate{
             cellType = nil
             visitVC.viewWillAppear(true)
             show(visitVC, sender: self)
+        }
+        else if tag == 8{
+            cellType = nil
+            foreignRegistrationVC.viewWillAppear(true)
+            show(foreignRegistrationVC, sender: self)
         }
         setupCard()
     }
