@@ -29,6 +29,8 @@ struct Constants {
     
     static var helpline = "TEL://1422"
     static let userType = ["User", "Tourist", "Seller"]
+    static let gender = ["Male", "Female", "Other"]
+
     static let bookingStay = "https://booking.kptourism.com/"
         static var mapboxSecretKey = "sk.eyJ1IjoidGNrcDAwNyIsImEiOiJjbGdrazJyMDkwZDd2M21xcXU5b25waW9jIn0.iOMmUGeAHWNOKKrDU5S2pg"
     
@@ -126,4 +128,14 @@ enum Envoirment {
 //Here setup app envoirment for TEST or LIVE
 func appEnvoirment() -> Envoirment {
     return Envoirment.Test
+}
+
+enum FileType{
+    case itinerary
+    case personDetail
+}
+
+enum ImageType{
+    case companyLicense
+    case companyGuide
 }

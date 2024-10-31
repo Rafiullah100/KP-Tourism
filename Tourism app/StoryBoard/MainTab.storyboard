@@ -590,6 +590,9 @@
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="44.333333333333336"/>
                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <connections>
+                                                                                                            <action selector="companyLicenseBtnAction:" destination="gnV-Q7-zoX" eventType="touchUpInside" id="pqL-L4-0wd"/>
+                                                                                                        </connections>
                                                                                                     </button>
                                                                                                 </subviews>
                                                                                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -813,6 +816,9 @@
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <connections>
+                                                                                                            <action selector="guideLicenseBtnAction:" destination="gnV-Q7-zoX" eventType="touchUpInside" id="o82-Rt-ijc"/>
+                                                                                                        </connections>
                                                                                                     </button>
                                                                                                 </subviews>
                                                                                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -1147,6 +1153,9 @@
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <connections>
+                                                                                                            <action selector="personDetailBtnAction:" destination="gnV-Q7-zoX" eventType="touchUpInside" id="Vhc-pp-rOw"/>
+                                                                                                        </connections>
                                                                                                     </button>
                                                                                                 </subviews>
                                                                                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -1231,6 +1240,9 @@
                                                                                                         <rect key="frame" x="0.0" y="0.0" width="353" height="44"/>
                                                                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                                                        <connections>
+                                                                                                            <action selector="itineraryBtnAction:" destination="gnV-Q7-zoX" eventType="touchUpInside" id="ttu-7l-tee"/>
+                                                                                                        </connections>
                                                                                                     </button>
                                                                                                 </subviews>
                                                                                                 <color key="backgroundColor" systemColor="systemGray5Color"/>
@@ -1422,7 +1434,24 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="arrivalDateTextField" destination="kdk-8B-u4K" id="eDo-PL-6AC"/>
+                        <outlet property="companyContactTextField" destination="Y8x-zC-3Ew" id="zlB-dU-RGd"/>
+                        <outlet property="companyLicenseLabel" destination="yxV-oh-zCR" id="nOC-3h-OZp"/>
+                        <outlet property="companyLicenseTextField" destination="wHE-s0-1KR" id="0U9-cw-gxz"/>
+                        <outlet property="companyNameTextField" destination="9xf-pt-F10" id="OQ1-mE-fwJ"/>
+                        <outlet property="countryTextField" destination="FN6-MR-k88" id="Uvv-a9-B9T"/>
+                        <outlet property="destinationTextField" destination="JU0-0E-Pti" id="RmG-8j-pPf"/>
+                        <outlet property="driverContactTextField" destination="ku7-cT-pDu" id="IK4-Dk-h3S"/>
+                        <outlet property="driverNameTextField" destination="85O-ui-p61" id="lrB-dr-QI7"/>
+                        <outlet property="driverNicTextField" destination="cFv-80-Ndb" id="f01-eW-kFH"/>
+                        <outlet property="emailTextField" destination="8M2-Qv-gY8" id="z6s-aP-xAP"/>
+                        <outlet property="guideLicenseLabel" destination="sjs-Qk-nyj" id="fRb-hd-Mpj"/>
+                        <outlet property="itineraryLabel" destination="SXc-hA-HIp" id="mmu-5V-aw1"/>
+                        <outlet property="personDetailLabel" destination="W0h-6p-RnP" id="Z4e-aV-ADg"/>
                         <outlet property="textView" destination="xKx-TQ-FW5" id="BF8-wF-qFK"/>
+                        <outlet property="totalPersonTextField" destination="tH6-FN-5lp" id="Vxc-xk-9GF"/>
+                        <outlet property="vehicleNumberTextField" destination="8Qv-hc-R3r" id="0vG-KL-HcN"/>
+                        <outlet property="vehicleTypeTextField" destination="9kg-Ef-OCz" id="0Is-wG-Z1n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2ql-Vk-Y4z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2210,7 +2239,17 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="arrivalDateTextField" destination="VTa-op-pjd" id="A60-IW-Y9H"/>
+                        <outlet property="countryTextField" destination="wno-0V-KT2" id="h6V-ok-m2e"/>
+                        <outlet property="destinationTextField" destination="uwe-jC-X7v" id="35K-ep-2bP"/>
+                        <outlet property="emailTextField" destination="1lf-FI-2fh" id="FGZ-pI-Rec"/>
+                        <outlet property="genderTextField" destination="Xe7-di-rzI" id="JNc-zW-Buh"/>
+                        <outlet property="hotelTextField" destination="TgJ-vS-Vwx" id="8bp-Uh-hid"/>
+                        <outlet property="mobileTextField" destination="J8E-96-jfE" id="4cO-9K-G6P"/>
+                        <outlet property="nameTextField" destination="lzV-PO-LIV" id="Vfh-4c-29i"/>
+                        <outlet property="passportTextField" destination="5TC-tf-sob" id="NLj-nv-Ant"/>
                         <outlet property="textView" destination="INd-3T-Svc" id="NnX-1b-dEO"/>
+                        <outlet property="visaTextField" destination="KkI-h4-k4I" id="vfF-Ba-knX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dm6-Mw-3sP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
