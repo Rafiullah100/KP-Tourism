@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Cairo-Regular.ttf">
+            <string>Cairo-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="DeliveryDayCollectionViewCell" customModule="Happy_Home" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="109" height="37"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="109" height="37"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q9r-SN-lu0">
+                        <rect key="frame" x="0.0" y="0.0" width="109" height="37"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="0xf-aX-NJb">
+                                <rect key="frame" x="10" y="0.0" width="89" height="37"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ajd-fk-Fn3">
+                                        <rect key="frame" x="0.0" y="0.0" width="20" height="37"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="schdule-check" translatesAutoresizingMaskIntoConstraints="NO" id="wLP-ok-QCm">
+                                                <rect key="frame" x="2.6666666666666661" y="11" width="14.999999999999998" height="15"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="15" id="p4r-Hq-jdx"/>
+                                                    <constraint firstAttribute="width" constant="15" id="znb-D2-Lcl"/>
+                                                </constraints>
+                                            </imageView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="wLP-ok-QCm" firstAttribute="centerX" secondItem="ajd-fk-Fn3" secondAttribute="centerX" id="RXu-Ox-Yk3"/>
+                                            <constraint firstAttribute="width" constant="20" id="hfo-Me-jkK"/>
+                                            <constraint firstItem="wLP-ok-QCm" firstAttribute="centerY" secondItem="ajd-fk-Fn3" secondAttribute="centerY" id="npi-ZB-V9Y"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lof-9S-uB8">
+                                        <rect key="frame" x="22" y="0.0" width="67" height="37"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PbX-7S-uIz">
+                                                <rect key="frame" x="0.0" y="0.0" width="67" height="37"/>
+                                                <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="13"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="PbX-7S-uIz" firstAttribute="leading" secondItem="Lof-9S-uB8" secondAttribute="leading" id="5vi-av-1sJ"/>
+                                            <constraint firstAttribute="width" priority="250" constant="69" id="FIV-Il-GY1"/>
+                                            <constraint firstAttribute="bottom" secondItem="PbX-7S-uIz" secondAttribute="bottom" id="auC-zs-QXT"/>
+                                            <constraint firstItem="PbX-7S-uIz" firstAttribute="top" secondItem="Lof-9S-uB8" secondAttribute="top" id="cK2-Dv-QbI"/>
+                                            <constraint firstAttribute="trailing" secondItem="PbX-7S-uIz" secondAttribute="trailing" id="jCv-0A-Ysy"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96470588239999999" green="0.85098039219999999" blue="0.20784313730000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="0xf-aX-NJb" firstAttribute="top" secondItem="q9r-SN-lu0" secondAttribute="top" id="IGV-hO-brp"/>
+                            <constraint firstAttribute="bottom" secondItem="0xf-aX-NJb" secondAttribute="bottom" id="MMx-Gf-IhC"/>
+                            <constraint firstItem="0xf-aX-NJb" firstAttribute="centerX" secondItem="q9r-SN-lu0" secondAttribute="centerX" id="RYH-Yx-7Le"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="q9r-SN-lu0" secondAttribute="trailing" id="9V2-Iu-Djh"/>
+                <constraint firstAttribute="bottom" secondItem="q9r-SN-lu0" secondAttribute="bottom" id="Aif-0r-CWs"/>
+                <constraint firstItem="q9r-SN-lu0" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="pSU-rv-gIN"/>
+                <constraint firstItem="q9r-SN-lu0" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="shZ-VA-3ko"/>
+            </constraints>
+            <size key="customSize" width="109" height="37"/>
+            <connections>
+                <outlet property="label" destination="PbX-7S-uIz" id="PGM-C5-99Y"/>
+            </connections>
+            <point key="canvasLocation" x="-70.992366412213741" y="15.140845070422536"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="schdule-check" width="12" height="12"/>
+    </resources>
+</document>

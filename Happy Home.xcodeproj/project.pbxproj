@@ -11,6 +11,12 @@
 		521A778E2CD62A7C005E8196 /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521A778D2CD62A7C005E8196 /* Common.storyboard */; };
 		521A77922CD62B08005E8196 /* NavigationView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 521A77912CD62B08005E8196 /* NavigationView.xib */; };
 		521A77942CD62B8E005E8196 /* NavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A77932CD62B8E005E8196 /* NavigationView.swift */; };
+		52376AD32CD73E7600395A8F /* DeliveryScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52376AD22CD73E7600395A8F /* DeliveryScheduleViewController.swift */; };
+		52376AD62CD74CEC00395A8F /* DeliveryDayCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52376AD42CD74CEC00395A8F /* DeliveryDayCollectionViewCell.swift */; };
+		52376AD72CD74CEC00395A8F /* DeliveryDayCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52376AD52CD74CEC00395A8F /* DeliveryDayCollectionViewCell.xib */; };
+		52376AD92CD7502E00395A8F /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52376AD82CD7502E00395A8F /* Constants.swift */; };
+		52376ADC2CD767D300395A8F /* DeliveryTimeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52376ADA2CD767D300395A8F /* DeliveryTimeCollectionViewCell.swift */; };
+		52376ADD2CD767D300395A8F /* DeliveryTimeCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52376ADB2CD767D300395A8F /* DeliveryTimeCollectionViewCell.xib */; };
 		527A6D8B2CD4A855002814F4 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 527A6D8A2CD4A855002814F4 /* Home.storyboard */; };
 		527A6D8D2CD4AA8E002814F4 /* ChooseLocationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6D8C2CD4AA8E002814F4 /* ChooseLocationViewController.swift */; };
 		527A6D922CD4B8DD002814F4 /* BeforeSignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527A6D8E2CD4B8DC002814F4 /* BeforeSignUpViewController.swift */; };
@@ -61,6 +67,12 @@
 		521A778D2CD62A7C005E8196 /* Common.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Common.storyboard; sourceTree = "<group>"; };
 		521A77912CD62B08005E8196 /* NavigationView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NavigationView.xib; sourceTree = "<group>"; };
 		521A77932CD62B8E005E8196 /* NavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationView.swift; sourceTree = "<group>"; };
+		52376AD22CD73E7600395A8F /* DeliveryScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryScheduleViewController.swift; sourceTree = "<group>"; };
+		52376AD42CD74CEC00395A8F /* DeliveryDayCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDayCollectionViewCell.swift; sourceTree = "<group>"; };
+		52376AD52CD74CEC00395A8F /* DeliveryDayCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeliveryDayCollectionViewCell.xib; sourceTree = "<group>"; };
+		52376AD82CD7502E00395A8F /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		52376ADA2CD767D300395A8F /* DeliveryTimeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryTimeCollectionViewCell.swift; sourceTree = "<group>"; };
+		52376ADB2CD767D300395A8F /* DeliveryTimeCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeliveryTimeCollectionViewCell.xib; sourceTree = "<group>"; };
 		527A6D8A2CD4A855002814F4 /* Home.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
 		527A6D8C2CD4AA8E002814F4 /* ChooseLocationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationViewController.swift; sourceTree = "<group>"; };
 		527A6D8E2CD4B8DC002814F4 /* BeforeSignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeforeSignUpViewController.swift; sourceTree = "<group>"; };
@@ -187,6 +199,18 @@
 			path = NavigationView;
 			sourceTree = "<group>";
 		};
+		52376AD12CD73E5C00395A8F /* DeliverySchedule */ = {
+			isa = PBXGroup;
+			children = (
+				52376AD22CD73E7600395A8F /* DeliveryScheduleViewController.swift */,
+				52376AD42CD74CEC00395A8F /* DeliveryDayCollectionViewCell.swift */,
+				52376AD52CD74CEC00395A8F /* DeliveryDayCollectionViewCell.xib */,
+				52376ADA2CD767D300395A8F /* DeliveryTimeCollectionViewCell.swift */,
+				52376ADB2CD767D300395A8F /* DeliveryTimeCollectionViewCell.xib */,
+			);
+			path = DeliverySchedule;
+			sourceTree = "<group>";
+		};
 		52AE9AA82CCF5DCE001CAAA5 = {
 			isa = PBXGroup;
 			children = (
@@ -265,6 +289,7 @@
 		52D283AC2CD0B112002BDD35 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				52376AD82CD7502E00395A8F /* Constants.swift */,
 				52F4EDA82CD67EF1001605F2 /* DynamicHeightTableView.swift */,
 				52D283AF2CD0BA8D002BDD35 /* Switcher.swift */,
 				52B20C672CD3933B00A2EB7A /* Color.swift */,
@@ -287,6 +312,7 @@
 		52E2B9202CD663760080A389 /* HomeModule */ = {
 			isa = PBXGroup;
 			children = (
+				52376AD12CD73E5C00395A8F /* DeliverySchedule */,
 				52F4EDAA2CD681F9001605F2 /* PaymentMethod */,
 				52E2B9212CD663920080A389 /* CardList */,
 				52F4EDB12CD68C03001605F2 /* AddressList */,
@@ -412,6 +438,7 @@
 				521A77922CD62B08005E8196 /* NavigationView.xib in Resources */,
 				52AE9AC12CCF5DD3001CAAA5 /* LaunchScreen.storyboard in Resources */,
 				52D283A42CD0B015002BDD35 /* Cairo-Bold.ttf in Resources */,
+				52376AD72CD74CEC00395A8F /* DeliveryDayCollectionViewCell.xib in Resources */,
 				527A6D8B2CD4A855002814F4 /* Home.storyboard in Resources */,
 				52E2B91D2CD64FBA0080A389 /* ShoppingPaymentView.xib in Resources */,
 				52F4EDAE2CD68216001605F2 /* PaymentMethodTableViewCell.xib in Resources */,
@@ -421,6 +448,7 @@
 				52AE9ABC2CCF5DCE001CAAA5 /* Auth.storyboard in Resources */,
 				52D283A82CD0B015002BDD35 /* Cairo-Light.ttf in Resources */,
 				52F4EDB72CD68C4C001605F2 /* AddressTableViewCell.xib in Resources */,
+				52376ADD2CD767D300395A8F /* DeliveryTimeCollectionViewCell.xib in Resources */,
 				52D283A72CD0B015002BDD35 /* Cairo-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -481,13 +509,16 @@
 				52D283B62CD0BC15002BDD35 /* LoginViewController.swift in Sources */,
 				52D283B22CD0BADD002BDD35 /* OtpViewController.swift in Sources */,
 				52AE9AB52CCF5DCE001CAAA5 /* AppDelegate.swift in Sources */,
+				52376AD92CD7502E00395A8F /* Constants.swift in Sources */,
 				52B20C662CD3797F00A2EB7A /* HomeViewController.swift in Sources */,
 				52E2B9262CD663D80080A389 /* CardTableViewCell.swift in Sources */,
 				52D283AE2CD0B120002BDD35 /* IBDesignableExtensions.swift in Sources */,
+				52376ADC2CD767D300395A8F /* DeliveryTimeCollectionViewCell.swift in Sources */,
 				527A6D942CD4B8DD002814F4 /* LanguagePopUpViewController.swift in Sources */,
 				52F4EDB02CD68229001605F2 /* PaymentMethodViewController.swift in Sources */,
 				52D283B02CD0BA8D002BDD35 /* Switcher.swift in Sources */,
 				52D283B42CD0BBC1002BDD35 /* Storyboard.swift in Sources */,
+				52376AD62CD74CEC00395A8F /* DeliveryDayCollectionViewCell.swift in Sources */,
 				527A6D922CD4B8DD002814F4 /* BeforeSignUpViewController.swift in Sources */,
 				52AE9AB72CCF5DCE001CAAA5 /* SceneDelegate.swift in Sources */,
 				527A6D8D2CD4AA8E002814F4 /* ChooseLocationViewController.swift in Sources */,
@@ -497,6 +528,7 @@
 				52F4EDA92CD67EF1001605F2 /* DynamicHeightTableView.swift in Sources */,
 				52E2B91F2CD64FCD0080A389 /* ShoppingPaymentView.swift in Sources */,
 				52B20C682CD3933B00A2EB7A /* Color.swift in Sources */,
+				52376AD32CD73E7600395A8F /* DeliveryScheduleViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
