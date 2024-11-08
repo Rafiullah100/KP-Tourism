@@ -80,4 +80,50 @@ class Networking{
             }
         }
     }
+    
+    func registerGroup(
+        route: Route,
+        files: [String: (data: Data, mimeType: String)],
+        parameters: [String: Any],
+        completion: @escaping (Result<SuccessModel, AppError>) -> Void
+    ) {
+        let urlStr = Route.baseUrl + route.description
+        let headers: HTTPHeaders = [
+            "Content-type": "multipart/form-data",
+            "x-access-token": "\(UserDefaults.standard.accessToken ?? "")"
+        ]
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'_'HH:mm:ss"
+        let timestamp = dateFormatter.string(from: Date())
+        
+        SVProgressHUD.show(withStatus: "Please Wait...")
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            // Add text parameters
+            for (key, value) in parameters {
+                if let stringValue = "\(value)".data(using: .utf8) {
+                    multipartFormData.append(stringValue, withName: key)
+                }
+            }
+            
+            // Add files (images or PDFs)
+            for (parameterName, file) in files {
+                let fileName = "\(timestamp)_\(parameterName).\(file.mimeType == "application/pdf" ? "pdf" : "jpg")"
+                multipartFormData.append(file.data, withName: parameterName, fileName: fileName, mimeType: file.mimeType)
+            }
+            
+        }, to: urlStr, headers: headers)
+        .responseDecodable(of: SuccessModel.self) { response in
+            SVProgressHUD.dismiss()
+            switch response.result {
+            case .success(let successModel):
+                completion(.success(successModel))
+            case .failure(let error):
+                print(error)
+                completion(.failure(AppError.unknownError))
+            }
+        }
+    }
+    
 }

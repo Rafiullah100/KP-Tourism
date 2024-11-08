@@ -20,6 +20,7 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
         self.attraction = attraction
         favoriteBtn.setImage(self.attraction?.isWished == 1 ? UIImage(named: "fav") : UIImage(named:  "unfavorite-gray"), for: .normal)
         imgView.sd_setImage(with: URL(string: Route.baseUrl + (self.attraction?.previewImage ?? "")))
+//        downloadImageSize(from: Route.baseUrl + (self.attraction?.previewImage ?? ""))
         attractionLabel.text = self.attraction?.title
         favoriteBtn.isHidden = Helper.shared.hideWhenNotLogin()
     }
@@ -27,8 +28,7 @@ class DestAttractCollectionViewCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
     }
-    
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

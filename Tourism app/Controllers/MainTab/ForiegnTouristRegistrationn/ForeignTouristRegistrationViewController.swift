@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum TouristType: String {
+    case individual
+    case group
+}
+
 class ForeignTouristRegistrationViewController: UIViewController {
 
     @IBOutlet weak var containerView: UIView!
