@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ShoppingDelegate {
+    func shoppingViewButtonAction()
+}
+
 
 class ShoppingPaymentView: UIView {
-        
+    var delegate: ShoppingDelegate?
+    
+    @IBOutlet weak var shoppingButton: UIButton!
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -26,6 +32,10 @@ class ShoppingPaymentView: UIView {
         xibView.frame = self.bounds
         xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(xibView)
+    }
+    
+    @IBAction func buttonAction(_ sender: Any) {
+        delegate?.shoppingViewButtonAction()
     }
 }
 

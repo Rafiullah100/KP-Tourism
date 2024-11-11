@@ -7,5 +7,9 @@ target 'Happy Home' do
 
   # Pods for Happy Home
 pod 'JBTabBarAnimation'
+#pod "AlignedCollectionViewFlowLayout"
+pod 'IQKeyboardManager' #iOS8 and later
+
 
 end
+

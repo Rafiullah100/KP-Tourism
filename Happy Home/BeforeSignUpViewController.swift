@@ -48,11 +48,7 @@ class BeforeSignUpViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            let vc = storyboard!.instantiateViewController(withIdentifier: "LanguagePopUpViewController") as! LanguagePopUpViewController
-                    vc.modalPresentationStyle = .overFullScreen
-                    vc.modalTransitionStyle = .crossDissolve
-                    vc.view.backgroundColor = UIColor.black.withAlphaComponent(0.1)
-                    self.present(vc, animated: true)
+            
         }
         
     }

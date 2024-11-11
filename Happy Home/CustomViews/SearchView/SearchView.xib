@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Cairo-Regular.ttf">
+            <string>Cairo-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="48"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="cwD-zz-9Cs">
+                    <rect key="frame" x="18" y="0.0" width="304" height="48"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="04P-3f-SqJ">
+                            <rect key="frame" x="0.0" y="0.0" width="28" height="48"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Home-Search" translatesAutoresizingMaskIntoConstraints="NO" id="Az9-g7-JNm">
+                                    <rect key="frame" x="2" y="12" width="24" height="24"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="24" id="ZUV-RF-Fif"/>
+                                        <constraint firstAttribute="height" constant="24" id="npQ-Jv-9Re"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Az9-g7-JNm" firstAttribute="centerX" secondItem="04P-3f-SqJ" secondAttribute="centerX" id="b9l-tQ-P3v"/>
+                                <constraint firstAttribute="width" constant="28" id="nfz-YZ-Ho9"/>
+                                <constraint firstItem="Az9-g7-JNm" firstAttribute="centerY" secondItem="04P-3f-SqJ" secondAttribute="centerY" id="vgy-U6-MSR"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YCI-ma-YtH">
+                            <rect key="frame" x="38" y="0.0" width="209" height="48"/>
+                            <subviews>
+                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Search Products or store" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="xzU-oU-Hrk">
+                                    <rect key="frame" x="0.0" y="0.0" width="209" height="48"/>
+                                    <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="14"/>
+                                    <textInputTraits key="textInputTraits"/>
+                                </textField>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstItem="xzU-oU-Hrk" firstAttribute="top" secondItem="YCI-ma-YtH" secondAttribute="top" id="0Wa-yU-7WC"/>
+                                <constraint firstItem="xzU-oU-Hrk" firstAttribute="leading" secondItem="YCI-ma-YtH" secondAttribute="leading" id="LoH-e2-1Af"/>
+                                <constraint firstAttribute="bottom" secondItem="xzU-oU-Hrk" secondAttribute="bottom" id="kG4-1r-B6t"/>
+                                <constraint firstAttribute="trailing" secondItem="xzU-oU-Hrk" secondAttribute="trailing" id="ta3-j7-dV5"/>
+                            </constraints>
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JMc-qc-pI0">
+                            <rect key="frame" x="257" y="0.0" width="47" height="48"/>
+                            <subviews>
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="barcode" translatesAutoresizingMaskIntoConstraints="NO" id="hjA-RV-Zdi">
+                                    <rect key="frame" x="0.66666666666668561" y="14" width="46" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="Jhh-bS-Ef1"/>
+                                        <constraint firstAttribute="width" constant="46" id="ug6-pZ-HcH"/>
+                                    </constraints>
+                                </imageView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="47" id="9UR-Nm-i3f"/>
+                                <constraint firstItem="hjA-RV-Zdi" firstAttribute="centerX" secondItem="JMc-qc-pI0" secondAttribute="centerX" id="Gf4-Ey-EUM"/>
+                                <constraint firstItem="hjA-RV-Zdi" firstAttribute="centerY" secondItem="JMc-qc-pI0" secondAttribute="centerY" id="eim-sW-fsw"/>
+                            </constraints>
+                        </view>
+                    </subviews>
+                </stackView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="cwD-zz-9Cs" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="18" id="39k-Pr-n1s"/>
+                <constraint firstAttribute="bottom" secondItem="cwD-zz-9Cs" secondAttribute="bottom" id="Hd4-zW-aLt"/>
+                <constraint firstItem="cwD-zz-9Cs" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="fNa-Io-uRO"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="cwD-zz-9Cs" secondAttribute="trailing" constant="24" id="idS-NE-3E3"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <userDefinedRuntimeAttributes>
+                <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                    <real key="value" value="25"/>
+                </userDefinedRuntimeAttribute>
+            </userDefinedRuntimeAttributes>
+            <point key="canvasLocation" x="-151.14503816793894" y="-259.85915492957747"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="Home-Search" width="24" height="24"/>
+        <image name="barcode" width="47" height="21"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

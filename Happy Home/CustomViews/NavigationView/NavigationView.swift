@@ -6,10 +6,13 @@
 //
 
 import UIKit
-
+protocol NavigationViewDelegate {
+    func back()
+}
 
 class NavigationView: UIView {
-        
+    var delegate: NavigationViewDelegate?
+    @IBOutlet weak var titleLabel: UILabel!
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -26,6 +29,10 @@ class NavigationView: UIView {
         xibView.frame = self.bounds
         xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(xibView)
+    }
+    
+    @IBAction func backButtonAction(_ sender: Any) {
+        delegate?.back()
     }
 }
 

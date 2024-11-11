@@ -17,7 +17,7 @@ class LoginViewController: UIViewController {
     
 
     @IBAction func signinButtonAction(_ sender: Any) {
-//        Switcher.gotoOtpScreen(delegate: self)
+        Switcher.gotoOtpScreen(delegate: self)
     }
     /*
     // MARK: - Navigation

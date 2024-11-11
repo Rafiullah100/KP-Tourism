@@ -205,9 +205,9 @@ extension UIView {
         layer.masksToBounds = false
         layer.shadowOpacity = 0.2
 //        layer.shadowColor = backgroundColor?.cgColor
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 1.5)
-        layer.shadowRadius = 2
+        layer.shadowColor = UIColor.lightGray.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1)
+        layer.shadowRadius = 1.0
     }
     
     @IBInspectable var addColorShadow: Bool {

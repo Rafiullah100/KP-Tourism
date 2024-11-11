@@ -21,6 +21,6 @@ class OtpViewController: UIViewController {
     }
     
     @IBAction func continueButtonAction(_ sender: Any) {
-        Switcher.gotoHome(delegate: self)
+        Switcher.gotoUpdateProfile(delegate: self)
     }
 }

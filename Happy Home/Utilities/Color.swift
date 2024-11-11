@@ -9,29 +9,40 @@ import Foundation
 import UIKit
 enum CustomColor {
     case tabColor
+    case yellowColor
+    case tabTextColor
+    case categoryColor
+    case canceledOrderBackgroundColor
+    case canceledOrderTextColor
+    case pendingOrderBackgroundColor
+    case pendingOrderTextColor
+    case deliveryOrderBackgroundColor
+    case deliveryOrderTextColor
 }
 
 extension CustomColor {
     var color: UIColor {
         switch self {
         case .tabColor:
-            return UIColor(white: 0xF8F7FB, alpha: 1.0)
+            return UIColor(hex: 0xF8F7FB, alpha: 1.0)
+        case .yellowColor:
+            return UIColor(hex: 0xF6D935, alpha: 1.0)
+        case .tabTextColor:
+            return UIColor(hex: 0x8891A5, alpha: 1.0)
+        case .categoryColor:
+            return UIColor(hex: 0x1E272E, alpha: 0.8)
+        case .canceledOrderBackgroundColor:
+            return UIColor(hex: 0xFF3C3C, alpha: 0.1)
+        case .canceledOrderTextColor:
+            return UIColor(hex: 0xFF3C3C, alpha: 1.0)
+        case .pendingOrderBackgroundColor:
+            return UIColor(hex: 0xA3A3A3, alpha: 0.1)
+        case .pendingOrderTextColor:
+            return UIColor(hex: 0xA3A3A3, alpha: 1.0)
+        case .deliveryOrderBackgroundColor:
+            return UIColor(hex: 0xFE8900, alpha: 0.1)
+        case .deliveryOrderTextColor:
+            return UIColor(hex: 0xFE8900, alpha: 1.0)
         }
-    }
-}
-
-extension UIColor {
-    convenience init(hex: String) {
-        var hexSanitized = hex.trimmingCharacters(in: .whitespacesAndNewlines)
-        hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-
-        var rgb: UInt64 = 0
-        Scanner(string: hexSanitized).scanHexInt64(&rgb)
-
-        let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-        let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-        let blue = CGFloat(rgb & 0x0000FF) / 255.0
-
-        self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }

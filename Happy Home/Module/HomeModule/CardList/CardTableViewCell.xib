@@ -42,11 +42,22 @@
                                                     <constraint firstAttribute="height" constant="20" id="OBE-kh-zHd"/>
                                                 </constraints>
                                             </imageView>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GUL-6v-Bhr">
+                                                <rect key="frame" x="0.0" y="0.0" width="20" height="44"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <connections>
+                                                    <action selector="checkmarkButtonAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="wTD-pX-8ZM"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
+                                            <constraint firstItem="GUL-6v-Bhr" firstAttribute="top" secondItem="jrd-JZ-NNq" secondAttribute="top" id="75t-yc-w8Q"/>
                                             <constraint firstAttribute="width" constant="20" id="QXN-lX-XEf"/>
+                                            <constraint firstItem="GUL-6v-Bhr" firstAttribute="leading" secondItem="jrd-JZ-NNq" secondAttribute="leading" id="V8n-L0-YdG"/>
+                                            <constraint firstAttribute="trailing" secondItem="GUL-6v-Bhr" secondAttribute="trailing" id="YA0-fu-6D6"/>
                                             <constraint firstItem="EXR-gx-jfv" firstAttribute="centerY" secondItem="jrd-JZ-NNq" secondAttribute="centerY" id="fd3-SU-HTm"/>
+                                            <constraint firstAttribute="bottom" secondItem="GUL-6v-Bhr" secondAttribute="bottom" id="jkh-uF-uHO"/>
                                             <constraint firstItem="EXR-gx-jfv" firstAttribute="centerX" secondItem="jrd-JZ-NNq" secondAttribute="centerX" id="wIW-je-3AB"/>
                                         </constraints>
                                     </view>
@@ -155,6 +166,9 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="checkMarkImageView" destination="EXR-gx-jfv" id="Fev-BN-EV7"/>
+            </connections>
             <point key="canvasLocation" x="145.03816793893128" y="25"/>
         </tableViewCell>
     </objects>
@@ -166,7 +180,7 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray3Color">
-            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.78039215689999997" green="0.78039215689999997" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

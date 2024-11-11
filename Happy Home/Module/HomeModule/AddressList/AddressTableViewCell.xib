@@ -98,22 +98,23 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D1j-Nh-kis">
                                         <rect key="frame" x="0.0" y="35" width="291" height="20"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ia7-hb-Hxn">
-                                                <rect key="frame" x="0.0" y="0.0" width="130" height="20"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="ia7-hb-Hxn">
+                                                <rect key="frame" x="0.0" y="0.0" width="110" height="20"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dun-bh-9z0">
-                                                        <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Office" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SaK-2n-vjP">
-                                                                <rect key="frame" x="16.333333333333336" y="-0.3333333333333357" width="27.333333333333336" height="20.666666666666668"/>
+                                                                <rect key="frame" x="11.333333333333334" y="-0.3333333333333357" width="27.333333333333329" height="20.666666666666668"/>
                                                                 <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="11"/>
-                                                                <nil key="textColor"/>
+                                                                <color key="textColor" red="0.89019607840000003" green="0.69803921570000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
                                                             <constraint firstItem="SaK-2n-vjP" firstAttribute="centerY" secondItem="dun-bh-9z0" secondAttribute="centerY" id="Dig-eW-IdK"/>
+                                                            <constraint firstAttribute="width" constant="50" id="QS4-Nb-4sA"/>
                                                             <constraint firstItem="SaK-2n-vjP" firstAttribute="centerX" secondItem="dun-bh-9z0" secondAttribute="centerX" id="SGQ-Rb-TYG"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
@@ -129,10 +130,10 @@
                                                         </userDefinedRuntimeAttributes>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Njh-VH-pKp">
-                                                        <rect key="frame" x="70" y="0.0" width="60" height="20"/>
+                                                        <rect key="frame" x="60" y="0.0" width="50" height="20"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0a6-g4-DiH">
-                                                                <rect key="frame" x="13" y="-0.3333333333333357" width="34.333333333333336" height="20.666666666666668"/>
+                                                                <rect key="frame" x="8" y="-0.3333333333333357" width="34.333333333333336" height="20.666666666666668"/>
                                                                 <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="11"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
@@ -142,6 +143,7 @@
                                                         <constraints>
                                                             <constraint firstItem="0a6-g4-DiH" firstAttribute="centerX" secondItem="Njh-VH-pKp" secondAttribute="centerX" id="VvZ-rj-jCu"/>
                                                             <constraint firstItem="0a6-g4-DiH" firstAttribute="centerY" secondItem="Njh-VH-pKp" secondAttribute="centerY" id="eOr-k2-Hut"/>
+                                                            <constraint firstAttribute="width" constant="50" id="gb5-2H-YHl"/>
                                                         </constraints>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
@@ -154,7 +156,7 @@
                                                     </view>
                                                 </subviews>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="130" id="1YL-k4-HWj"/>
+                                                    <constraint firstAttribute="width" priority="250" id="1YL-k4-HWj"/>
                                                     <constraint firstAttribute="height" constant="20" id="gYh-7I-tiL"/>
                                                 </constraints>
                                             </stackView>
@@ -210,6 +212,9 @@
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="defaultView" destination="Njh-VH-pKp" id="jns-jQ-1Fy"/>
+            </connections>
             <point key="canvasLocation" x="138.93129770992365" y="19.718309859154932"/>
         </tableViewCell>
     </objects>

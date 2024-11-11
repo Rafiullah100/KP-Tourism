@@ -9,6 +9,8 @@ import UIKit
 
 class DeliveryScheduleViewController: UIViewController {
 
+    @IBOutlet weak var shoppingView: ShoppingPaymentView!
+    @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var timeView: UIView!
     @IBOutlet weak var viewHeight: NSLayoutConstraint!
     @IBOutlet weak var timeCollectionView: UICollectionView!{
@@ -24,6 +26,21 @@ class DeliveryScheduleViewController: UIViewController {
             dayCollectionView.dataSource = self
             dayCollectionView.register(UINib(nibName: "DeliveryDayCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: DeliveryDayCollectionViewCell.cellReuseIdentifier())
         }
+    }
+    
+    var selectedTimeIndexPath: IndexPath?
+    var selectedDayIndexPath: IndexPath?
+
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        shoppingView.delegate = self
+        navigationView.delegate = self
+        shoppingView.shoppingButton.setTitle("Go for Payment", for: .normal)
+        navigationView.titleLabel.text = "Add Further Details"
+    }
+    @IBAction func changeButtonAction(_ sender: Any) {
+        Switcher.gotoAddressList(delegate: self)
     }
 }
 
@@ -41,10 +58,12 @@ extension DeliveryScheduleViewController: UICollectionViewDelegate, UICollection
         if collectionView == dayCollectionView{
             let cell: DeliveryDayCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DeliveryDayCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DeliveryDayCollectionViewCell
             cell.label.text = Constants.days[indexPath.row]
+            cell.configure(isSelected: indexPath == selectedDayIndexPath)
             return cell
         }
         else{
             let cell: DeliveryTimeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: DeliveryTimeCollectionViewCell.cellReuseIdentifier(), for: indexPath) as! DeliveryTimeCollectionViewCell
+            cell.configure(isSelected: indexPath == selectedTimeIndexPath)
             return cell
         }
     }
@@ -68,5 +87,28 @@ extension DeliveryScheduleViewController: UICollectionViewDelegate, UICollection
             let width = availableWidth / cellsAcross
             return CGSize(width: width, height: 30)
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == dayCollectionView{
+            selectedDayIndexPath = indexPath
+            dayCollectionView.reloadData()
+        }
+        else{
+            selectedTimeIndexPath = indexPath
+            timeCollectionView.reloadData()
+        }
+    }
+}
+
+extension DeliveryScheduleViewController: NavigationViewDelegate{
+    func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension DeliveryScheduleViewController: ShoppingDelegate{
+    func shoppingViewButtonAction() {
+        Switcher.gotoPaymentMethod(delegate: self)
     }
 }

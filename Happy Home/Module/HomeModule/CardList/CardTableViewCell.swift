@@ -8,7 +8,9 @@
 import UIKit
 
 class CardTableViewCell: UITableViewCell {
+    var didTapButton: (() -> Void)?
 
+    @IBOutlet weak var checkMarkImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,4 +22,11 @@ class CardTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configure(isSelected: Bool) {
+        checkMarkImageView.image = UIImage(named: isSelected ? "card-checkmark" : "card-uncheck")
+    }
+    
+    @IBAction func checkmarkButtonAction(_ sender: Any) {
+        didTapButton?()
+    }
 }

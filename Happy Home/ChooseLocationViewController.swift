@@ -30,4 +30,7 @@ class ChooseLocationViewController: UIViewController {
                                                   longitudinalMeters: regionRadius)
         mapView.setRegion(coordinateRegion, animated: true)
     }
+    @IBAction func backAction(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
 }

@@ -9,6 +9,10 @@ import UIKit
 
 class CartDetailViewController: UIViewController {
 
+    @IBOutlet weak var urgentDeliveryView: UIView!
+    @IBOutlet weak var normalDeliveryView: UIView!
+    @IBOutlet weak var shoppingView: ShoppingPaymentView!
+    @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var tableView: UITableView!{
         didSet{
             tableView.delegate = self
@@ -18,6 +22,20 @@ class CartDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        shoppingView.delegate = self
+        navigationView.delegate = self
+        navigationView.titleLabel.text = "Payment"
+        shoppingView.shoppingButton.setTitle("Continue", for: .normal)       
+    }
+    
+    @IBAction func normalDeliveryButtonAction(_ sender: Any) {
+        normalDeliveryView.backgroundColor = CustomColor.yellowColor.color
+        urgentDeliveryView.backgroundColor = .clear
+        
+    }
+    @IBAction func urgentDeliveryButtonAction(_ sender: Any) {
+        urgentDeliveryView.backgroundColor = CustomColor.yellowColor.color
+        normalDeliveryView.backgroundColor = .clear
     }
 }
 
@@ -32,5 +50,17 @@ extension CartDetailViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
+    }
+}
+
+extension CartDetailViewController: NavigationViewDelegate{
+    func back() {
+        self.navigationController?.popViewController(animated: true)
+    }
+}
+
+extension CartDetailViewController: ShoppingDelegate{
+    func shoppingViewButtonAction() {
+        Switcher.gotoDeliverySchedule(delegate: self)
     }
 }

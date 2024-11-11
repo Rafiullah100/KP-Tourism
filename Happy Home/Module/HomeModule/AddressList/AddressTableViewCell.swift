@@ -8,7 +8,11 @@
 import UIKit
 
 class AddressTableViewCell: UITableViewCell {
+    var didUnselectedTapped: (() -> Void)?
+    var didEditTapped: (() -> Void)?
+    var didDeleteTapped: (() -> Void)?
 
+    @IBOutlet weak var defaultView: UIView!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,13 +26,13 @@ class AddressTableViewCell: UITableViewCell {
     
     @IBAction func menuButtonAction(_ sender: UIButton) {
         let unselectedAction = UIAction(title: "Unselected", image: UIImage(systemName: "checkmark.circle")) { action in
-            print("Unselected tapped")
+            self.didUnselectedTapped?()
         }
         let editAction = UIAction(title: "Edit", image: UIImage(systemName: "pencil")) { action in
-            print("Edit tapped")
+            self.didEditTapped?()
         }
         let deleteAction = UIAction(title: "Delete", image: UIImage(systemName: "trash")) { action in
-            print("Delete tapped")
+            self.didDeleteTapped?()
         }
         let menu = UIMenu(title: "", children: [unselectedAction, editAction, deleteAction])
         sender.menu = menu

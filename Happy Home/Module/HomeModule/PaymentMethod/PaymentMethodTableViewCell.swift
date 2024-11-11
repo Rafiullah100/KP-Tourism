@@ -7,7 +7,13 @@
 
 import UIKit
 
+
+
 class PaymentMethodTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var checkImageView: UIImageView!
+    
+    var didTapButton: (() -> Void)?
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -20,4 +26,12 @@ class PaymentMethodTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func configure(isSelected: Bool) {
+        checkImageView.image = UIImage(named: isSelected ? "card-checkmark" : "card-uncheck")
+    }
+    
+    @IBAction func checkButtonAction(_ sender: Any) {
+        didTapButton?()
+    }
 }
+
