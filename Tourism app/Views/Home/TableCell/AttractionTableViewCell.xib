@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="BFZ-nx-1SB" customClass="AttractionTableViewCell" customModule="Tourism_app" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFZ-nx-1SB" id="nFp-4Y-rED">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="300"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RC9-2C-tv6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="290"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="XR0-7q-D85">
+                                <rect key="frame" x="0.0" y="3" width="320" height="285"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9C0-vS-yNg">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
+                                        <subviews>
+                                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="swatt1" translatesAutoresizingMaskIntoConstraints="NO" id="BxH-5o-4m5">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="f3g-td-uVi" customClass="ImageSlideshow" customModule="ImageSlideshow">
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="285"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                                        <real key="value" value="10"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                            </view>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YMh-Mt-giM">
+                                                <rect key="frame" x="282" y="14" width="25" height="25"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="25" id="5BT-5p-a2K"/>
+                                                    <constraint firstAttribute="height" constant="25" id="oJ2-eD-MaG"/>
+                                                </constraints>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal" backgroundImage="unfavorite"/>
+                                                <connections>
+                                                    <action selector="favoriteBtnAction:" destination="BFZ-nx-1SB" eventType="touchUpInside" id="Rww-D8-veC"/>
+                                                </connections>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Mahudand, Kalam" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0eb-tw-0SL">
+                                                <rect key="frame" x="8" y="260" width="110.5" height="17"/>
+                                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="12"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="f3g-td-uVi" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" id="GPj-vT-XYt"/>
+                                            <constraint firstItem="0eb-tw-0SL" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" constant="8" id="HFV-ak-qwO"/>
+                                            <constraint firstAttribute="bottom" secondItem="f3g-td-uVi" secondAttribute="bottom" id="S52-IL-72K"/>
+                                            <constraint firstItem="BxH-5o-4m5" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" id="S7b-H3-r0I"/>
+                                            <constraint firstItem="f3g-td-uVi" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" id="WZ8-ew-Mmz"/>
+                                            <constraint firstItem="YMh-Mt-giM" firstAttribute="top" secondItem="9C0-vS-yNg" secondAttribute="top" constant="14" id="YEY-q9-w1N"/>
+                                            <constraint firstAttribute="bottom" secondItem="BxH-5o-4m5" secondAttribute="bottom" id="eN0-dK-CC2"/>
+                                            <constraint firstAttribute="trailing" secondItem="f3g-td-uVi" secondAttribute="trailing" id="kZt-j9-4xN"/>
+                                            <constraint firstAttribute="trailing" secondItem="YMh-Mt-giM" secondAttribute="trailing" constant="13" id="keJ-VK-2mK"/>
+                                            <constraint firstItem="BxH-5o-4m5" firstAttribute="leading" secondItem="9C0-vS-yNg" secondAttribute="leading" id="kwG-jq-U2b"/>
+                                            <constraint firstAttribute="bottom" secondItem="0eb-tw-0SL" secondAttribute="bottom" constant="8" id="q3G-EV-814"/>
+                                            <constraint firstAttribute="trailing" secondItem="BxH-5o-4m5" secondAttribute="trailing" id="zWf-Po-9Bv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="XR0-7q-D85" firstAttribute="leading" secondItem="RC9-2C-tv6" secondAttribute="leading" id="Ouf-fe-MQe"/>
+                            <constraint firstItem="XR0-7q-D85" firstAttribute="top" secondItem="RC9-2C-tv6" secondAttribute="top" constant="3" id="UVb-0Y-RcX"/>
+                            <constraint firstAttribute="bottom" secondItem="XR0-7q-D85" secondAttribute="bottom" constant="2" id="fpb-ss-JnX"/>
+                            <constraint firstAttribute="trailing" secondItem="XR0-7q-D85" secondAttribute="trailing" id="ztI-Ng-yCP"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="RC9-2C-tv6" secondAttribute="trailing" id="2Rc-f9-i4j"/>
+                    <constraint firstItem="RC9-2C-tv6" firstAttribute="top" secondItem="nFp-4Y-rED" secondAttribute="top" id="8nF-Ms-7sE"/>
+                    <constraint firstItem="RC9-2C-tv6" firstAttribute="leading" secondItem="nFp-4Y-rED" secondAttribute="leading" id="Jpn-Ip-2fp"/>
+                    <constraint firstAttribute="bottom" secondItem="RC9-2C-tv6" secondAttribute="bottom" constant="10" id="K2I-8f-0M9"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="WiO-if-ncM"/>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <connections>
+                <outlet property="favoriteBtn" destination="YMh-Mt-giM" id="twe-iV-de1"/>
+                <outlet property="label" destination="0eb-tw-0SL" id="Fcb-uk-JaK"/>
+                <outlet property="slideShow" destination="f3g-td-uVi" id="Fxa-f8-40m"/>
+            </connections>
+            <point key="canvasLocation" x="749.27536231884062" y="141.29464285714286"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="swatt1" width="1104" height="815"/>
+        <image name="unfavorite" width="22" height="21"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

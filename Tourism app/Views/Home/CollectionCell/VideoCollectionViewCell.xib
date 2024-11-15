@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell_identifier" id="day-Ts-teM" customClass="VideoCollectionViewCell" customModule="Tourism_app" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="120" height="100"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="120" height="100"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H3p-XB-OfF">
+                        <rect key="frame" x="0.0" y="0.0" width="120" height="100"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video" translatesAutoresizingMaskIntoConstraints="NO" id="82U-B8-qpt">
+                                <rect key="frame" x="0.0" y="0.0" width="118" height="100"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="video-icon" translatesAutoresizingMaskIntoConstraints="NO" id="Rki-ID-ayA">
+                                <rect key="frame" x="10" y="10" width="12" height="12"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="12" id="CBd-3v-ybY"/>
+                                    <constraint firstAttribute="height" constant="12" id="efh-ID-Ws4"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="82U-B8-qpt" firstAttribute="top" secondItem="H3p-XB-OfF" secondAttribute="top" id="708-n5-EmW"/>
+                            <constraint firstItem="Rki-ID-ayA" firstAttribute="top" secondItem="H3p-XB-OfF" secondAttribute="top" constant="10" id="9OS-GF-W9T"/>
+                            <constraint firstAttribute="trailing" secondItem="82U-B8-qpt" secondAttribute="trailing" constant="2" id="WuA-HZ-Jwh"/>
+                            <constraint firstItem="Rki-ID-ayA" firstAttribute="leading" secondItem="H3p-XB-OfF" secondAttribute="leading" constant="10" id="dZy-9m-2Ns"/>
+                            <constraint firstItem="82U-B8-qpt" firstAttribute="leading" secondItem="H3p-XB-OfF" secondAttribute="leading" id="fvs-vd-34n"/>
+                            <constraint firstAttribute="bottom" secondItem="82U-B8-qpt" secondAttribute="bottom" id="nFm-Uh-A0F"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="zLT-it-aVt"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="H3p-XB-OfF" secondAttribute="bottom" id="2a2-To-zCJ"/>
+                <constraint firstItem="H3p-XB-OfF" firstAttribute="top" secondItem="day-Ts-teM" secondAttribute="top" id="3BF-R6-JqR"/>
+                <constraint firstAttribute="trailing" secondItem="H3p-XB-OfF" secondAttribute="trailing" id="XSH-5M-YpK"/>
+                <constraint firstItem="H3p-XB-OfF" firstAttribute="leading" secondItem="day-Ts-teM" secondAttribute="leading" id="soL-hH-Hen"/>
+            </constraints>
+            <connections>
+                <outlet property="imgView" destination="82U-B8-qpt" id="dwh-4H-S4h"/>
+            </connections>
+            <point key="canvasLocation" x="137.68115942028987" y="119.86607142857142"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="video" width="351" height="282"/>
+        <image name="video-icon" width="14" height="14"/>
+    </resources>
+</document>

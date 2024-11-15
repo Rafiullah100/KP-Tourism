@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Poppins-Regular.ttf">
+            <string>Poppins-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="ProfileCollectionViewCell" customModule="Tourism_app" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="150" height="150"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DJH-HQ-yUa">
+                        <rect key="frame" x="2" y="2" width="146" height="146"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Mask Group 35" translatesAutoresizingMaskIntoConstraints="NO" id="sqf-GN-X2T">
+                                <rect key="frame" x="0.0" y="0.0" width="146" height="146"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gxR-T3-z6S">
+                                <rect key="frame" x="96" y="10" width="40" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="delete" translatesAutoresizingMaskIntoConstraints="NO" id="xRe-A4-kJM">
+                                        <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Xoo-1n-RXk"/>
+                                            <constraint firstAttribute="width" constant="20" id="ate-BE-vDH"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gAP-tj-DLh">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <connections>
+                                            <action selector="deleteBtnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="csV-kD-ofN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="backgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="gAP-tj-DLh" firstAttribute="top" secondItem="gxR-T3-z6S" secondAttribute="top" id="6En-1w-ZZO"/>
+                                    <constraint firstItem="xRe-A4-kJM" firstAttribute="centerY" secondItem="gxR-T3-z6S" secondAttribute="centerY" id="95T-iS-SA3"/>
+                                    <constraint firstAttribute="width" constant="40" id="ZR5-Px-Xtt"/>
+                                    <constraint firstAttribute="trailing" secondItem="gAP-tj-DLh" secondAttribute="trailing" id="ZUO-GZ-PEd"/>
+                                    <constraint firstItem="xRe-A4-kJM" firstAttribute="centerX" secondItem="gxR-T3-z6S" secondAttribute="centerX" id="g43-ef-2iy"/>
+                                    <constraint firstAttribute="bottom" secondItem="gAP-tj-DLh" secondAttribute="bottom" id="h4V-QZ-Bl4"/>
+                                    <constraint firstItem="gAP-tj-DLh" firstAttribute="leading" secondItem="gxR-T3-z6S" secondAttribute="leading" id="nBX-Uw-cP0"/>
+                                    <constraint firstAttribute="height" constant="40" id="w8Y-S1-px9"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xej-By-l83">
+                                <rect key="frame" x="10" y="10" width="40" height="40"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="edit" translatesAutoresizingMaskIntoConstraints="NO" id="hn0-Qi-ema">
+                                        <rect key="frame" x="10" y="10" width="20" height="20"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="nHH-q1-4w4"/>
+                                            <constraint firstAttribute="height" constant="20" id="x84-Lj-dZA"/>
+                                        </constraints>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TMc-jI-MgU">
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <connections>
+                                            <action selector="editBtnAction:" destination="gTV-IL-0wX" eventType="touchUpInside" id="tXu-Fe-BLi"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" name="backgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="hn0-Qi-ema" firstAttribute="centerY" secondItem="xej-By-l83" secondAttribute="centerY" id="11M-YI-pv8"/>
+                                    <constraint firstAttribute="bottom" secondItem="TMc-jI-MgU" secondAttribute="bottom" id="49p-Fo-WgG"/>
+                                    <constraint firstAttribute="trailing" secondItem="TMc-jI-MgU" secondAttribute="trailing" id="7zu-vu-9GH"/>
+                                    <constraint firstAttribute="width" constant="40" id="F0N-T9-dsC"/>
+                                    <constraint firstItem="TMc-jI-MgU" firstAttribute="top" secondItem="xej-By-l83" secondAttribute="top" id="GJM-aT-z46"/>
+                                    <constraint firstItem="hn0-Qi-ema" firstAttribute="centerX" secondItem="xej-By-l83" secondAttribute="centerX" id="L1s-1R-fHh"/>
+                                    <constraint firstItem="TMc-jI-MgU" firstAttribute="leading" secondItem="xej-By-l83" secondAttribute="leading" id="WWU-ba-hRl"/>
+                                    <constraint firstAttribute="height" constant="40" id="m6q-O7-y0E"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                        <real key="value" value="20"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtL-jM-wYj">
+                                <rect key="frame" x="10" y="118" width="126" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="lgT-o0-xXT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Poppins-Regular" family="Poppins" pointSize="15"/>
+                                <color key="textColor" name="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" name="incomingMessageBackground"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sqf-GN-X2T" secondAttribute="trailing" id="3FC-Ou-no0"/>
+                            <constraint firstAttribute="trailing" secondItem="jtL-jM-wYj" secondAttribute="trailing" constant="10" id="5eM-B7-Bzy"/>
+                            <constraint firstItem="sqf-GN-X2T" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" id="Est-UC-BUr"/>
+                            <constraint firstAttribute="bottom" secondItem="jtL-jM-wYj" secondAttribute="bottom" constant="8" id="Lz1-jR-tMk"/>
+                            <constraint firstItem="gxR-T3-z6S" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" constant="10" id="NmM-tP-HQI"/>
+                            <constraint firstAttribute="trailing" secondItem="gxR-T3-z6S" secondAttribute="trailing" constant="10" id="Sut-tm-D8r"/>
+                            <constraint firstItem="xej-By-l83" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" constant="10" id="dPR-EJ-ANv"/>
+                            <constraint firstItem="jtL-jM-wYj" firstAttribute="leading" secondItem="DJH-HQ-yUa" secondAttribute="leading" constant="10" id="h7c-qm-P6r"/>
+                            <constraint firstItem="xej-By-l83" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" constant="10" id="qpW-YO-YKe"/>
+                            <constraint firstItem="sqf-GN-X2T" firstAttribute="top" secondItem="DJH-HQ-yUa" secondAttribute="top" id="t0w-zP-DZY"/>
+                            <constraint firstAttribute="bottom" secondItem="sqf-GN-X2T" secondAttribute="bottom" id="zIb-cp-HdK"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="ibcornerRadius">
+                                <real key="value" value="10"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="DJH-HQ-yUa" secondAttribute="trailing" constant="2" id="BVC-kI-Arl"/>
+                <constraint firstItem="DJH-HQ-yUa" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="RfU-rS-jR2"/>
+                <constraint firstAttribute="bottom" secondItem="DJH-HQ-yUa" secondAttribute="bottom" constant="2" id="qjZ-6y-dCq"/>
+                <constraint firstItem="DJH-HQ-yUa" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="2" id="x9Y-9G-sqW"/>
+            </constraints>
+            <connections>
+                <outlet property="deleteButton" destination="gAP-tj-DLh" id="31k-pC-TIT"/>
+                <outlet property="deleteView" destination="gxR-T3-z6S" id="cRa-Ox-dwU"/>
+                <outlet property="editButton" destination="TMc-jI-MgU" id="98h-jB-Sxc"/>
+                <outlet property="editView" destination="xej-By-l83" id="4ms-Xe-InC"/>
+                <outlet property="imgView" destination="sqf-GN-X2T" id="m0R-Hp-pfr"/>
+                <outlet property="label" destination="jtL-jM-wYj" id="Nmd-lp-Nrs"/>
+            </connections>
+            <point key="canvasLocation" x="41.221374045801525" y="20.422535211267608"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Mask Group 35" width="495" height="501"/>
+        <image name="delete" width="21.333333969116211" height="21.333333969116211"/>
+        <image name="edit" width="21.333333969116211" height="21.333333969116211"/>
+        <namedColor name="backgroundColor">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="incomingMessageBackground">
+            <color red="0.89800000190734863" green="0.89800000190734863" blue="0.9179999828338623" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="textColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
