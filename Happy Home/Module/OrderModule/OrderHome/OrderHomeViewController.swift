@@ -35,8 +35,15 @@ class OrderHomeViewController: UIViewController, ProductNavigationViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationView.label.text = LocalizationKeys.orders.rawValue.localizeString()
+        currentLabel.text = LocalizationKeys.currentOrder.rawValue.localizeString()
+        completedLabel.text = LocalizationKeys.completedOrder.rawValue.localizeString()
+        cancelLabel.text = LocalizationKeys.cancelOrder.rawValue.localizeString()
+
         navigationView.delegate = self
-        navigationView.leftIconImageView.image = UIImage(named: "Notification")
+        navigationView.backIcon.image = UIImage(named: "Notification")
+        
         tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         self.tableView.rowHeight = UITableView.automaticDimension
         self.tableView.estimatedRowHeight = 44.0

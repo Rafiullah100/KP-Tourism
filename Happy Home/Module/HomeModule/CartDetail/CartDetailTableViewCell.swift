@@ -9,9 +9,11 @@ import UIKit
 
 class CartDetailTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var riyalLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        riyalLabel.text = LocalizationKeys.riyal.rawValue.localizeString()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

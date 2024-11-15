@@ -9,6 +9,12 @@ import UIKit
 
 class CartDetailViewController: UIViewController {
 
+    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet weak var itemLabel: UILabel!
+    @IBOutlet weak var applyButton: UIButton!
+    @IBOutlet weak var couponTextField: UITextField!
+    @IBOutlet weak var urgentDeliveryButton: UIButton!
+    @IBOutlet weak var normalDeliveryButton: UIButton!
     @IBOutlet weak var urgentDeliveryView: UIView!
     @IBOutlet weak var normalDeliveryView: UIView!
     @IBOutlet weak var shoppingView: ShoppingPaymentView!
@@ -22,10 +28,17 @@ class CartDetailViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        couponTextField.textAlignment = Helper.shared.isRTL() ? .right : .left
         shoppingView.delegate = self
         navigationView.delegate = self
-        navigationView.titleLabel.text = "Payment"
-        shoppingView.shoppingButton.setTitle("Continue", for: .normal)       
+        navigationView.titleLabel.text = LocalizationKeys.payment.rawValue.localizeString()
+        normalDeliveryButton.setTitle(LocalizationKeys.normalDelivery.rawValue.localizeString(), for: .normal)
+        urgentDeliveryButton.setTitle(LocalizationKeys.urgentDelivery.rawValue.localizeString(), for: .normal)
+        couponTextField.placeholder = LocalizationKeys.addCoupon.rawValue.localizeString()
+        applyButton.setTitle(LocalizationKeys.apply.rawValue.localizeString(), for: .normal)
+        itemLabel.text = LocalizationKeys.items.rawValue.localizeString()
+
+        shoppingView.shoppingButton.setTitle(LocalizationKeys.Continue.rawValue.localizeString(), for: .normal)
     }
     
     @IBAction func normalDeliveryButtonAction(_ sender: Any) {
@@ -36,6 +49,10 @@ class CartDetailViewController: UIViewController {
     @IBAction func urgentDeliveryButtonAction(_ sender: Any) {
         urgentDeliveryView.backgroundColor = CustomColor.yellowColor.color
         normalDeliveryView.backgroundColor = .clear
+    }
+    
+    
+    @IBAction func applyButtonAction(_ sender: Any) {
     }
 }
 

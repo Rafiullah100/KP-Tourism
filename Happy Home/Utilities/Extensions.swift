@@ -465,23 +465,36 @@ extension String {
 
 
 
-//extension String{
-//    func localizeString() -> String {
-//        //        let loc = UserDefaults.standard.selectedLanguage == AppLanguage.english.rawValue ? "en" : "ar"
-//        var loc = ""
-//        let language: AppLanguage = AppLanguage(rawValue: UserDefaults.standard.selectedLanguage ?? "") ?? .english
-//        print(language)
-//        
-//        switch language {
-//        case .english:
-//            loc = "en"
-//        case .arabic:
-//            loc = "ar"
-//        }
-//        let path = Bundle.main.path(forResource: loc, ofType: "lproj")
-//        let bundle = Bundle(path: path!)
-//        return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
-//    }
-//}
+extension String{
+    func localizeString() -> String {
+        var loc = ""
+        let language: AppLanguage = AppLanguage(rawValue: UserDefaults.standard.selectedLanguage ?? "") ?? .english
+        print(language)
+        
+        switch language {
+        case .english:
+            loc = "en"
+        case .arabic:
+            loc = "ar"
+        }
+        let path = Bundle.main.path(forResource: loc, ofType: "lproj")
+        let bundle = Bundle(path: path!)
+        return NSLocalizedString(self, tableName: nil, bundle: bundle!, value: "", comment: "")
+    }
+}
+
+enum AppLanguage: String, CaseIterable {
+    case english = "English"
+    case arabic = "Arabic"
+    
+    var isLTR: Bool {
+        return self == .english
+    }
+}
+
+enum AppLanguagecode: String {
+    case en
+    case ar
+}
 
 

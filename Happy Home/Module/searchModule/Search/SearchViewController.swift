@@ -8,6 +8,10 @@
 import UIKit
 class SearchViewController: UIViewController {
 
+    @IBOutlet weak var likelyLabel: UILabel!
+    @IBOutlet weak var categoryLabel: UILabel!
+    @IBOutlet weak var historyLabel: UILabel!
+    @IBOutlet weak var searchLabel: UILabel!
     @IBOutlet weak var categoryCollectionViewHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var historyCollectionViewHeightContraint: NSLayoutConstraint!
     @IBOutlet weak var productCollectionView: UICollectionView! {
@@ -37,6 +41,10 @@ class SearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        searchLabel.text = LocalizationKeys.search.rawValue.localizeString()
+        historyLabel.text = LocalizationKeys.searchHistory.rawValue.localizeString()
+        categoryLabel.text = LocalizationKeys.categories.rawValue.localizeString()
+        likelyLabel.text = LocalizationKeys.youMightalsoLike.rawValue.localizeString()
     }
     
     override func viewDidLayoutSubviews() {
@@ -70,16 +78,13 @@ extension SearchViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        if collectionView == productCollectionView {
-//            let cellsAcross: CGFloat = 2.7
-//            let spaceBetweenCells: CGFloat = 5
-//            let sectionInset: CGFloat = 5
-//            let totalPadding = (cellsAcross - 1) * spaceBetweenCells + 2 * sectionInset
-//            let availableWidth = collectionView.bounds.width - totalPadding
-//            let width = availableWidth / cellsAcross
-//            return CGSize(width: width, height: 200)
-//        }
-//        return CGSize(width: UICollectionViewFlowLayout.automaticSize.width, height: UICollectionViewFlowLayout.automaticSize.height)
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellsAcross: CGFloat = 2.7
+        let spaceBetweenCells: CGFloat = 5
+        let sectionInset: CGFloat = 5
+        let totalPadding = (cellsAcross - 1) * spaceBetweenCells + 2 * sectionInset
+        let availableWidth = collectionView.bounds.width - totalPadding
+        let width = availableWidth / cellsAcross
+        return CGSize(width: width, height: 200)
+    }
 }

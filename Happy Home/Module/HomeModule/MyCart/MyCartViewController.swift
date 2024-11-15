@@ -9,6 +9,8 @@ import UIKit
 
 class MyCartViewController: UIViewController {
 
+    @IBOutlet weak var likeLabel: UILabel!
+    @IBOutlet weak var checkoutButton: UIButton!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
             collectionView.delegate = self
@@ -29,12 +31,14 @@ class MyCartViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationView.delegate = self
-        navigationView.titleLabel.text = "My Cart"
+        likeLabel.text = LocalizationKeys.youMightalsoLike.rawValue.localizeString()
+        navigationView.titleLabel.text = LocalizationKeys.myCart.rawValue.localizeString()
+        checkoutButton.setTitle(LocalizationKeys.proceedToCheckOut.rawValue.localizeString(), for: .normal)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {

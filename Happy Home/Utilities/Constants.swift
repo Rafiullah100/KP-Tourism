@@ -8,11 +8,60 @@
 import Foundation
 import UIKit
 
+//enum PaymentMethod {
+//    case walletPayment
+//    case cashOnDelivery
+//    case machinePayment
+//    case stcPayment
+//    case creditCardPayment
+//}
 
+struct PaymentMethod {
+    let name: String
+    let description: String
+    let point: Int
+    let icon: String
+    let navigateTo: Bool
+}
 
 struct Constants {
+    
+    static let paymentMethod = [PaymentMethod(name: "Wallet Points", description: "Use the wallet points", point: 50, icon: "wallet-payment", navigateTo: false), PaymentMethod(name: "Cash On Delivery", description: "Cash on delivery", point: -1, icon: "cash-on-delivery", navigateTo: false),
+     PaymentMethod(name: "Machine Payment", description: "Machine payment", point: -1, icon: "machine-payment", navigateTo: false), PaymentMethod(name: "STC Pay", description: "STC pay", point: -1, icon: "stc", navigateTo: true), PaymentMethod(name: "Credit/Debit Card", description: "Credit/Debit Card", point: -1, icon: "credit-payment", navigateTo: true)]
 
-    static let days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+    static let days = {
+        if UserDefaults.standard.languageCode == "ar"{
+            return ["الأحد", "الاثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"]
+        }
+        else{
+            return ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        }
+    }()
+    
+    static let menu = {
+        if UserDefaults.standard.languageCode == "ar"{
+            return [
+                settingData(text: "عربتي", icon: "cart"),
+                settingData(text: "قائمة الرغبات", icon: "wish-list"),
+                settingData(text: "اللغة / الإنجليزية", icon: "language"),
+                settingData(text: "ملاحظات العملاء", icon: "Star"),
+                settingData(text: "مشاركة التطبيق", icon: "share"),
+                settingData(text: "الشروط والأحكام", icon: "error"),
+                settingData(text: "اتصل بنا", icon: "message-call")
+            ]
+            
+        }
+        else{
+            return [settingData(text: "My Cart", icon: "cart"),
+                                settingData(text: "Wishlist", icon: "wish-list"),
+                                settingData(text: "Language  / English", icon: "language"),
+                                settingData(text: "Customer Feedback", icon: "Star"),
+                                settingData(text: "Share App", icon: "share"),
+                                settingData(text: "Terms and Condions", icon: "error"),
+                                settingData(text: "Contact Us", icon: "message-call")
+            ]
+        }
+    }()
     
     static let appColor = #colorLiteral(red: 0.9682764411, green: 0.6770070195, blue: 0.4894526005, alpha: 1)
     static let fontName = "Cairo"

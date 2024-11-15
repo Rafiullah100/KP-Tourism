@@ -1075,7 +1075,7 @@
                                                                                                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                                                                 </state>
                                                                                                                                 <connections>
-                                                                                                                                    <action selector="cancelOrderButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Kev-hL-cIp"/>
+                                                                                                                                    <action selector="cancelOrderButtonAction:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Hib-ri-p3Q"/>
                                                                                                                                 </connections>
                                                                                                                             </button>
                                                                                                                         </subviews>
@@ -1179,7 +1179,22 @@
                     </view>
                     <navigationItem key="navigationItem" id="gQ7-to-MN9"/>
                     <connections>
+                        <outlet property="acceptedImageView" destination="8Fa-de-PXZ" id="6hh-zO-Nyc"/>
+                        <outlet property="acceptedLabel" destination="GGb-mS-nMh" id="OkD-ln-9EW"/>
+                        <outlet property="cancelOrderButton" destination="Je6-5Q-yZL" id="1tN-Yf-hVh"/>
+                        <outlet property="cardImageView" destination="vfs-MD-pE7" id="yJO-SM-GiV"/>
+                        <outlet property="deliveredImageView" destination="zmK-nH-LPP" id="E8Q-BK-M4u"/>
+                        <outlet property="deliveredLabel" destination="hPM-nL-0uH" id="fHw-L2-o6u"/>
                         <outlet property="navigationView" destination="hmo-x0-ozJ" id="gsV-uo-meV"/>
+                        <outlet property="orderIDLabel" destination="lO3-aQ-Cpm" id="aGI-Ch-PMC"/>
+                        <outlet property="orderIDValueLabel" destination="FU7-Fu-dE8" id="DCL-eC-4VB"/>
+                        <outlet property="paymentMethodLabel" destination="Czp-ni-TgT" id="u7P-nk-14E"/>
+                        <outlet property="paymentStatusLabel" destination="RvK-QE-J2m" id="E3m-m4-pkv"/>
+                        <outlet property="prepareImageView" destination="T2d-7h-um7" id="m6C-T6-cws"/>
+                        <outlet property="prepareLabel" destination="mEo-VC-1jb" id="PAE-Tr-S41"/>
+                        <outlet property="shippedImageView" destination="bUX-6b-kUQ" id="VFp-So-ndU"/>
+                        <outlet property="shippedLabel" destination="tdI-nv-zme" id="hyb-w2-w8A"/>
+                        <outlet property="successLabel" destination="8rw-sq-gHt" id="Wgs-cQ-eVZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2000,7 +2015,17 @@
                     </view>
                     <navigationItem key="navigationItem" id="o0H-ai-h71"/>
                     <connections>
+                        <outlet property="acceptedLabel" destination="dwA-l8-KTC" id="7k2-Cf-RGP"/>
+                        <outlet property="cardImageView" destination="j4R-08-jZq" id="gxy-eD-g8S"/>
+                        <outlet property="deliveredLabel" destination="pKC-37-yJM" id="X2s-Gp-mIm"/>
                         <outlet property="navigationView" destination="1Fs-SC-gwL" id="h6q-pc-lBq"/>
+                        <outlet property="orderIDLabel" destination="gRu-he-m6S" id="o1q-LD-Eka"/>
+                        <outlet property="orderIDValueLabel" destination="NqR-h6-pz4" id="W3Q-pd-uK5"/>
+                        <outlet property="paymentMethodLabel" destination="M7Q-eA-3qh" id="yaG-pb-R74"/>
+                        <outlet property="paymentStatusLabel" destination="V9x-zx-dCS" id="fvy-zE-1nN"/>
+                        <outlet property="prepareLabel" destination="c1y-9x-DZJ" id="Wah-Kj-Drf"/>
+                        <outlet property="shippedLabel" destination="Umf-Cr-Tjn" id="sAR-i0-qho"/>
+                        <outlet property="successLabel" destination="KDb-wX-w0Y" id="Con-kN-Khs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZAk-Mc-Ibi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2065,9 +2090,8 @@
                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cCL-Qg-M3y">
                                                                                         <rect key="frame" x="0.0" y="0.0" width="333" height="15"/>
                                                                                         <subviews>
-                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Please leave the Order cancel reason" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AH-5k-AnJ">
-                                                                                                <rect key="frame" x="0.0" y="-3" width="373" height="20"/>
-                                                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please leave the Order cancel reason" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8AH-5k-AnJ">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="333" height="15"/>
                                                                                                 <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="12"/>
                                                                                                 <nil key="textColor"/>
                                                                                                 <nil key="highlightedColor"/>
@@ -2075,7 +2099,11 @@
                                                                                         </subviews>
                                                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                                                         <constraints>
+                                                                                            <constraint firstItem="8AH-5k-AnJ" firstAttribute="top" secondItem="cCL-Qg-M3y" secondAttribute="top" id="74B-Su-HcN"/>
+                                                                                            <constraint firstAttribute="bottom" secondItem="8AH-5k-AnJ" secondAttribute="bottom" id="GAW-i1-TLv"/>
+                                                                                            <constraint firstAttribute="trailing" secondItem="8AH-5k-AnJ" secondAttribute="trailing" id="J8r-fm-wpm"/>
                                                                                             <constraint firstAttribute="height" constant="15" id="haT-uC-Csf"/>
+                                                                                            <constraint firstItem="8AH-5k-AnJ" firstAttribute="leading" secondItem="cCL-Qg-M3y" secondAttribute="leading" id="yn0-JT-bt6"/>
                                                                                         </constraints>
                                                                                     </view>
                                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5UG-ix-wNc">
@@ -2151,6 +2179,9 @@
                                                                         <real key="value" value="5"/>
                                                                     </userDefinedRuntimeAttribute>
                                                                 </userDefinedRuntimeAttributes>
+                                                                <connections>
+                                                                    <action selector="submitButtonAction:" destination="gXb-1a-5MH" eventType="touchUpInside" id="8zl-9n-zdC"/>
+                                                                </connections>
                                                             </button>
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -2201,6 +2232,12 @@
                             <constraint firstItem="5KZ-vu-X51" firstAttribute="leading" secondItem="bkZ-wL-NiL" secondAttribute="leading" id="thF-kx-kfm"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="orderCancelLabel" destination="QOS-hx-sJ2" id="4kV-lI-0hn"/>
+                        <outlet property="reasonLabel" destination="8AH-5k-AnJ" id="Cr0-64-8KW"/>
+                        <outlet property="submitButton" destination="pc6-wJ-cjg" id="8h5-W7-dlp"/>
+                        <outlet property="textView" destination="5UG-ix-wNc" id="qep-Ng-B0f"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7qK-K2-cIL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -2210,7 +2247,9 @@
         <scene sceneID="XxO-WC-wGe">
             <objects>
                 <navigationController storyboardIdentifier="orders_nav" automaticallyAdjustsScrollViewInsets="NO" id="HbF-8J-wfH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Orders" image="order 1" selectedImage="order-selected" id="cOO-nc-YG5"/>
+                    <tabBarItem key="tabBarItem" title="Orders" image="order" selectedImage="order-selected" id="cOO-nc-YG5">
+                        <inset key="imageInsets" minX="0.0" minY="2" maxX="0.0" maxY="0.0"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hhI-XW-tHO">
@@ -2233,7 +2272,7 @@
         <image name="fast-delivery" width="29" height="29"/>
         <image name="green-checkmark" width="16" height="16"/>
         <image name="inventory" width="26" height="26"/>
-        <image name="order 1" width="24" height="24"/>
+        <image name="order" width="20" height="24"/>
         <image name="order-selected" width="56" height="56"/>
         <image name="order-status-uncheck" width="16" height="16"/>
         <image name="shipped-check" width="24" height="24"/>

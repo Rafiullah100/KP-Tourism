@@ -9,12 +9,13 @@ import UIKit
 
 class ProductCollectionViewCell: UICollectionViewCell {
 
+    @IBOutlet weak var expiredDateLabel: UILabel!
     @IBOutlet weak var favoriteImageView: UIImageView!
     @IBOutlet var percentageLbl: UILabel!
     @IBOutlet var productImg: UIImageView!
     @IBOutlet var productTitleLbl: UILabel!
     @IBOutlet var expireDate: UILabel!
-    @IBOutlet var newPrice: UILabel!
+    @IBOutlet var newPriceLabel: UILabel!
     @IBOutlet var oldPrice: UILabel!
     
     @IBOutlet weak var addView: UIView!
@@ -33,13 +34,15 @@ class ProductCollectionViewCell: UICollectionViewCell {
         
     }
 
-    // Increment & Decrement Functions
     
     
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
+        expiredDateLabel.text = LocalizationKeys.expiredDate.rawValue.localizeString()
+        oldPrice.text = "6.4 \(LocalizationKeys.riyal.rawValue.localizeString())"
+        newPriceLabel.text = "5.4 \(LocalizationKeys.riyal.rawValue.localizeString())"
+        percentageLbl.text = "-30% \nOFF"
     }
 
     

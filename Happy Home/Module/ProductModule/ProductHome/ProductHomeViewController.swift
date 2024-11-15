@@ -9,6 +9,8 @@ import UIKit
 
 class ProductHomeViewController: UIViewController {
 
+    @IBOutlet weak var riyalLabel: UILabel!
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var categoryCollectionView: UICollectionView!{
         didSet{
             categoryCollectionView.register(UINib(nibName: "ProductCategoryCollectionViewCell", bundle: nil), forCellWithReuseIdentifier: ProductCategoryCollectionViewCell.cellReuseIdentifier())
@@ -33,7 +35,10 @@ class ProductHomeViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        titleLabel.text = LocalizationKeys.allProducts.rawValue.localizeString()
+        riyalLabel.text = LocalizationKeys.riyal.rawValue.localizeString()
+
+        categoryCollectionView.showsHorizontalScrollIndicator = false
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -70,12 +75,12 @@ extension ProductHomeViewController : UICollectionViewDelegate, UICollectionView
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let cellsAcross: CGFloat = 3
-        let spaceBetweenCells: CGFloat = 1
-        let sectionInset: CGFloat = 5
+        let spaceBetweenCells: CGFloat = 0
+        let sectionInset: CGFloat = 0
         let totalPadding = (cellsAcross - 1) * spaceBetweenCells + 2 * sectionInset
         let availableWidth = collectionView.bounds.width - totalPadding
         let width = availableWidth / cellsAcross
-        return CGSize(width: width, height: 200)
+        return CGSize(width: width, height: 235)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -84,6 +89,7 @@ extension ProductHomeViewController : UICollectionViewDelegate, UICollectionView
             Switcher.gotoProductDetail(delegate: self)
         }
         else{
+            collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
             selectedCategoryIndex = indexPath.item
             collectionView.reloadData()
         }

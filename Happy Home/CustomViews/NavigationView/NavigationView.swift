@@ -18,6 +18,7 @@ class NavigationView: UIView {
         commonInit()
     }
     
+    @IBOutlet weak var backIcon: UIImageView!
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
@@ -33,6 +34,11 @@ class NavigationView: UIView {
     
     @IBAction func backButtonAction(_ sender: Any) {
         delegate?.back()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        backIcon.image = UIImage(named: Helper.shared.isRTL() ? "ar-back-circle-arrow" : "back-circle-arrow")
     }
 }
 

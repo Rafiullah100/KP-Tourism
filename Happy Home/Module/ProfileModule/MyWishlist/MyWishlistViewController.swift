@@ -10,6 +10,7 @@ import UIKit
 class MyWishlistViewController: UIViewController {
 
    
+    @IBOutlet weak var likelyLabel: UILabel!
     @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var collectionView: UICollectionView!{
         didSet{
@@ -30,7 +31,9 @@ class MyWishlistViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationView.delegate = self
-        navigationView.titleLabel.text = "My Wishlist"
+        navigationView.titleLabel.text = LocalizationKeys.myWishlist.rawValue.localizeString()
+        likelyLabel.text = LocalizationKeys.youMightalsoLike.rawValue.localizeString()
+
     }
     
     override func viewWillAppear(_ animated: Bool) {

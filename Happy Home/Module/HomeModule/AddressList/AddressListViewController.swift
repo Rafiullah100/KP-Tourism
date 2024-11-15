@@ -9,6 +9,8 @@ import UIKit
 
 class AddressListViewController: UIViewController {
 
+    @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var addButton: UILabel!
     @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
     @IBOutlet weak var tableView: DynamicHeightTableView!{
@@ -20,7 +22,9 @@ class AddressListViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationView.titleLabel.text = "Change Shipping Address"
+        navigationView.titleLabel.text = LocalizationKeys.changeShippingAddress.rawValue.localizeString()
+        addButton.text = LocalizationKeys.addNewAddress.rawValue.localizeString()
+        continueButton.setTitle(LocalizationKeys.Continue.rawValue.localizeString(), for: .normal)
         navigationView.delegate = self
 
         self.tableView.rowHeight = UITableView.automaticDimension
@@ -44,6 +48,7 @@ extension AddressListViewController: UITableViewDelegate, UITableViewDataSource{
             Switcher.gotoChooseLoc(delegate: self)
         }
         cell.defaultView.isHidden = !(indexPath.row == 0)
+        cell.addressLabel.text = "\(LocalizationKeys.address.rawValue.localizeString()) \(indexPath.row)"
         return cell
     }
 }

@@ -13,6 +13,7 @@ class ProductNavigationView: UIView {
     var delegate: ProductNavigationViewDelegate?
     @IBOutlet weak var label: UILabel!
     
+    @IBOutlet weak var iconView: UIImageView!
     @IBOutlet weak var leftIconImageView: UIButton!
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,6 +35,11 @@ class ProductNavigationView: UIView {
     
     @IBAction func backButtonAction(_ sender: Any) {
         delegate?.back()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        iconView.image = UIImage(named: Helper.shared.isRTL() ? "ar-back-circle-arrow" : "back-circle-arrow")
     }
 }
 

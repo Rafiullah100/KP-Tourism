@@ -22,7 +22,21 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ShoppingPaymentView" customModule="Happy_Home" customModuleProvider="target">
             <connections>
+                <outlet property="attentionLabel" destination="KFm-1X-870" id="JSJ-ph-1fq"/>
+                <outlet property="attentionValueLabel" destination="k6J-kF-bHy" id="5r4-OV-9P9"/>
+                <outlet property="chargesLabel" destination="uy5-RY-hGL" id="4u4-di-S2f"/>
+                <outlet property="chargesPriceLabel" destination="JoZ-fj-FvY" id="L8K-B3-s8G"/>
+                <outlet property="discountLabel" destination="Dg3-t8-FAW" id="Bj0-UH-T0W"/>
+                <outlet property="discountValueLabel" destination="geZ-ce-Dqd" id="gzQ-i1-rTd"/>
+                <outlet property="riyalLabel" destination="P1Z-MM-Kpf" id="bFe-7b-RxN"/>
                 <outlet property="shoppingButton" destination="Nx4-Gg-ub7" id="bYq-Z9-zGO"/>
+                <outlet property="subTotalValueLabel" destination="EAS-r2-sgN" id="K0y-Z6-YSI"/>
+                <outlet property="subtotalLabel" destination="VNK-yj-Ee7" id="flH-KM-KaZ"/>
+                <outlet property="taxLabel" destination="obv-Xq-bcn" id="wam-0r-ppI"/>
+                <outlet property="taxValueLabel" destination="ovW-R2-cFW" id="uZp-z3-7ZW"/>
+                <outlet property="totalItemLabel" destination="eV5-Ws-q9r" id="WRl-lv-eWo"/>
+                <outlet property="totalPriceLabel" destination="7f1-4W-zEr" id="NB8-bP-yKP"/>
+                <outlet property="vatLabel" destination="Qci-jT-nDt" id="FVv-30-OM5"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -40,10 +54,10 @@
                                     <rect key="frame" x="0.0" y="0.0" width="380" height="40"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dyU-hx-hq1">
-                                            <rect key="frame" x="18" y="15" width="299.33333333333331" height="15"/>
+                                            <rect key="frame" x="18" y="15" width="285" height="15"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attention!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KFm-1X-870">
-                                                    <rect key="frame" x="0.0" y="0.0" width="64.666666666666671" height="15"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="65.333333333333329" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" priority="250" constant="59.670000000000002" id="lyC-nB-voc"/>
                                                     </constraints>
@@ -52,7 +66,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are not allowed to cancel this order" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k6J-kF-bHy">
-                                                    <rect key="frame" x="69.666666666666671" y="0.0" width="229.66666666666663" height="15"/>
+                                                    <rect key="frame" x="70.333333333333329" y="0.0" width="214.66666666666669" height="15"/>
                                                     <fontDescription key="fontDescription" name="Cairo-Medium" family="Cairo" pointSize="13"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -119,7 +133,7 @@
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2be-Vw-BtQ">
                                                                                     <rect key="frame" x="260" y="0.0" width="60" height="20"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 18" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7f1-4W-zEr">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 18" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7f1-4W-zEr">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                                                             <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="13"/>
                                                                                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
@@ -130,7 +144,6 @@
                                                                                     <constraints>
                                                                                         <constraint firstItem="7f1-4W-zEr" firstAttribute="top" secondItem="2be-Vw-BtQ" secondAttribute="top" id="3RP-mG-i56"/>
                                                                                         <constraint firstItem="7f1-4W-zEr" firstAttribute="leading" secondItem="2be-Vw-BtQ" secondAttribute="leading" id="K3V-Ct-bCw"/>
-                                                                                        <constraint firstAttribute="width" constant="60" id="U6M-hJ-tko"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="7f1-4W-zEr" secondAttribute="bottom" id="ovA-wl-lMq"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="7f1-4W-zEr" secondAttribute="trailing" id="vWQ-ZD-oxH"/>
                                                                                     </constraints>
@@ -179,7 +192,7 @@
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wFJ-5L-mhs">
                                                                                     <rect key="frame" x="260" y="0.0" width="60" height="20"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoZ-fj-FvY">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JoZ-fj-FvY">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                                                             <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="14"/>
                                                                                             <color key="textColor" red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
@@ -191,7 +204,6 @@
                                                                                         <constraint firstItem="JoZ-fj-FvY" firstAttribute="leading" secondItem="wFJ-5L-mhs" secondAttribute="leading" id="PMi-Tm-g1X"/>
                                                                                         <constraint firstItem="JoZ-fj-FvY" firstAttribute="top" secondItem="wFJ-5L-mhs" secondAttribute="top" id="YvF-89-aWM"/>
                                                                                         <constraint firstAttribute="trailing" secondItem="JoZ-fj-FvY" secondAttribute="trailing" id="bfE-H1-ojf"/>
-                                                                                        <constraint firstAttribute="width" constant="60" id="c7z-mW-jjm"/>
                                                                                         <constraint firstAttribute="bottom" secondItem="JoZ-fj-FvY" secondAttribute="bottom" id="ruM-vh-tWe"/>
                                                                                     </constraints>
                                                                                 </view>
@@ -239,7 +251,7 @@
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8iS-T9-B0P">
                                                                                     <rect key="frame" x="260" y="0.0" width="60" height="20"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geZ-ce-Dqd">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="geZ-ce-Dqd">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                                                             <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="14"/>
                                                                                             <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -299,7 +311,7 @@
                                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mgq-x5-AYr">
                                                                                     <rect key="frame" x="260" y="0.0" width="60" height="20"/>
                                                                                     <subviews>
-                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovW-R2-cFW">
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="20%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovW-R2-cFW">
                                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                                                             <fontDescription key="fontDescription" name="Cairo-Regular" family="Cairo" pointSize="14"/>
                                                                                             <color key="textColor" red="0.33333333329999998" green="0.33333333329999998" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -328,6 +340,11 @@
                                                                     </constraints>
                                                                 </view>
                                                             </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="8iS-T9-B0P" firstAttribute="width" secondItem="mgq-x5-AYr" secondAttribute="width" id="4ew-1C-wCk"/>
+                                                                <constraint firstItem="wFJ-5L-mhs" firstAttribute="width" secondItem="8iS-T9-B0P" secondAttribute="width" id="CYj-ju-rLr"/>
+                                                                <constraint firstItem="2be-Vw-BtQ" firstAttribute="width" secondItem="wFJ-5L-mhs" secondAttribute="width" id="llj-vZ-kzN"/>
+                                                            </constraints>
                                                         </stackView>
                                                     </subviews>
                                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -375,7 +392,7 @@
                                                                             <rect key="frame" x="0.0" y="0.0" width="60" height="20"/>
                                                                             <subviews>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Riyal" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P1Z-MM-Kpf">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="30.333333333333332" height="20"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="29.333333333333332" height="20"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="width" priority="250" constant="35" id="Nfs-IE-xPi"/>
                                                                                     </constraints>
@@ -384,7 +401,7 @@
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21.6" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAS-r2-sgN">
-                                                                                    <rect key="frame" x="32.333333333333314" y="0.0" width="27.666666666666671" height="20"/>
+                                                                                    <rect key="frame" x="31.333333333333314" y="0.0" width="28.666666666666671" height="20"/>
                                                                                     <fontDescription key="fontDescription" name="Cairo-Bold" family="Cairo" pointSize="15"/>
                                                                                     <nil key="textColor"/>
                                                                                     <nil key="highlightedColor"/>
@@ -417,7 +434,7 @@
                                                     <rect key="frame" x="0.0" y="129" width="320" height="20"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="VAT:  12314256632255" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qci-jT-nDt">
-                                                            <rect key="frame" x="78.333333333333329" y="0.66666666666665719" width="163.33333333333337" height="18.666666666666668"/>
+                                                            <rect key="frame" x="79.333333333333329" y="-5" width="161.33333333333337" height="30"/>
                                                             <fontDescription key="fontDescription" name="Cairo-Medium" family="Cairo" pointSize="16"/>
                                                             <color key="textColor" red="0.59215686274509804" green="0.59215686274509804" blue="0.59215686274509804" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>

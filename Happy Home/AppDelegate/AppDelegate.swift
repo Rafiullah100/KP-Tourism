@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         IQKeyboardManager.shared().shouldResignOnTouchOutside = true
         IQKeyboardManager.shared().isEnableAutoToolbar = true
+        
+        let language: AppLanguage = AppLanguage(rawValue: UserDefaults.standard.selectedLanguage ?? "") ?? .english
+        UIView.appearance().semanticContentAttribute = language == .arabic ? .forceRightToLeft : .forceLeftToRight
+        
         return true
     }
 

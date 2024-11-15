@@ -9,6 +9,7 @@ import UIKit
 
 class SearchView: UIView {
         
+    @IBOutlet weak var textField: UITextField!
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -17,6 +18,12 @@ class SearchView: UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         commonInit()
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        textField.placeholder = LocalizationKeys.searchProductsOrStore.rawValue.localizeString()
+        textField.textAlignment = Helper.shared.isRTL() ? .right : .left
     }
     
     private func commonInit() {

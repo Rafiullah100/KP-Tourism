@@ -13,8 +13,9 @@ protocol OrderNavigationViewDelegate {
 class OrderView: UIView {
     var delegate: ProductNavigationViewDelegate?
 
+    @IBOutlet weak var backIcon: UIImageView!
+    @IBOutlet weak var riyalLabel: UILabel!
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var leftIconImageView: UIImageView!
     override init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
@@ -32,6 +33,12 @@ class OrderView: UIView {
         xibView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(xibView)
     }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        riyalLabel.text = LocalizationKeys.riyal.rawValue.localizeString()
+    }
+    
     
     @IBAction func backButtonAction(_ sender: Any) {
         delegate?.back()

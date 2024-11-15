@@ -28,8 +28,8 @@ class PaymentMethodViewController: UIViewController {
         super.viewDidLoad()
         shoppingView.delegate = self
         navigationView.delegate = self
-        shoppingView.shoppingButton.setTitle("Place Order", for: .normal)
-        navigationView.titleLabel.text = "Select Payment Method"
+        shoppingView.shoppingButton.setTitle(LocalizationKeys.placeOrder.rawValue.localizeString(), for: .normal)
+        navigationView.titleLabel.text = LocalizationKeys.selectPaymentMethod.rawValue.localizeString()
         self.tableView.layoutIfNeeded()
         self.tableViewHeight.constant = self.tableView.contentSize.height
     }
@@ -37,17 +37,15 @@ class PaymentMethodViewController: UIViewController {
 
 extension PaymentMethodViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return Constants.paymentMethod.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: PaymentMethodTableViewCell = tableView.dequeueReusableCell(withIdentifier: "PaymentMethodTableViewCell", for: indexPath) as! PaymentMethodTableViewCell
         cell.configure(isSelected: selectedIndexPath == indexPath)
+        cell.payment = Constants.paymentMethod[indexPath.row]
         cell.didTapButton = {
             self.selectedIndexPath = indexPath
             self.tableView.reloadData()
-        }
-        if indexPath.row > 2{
-            cell.checkImageView.image = UIImage(named: "circle-forward-arrow")
         }
         return cell
     }

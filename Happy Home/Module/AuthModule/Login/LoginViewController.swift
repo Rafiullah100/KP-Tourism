@@ -8,25 +8,25 @@
 import UIKit
 
 class LoginViewController: UIViewController {
-
+    @IBOutlet weak var privacyButton: UIButton!
+    
+    @IBOutlet weak var signinButton: UIButton!
+    @IBOutlet weak var forgotPhoneButton: UIButton!
+    @IBOutlet weak var numberTextField: UITextField!
+    @IBOutlet weak var countryCodeLabel: UILabel!
+    @IBOutlet weak var signinLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        signinLabel.text = LocalizationKeys.signin.rawValue.localizeString()
+        numberTextField.textAlignment = Helper.shared.isRTL() ? .right : .left
+        signinButton.setTitle(LocalizationKeys.signin.rawValue.localizeString(), for: .normal)
+        forgotPhoneButton.setTitle(LocalizationKeys.forgotPhone.rawValue.localizeString(), for: .normal)
+        privacyButton.setTitle(LocalizationKeys.termsAndConditions.rawValue.localizeString(), for: .normal)
     }
     
 
     @IBAction func signinButtonAction(_ sender: Any) {
         Switcher.gotoOtpScreen(delegate: self)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

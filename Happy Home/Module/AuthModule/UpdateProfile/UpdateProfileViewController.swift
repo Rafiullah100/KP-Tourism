@@ -9,10 +9,29 @@ import UIKit
 
 class UpdateProfileViewController: UIViewController {
 
+    @IBOutlet weak var privacyLabel: UILabel!
+    @IBOutlet weak var termsLabel: UILabel!
+    @IBOutlet weak var continueButton: UIButton!
+    @IBOutlet weak var approveLabel: UILabel!
+    @IBOutlet weak var locationTextField: UITextField!
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var updateLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        approveLabel.text = LocalizationKeys.approve.rawValue.localizeString()
+        emailTextField.textAlignment = Helper.shared.isRTL() ? .right : .left
+        locationTextField.textAlignment = Helper.shared.isRTL() ? .right : .left
+        nameTextField.textAlignment = Helper.shared.isRTL() ? .right : .left
+        nameTextField.placeholder = LocalizationKeys.fullName.rawValue.localizeString()
+        emailTextField.placeholder = LocalizationKeys.email.rawValue.localizeString()
+        locationTextField.text = LocalizationKeys.addLocation.rawValue.localizeString()
+        privacyLabel.text = LocalizationKeys.privacyPolicy.rawValue.localizeString()
+        approveLabel.text = LocalizationKeys.approve.rawValue.localizeString()
+        termsLabel.text = LocalizationKeys.termsAndConditions.rawValue.localizeString()
+
+        continueButton.setTitle(LocalizationKeys.signin.rawValue.localizeString(), for: .normal)
     }
     
     override func viewWillAppear(_ animated: Bool) {

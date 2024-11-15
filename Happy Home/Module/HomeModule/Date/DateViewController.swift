@@ -11,6 +11,8 @@ protocol DateDelegate {
 }
 class DateViewController: UIViewController {
     
+    @IBOutlet weak var okButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var datePicker: UIDatePicker!
     var delegate: DateDelegate?
     var dateString: String?

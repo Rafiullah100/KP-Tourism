@@ -9,6 +9,7 @@ import UIKit
 
 class CardListViewController: UIViewController {
 
+    @IBOutlet weak var addLabel: UIButton!
     @IBOutlet weak var shoppingView: ShoppingPaymentView!
     @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var tableViewHeight: NSLayoutConstraint!
@@ -25,8 +26,9 @@ class CardListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        shoppingView.shoppingButton.setTitle("Continue", for: .normal)
-        navigationView.titleLabel.text = "Select Your Card"
+        shoppingView.shoppingButton.setTitle(LocalizationKeys.Continue.rawValue.localizeString(), for: .normal)
+        navigationView.titleLabel.text = LocalizationKeys.addNewCard.rawValue.localizeString()
+        addLabel.setTitle(LocalizationKeys.addNewCard.rawValue.localizeString(), for: .normal)
         navigationView.delegate = self
         shoppingView.delegate = self
 

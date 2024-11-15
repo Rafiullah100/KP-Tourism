@@ -9,6 +9,13 @@ import UIKit
 
 class DeliveryScheduleViewController: UIViewController {
 
+    @IBOutlet weak var changeLabel: UILabel!
+    @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var changeButton: UIButton!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var phoneLabel: UILabel!
+    @IBOutlet weak var addressLabel: UILabel!
     @IBOutlet weak var shoppingView: ShoppingPaymentView!
     @IBOutlet weak var navigationView: NavigationView!
     @IBOutlet weak var timeView: UIView!
@@ -36,8 +43,12 @@ class DeliveryScheduleViewController: UIViewController {
         super.viewDidLoad()
         shoppingView.delegate = self
         navigationView.delegate = self
-        shoppingView.shoppingButton.setTitle("Go for Payment", for: .normal)
-        navigationView.titleLabel.text = "Add Further Details"
+        shoppingView.shoppingButton.setTitle(LocalizationKeys.goForPayment.rawValue.localizeString(), for: .normal)
+        navigationView.titleLabel.text = LocalizationKeys.addFurtherDetails.rawValue.localizeString()
+        dayLabel.text = LocalizationKeys.selectDeliveryDay.rawValue.localizeString()
+        timeLabel.text = LocalizationKeys.selectDeliveryTime.rawValue.localizeString()
+        changeLabel.text = LocalizationKeys.change.rawValue.localizeString()
+
     }
     @IBAction func changeButtonAction(_ sender: Any) {
         Switcher.gotoAddressList(delegate: self)

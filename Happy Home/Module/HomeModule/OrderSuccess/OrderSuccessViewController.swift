@@ -9,9 +9,14 @@ import UIKit
 
 class OrderSuccessViewController: UIViewController {
 
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var successLabel: UILabel!
+    @IBOutlet weak var congrateLabel: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        backButton.setTitle(LocalizationKeys.backToHome.rawValue.localizeString(), for: .normal)
+        successLabel.text = LocalizationKeys.yourOrderHasBeenSuccesssfullyPlaced.rawValue.localizeString()
+        congrateLabel.text = LocalizationKeys.congratulations.rawValue.localizeString()
         // Do any additional setup after loading the view.
     }
     
