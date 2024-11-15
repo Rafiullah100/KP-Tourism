@@ -34,6 +34,7 @@ class AttractionTableViewCell: UITableViewCell {
                     slideShow.slideshowInterval = 2.0
                     slideShow.contentScaleMode = UIViewContentMode.scaleAspectFill
                     slideShow.isUserInteractionEnabled = false
+                    slideShow.contentScaleMode = .scaleToFill
                     slideShow.setImageInputs(imageSDWebImageSrc)
                 }
             })
